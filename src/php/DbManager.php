@@ -5,7 +5,7 @@ define("DB_NAME",$config["DB_NAME"]);
 define("DB_USERNAME",$config["DB_USERNAME"]);
 define("DB_PASSWORD",$config["DB_PASSWORD"]);
 
-class DbMangager{
+class DbManager{
     public const HOST = DB_HOST;
     public const DBNAME = DB_NAME;
     public const USERNAME = DB_USERNAME;
