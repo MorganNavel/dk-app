@@ -6,11 +6,14 @@
     <title>Page Principal</title>
 </head>
 <body>
-<?php 
- require_once "./php/header.php"
-?>
-<?php 
-require_once "./php/footer.php"
-?>
+    <?php 
+        require_once "./php/header.php"
+    ?>
+    <?php
+    require_once "./php/signup.php"
+    ?>
+    <?php 
+        require_once "./php/footer.php"
+    ?>
 </body>
 </html>
