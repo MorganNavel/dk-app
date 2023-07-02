@@ -1,4 +1,4 @@
-window.onload = function (event) {
+window.addEventListener("DOMContentLoaded", function () {
   const submit_btn = document.getElementById("submit_btn");
   const div_password = document.getElementById("div-password");
   submit_btn.disabled = true;
@@ -24,4 +24,4 @@ window.onload = function (event) {
       }
     }
   });
-};
+});
