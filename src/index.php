@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,8 +10,12 @@
 <?php 
  require_once "./php/header.php"
 ?>
+<?php
+require_once "./php/signup.php"
+?>
 <?php 
 require_once "./php/footer.php"
 ?>
 </body>
 </html>
+
