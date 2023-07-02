@@ -9,7 +9,6 @@
 </head>
 <body>  
     <form class="form" action="./php/authentification.php" method="post">
-<<<<<<< HEAD
         <div class="flex">
             <div><object data="./img/name.svg" width="20" height="20"></object></div><input type="text" name="name" placeholder="Enter your name"><br>
         </div>
