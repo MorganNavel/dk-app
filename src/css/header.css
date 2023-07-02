@@ -1,19 +1,34 @@
 .body {
     margin: 0;
-    background: black;
 }
-
 a {
     text-decoration: none;
-    color: white;
+    color: 000000;
 }
 .navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 8px 12px;
+    border-bottom: solid 1px #CECECE;
 }
-
-.navbar__entrainement {
+.navbar__logo {
     font-size: 24px;
+    align-items: center;
+}
+.navbar__menu {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    /* background-color: plum; */
+}
+.navbar__menu li {
+    padding: 8px 12px;
+}
+.navbar__language {
+    list-style: none;
+    display: flex;
+}
+.navbar__language li{
+    padding: 8px 5px;
 }
