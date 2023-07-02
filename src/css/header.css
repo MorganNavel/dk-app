@@ -1,56 +1,82 @@
-:root {
-    --main-color-red: #E3101F;
-    --main-color-gray: #CECECE;
+/* .img__logo{
+
+} */
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: Avenir, sans-serif;
+}
+*,*::before,*::after {
+  box-sizing: content-box;
 }
 
-body {
-    margin: 0;
+nav{
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    position: sticky;
+    /* bottom: 100%; */
+    transform: translateY(50%); 
 }
-a, a:visited {
-    text-decoration: none;
-    color: black;
+
+
+nav ul{
+    list-style-type: none;
+    padding-left: 0px;
 }
-a:hover {
-    color: var(--main-color-red);
-}
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 12px;
-    border-bottom: solid 1px var(--main-color-gray);
+
+nav ul li{
+    float: left;
+    width: 25%;
+    text-align: center;
     position: relative;
 }
-.navbar__logo {
-    font-size: 24px;
-    align-items: center;
+
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
 }
-.navbar__menu {
-    display: flex;
-    list-style: none;
-    padding-left: 0;
+
+nav a{
+    display: block;
+    text-decoration: none;
+    color: #007bff;
+    border-bottom: 2px solid transparent;
+    padding: 10px 0px;
 }
-.navbar__menu li {
-    padding: 8px 12px;
+
+nav a:hover{
+    color:#4646FF;
+    border-bottom: 2px solid #4646FF;
 }
-.navbar__language {
-    list-style: none;
-    display: flex;
-}
-.navbar__language li{
-    padding: 8px 5px;
-}
-.navbar__language a:hover{
-    border: 3px black;
-}
-.menu_panel {
-    width: 100%;
-    /* background: red; */
-    left: 0;
-    top:100%;
-    z-index: 999;
-    padding-left: 180px;
-    font-size: 15px;
+
+.sous{
     display: none;
-    border-bottom: solid 1px var(--main-color-gray);
+    box-shadow: 0px 1px 2px #CCC;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
 }
+nav > ul li:hover .sous{
+    display: block;
+}
+.sous li{
+    float: none;
+    width: 100%;
+    text-align: left;
+}
+.sous a{
+    padding: 10px;
+    border-bottom: none;
+}
+.sous a:hover{
+    border-bottom: none;
+    background-color: RGBa(200,200,200,0.1);
+}
+.deroulant > a::after{
+    content:" ▼";
+    font-size: 12px;
+}
+
