@@ -59,7 +59,7 @@ class UserManager{
         }
         else{
             self::$cnx = DbManager::getConnexion();
-            self::addUser($email,$name,$password);
+            return self::addUser($email,$name,$password);
         }
     }
     public static function isConnected(){

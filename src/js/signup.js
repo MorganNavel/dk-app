@@ -24,4 +24,5 @@ window.onload = function (event) {
       }
     }
   });
+  //Faire une évaluation de la force du mot de passe
 };

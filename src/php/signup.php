@@ -1,29 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FKLearning</title>
-    <script src="./js/form.js" ></script>
-    <link rel="stylesheet" href="./css/style.css">
-</head>
-<body>  
-    <form class="form" action="./php/authentification.php" method="post">
-<<<<<<< HEAD
-        <div class="flex">
-            <div><object data="./img/name.svg" width="20" height="20"></object></div><input type="text" name="name" placeholder="Enter your name"><br>
-        </div>
+<?php
+session_start();
+require_once "./UserManager.php";
+if(!empty($_POST["name"]) && !empty($_POST["email"]) && !empty($_POST["password"]) && !empty($_POST["confirm_password"])){
 
-        <div class="flex">
-            <div><object data="./img/email.svg" width="20" height="20"></object></div><input type="email" name="email" placeholder="Enter your email"><br> 
-        </div>
-
-        <div id="div-password" class="flex">
-            <div><object data="./img/password.svg" width="20" height="20"></object></div><input type="password" name="password" id="password" placeholder="Enter password"> 
-            <div><object data="./img/confirm_password.svg" width="20" height="20"></object></div><input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm password">
-        </div>
-        <div id="error-div"></div>
-        <input type="submit" value="VALIDER" id="submit_btn">
-    </form>
-</body>
-</html>
+    if(UserManager::addUser($_POST["email"],$_POST["name"],$_POST["password"])!=-1){
+        $_SESSION["name"] = $_POST["name"];
+        $_SESSION["email"] = $_POST["email"];
+        $_SESSION["password"] = $_POST["password"];
+        echo "<h1>Bienvenue ",$_POST["name"],"!</h1>";
+    }else{
+        echo "<h1>Adresse email ou nom déjà utilisé</h1>";
+    }
+}else{
+    echo "<h1>Veuillez remplir tous les champs</h1>";
+}
+?>
