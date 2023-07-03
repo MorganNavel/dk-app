@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", function (e) {
-  console.log("header.js loaded ! ");
+  console.log("header.js loaded!");
 
   const li_menu = document.getElementById("li_entrainement");
   console.log(li_menu);
