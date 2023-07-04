@@ -4,7 +4,7 @@
 <body>
     <div class="row">
         <div class="col-sm-2">
-            <img src="./img/logo.png" width="120" alt="logo">
+            <img class="img_logo" src="./img/logo.png" width="120" alt="logo">
         </div>
         <div class="col-sm-10">
             <nav>
@@ -18,7 +18,11 @@
                     </li>
                     <li><a href="#">Participer</a></li>
                     <li><a href="#">Ma page</a></li>
-                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Login</a></li> 
+                    <li class="li_language">Language
+                        <img src="./img/flag-france.png" width="20" alt="fr">
+                        <img src="./img/flag-south-korea.png" width="20" alt="kr">
+                    </li> 
                 </ul>
             </nav>
         </div>
