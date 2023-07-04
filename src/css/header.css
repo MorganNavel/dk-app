@@ -10,29 +10,27 @@
     box-sizing: content-box;
 }
 .row {
-    padding: 8px 18px;
+    margin:0 auto;
+    padding: 8px 12px;
+    width: 1100px;
 }
-.img_logo{
-    padding-left:10px;
-    padding-top: 8px;
-}
-
 nav{
-    width: 100%;
+    display: flex;
+    width: 1050px;
+    height: 70px;
     margin: 0 auto;
-    background-color: white;
-    position: sticky;
-    transform: translateY(50%); 
-
+    align-items: center;
+    background-color: #fff;
 }
-
 nav ul{
     list-style-type: none;
     padding-left: 0px;
+    margin: 0 auto;
 }
 nav ul li{
     float: left;
-    width: 20%;
+    width: 150px;
+    padding: 8px 12px;
     text-align: center;
     position: relative;
 }
@@ -42,6 +40,7 @@ nav ul::after{
     clear: both;
 }
 nav a, .li_language{
+    font-weight: bold;
     display: block;
     text-decoration: none;
     color: #000000;
@@ -51,6 +50,9 @@ nav a, .li_language{
 nav a:hover{
     color:var(--color_blue);
     text-decoration: none;
+}
+.deroulant a:first-child{
+    /* background: lawngreen; */
 }
 .sous{
     display: none;
@@ -69,14 +71,13 @@ nav > ul li:hover .sous{
     text-align: left;
 }
 .sous a{
-    padding: 10px;
+    padding:6px;
     border-bottom: none;
 }
 .sous a:hover{
     border-bottom: none;
-    background-color: RGBA(200,200,200,0.1);
+    /* background-color: RGBA(200,200,200,0.1); */
 }
 .deroulant > a::after{
-    /* content:" ▼"; */
     font-size: 12px;
 }
