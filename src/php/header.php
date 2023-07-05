@@ -18,8 +18,8 @@
                         </ul>
                     </li>
                     <li><a href="#">Participer</a></li>
-                    <li><a href="#">Ma page</a></li>
-                    <li><a href="#">Login</a></li> 
+                    <li><a href="../src/php/mapage.php">Ma page</a></li>
+                    <li><a href="../src/php/login.php">Login</a></li> 
                 </ul>
                 <ul>
                     <li class="li_language">Language

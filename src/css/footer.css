@@ -1,0 +1,24 @@
+.div_footer{
+    background-color: #22339B;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+}
+.div_contact{
+    padding:20px 0px;
+    width:100%;
+    text-align: center;
+}
+.a_aboutUs, .a_newletter{
+    padding-left: 20px;
+}
+.div_contact a{
+    text-decoration: none;
+    color:white;
+}
+.div_rights{
+    color:white;
+    padding: 0px 0px 20px 0px;
+    width: 100%;
+}
