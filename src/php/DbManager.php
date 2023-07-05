@@ -14,7 +14,8 @@ class DbManager{
     public const PASSWORD = DB_PASSWORD;
     private static $cnx = null;
 
-    public static function getConnexion(){
+    public static function getConnection(){
+        
         if(self::$cnx==null){
             try{
                 self::$cnx = new PDO("mysql:host=".self::HOST.";dbname=".self::DBNAME, self::USERNAME, self::PASSWORD);
@@ -27,7 +28,7 @@ class DbManager{
         }
         return self::$cnx;
     }
-    public static function injectConnexion($DB_NAME){
+    public static function injectConnection($DB_NAME){
         try{
             self::$cnx = new PDO("mysql:host=".self::HOST.";dbname=".$DB_NAME, self::USERNAME, self::PASSWORD);
             self::$cnx ->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
