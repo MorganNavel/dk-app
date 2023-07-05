@@ -7,7 +7,7 @@
         <li><a href="">Entraînement</a></li>
         <li><a href="">Participer</a></li>
         <li><a href="">Ma page</a></li>
-        <li><a href="">Login</a></li>
+        <li><a href="./src/login.php">Login</a></li>
         
     </div>
     <div class="navbar__language">

@@ -2,68 +2,103 @@
 require_once("./DbManager.php");
 
 class UserManager{
-    private static $cnx = null;
-    
-    public static function login($email,$password){
-        if(self::$cnx!=null){
+    private static $_cnx = null;
+        
+    /**
+     * Login a user
+     *
+     * @param  string $email
+     * @param  string $password
+     * @return array|int
+     */
+    public static function login($email,$password)
+    {
+        if (self::$_cnx!=null) {
             try{
-                $response = self::$cnx->prepare("SELECT * FROM USERS where email:=email AND password:=password");
-                $response->execute(array('email'=>$email,'password'=>sha1($password)));
+                $sql="SELECT * FROM USERS where email:=email AND password:=password";
+                $response = self::$_cnx->prepare($sql);
+                $tab = array('email'=>$email,'password'=>sha1($password));
+                $response->execute($tab);
                 $user = $response->fetch();
-                if($user){
+                if ($user) {
                     return $user;
+                } else {
+                    // ERROR PAGE
+                    return -1;
                 }
             }
             catch(PDOException $e){
                 return -1;
             }
-        }
-        else{
-            self::$cnx = DbManager::getConnexion();
-            self::login($email,$password);
+        } else {
+            self::$_cnx = DbManager::getConnection();
+            return self::login($email, $password);
         }
     }
-    public static function getUserById($email){
-        if(self::$cnx!=null){
+
+    /**
+     * Get a user
+     *
+     * @param  string $email
+     * @return array|int
+     */
+    public static function getUserById($email)
+    {
+        if (self::$_cnx!=null) {
             try{
-                $response = self::$cnx->prepare("SELECT * FROM USERS where email:=email");
+                $sql = "SELECT * FROM USERS where email:=email";
+                $response = self::$_cnx->prepare($sql);
                 $response->execute(array('email'=>$email));
                 $user = $response->fetch();
-                if($user){
+                if ($user) {
                     return $user;
+                } else {
+                    // ERROR PAGE
+                    return -1;
+                }
+            }
+            catch(PDOException $e){
+                // ERROR PAGE
+                return -1;
+            }
+        } else {
+            self::$_cnx = DbManager::getConnection();
+            return self::getUserById($email);
+        }
+    }
+
+    
+    /**
+     * addUser
+     *
+     * @param  string $email
+     * @param  string $name
+     * @param  string $password
+     * @return int
+     */
+    public static function addUser($email, $name, $password)
+    {
+        if (self::$_cnx !=null) {
+            try{
+                $hashed = sha1($password);
+                $sql = "INSERT INTO USERS(email,name,password) VALUES(:email,:name,:password)";
+                $response = self::$_cnx->prepare($sql);
+                $tab = array('email'=>$email,'name'=> $name,'password'=>$hashed);
+                $response = $response->execute($tab);
+                if ($response) {
+                    echo "<h1>Vous avez été enregistré correctement<h1>";
+                    return $response;
+                } else {
+                    return -1;
                 }
             }
             catch(PDOException $e){
                 return -1;
             }
+        } else {
+            self::$_cnx = DbManager::getConnection();
+            return self::addUser($email, $name, $password);
         }
-        else{
-            self::$cnx = DbManager::getConnexion();
-            self::getUserById($email);
-        }
-    }
-
-
-    public static function addUser($email,$name,$password){
-        if(self::$cnx !=null){
-            try{
-                $hashedPassword = sha1($password);
-                $response = self::$cnx->prepare("INSERT INTO USERS(email,name,password) VALUES(:email,:name,:password)");
-                $response->execute(array('email'=>$email,'name'=> $name,'password'=>$hashedPassword));
-                echo "<h1>Vous avez été enregistré correctement<h1>";
-                return 0;
-            }
-            catch(PDOException $e){
-                return -1;
-            }
-        }
-        else{
-            self::$cnx = DbManager::getConnexion();
-            return self::addUser($email,$name,$password);
-        }
-    }
-    public static function isConnected(){
-        return self::$cnx;
-    }
+    }    
 }
 ?>
