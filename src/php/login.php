@@ -1,10 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="../js/form.js" ></script>
-    <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <title>Login</title>
 </head>
+
 <body>
     <nav class="navbar">
         <div class="navbar__logo">
@@ -33,21 +36,17 @@
         </div>
     </nav>
     <form class="form" action="./authentification.php" method="post">
->>>>>>> register
+        
         <div class="flex">
-            <div><object data="../img/name.svg" width="20" height="20"></object></div><input type="text" name="name" placeholder="Enter your name"><br>
+            <div><object data="../img/email.svg" width="20" height="20"></object></div><input type="email" name="email" placeholder="Enter your email">
         </div>
-
-        <div class="flex">
-            <div><object data="../img/email.svg" width="20" height="20"></object></div><input type="email" name="email" placeholder="Enter your email"><br> 
-        </div>
-
+        <br> 
         <div id="div-password" class="flex">
             <div><object data="../img/password.svg" width="20" height="20"></object></div><input type="password" name="password" id="password" placeholder="Enter password"> 
-            <div><object data="../img/confirm_password.svg" width="20" height="20"></object></div><input type="password" name="confirm_password" id="confirm-password" placeholder="Confirm password">
         </div>
         <div id="error-div"></div><br>
         <input type="submit" value="VALIDER" id="submit_btn"><br><br>
-        <div class="flex"><a href="./login.php">Déjà inscrit ?</a></div>
+        <div class="flex"><a href="./signup.php">Pas encore inscrit ?</a></div>
     </form>
 </body>
+</html>
