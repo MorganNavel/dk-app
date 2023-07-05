@@ -3,7 +3,7 @@
 }
 [id="slide01"]:checked ~ .slidelist .slideitem{
     transform: translateX(0);
-    animation: slide01 20s infinite;
+    animation: slide01 30s infinite;
 }
 [id="slide02"]:checked ~ .slidelist .slideitem{
     transform: translateX(-100%);
@@ -68,7 +68,23 @@
     color:gray;
     display: inline-block;
     transition: background-color 0.6s ease;
-  }
-  .active {
+}
+.active {
     background-color: #717171;
-  }
+}
+.slideitem i{
+    color: white;
+    background-color: #717171;
+    padding:6px;
+    border-radius: 100%;
+    font-weight: bold;
+    font-size: 18pt;
+}
+.left{
+    display: inline-block;
+    margin-right: 400px;
+}
+.right{
+    display: inline-block;
+    margin-left: 400px;
+}
