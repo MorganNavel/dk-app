@@ -15,6 +15,7 @@ class DbManager{
     private static $cnx = null;
 
     public static function getConnection(){
+        
         if(self::$cnx==null){
             try{
                 self::$cnx = new PDO("mysql:host=".self::HOST.";dbname=".self::DBNAME, self::USERNAME, self::PASSWORD);
