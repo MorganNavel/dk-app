@@ -1,17 +1,27 @@
 <?php
 
+/**
+ *  @author FKLearning <navelmorgan34@gmail.com>
+ *  @license Copyright (c) 2023 FKLearning - All Rights Reserved
+ *  @copyright 2023 FKLearning
+ *  Unauthorized copying of this file, via any medium is strictly prohibited
+ *  Proprietary and confidential
+ */
+
 session_start();
-require_once "./UserManager.php";
-var_dump($_POST["email"]);
-var_dump($_POST["password"]);
-var_dump($_POST["confirm_password"]);
-var_dump($_POST["name"]);
-var_dump($_SESSION["email"]=null);
+require_once dirname(__FILE__)."/class/UserManager.php";
+
+// echo "email".var_dump($_POST["email"])."<br>";
+// echo "password".var_dump($_POST["password"])."<br>";
+// echo "confirm_password".var_dump($_POST["confirm_password"])."<br>";
+// echo "name".var_dump($_POST["name"])."<br>";
+// echo "SESSION".var_dump($_SESSION["email"])."<br>";
+
 session_destroy();
 /**
  * Check if a value is set
  *
- * @param  mixe $var
+ * @param  str $var
  * @return bool
  */
 function isset_var($var)
@@ -21,8 +31,7 @@ function isset_var($var)
 
 if (!isset_var($_SESSION["email"])) {
 
-    if (isset_var($_POST["email"]) && isset_var($_POST["password"]) && isset_var($_POST["confirm_password"] && isset_var($_POST["name"]))) {
-
+    if (isset_var($_POST["email"]) && isset_var($_POST["password"]) && isset_var($_POST["confirm_password"]) && isset_var($_POST["name"])) {
         $email = $_POST["email"];
         $password = $_POST["password"];
         $c_password = $_POST["confirm_password"];
@@ -31,7 +40,7 @@ if (!isset_var($_SESSION["email"])) {
             $res = UserManager::addUser($email, $name, $password);
             if ($res!=-1) {
                 $_SESSION["email"] = $_POST["email"];
-                $_SESSION["password"] = sha1($_POST["password"]);
+                echo "<h1>Vous avez été enregistré correctement<h1>";
                 echo "<h1>Bienvenue ",$_POST["name"],"!</h1>";
             } else {
                 //ERROR DUE TO DATABASE
@@ -47,10 +56,10 @@ if (!isset_var($_SESSION["email"])) {
         $email = $_POST["email"];
         $password = $_POST["password"];
         if (!empty($email) && !empty($password)) {
-            $res = UserManager::getUserById($email);
+            $res = UserManager::login($email, $password);
             if ($res!=-1) {
                 $_SESSION["email"] = $_POST["email"];
-                echo "<h1>Bienvenue ",$_POST["name"],"!</h1>";
+                echo "<h1>Bienvenue ",$res["name"],"!</h1>";
             } else {
                 //ERROR DUE TO DATABASE
                 //SEND TO ERROR PAGE
@@ -60,10 +69,12 @@ if (!isset_var($_SESSION["email"])) {
             echo "<h1>Veuillez remplir tous les champs</h1>";
         }
     } else {
-        echo "ERROR";
+        //ERROR
     }
+} else {
+    //ALREADY LOGGED BY SESSION
 }
-//ALREADY LOGGED BY SESSION
+
 
 
 

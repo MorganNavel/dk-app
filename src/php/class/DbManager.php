@@ -8,7 +8,7 @@
  *  Proprietary and confidential
  */
 
-include './config.php';
+require_once dirname(__FILE__).'/config.php';
 
 //define CONFIG VARIABLES
 define("DB_NAME", $CONFIG["DB_NAME"]);
@@ -31,7 +31,8 @@ class DbManager
      *
      * @return PDO|int
      */
-    public static function getConnection() {
+    public static function getConnection() 
+    {
         if (self::$_cnx==null) {
             try{
                 $URL = "mysql:host=".self::HOST.";dbname=".self::DBNAME;

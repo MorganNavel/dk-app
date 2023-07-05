@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Page Principal</title>
-    <link rel="stylesheet" href="/src/css/header.css">
-    <script src="/src/js/signup.js"></script>
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/signup.js"></script>
 </head>
 <body>
     <nav class="navbar">

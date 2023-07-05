@@ -1,5 +1,14 @@
 <?php
-require_once("./DbManager.php");
+/**
+ *  @author FKLearning <navelmorgan34@gmail.com>
+ *  @license Copyright (c) 2023 FKLearning - All Rights Reserved
+ *  @copyright 2023 FKLearning
+ *  Unauthorized copying of this file, via any medium is strictly prohibited
+ *  Proprietary and confidential
+ */
+
+
+require_once dirname(__FILE__)."/DbManager.php";
 
 class UserManager{
     private static $_cnx = null;
@@ -15,19 +24,26 @@ class UserManager{
     {
         if (self::$_cnx!=null) {
             try{
-                $sql="SELECT * FROM USERS where email:=email AND password:=password";
+
+                $sql="SELECT * FROM USERS WHERE email=:email AND password=:password";
+
                 $response = self::$_cnx->prepare($sql);
                 $tab = array('email'=>$email,'password'=>sha1($password));
+
                 $response->execute($tab);
+
                 $user = $response->fetch();
+
                 if ($user) {
                     return $user;
                 } else {
                     // ERROR PAGE
                     return -1;
                 }
+
             }
             catch(PDOException $e){
+                print "Error: ".$e->getMessage();
                 return -1;
             }
         } else {
@@ -86,7 +102,6 @@ class UserManager{
                 $tab = array('email'=>$email,'name'=> $name,'password'=>$hashed);
                 $response = $response->execute($tab);
                 if ($response) {
-                    echo "<h1>Vous avez été enregistré correctement<h1>";
                     return $response;
                 } else {
                     return -1;
