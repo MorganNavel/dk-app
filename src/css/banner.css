@@ -80,11 +80,11 @@
     font-weight: bold;
     font-size: 18pt;
 }
-.left{
+label.left{
     display: inline-block;
     margin-right: 400px;
 }
-.right{
+label.right{
     display: inline-block;
     margin-left: 400px;
 }
