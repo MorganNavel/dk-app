@@ -11,12 +11,6 @@
 session_start();
 require_once dirname(__FILE__)."/class/UserManager.php";
 
-// echo "email".var_dump($_POST["email"])."<br>";
-// echo "password".var_dump($_POST["password"])."<br>";
-// echo "confirm_password".var_dump($_POST["confirm_password"])."<br>";
-// echo "name".var_dump($_POST["name"])."<br>";
-// echo "SESSION".var_dump($_SESSION["email"])."<br>";
-
 session_destroy();
 /**
  * Check if a value is set
@@ -26,7 +20,7 @@ session_destroy();
  */
 function isset_var($var)
 {
-    return $var!==null;
+    return $var !== null;
 }
 
 if (!isset_var($_SESSION["email"])) {
@@ -38,29 +32,29 @@ if (!isset_var($_SESSION["email"])) {
         $name = $_POST["name"];
         if (!empty($email) && !empty($password) && !empty($password)) {
             $res = UserManager::addUser($email, $name, $password);
-            if ($res!=-1) {
+            if ($res) {
                 $_SESSION["email"] = $_POST["email"];
                 echo "<h1>Vous avez été enregistré correctement<h1>";
                 echo "<h1>Bienvenue ",$_POST["name"],"!</h1>";
             } else {
+                echo "Error";
                 //ERROR DUE TO DATABASE
                 //SEND TO ERROR PAGE
             }
         } else {
             echo "<h1>Veuillez remplir tous les champs</h1>";
         }
-    }
-    //If not set then it must be with less values
-
-    if (isset_var($_POST["email"]) && isset_var($_POST["password"]) ) {
+        //If not set then it must be with less values
+    } elseif (isset_var($_POST["email"]) && isset_var($_POST["password"])) {
         $email = $_POST["email"];
         $password = $_POST["password"];
         if (!empty($email) && !empty($password)) {
             $res = UserManager::login($email, $password);
-            if ($res!=-1) {
+            if ($res != -1) {
                 $_SESSION["email"] = $_POST["email"];
                 echo "<h1>Bienvenue ",$res["name"],"!</h1>";
             } else {
+                echo "Error";
                 //ERROR DUE TO DATABASE
                 //SEND TO ERROR PAGE
             }

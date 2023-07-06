@@ -20,7 +20,7 @@ class UserManager{
      * @param  string $password
      * @return array|int
      */
-    public static function login($email,$password)
+    public static function login($email, $password)
     {
         if (self::$_cnx!=null) {
             try{
@@ -40,7 +40,6 @@ class UserManager{
                     // ERROR PAGE
                     return -1;
                 }
-
             }
             catch(PDOException $e){
                 print "Error: ".$e->getMessage();
@@ -94,12 +93,12 @@ class UserManager{
      */
     public static function addUser($email, $name, $password)
     {
-        if (self::$_cnx !=null) {
+        if (self::$_cnx != null) {
             try{
                 $hashed = sha1($password);
                 $sql = "INSERT INTO USERS(email,name,password) VALUES(:email,:name,:password)";
                 $response = self::$_cnx->prepare($sql);
-                $tab = array('email'=>$email,'name'=> $name,'password'=>$hashed);
+                $tab = array('email' => $email, 'name' => $name,'password'=>$hashed);
                 $response = $response->execute($tab);
                 if ($response) {
                     return $response;
