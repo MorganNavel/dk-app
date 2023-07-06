@@ -5,12 +5,13 @@ window.addEventListener("DOMContentLoaded", function (e) {
   console.log(li_menu);
   const div_category = document.getElementById("menu_panel");
 
-  li_menu.addEventListener("click", function (e) {
-    console.log("test");
-    if (div_category.style.display == "none") {
-      div_category.style.display == "block";
+  li_menu.addEventListener("mouseover", function (e) {
+    if (div_category.style.display == "") {
+      console.log(div_category.style.display);
+      div_category.style.display == "grid";
+      console.log(div_category.style.display);
     } else {
-      div_category.style.display == "none";
+      div_category.style.display == "";
     }
   });
 });

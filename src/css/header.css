@@ -1,56 +1,83 @@
 :root {
-    --main-color-red: #E3101F;
-    --main-color-gray: #CECECE;
+    --color_blue: #1029C9;
 }
-
-body {
-    margin: 0;
+*{
+    margin: 0px;
+    padding: 0px;
+    font-family: Avenir, sans-serif;
 }
-a, a:visited {
-    text-decoration: none;
-    color: black;
+*,*::before,*::after {
+    box-sizing: content-box;
 }
-a:hover {
-    color: var(--main-color-red);
-}
-.navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.row {
+    margin:0 auto;
     padding: 8px 12px;
-    border-bottom: solid 1px var(--main-color-gray);
+    width: 1100px;
+}
+nav{
+    display: flex;
+    width: 1050px;
+    height: 70px;
+    margin: 0 auto;
+    align-items: center;
+    background-color: #fff;
+}
+nav ul{
+    list-style-type: none;
+    padding-left: 0px;
+    margin: 0 auto;
+}
+nav ul li{
+    float: left;
+    width: 150px;
+    padding: 8px 12px;
+    text-align: center;
     position: relative;
 }
-.navbar__logo {
-    font-size: 24px;
-    align-items: center;
+nav ul::after{
+    content: "";
+    display: table;
+    clear: both;
 }
-.navbar__menu {
-    display: flex;
-    list-style: none;
-    padding-left: 0;
+.img_logo{
+    margin-top:14px;
 }
-.navbar__menu li {
-    padding: 8px 12px;
+nav a, .li_language{
+    font-weight: bold;
+    display: block;
+    text-decoration: none;
+    color: #000000;
+    border-bottom: 2px solid transparent;
+    padding: 10px 0px;
 }
-.navbar__language {
-    list-style: none;
-    display: flex;
+nav a:hover{
+    color:var(--color_blue);
+    text-decoration: none;
 }
-.navbar__language li{
-    padding: 8px 5px;
-}
-.navbar__language a:hover{
-    border: 3px black;
-}
-.menu_panel {
-    width: 100%;
-    /* background: red; */
-    left: 0;
-    top:100%;
-    z-index: 999;
-    padding-left: 180px;
-    font-size: 15px;
+.sous{
     display: none;
-    border-bottom: solid 1px var(--main-color-gray);
+    box-shadow: 0px 1px 2px #CCC;
+    background-color: white;
+    position: absolute;
+    width: 100%;
+    z-index: 1000;
+}
+nav > ul li:hover .sous{
+    display: block;
+}
+.sous li{
+    float: none;
+    width: 100%;
+    text-align: left;
+}
+.sous a{
+    padding:6px;
+    border-bottom: none;
+}
+.sous a:hover{
+    border-bottom: none;
+    /* background-color: RGBA(200,200,200,0.1); */
+}
+.deroulant > a::after{
+    font-size: 12px;
 }

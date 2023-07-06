@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Principal</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="./js/banner.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+    <link rel="stylesheet" href="./css/banner.css">
+    <link rel="stylesheet" href="./css/footer.css">
+    <link rel="stylesheet" href="./css/header.css">
+
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar__logo">
+            <img src="./img/logo.png" height="32" alt="FR">
+            <a href="">FRLearning</a>
+        </div>
+        <div class="navbar__menu">
+            <li><a href="">Entraînement</a></li>
+            <li><a href="">Participer</a></li>
+            <li><a href="">Ma page</a></li>
+            <li><a href="./html/login.html">Login</a></li>
+            
+        </div>
+        <div class="navbar__language">
+            <li><a href="">Langue</a></li>
+            <li>
+                <a href="">
+                    <img src="./img/flag-france.png" width="30" alt="FR">
+                </a>
+            </li>
+            <li>
+                <a href="">
+                    <img src="./img/flag-south-korea.png" width="30" alt="FR">
+                </a>
+            </li>
+        </div>
+    </nav>
+    <body>
+    <div class="div_banner">
+        <div class="slidebox">
+            <input type="radio" name="slide" id="slide01" checked>
+            <input type="radio" name="slide" id="slide02">
+            <input type="radio" name="slide" id="slide03">
+            <input type="radio" name="slide" id="slide04">
+            <ul class="slidelist">
+                <li class="slideitem">
+                    <label for="slide04" class="left">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </label>
+                    <h1>
+                        사랑해 1
+                    </h1>
+                    <label for="slide02" class="right">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </label>
+                    <h2>
+                        Je t'aime
+                    </h2>
+                </li>
+                <li class="slideitem">
+                    <label for="slide01" class="left">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </label>
+                    <h1>
+                    사랑해 2
+                    </h1>
+                    <label for="slide03" class="right">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </label>
+                    <h2>
+                        Je t'aime
+                    </h2>
+                </li>
+                <li class="slideitem">
+                    <label for="slide02" class="left">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </label>
+                    <h1>
+                    사랑해 3
+                    </h1>
+                    <label for="slide04" class="right">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </label>
+                    <h2>
+                        Je t'aime
+                    </h2>
+                </li>
+                <li class="slideitem">
+                    <label for="slide03" class="left">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </label>
+                    <h1>
+                        사랑해 4
+                    </h1>
+                    <label for="slide01" class="right">
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </label>
+                    <h2>
+                        Je t'aime
+                    </h2>
+                </li>
+            </ul>
+            <div class="div_dots">
+                <span class="dot" onclick="currentSlide(1)">●</span> 
+                <span class="dot" onclick="currentSlide(2)">●</span> 
+                <span class="dot" onclick="currentSlide(3)">●</span> 
+                <span class="dot" onclick="currentSlide(4)">●</span> 
+            </div>
+        </div>
+    </div>
+    <div class="div_footer">
+        <div class="div_contact">
+            <img class="img_instagram" src="./img/contact_instagram.png" width="50" alt="instagram">
+            <img class="img_facebook" src="./img/contact_facebook.png" width="50" alt="facebook">
+            <img class="img_google" src="./img/contact_google.png" width="50" alt="google">
+            <img class="img_twitter" src="./img/contact_twitter.png" width="50" alt="twitter">
+            <a href="./html/aboutus.html" class="a_aboutUs">About us</a>
+            <a href="./html/newsletter.html" class="a_newletter">Newsletter</a>
+        </div>
+        <div class="div_rights">© 2023 French Korean Learning. All rights reserved.</div>
+    </div>
+</body>
+</html>
