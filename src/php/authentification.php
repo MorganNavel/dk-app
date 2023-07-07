@@ -22,7 +22,6 @@ function isset_var($var)
 {
     return $var !== null;
 }
-
 if (!isset_var($_SESSION["email"])) {
 
     if (isset_var($_POST["email"]) && isset_var($_POST["password"]) && isset_var($_POST["confirm_password"]) && isset_var($_POST["name"])) {

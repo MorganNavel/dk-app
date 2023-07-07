@@ -1,24 +1,25 @@
 function translator(e){
-    var clickedFlag=e.alt
-    var currentSiteLanguage = document.getElementsByTagName('html')[0].getAttribute('lang')
-    if (clickedFlag=="fr"){
-        if(currentSiteLanguage=="fr"){
-            alert("your language is alreay French")
-            return;
-        } else {
-            document.documentElement.setAttribute("lang","fr")
-            headerTranslateTo("fr")
-        }
-    } else {
-        if(currentSiteLanguage=="kr"){
-            alert("your language is alreay Korean")
-            return;
-        } else {
-            document.documentElement.setAttribute("lang","kr")
-            headerTranslateTo("kr")
-        }
+  var clickedFlag = e.alt;
+  var currentSiteLanguage = document
+    .getElementsByTagName("html")[0]
+    .getAttribute("lang");
+  if (clickedFlag == "fr") {
+    if (currentSiteLanguage == "fr") {
+      alert("Your language is alreay French");
+      return;
     }
+    document.documentElement.setAttribute("lang", "fr");
+    headerTranslateTo("fr");
+  } else {
+    if (currentSiteLanguage == "kr") {
+      alert("Your language is alreay Korean");
+      return;
+    }
+    document.documentElement.setAttribute("lang", "kr");
+    headerTranslateTo("kr");
+  }
 }
+
 
 function headerTranslateTo(targetLanguage) {
     var entrainement    = document.getElementById("entrainement")
@@ -28,8 +29,7 @@ function headerTranslateTo(targetLanguage) {
     var language        = document.getElementById("language")
     var participer      = document.getElementById("participer")
     var mapage          = document.getElementById("mapage")
-    var login           = document.getElementById("login")
-
+    var login = document.getElementById("login");
     if (targetLanguage=="kr") {
         entrainement.innerText  = "연습하기"
         cours.innerText         = "수업"
