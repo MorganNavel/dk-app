@@ -31,7 +31,7 @@ function headerTranslateTo(targetLanguage) {
     var login           = document.getElementById("login")
 
     if (targetLanguage=="kr") {
-        entrainement.innerText  = "연습"
+        entrainement.innerText  = "연습하기"
         cours.innerText         = "수업"
         vocabulaire.innerText   = "어휘"
         expression.innerText    = "표현"
