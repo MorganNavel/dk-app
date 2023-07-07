@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/banner.css">
     <link rel="stylesheet" href="./css/footer.css">
     <link rel="stylesheet" href="./css/header.css">
-
+    <script src="./js/translator.js"></script>
 </head>
 <body>
     <div class="row">
@@ -20,21 +20,21 @@
                     <li><a><img class="img_logo" src="./img/logo.png" width="100" alt="logo"></a></li>
                 </ul>
                 <ul>
-                    <li class="deroulant"><a href="#">Entraînement &ensp;</a>
+                    <li class="deroulant"><a href="#" id="entrainement">Entraînement &ensp;</a>
                         <ul class="sous">
-                            <li><a href="#">Cours</a></li>
-                            <li><a href="#">Vocabulaire</a></li>
-                            <li><a href="#">Expression</a></li>
+                            <li><a href="#" id="cours">Cours</a></li>
+                            <li><a href="#" id="vocabulaire">Vocabulaire</a></li>
+                            <li><a href="#" id="expression">Expression</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Participer</a></li>
-                    <li><a href="../src/php/mapage.php">Ma page</a></li>
-                    <li><a href="../src/php/login.php">Login</a></li> 
+                    <li><a href="#" id="participer">Participer</a></li>
+                    <li><a href="../src/php/mapage.php" id="mapage">Ma page</a></li>
+                    <li><a href="../src/php/login.php" id="login">Login</a></li> 
                 </ul>
                 <ul>
-                    <li class="li_language">Language
-                        <img src="./img/flag-france.png" width="20" alt="fr" onclick="">
-                        <img src="./img/flag-south-korea.png" width="20" alt="kr" onclick="">
+                    <li class="li_language"><label id="language">Language</label>
+                        <img src="./img/flag-france.png"      width="20" alt="fr" onclick="translator(this);">
+                        <img src="./img/flag-south-korea.png" width="20" alt="kr" onclick="translator(this);">
                     </li> 
                 </ul>
             </nav>
