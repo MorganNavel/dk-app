@@ -25,11 +25,13 @@ function isset_var($var)
 if (!isset_var($_SESSION["email"])) {
 
     if (isset_var($_POST["email"]) && isset_var($_POST["password"]) && isset_var($_POST["confirm_password"]) && isset_var($_POST["name"])) {
+
         $email = $_POST["email"];
         $password = $_POST["password"];
         $c_password = $_POST["confirm_password"];
         $name = $_POST["name"];
-        if (!empty($email) && !empty($password) && !empty($password)) {
+        if (!empty($email) && !empty($password) && !empty($c_password) && !empty($name)) {
+
             $res = UserManager::addUser($email, $name, $password);
             if ($res) {
                 $_SESSION["email"] = $_POST["email"];

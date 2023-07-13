@@ -31,21 +31,21 @@ class DbManager
      *
      * @return PDO|int
      */
-    public static function getConnection() 
+    public static function getConnection()
     {
-        if (self::$_cnx==null) {
-            try{
-                $URL = "mysql:host=".self::HOST.";dbname=".self::DBNAME;
+        if (self::$_cnx == null) {
+            try {
+                $URL = "mysql:host=" . self::HOST . ";dbname=" . self::DBNAME;
                 self::$_cnx = new PDO($URL, self::USERNAME, self::PASSWORD);
                 self::$_cnx ->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
                 self::$_cnx->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             }
-            catch(PDOException $e){
+            catch (PDOException $e) {
                 return -1;
             }
         }
         return self::$_cnx;
-    }    
+    }
     /**
      * Allow to test the class by injecting a debug database
      *
@@ -53,16 +53,16 @@ class DbManager
      * 
      * @return PDO|int
      */
-    public static function injectConnection($DB_NAME) 
+    public static function injectConnection($DB_NAME)
     {
-        try{
-            $URL = "mysql:host=".self::HOST.";dbname=".$DB_NAME;
+        try {
+            $URL = "mysql:host=" . self::HOST . ";dbname=" . $DB_NAME;
             self::$_cnx = new PDO($URL, self::USERNAME, self::PASSWORD);
             self::$_cnx ->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             self::$_cnx->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             echo "Connexion réussi";
         }
-        catch(PDOException $e){
+        catch (PDOException $e) {
             // ERROR PAGE
             return -1;
         }
