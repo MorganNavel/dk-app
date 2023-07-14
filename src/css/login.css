@@ -1,28 +1,28 @@
-.div_login {
+.div_login, .div_signup {
     margin: 100px auto;
     width: 350px;
-    height: 400px;
 }
 .div_logo{
     width: 100%;
     text-align: center;
-    padding: 50px;
+    padding-bottom: 60px;
 }
 .img_logo{
     width: 150px;
 }
-.input_email, .input_password{
+.input_email, .input_password, .input_name{
     width:100%;
     border: solid black 1px;
     height:50px;
     font-size: 16pt;
     padding:5px;
 }
-.p_email, .p_password{
+
+.p_email, .p_password, .p_name{
     font-size: 18pt;
     margin: 0;
 }
-.p_password{
+.p_password, .p_name{
     margin-top:20px;
 }
 .div_submit{
