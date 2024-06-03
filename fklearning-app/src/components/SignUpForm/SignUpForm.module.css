@@ -1,24 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Form Container */
 .formContainer {
-  @apply max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md transition-transform transform duration-500;
-  border: 2px solid #000;
+  @apply max-w-lg mx-auto mt-12 p-8 bg-white rounded-xl shadow-lg transition-transform transform duration-500;
+  border: 2px solid #e0e0e0;
 }
 
+/* Input Container */
 .inputContainer {
-  @apply flex items-center space-x-2 border-b py-2 transition-colors duration-300;
-  border-bottom-color: #0033a0;
+  @apply flex items-center space-x-3 border-b-2 py-2 transition-colors duration-300;
+  border-bottom-color: #008080; /* Teal */
 }
 
+/* Input Field */
 .input {
-  @apply w-full px-2 py-1 outline-none focus:ring-2;
+  @apply w-full px-4 py-2 outline-none focus:ring-2 rounded-md;
 }
 
 .input:focus {
-  @apply ring-red-500;
+  @apply ring-blue-500; /* Bleu */
 }
 
+/* Button */
 .button {
-  @apply w-full mt-6 py-2 text-white rounded-lg transition-transform duration-500;
-  background: linear-gradient(90deg, #0033a0 0%, #ce1126 100%);
+  @apply w-full mt-8 py-3 text-white rounded-xl transition-transform duration-500 font-semibold;
+  background-color: #008080; /* Teal */
   transform: scale(1);
 }
 
@@ -26,22 +34,28 @@
   @apply transform hover:scale-105;
 }
 
+/* Icon */
 .icon {
   @apply h-6 w-6;
-  animation: bounce 1s ease-in-out;
+  animation: bounce 1s ease-in-out infinite;
 }
+
+/* Error Box */
 .errorBox {
-  @apply bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-4;
+  @apply bg-red-50 border border-red-400 text-red-600 px-4 py-3 rounded-lg mb-6;
 }
 
+/* Error Message */
 .errorMessage {
-  @apply font-bold;
+  @apply font-semibold;
 }
 
+/* Error Item */
 .errorItem {
-  @apply mt-1;
+  @apply mt-2;
 }
 
+/* Error Shake Animation */
 .errorShake {
   animation: shake 0.3s ease-in-out;
 }

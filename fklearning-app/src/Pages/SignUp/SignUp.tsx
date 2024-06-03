@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { SignUpForm } from "../../components/SignUpForm/SignUpForm";
 import { SignUpInput, User } from "../../types/User";
+import Header from "../../components/Header/Header";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ function SignUp() {
 
   return (
     <>
+      <Header />
       <SignUpForm
         onSignUp={handleSignUp}
         onSwitchToSignIn={handleSwitch}
