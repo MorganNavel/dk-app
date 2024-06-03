@@ -97,17 +97,10 @@ function SignUpForm({ onSignUp, onSwitchToSignIn }: SignUpFormProps) {
   return (
     <>
       <Toaster richColors />
-      <form
-        onSubmit={handleSubmit}
-        className={styles.formContainer}
-      >
+      <form onSubmit={handleSubmit} className={styles.formContainer}>
         <div className="space-y-4">
           <div className={styles.inputContainer}>
-            <img
-              src={userLogo}
-              alt="firstname"
-              className={styles.icon}
-            />
+            <img src={userLogo} alt="firstname" className={styles.icon} />
             <input
               type="text"
               name="firstname"
@@ -117,11 +110,7 @@ function SignUpForm({ onSignUp, onSwitchToSignIn }: SignUpFormProps) {
           </div>
 
           <div className={styles.inputContainer}>
-            <img
-              src={userLogo}
-              alt="lastname"
-              className={styles.icon}
-            />
+            <img src={userLogo} alt="lastname" className={styles.icon} />
             <input
               type="text"
               name="lastname"
@@ -131,11 +120,7 @@ function SignUpForm({ onSignUp, onSwitchToSignIn }: SignUpFormProps) {
           </div>
 
           <div className={styles.inputContainer}>
-            <img
-              src={emailLogo}
-              alt="email"
-              className={styles.icon}
-            />
+            <img src={emailLogo} alt="email" className={styles.icon} />
             <input
               type="text"
               placeholder="Enter email *"
@@ -144,11 +129,7 @@ function SignUpForm({ onSignUp, onSwitchToSignIn }: SignUpFormProps) {
             />
           </div>
           <div className={styles.inputContainer}>
-            <img
-              src={phoneLogo}
-              alt="phone"
-              className={styles.icon}
-            />
+            <img src={phoneLogo} alt="phone" className={styles.icon} />
             <input
               type="text"
               placeholder="Enter phone"
@@ -158,11 +139,7 @@ function SignUpForm({ onSignUp, onSwitchToSignIn }: SignUpFormProps) {
           </div>
 
           <div className={styles.inputContainer}>
-            <img
-              src={passwordLogo}
-              alt="password"
-              className={styles.icon}
-            />
+            <img src={passwordLogo} alt="password" className={styles.icon} />
             <input
               type="password"
               placeholder="Enter password *"
@@ -184,10 +161,7 @@ function SignUpForm({ onSignUp, onSwitchToSignIn }: SignUpFormProps) {
             />
           </div>
         </div>
-        <button
-          type="submit"
-          className={styles.button}
-        >
+        <button type="submit" className={styles.button}>
           Sign Up
         </button>
         <p className="mt-2 text-sm text-center text-gray-600">

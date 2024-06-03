@@ -1,84 +1,134 @@
 import React, { useState } from "react";
+import { Navbar, Nav, NavDropdown, Container, Image } from "react-bootstrap";
+import avatarDefault from "../../assets/images/avatar-default.png";
+import arrowDown from "../../assets/images/arrow-down.svg";
+import { User } from "../../types/User";
 
 const Header = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<User>({
+    idUser: 1,
+    firstname: "John",
+    lastname: "Doe",
+    email: "john.doe@gmail.fr",
+    phone: "1234567890",
+  });
+
+  function handleSignOut() {
+    setUser({
+      idUser: -1,
+      firstname: "",
+      lastname: "",
+      email: "",
+      phone: "",
+    });
+  }
+
   return (
-    <header className="bg-gray-800 text-white p-4">
-      <div className="container mx-auto flex justify-between items-center">
-        <div className="text-2xl font-bold">
-          <a href="/">FKLearning</a>
-        </div>
-        <nav>
-          <ul className="flex space-x-4">
-            <li>
-              <a
-                href="/catalog"
-                className="hover:underline"
-              >
-                Video Catalog
-              </a>
-            </li>
-            <li>
-              <a
-                href="/pricing"
-                className="hover:underline"
-              >
-                Pricing
-              </a>
-            </li>
-            <li>
-              <a
-                href="/training-tools"
-                className="hover:underline"
-              >
-                Training Tools
-              </a>
-            </li>
-            <li>
-              <a
-                href="/teachers"
-                className="hover:underline"
-              >
-                Teachers
-              </a>
-            </li>
-          </ul>
-        </nav>
-        {user ? (
-          <>
-            <div className="flex space-x-2">
-              <a
-                href="/sign-in"
-                className="border border-white px-3 py-1 rounded hover:bg-white hover:text-gray-800 transition"
-              >
-                Sign In
-              </a>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div>
-                {(user as { firstname: string }).firstname}{" "}
-                {(user as { lastname: string }).lastname}{" "}
-              </div>
-              <button
-                onClick={() => setUser(null)}
-                className="border border-white px-3 py-1 rounded hover:bg-white hover:text-gray-800 transition"
-              >
-                Sign Out
-              </button>
-            </div>
-          </>
-        ) : (
-          <div className="flex space-x-2">
-            <a
-              href="/sign-up"
-              className="border border-white px-3 py-1 rounded hover:bg-white hover:text-gray-800 transition"
+    <Navbar
+      bg="teal"
+      variant="dark"
+      expand="lg"
+      className="p-3 bg-teal-700 text-white text-lg"
+    >
+      <Container className="flex items-center justify-between">
+        <Navbar.Brand href="/" className="font-bold text-2xl ml-8">
+          FKLearning
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Collapse
+          id="basic-navbar-nav"
+          className="flex justify-center w-full"
+        >
+          <Nav className="flex space-x-8">
+            <Nav.Link
+              href="/catalog"
+              className="hover:border-b-2 hover:border-white"
             >
-              Sign Up
-            </a>
-          </div>
+              Vidéo Catalogue
+            </Nav.Link>
+            <Nav.Link
+              href="/pricing"
+              className="hover:border-b-2 hover:border-white"
+            >
+              Tarif des abonnements
+            </Nav.Link>
+            <Nav.Link
+              href="/level-test"
+              className="hover:border-b-2 hover:border-white"
+            >
+              Level Test
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
+        {user.idUser !== -1 ? (
+          <Nav className="relative group ml-auto mr-8">
+            <NavDropdown
+              title={
+                <div className="flex items-center cursor-pointer">
+                  <Image
+                    src={avatarDefault}
+                    roundedCircle
+                    width="30"
+                    height="30"
+                    className="mr-2"
+                  />
+                  <span className="whitespace-nowrap">
+                    {user.firstname} {user.lastname}
+                  </span>
+                  <Image
+                    src={arrowDown}
+                    width="12"
+                    height="12"
+                    className="ml-2"
+                  />
+                </div>
+              }
+              id="basic-nav-dropdown"
+              className="relative"
+            >
+              <div className="absolute right-0 mt-2 w-48 bg-white text-teal-700 shadow-lg rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                <NavDropdown.Item
+                  href="/my-account"
+                  className="flex items-center px-4 py-2 hover:bg-teal-700 hover:text-white"
+                >
+                  My Account
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="/orders"
+                  className="flex items-center px-4 py-2 hover:bg-teal-700 hover:text-white"
+                >
+                  Orders
+                </NavDropdown.Item>
+                <NavDropdown.Item
+                  href="/subscription"
+                  className="flex items-center px-4 py-2 hover:bg-teal-700 hover:text-white"
+                >
+                  Subscription
+                </NavDropdown.Item>
+
+                <NavDropdown.Divider />
+                <NavDropdown.Item
+                  onClick={handleSignOut}
+                  className="flex items-center px-4 py-2 hover:bg-teal-700 hover:text-white"
+                >
+                  Sign Out
+                </NavDropdown.Item>
+              </div>
+            </NavDropdown>
+          </Nav>
+        ) : (
+          <Nav className="flex space-x-2 ml-auto">
+            {" "}
+            <Nav.Link
+              href="/sign-in"
+              className="border border-white px-3 py-1 rounded hover:bg-white hover:text-teal-700 transition"
+            >
+              Sign In
+            </Nav.Link>
+          </Nav>
         )}
-      </div>
-    </header>
+      </Container>
+    </Navbar>
   );
 };
 
