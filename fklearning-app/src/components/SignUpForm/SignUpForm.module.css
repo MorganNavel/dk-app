@@ -1,0 +1,63 @@
+.formContainer {
+  @apply max-w-md mx-auto mt-10 p-6 bg-white rounded-lg shadow-md transition-transform transform duration-500;
+  border: 2px solid #000;
+}
+
+.inputContainer {
+  @apply flex items-center space-x-2 border-b py-2 transition-colors duration-300;
+  border-bottom-color: #0033a0;
+}
+
+.input {
+  @apply w-full px-2 py-1 outline-none focus:ring-2;
+}
+
+.input:focus {
+  @apply ring-red-500;
+}
+
+.button {
+  @apply w-full mt-6 py-2 text-white rounded-lg transition-transform duration-500;
+  background: linear-gradient(90deg, #0033a0 0%, #ce1126 100%);
+  transform: scale(1);
+}
+
+.button:hover {
+  @apply transform hover:scale-105;
+}
+
+.icon {
+  @apply h-6 w-6;
+  animation: bounce 1s ease-in-out;
+}
+.errorBox {
+  @apply bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-md mb-4;
+}
+
+.errorMessage {
+  @apply font-bold;
+}
+
+.errorItem {
+  @apply mt-1;
+}
+
+.errorShake {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  50% {
+    transform: translateX(5px);
+  }
+  75% {
+    transform: translateX(-5px);
+  }
+}

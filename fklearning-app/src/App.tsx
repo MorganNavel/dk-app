@@ -1,11 +1,11 @@
-import './App.css';
-import { LoginPage } from './pages/Login/Login';
+import { Outlet } from "react-router";
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <LoginPage/>
-    </div>
+    <>
+      <Outlet />
+    </>
   );
 }
 
