@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { FormEvent } from "react";
 import styles from "./SignInForm.module.css";
 import emailLogo from "../../assets/images/email.png";
 import passwordLogo from "../../assets/images/password.png";
@@ -43,7 +43,7 @@ function SignInForm({ onSignIn, onSwitchToSignUp }: SignInFormProps) {
     setTimeout(() => {
       formContainer?.classList.remove(styles.errorShake);
     }, 500);
-    for (let [key, value] of Object.entries(errors)) {
+    for (let [, value] of Object.entries(errors)) {
       if (value) {
         toast.error(value);
         return;
