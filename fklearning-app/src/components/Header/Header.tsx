@@ -14,6 +14,7 @@ import {
   Image,
 } from "react-bootstrap";
 import Sidebar from "../Sidebar/Sidebar";
+import Drawer from "@mui/material/Drawer";
 
 const Header = () => {
   const [user, setUser] = useState<User>({
@@ -143,12 +144,11 @@ const Header = () => {
           </NavbarCollapse>
         </Container>
       </Navbar>
-
       <Drawer
         open={isSidebarOpen}
         onClose={handleToogleSidebar}
       >
-        <Sliderbar
+        <Siderbar />
       </Drawer>
     </>
   );
