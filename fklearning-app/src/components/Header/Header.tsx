@@ -1,20 +1,19 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import avatarDefault from "../../assets/images/avatar-default.png";
 import arrowDown from "../../assets/images/arrow-down.svg";
 import { IoIosLogOut } from "react-icons/io";
 import { User } from "../../types/User";
-import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
+import { AiOutlineMenu } from "react-icons/ai";
 import {
   Container,
   NavDropdown,
   Nav,
   Navbar,
-  NavbarBrand,
   NavbarCollapse,
   NavLink,
   Image,
-  DropdownDivider,
 } from "react-bootstrap";
+import Sidebar from "../Sidebar/Sidebar";
 
 const Header = () => {
   const [user, setUser] = useState<User>({
@@ -26,8 +25,10 @@ const Header = () => {
   });
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const sidebarRef = useRef<HTMLDivElement>(null);
 
+  function handleToogleSidebar() {
+    setIsSidebarOpen(!isSidebarOpen);
+  }
   function handleSignOut() {
     setUser({
       idUser: -1,
@@ -37,33 +38,12 @@ const Header = () => {
       phone: "",
     });
   }
-
-  const handleClickOutside = (event: MouseEvent) => {
-    if (
-      sidebarRef.current &&
-      !sidebarRef.current.contains(event.target as Node)
-    ) {
-      setIsSidebarOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    if (isSidebarOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    } else {
-      document.removeEventListener("mousedown", handleClickOutside);
-    }
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isSidebarOpen]);
-
   return (
     <>
       <Navbar className="bg-teal-700 p-4 lg:p-7 text-white">
         <Container className="flex justify-between items-center">
           <div className="flex justify-start lg:hidden">
-            <button onClick={() => setIsSidebarOpen(true)}>
+            <button onClick={handleToogleSidebar}>
               <AiOutlineMenu
                 size={24}
                 className="text-white"
@@ -164,80 +144,12 @@ const Header = () => {
         </Container>
       </Navbar>
 
-      {isSidebarOpen && (
-        <div className="fixed inset-0 z-50 bg-black bg-opacity-50 lg:hidden">
-          <div
-            ref={sidebarRef}
-            className={`fixed inset-y-0 left-0 w-64 bg-teal-700 p-4 transform transition-transform duration-300 ${
-              isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
-          >
-            <div className="flex justify-between items-center mb-4">
-              <span className="text-white text-2xl font-bold">FKLearning</span>
-              <button onClick={() => setIsSidebarOpen(false)}>
-                <AiOutlineClose
-                  size={24}
-                  className="text-white"
-                />
-              </button>
-            </div>
-            <nav className="flex flex-col space-y-4">
-              <DropdownDivider />
-
-              <NavLink
-                className="text-white hover:bg-teal-800 p-2 rounded"
-                href="/level-test"
-              >
-                Level Test
-              </NavLink>
-              <NavLink
-                className="text-white hover:bg-teal-800 p-2 rounded"
-                href="/pricing"
-              >
-                Pricing
-              </NavLink>
-              <NavLink
-                className="text-white hover:bg-teal-800 p-2 rounded"
-                href="/catalog"
-              >
-                Video Catalog
-              </NavLink>
-              <DropdownDivider />
-              {user.idUser !== -1 && (
-                <div className="flex flex-col space-y-4 mt-4">
-                  <NavLink
-                    href="/my-account"
-                    className="text-white hover:bg-teal-800 p-2 rounded"
-                  >
-                    My Account
-                  </NavLink>
-                  <NavLink
-                    href="/orders"
-                    className="text-white hover:bg-teal-800 p-2 rounded"
-                  >
-                    Orders
-                  </NavLink>
-                  <NavLink
-                    href="/subscription"
-                    className="text-white hover:bg-teal-800 p-2 rounded"
-                  >
-                    Subscription
-                  </NavLink>
-                  <DropdownDivider />
-
-                  <button
-                    onClick={handleSignOut}
-                    className="text-white hover:bg-teal-800 p-2 rounded flex items-center"
-                  >
-                    Sign Out
-                    <IoIosLogOut className="ml-3" />
-                  </button>
-                </div>
-              )}
-            </nav>
-          </div>
-        </div>
-      )}
+      <Drawer
+        open={isSidebarOpen}
+        onClose={handleToogleSidebar}
+      >
+        <Sliderbar
+      </Drawer>
     </>
   );
 };
