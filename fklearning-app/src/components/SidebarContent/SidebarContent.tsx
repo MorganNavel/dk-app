@@ -29,10 +29,10 @@ export default function SidebarContent() {
             key={"Danbee Korean"}
             disablePadding
           >
-              <ListItemText
-                primary="Danbee Korean"
-                className="text-2xl font-bold text-center"
-              />
+            <ListItemText
+              primary="Danbee Korean"
+              className="text-2xl font-bold text-center"
+            />
           </ListItem>
         </List>
         <List>
