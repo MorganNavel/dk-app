@@ -13,7 +13,7 @@ import {
   NavLink,
   Image,
 } from "react-bootstrap";
-import Sidebar from "../Sidebar/Sidebar";
+import SidebarContent from "../SidebarContent/SidebarContent";
 import Drawer from "@mui/material/Drawer";
 
 const Header = () => {
@@ -52,7 +52,7 @@ const Header = () => {
             </button>
           </div>
           <div className="font-bold text-2xl lg:ml-8 mr-8 flex-grow text-center lg:flex-grow-0">
-            FKLearning
+            Danbee Korean
           </div>
           <NavbarCollapse
             id="basic-navbar-nav"
@@ -148,7 +148,7 @@ const Header = () => {
         open={isSidebarOpen}
         onClose={handleToogleSidebar}
       >
-        <Siderbar />
+        <SidebarContent />
       </Drawer>
     </>
   );

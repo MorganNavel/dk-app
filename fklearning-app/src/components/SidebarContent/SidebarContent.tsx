@@ -17,13 +17,24 @@ import {
 
 import { LuBellRing } from "react-icons/lu";
 
-export default function Sidebar() {
+export default function SidebarContent() {
   return (
     <>
       <Box
         sx={{ width: 250 }}
         role="presentation"
       >
+        <List>
+          <ListItem
+            key={"Danbee Korean"}
+            disablePadding
+          >
+              <ListItemText
+                primary="Danbee Korean"
+                className="text-2xl font-bold text-center"
+              />
+          </ListItem>
+        </List>
         <List>
           {["Level Test", "Pricing", "Video Catalog"].map((text, index) => (
             <ListItem
@@ -54,9 +65,9 @@ export default function Sidebar() {
             >
               <ListItemButton>
                 <ListItemIcon>
-                  {index === 1 ? (
+                  {index === 0 ? (
                     <MdAccountCircle />
-                  ) : index === 2 ? (
+                  ) : index === 1 ? (
                     <LuBellRing />
                   ) : (
                     <MdOutlineShoppingCart />
