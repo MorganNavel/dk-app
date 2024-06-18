@@ -3,7 +3,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { FiYoutube } from "react-icons/fi";
 import { FaPeopleGroup } from "react-icons/fa6";
 
-const Dropdown = (props: { title: string, children: React.ReactNode }) => {
+const DropdownSidebar = (props: { title: string, children: React.ReactNode }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -15,7 +15,7 @@ const Dropdown = (props: { title: string, children: React.ReactNode }) => {
 
                 <a
                     onClick={() => setIsOpen(!isOpen)}
-                    className="flex items-center justify-between w-full py-2 px-3 text-gray-300"
+                    className="flex items-center justify-between w-full py-2 px-3"
                 >
                     
                     <span className="font-semibold">{props.title}</span>
@@ -34,4 +34,4 @@ const Dropdown = (props: { title: string, children: React.ReactNode }) => {
     );
 };
 
-export default Dropdown;
+export default DropdownSidebar;
