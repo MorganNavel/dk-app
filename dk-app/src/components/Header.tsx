@@ -8,6 +8,9 @@ import Sidebar from "./Sidebar";
 import { User } from "../types/User";
 import  CustomDropdown from "./Dropdown"
 import { PiSignOutBold } from "react-icons/pi";
+import { MdOutlineManageAccounts } from "react-icons/md";
+import { LuShoppingCart } from "react-icons/lu";
+import { LuCalendarClock } from "react-icons/lu";
 
 export default function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -35,11 +38,11 @@ export default function Header() {
 
   return (
     <>
-      <Navbar className="text-gray-300 bg-gradient-to-b from-[#57A773] to-[#539B70] h-[81px] lg:h-[118px]">
+      <Navbar className="text-textColor bg-gradient-to-b from-[#57A773] to-[#539B70] h-[81px] lg:h-[118px]">
         <Container className="flex py-3 px-5 items-center justify-between ">
           <div className=" p-0.5 rounded-lg bg-hoverMobile lg:hidden">
             <IoIosMenu
-              className="text-gray-300 w-7 h-7"
+              className="text-textColor w-7 h-7"
               onClick={toggleSidebar}
             />
           </div>
@@ -62,7 +65,7 @@ export default function Header() {
             </div>
           
               <CustomDropdown title="Videos" isUserProfil={false}>
-                <div className="flex-col bg-primary">
+                <div className="flex-col bg-primary text-md">
                   <p className="py-1 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"> 
                     <a>
                       Grammar
@@ -91,7 +94,7 @@ export default function Header() {
                 </div>
               </CustomDropdown>
               <CustomDropdown title="Take Classes" isUserProfil={false}>
-                <div className="flex-col bg-primary">
+                <div className="flex-col bg-primary text-md">
                   <p className="py-1 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"> 
                     <a>
                       Beginner
@@ -120,7 +123,7 @@ export default function Header() {
                 </div>
               </CustomDropdown>
               <CustomDropdown title="Take Classes" isUserProfil={false}>
-                <div className="flex-col bg-primary">
+                <div className="flex-col bg-primary text-md">
                   <p className="py-1 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"> 
                     <a>
                       Danbee Park
@@ -135,42 +138,42 @@ export default function Header() {
                 </div>
               </CustomDropdown>
           </div>
-          <div className="hidden text-lg lg:flex mr-2">
+          <div className="hidden text-lg lg:flex mr-9">
           {user.idUser!=-1? 
           <>
             <CustomDropdown title={user.firstname.charAt(0)+ " ." + user.lastname} isUserProfil={true}>
-                <div className="flex-col bg-primary">
-                  <p className="py-1 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"> 
-                    <a>
+                <div className="flex-col bg-primary text-md">
+                  <p className="py-1 px-3  border-b hover:bg-hoverMobile hover:cursor-pointer">
+                    <a className="flex items-center">
+                      <MdOutlineManageAccounts className="mr-1 text-textColor w-7 h-7 "/>
                       My Account
                     </a> 
                   </p>
-                  <p className="py-1 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"> 
-                    <a>
-                      Intermediate 1
+                  <p className="py-1 px-3  border-b hover:bg-hoverMobile hover:cursor-pointer">
+                    <a className="flex items-center">
+                      <LuShoppingCart className="mr-1 text-textColor w-7 h-7"/>
+                      Orders
                     </a>  
                   </p>
-                  <p className="py-1 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"> 
-                    <a>
-                      Intermediate 2
+                  <p className="py-1 px-3 border-b hover:bg-hoverMobile hover:cursor-pointer">
+                  <a className="flex items-center">
+                    <LuCalendarClock className="mr-1 text-textColor w-7 h-7"/>
+                    Subscriptions
                     </a>  
                   </p>
-                  <p className="py-1 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"> 
-                    <a>
-                      TOPIK
-                    </a> 
-                  </p>
-                  <p className="py-1 text-center hover:bg-hoverMobile hover:cursor-pointer"> 
-                    <a>
+                  <p className=" py-1 px-3 hover:bg-hoverMobile hover:cursor-pointer">
+                    <a className="flex items-center">
+                      <PiSignOutBold className="mr-1 text-textColor w-7 h-7"/>
+
                       Sign Out
+
                     </a>
-                    <PiSignOutBold className="text-gray-300"/>
                   </p>
                 </div>
               </CustomDropdown>   
           </>
           :
-          <button className="border-2 border-gray-300 rounded-md px-9 py-3">
+          <button className="border-2 border-textColor rounded-md px-9 py-3">
             <a href="/sign-in">
               Sign In
             </a>

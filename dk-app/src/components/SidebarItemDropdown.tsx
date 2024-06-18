@@ -19,7 +19,7 @@ const DropdownSidebar = (props: { title: string, children: React.ReactNode }) =>
                 >
                     
                     <span className="font-semibold">{props.title}</span>
-                    <IoIosArrowDown className={`${isOpen ? "rotate-180" : ""} transition-transform`} />
+                    <IoIosArrowDown className={`${isOpen ? "rotate-180" : ""} transition-transform text-textColor`} />
 
                 </a>
             </div>

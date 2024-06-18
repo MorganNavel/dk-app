@@ -34,7 +34,7 @@ const Sidebar = ({ isOpen, user , onClose }: SidebarProps) => {
 
   return (
     <div
-      className={`text-gray-300 lg:hidden sidebar fixed top-13 left-0 h-full w-64 bg-primary shadow-lg transform ${
+      className={`text-textColor lg:hidden sidebar fixed top-13 left-0 h-full w-64 bg-primary shadow-lg transform ${
         isOpen ? "translate-x-0 " : "-translate-x-full"
       } transition-transform duration-300 ease-in-out z-50 font-Roboto`}
     >
@@ -117,13 +117,13 @@ const Sidebar = ({ isOpen, user , onClose }: SidebarProps) => {
         
         <div className="min-h-screen flex flex-col items-center">
           {user.idUser!=-1? 
-            <button className="border-2 border-gray-300 rounded-md px-9 py-3">
+            <button className="border-2 border-textColor rounded-md px-9 py-3">
             <a href="/sign-out">
               Sign Out
             </a>
           </button>
           :
-          <button className="border-2 border-gray-300 rounded-md px-9 py-3">
+          <button className="border-2 border-textColor rounded-md px-9 py-3">
             <a href="/sign-in">
               Sign In
             </a>

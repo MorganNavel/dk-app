@@ -27,7 +27,7 @@ const CustomDropdown: React.FC<DropdownProps> = ({ title, children, isUserProfil
         </span>
         <span>{title}</span>
         <IoIosArrowDown
-          className={`text-gray-300 transition-transform transform ${
+          className={`text-textColor transition-transform transform ${
             isHovered ? "rotate-180" : ""
           }`}
         />

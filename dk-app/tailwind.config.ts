@@ -16,6 +16,8 @@ const config: Config = {
         hoverDesktop: "#8FB98E",
         divider: "#DCDCDC",
         overlay: "#232222",
+        textColor: "white"
+
       },
       fontFamily: {
         Roboto: ['Roboto',"sans-serif"],
