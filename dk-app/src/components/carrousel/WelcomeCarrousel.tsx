@@ -2,7 +2,13 @@
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+import {
+  Navigation,
+  Pagination,
+  Scrollbar,
+  A11y,
+  Autoplay,
+} from "swiper/modules";
 import { SizeWithHeaderComponent } from "./items/SizeWithHeaderComponent";
 import "swiper/css";
 import "swiper/css/navigation";
@@ -16,10 +22,14 @@ export const Caroussel = () => {
   return (
     <div className="relative">
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={50}
         slidesPerView={1}
         loop={true}
+        autoplay={{
+          delay: 7000,
+          disableOnInteraction: false,
+        }}
         pagination={{
           clickable: true,
           renderBullet: (index, className) => {
