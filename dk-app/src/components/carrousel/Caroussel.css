@@ -1,0 +1,22 @@
+.swiper-pagination {
+  text-align: center;
+}
+.swiper-pagination-bullet {
+  background-color: #99d68f;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  border-radius: 50%;
+  opacity: 1;
+  transition: background-color 0.3s;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: #57a773;
+}
+
+.clip-quarter-circle {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}

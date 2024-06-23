@@ -6,15 +6,14 @@ import { FaEuroSign } from "react-icons/fa";
 import { IoIosSchool } from "react-icons/io";
 import { FaUserGraduate } from "react-icons/fa";
 import { User } from "@/types/User";
-import DropdownSidebar from "./SidebarItemDropdown";
+import DropdownSidebar from "../dropdown/SidebarDropdown";
 
 interface SidebarProps {
   isOpen: boolean;
   user: User;
   onClose: () => void;
 }
-const Sidebar = ({ isOpen, user , onClose }: SidebarProps) => {
-  
+const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
   useEffect(() => {
     const handleOutsideClick = (event: Event) => {
       if (!isOpen) return;
@@ -30,7 +29,6 @@ const Sidebar = ({ isOpen, user , onClose }: SidebarProps) => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, [isOpen, onClose]);
-
 
   return (
     <div
@@ -58,78 +56,72 @@ const Sidebar = ({ isOpen, user , onClose }: SidebarProps) => {
       <nav className="ml-4 mt-4">
         <ul className="pb-14">
           <li className="py-1 ">
-            <SidebarItem href="/level-test" text="Level Test" >
-              <TbCertificate className=" h-5 w-5"/>
+            <SidebarItem
+              href="/level-test"
+              text="Level Test"
+            >
+              <TbCertificate className=" h-5 w-5" />
             </SidebarItem>
           </li>
           <li className="py-1 ">
-            <SidebarItem href="/pricing" text="Pricing">
-              <FaEuroSign className="h-5 w-5"/>
+            <SidebarItem
+              href="/pricing"
+              text="Pricing"
+            >
+              <FaEuroSign className="h-5 w-5" />
             </SidebarItem>
           </li>
-          <li >
-              <DropdownSidebar title="Videos">
-                <div className="flex-col bg-hoverMobile mr-4">
-                  <p className="py-1 text-center  border-b "> 
-                    <a>
-                      Grammar
-                    </a> 
-                  </p>
-                  <p className="py-1 text-center  border-b"> 
-                    <a>
-                      Vocabulary
-                    </a>  
-                  </p>
-                  <p className="py-1 text-center  border-b"> 
-                    <a>
-                      Conjugation
-                    </a>  
-                  </p>
-                  <p className="py-1 text-center  border-b"> 
-                    <a>
-                      Conversation
-                    </a> 
-                  </p>
-                  <p className="py-1 text-center  border-b"> 
-                    <a>
-                      Other
-                    </a> 
-                  </p>
-
-                </div>
-              </DropdownSidebar>
+          <li>
+            <DropdownSidebar title="Videos">
+              <div className="flex-col bg-hoverMobile mr-4">
+                <p className="py-1 text-center  border-b ">
+                  <a>Grammar</a>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <a>Vocabulary</a>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <a>Conjugation</a>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <a>Conversation</a>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <a>Other</a>
+                </p>
+              </div>
+            </DropdownSidebar>
           </li>
           <li>
             <DropdownSidebar title="Teachers">
               <div className="flex-col bg-hoverMobile mr-4">
-                <p className="py-1 text-center  border-b "> 
-                  <a> Danbee Park </a> 
-                </p>  
+                <p className="py-1 text-center  border-b ">
+                  <a> Danbee Park </a>
+                </p>
               </div>
             </DropdownSidebar>
           </li>
           <li className="py-1 ">
-            <SidebarItem href="/tutoring" text="Take Classes">
-              <IoIosSchool className="h-5 w-5"/>
+            <SidebarItem
+              href="/tutoring"
+              text="Take Classes"
+            >
+              <IoIosSchool className="h-5 w-5" />
             </SidebarItem>
           </li>
         </ul>
-        
+
         <div className="min-h-screen flex flex-col items-center">
-          {user.idUser!=-1? 
+          {user.idUser != -1 ? (
             <button className="border-2 border-textColor rounded-md px-9 py-3">
-            <a href="/sign-out">
-              Sign Out
-            </a>
-          </button>
-          :
-          <button className="border-2 border-textColor rounded-md px-9 py-3">
-            <a href="/sign-in">
-              Sign In
-            </a>
-          </button>
-          }
-      </div>
+              <a href="/sign-out">Sign Out</a>
+            </button>
+          ) : (
+            <button className="border-2 border-textColor rounded-md px-9 py-3">
+              <a href="/sign-in">Sign In</a>
+            </button>
+          )}
+        </div>
       </nav>
     </div>
   );
