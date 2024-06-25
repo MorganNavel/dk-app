@@ -1,3 +1,4 @@
+import { CustomButtonPrimary } from "@/components/reusable/Button/CustomButtonPrimary";
 interface NewHereProps {
   onClick: () => void;
 }
@@ -11,17 +12,16 @@ export const NewHereComponent = ({ onClick }: NewHereProps) => {
             <h2 className="text-4xl font-bold drop-shadow-md mb-12">
               New Here?
             </h2>
-            <p className="text-xl text-center max-w-sm mx-auto mb-12">
+            <p className="text-xl text-center max-w-md mx-auto mb-12">
               Get personalized resources based on your interests, and needs.
               Visit our questionnaire to start your customized learning journey!
             </p>
           </div>
-          <button
+          <CustomButtonPrimary
             onClick={onClick}
-            className="bg-primary text-xl transition-all duration-300 hover:bg-white hover:border hover:border-2 hover:border-primary hover:text-primary text-white py-3 px-10 rounded-full"
-          >
-            Start Questionnaire
-          </button>
+            text="Start Questionnaire"
+            className="py-3 px-10 text-xl"
+          />
         </div>
       </div>
     </>

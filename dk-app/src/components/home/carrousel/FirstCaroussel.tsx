@@ -1,4 +1,3 @@
-// Caroussel.js
 "use client";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -20,7 +19,7 @@ import { ReadReviewsComponent } from "./items/ReadReviews";
 
 export const Caroussel = () => {
   return (
-    <div className="relative">
+    <>
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
         spaceBetween={50}
@@ -33,10 +32,10 @@ export const Caroussel = () => {
         pagination={{
           clickable: true,
           renderBullet: (index, className) => {
-            console.log(className);
             return '<span class="' + className + '">' + "</span>";
           },
         }}
+        className="font-Poppins"
       >
         <SwiperSlide>
           <SizeWithHeaderComponent>
@@ -59,9 +58,9 @@ export const Caroussel = () => {
         </SwiperSlide>
       </Swiper>
       <div className="relative hidden lg:flex">
-        <div className="absolute bottom-0 left-0 w-[325px] h-[325px] rounded-tr-full bg-primary opacity-65 border-t-[1px] border-r-[1px]"></div>
-        <div className="absolute bottom-0 right-0 w-[325px] h-[325px] rounded-tl-full bg-primary opacity-65 border-t-[1px] border-r-[1px]"></div>
+        <div className="absolute bottom-0 left-0 w-[380px] h-[380px] rounded-tr-full bg-primary opacity-65 border-t-[1px] border-r-[1px]"></div>
+        <div className="absolute bottom-0 right-0 w-[380px] h-[380px] rounded-tl-full bg-primary opacity-65 border-t-[1px] border-r-[1px]"></div>
       </div>
-    </div>
+    </>
   );
 };

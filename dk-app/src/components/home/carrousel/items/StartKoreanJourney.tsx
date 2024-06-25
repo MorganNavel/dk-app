@@ -1,4 +1,5 @@
-import { IoRocketOutline } from "react-icons/io5";
+import { CustomButtonPrimary } from "@/components/reusable/Button/CustomButtonPrimary";
+import rocket from "@public/assets/img/rocket.png";
 interface NewHereProps {
   onClick: () => void;
 }
@@ -12,22 +13,24 @@ export const StartKoreanJourneyComponent = ({ onClick }: NewHereProps) => {
             <h2 className="text-4xl font-bold drop-shadow-md mb-12">
               Start Your Korean Journey!
             </h2>
-            <p className="text-xl text-center max-w-sm mx-auto pt-6 mb-12 relative">
+            <p className="text-xl text-center max-w-md mx-auto pt-6 mb-12 relative">
               Unlock your potential and dive into the world of Korean language
               and culture. Join us today and take the first step towards
               mastering Korean!
             </p>
           </div>
-
-          <button
+          <CustomButtonPrimary
             onClick={onClick}
-            className="bg-primary text-xl transition-all duration-300 hover:bg-white hover:border hover:border-2 hover:border-primary hover:text-primary text-white py-3 px-12 rounded-full"
-          >
-            Join Now
-          </button>
+            text="Join Now"
+            className="py-3 px-12 text-xl"
+          />
         </div>
       </div>
-      <IoRocketOutline className="hidden xl:block right-1/4 mt-12 absolute top-1/3 transform -translate-y-1/2 text-9xl h-[450px] text-gray-400" />
+      <img
+        src={rocket.src}
+        alt="rocket"
+        className="hidden xl:block right-[17rem] top-[22rem] absolute transform -translate-y-1/2 h-[230px] w-[230px]"
+      ></img>
     </>
   );
 };

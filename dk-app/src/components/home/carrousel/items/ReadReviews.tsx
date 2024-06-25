@@ -1,4 +1,5 @@
 import { BsGraphUp } from "react-icons/bs";
+import { CustomButtonPrimary } from "@/components/reusable/Button/CustomButtonPrimary";
 interface ReadReviewsProps {
   onClick: () => void;
 }
@@ -23,12 +24,11 @@ export const ReadReviewsComponent = ({ onClick }: ReadReviewsProps) => {
             className="text-9xl text-gray-400 mb-12  "
           />
 
-          <button
+          <CustomButtonPrimary
             onClick={onClick}
-            className="bg-primary text-xl transition-all duration-300 hover:bg-white hover:border hover:border-2 hover:border-primary hover:text-primary text-white py-3 px-12 rounded-full"
-          >
-            Read Reviews
-          </button>
+            text="Read Reviews"
+            className="py-3 px-12 text-xl"
+          />
         </div>
       </div>
     </>

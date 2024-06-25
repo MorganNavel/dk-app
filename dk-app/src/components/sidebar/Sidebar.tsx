@@ -6,7 +6,7 @@ import { FaEuroSign } from "react-icons/fa";
 import { IoIosSchool } from "react-icons/io";
 import { FaUserGraduate } from "react-icons/fa";
 import { User } from "@/types/User";
-import DropdownSidebar from "../dropdown/SidebarDropdown";
+import DropdownSidebar from "../reusable/dropdown/SidebarDropdown";
 
 interface SidebarProps {
   isOpen: boolean;

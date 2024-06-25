@@ -1,12 +1,12 @@
 "use client";
-import "../globals.css";
+import "@/globals.css";
 import { IoIosMenu } from "react-icons/io";
 import { Navbar, Container, Image, Dropdown } from "react-bootstrap";
-import logo from "../../public/assets/img/logo.png";
+import logo from "@public/assets/img/logo.png";
 import { useEffect, useState } from "react";
 import Sidebar from "./sidebar/Sidebar";
-import { User } from "../types/User";
-import CustomDropdown from "./dropdown/Dropdown";
+import { User } from "@/types/User";
+import CustomDropdown from "./reusable/dropdown/Dropdown";
 import { PiSignOutBold } from "react-icons/pi";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { LuShoppingCart } from "react-icons/lu";
@@ -37,7 +37,7 @@ export default function Header() {
 
   return (
     <>
-      <Navbar className="text-textColor bg-gradient-to-b from-[#57A773] to-[#539B70] h-[81px] lg:h-[118px]">
+      <Navbar className="w-full text-textColor bg-gradient-to-b from-[#57A773] to-[#539B70] h-[81px] lg:h-[118px]">
         <Container className="flex py-3 px-5 items-center justify-between ">
           <div className=" p-0.5 rounded-lg bg-hoverMobile lg:hidden">
             <IoIosMenu
