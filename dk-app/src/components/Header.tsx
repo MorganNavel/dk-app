@@ -37,7 +37,7 @@ export default function Header() {
 
   return (
     <>
-      <Navbar className="w-full text-textColor bg-gradient-to-b from-[#57A773] to-[#539B70] h-[81px] lg:h-[118px]">
+      <Navbar className="sticky top-0 z-25 lg:relative w-full text-textColor bg-gradient-to-b from-[#57A773] to-[#539B70] h-[81px] lg:h-[118px]">
         <Container className="flex py-3 px-5 items-center justify-between ">
           <div className=" p-0.5 rounded-lg bg-hoverMobile lg:hidden">
             <IoIosMenu
