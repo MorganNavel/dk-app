@@ -6,9 +6,14 @@ import { ELearningComponent } from "@/components/home/ELearningComponent";
 export default function Home() {
   return (
     <>
-      <Header />
-      <Caroussel />
-      <ELearningComponent />
+      <div className="flex flex-col">
+        <div className="flex flex-col h-screen justify-between">
+          <Header />
+          <Caroussel />
+        </div>
+
+        <ELearningComponent />
+      </div>
     </>
   );
 }
