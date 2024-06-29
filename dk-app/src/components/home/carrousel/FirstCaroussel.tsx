@@ -8,21 +8,18 @@ import {
   A11y,
   Autoplay,
 } from "swiper/modules";
-import { SizeWithHeaderComponent } from "./items/SizeWithHeaderComponent";
-import "swiper/css";
-import "swiper/css/navigation";
+
 import "./Caroussel.css";
-import "swiper/css/scrollbar";
 import { NewHereComponent } from "./items/NewHere";
 import { StartKoreanJourneyComponent } from "./items/StartKoreanJourney";
 import { ReadReviewsComponent } from "./items/ReadReviews";
+import { DoubleCircles } from "@/components/DoubleCircles";
 
 export const Caroussel = () => {
   return (
-    <>
+    <div className="h-screen flex flex-col justify-center items-center">
       <Swiper
         modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
-        spaceBetween={50}
         slidesPerView={1}
         loop={true}
         autoplay={{
@@ -32,35 +29,27 @@ export const Caroussel = () => {
         pagination={{
           clickable: true,
           renderBullet: (index, className) => {
+            console.log(className);
             return '<span class="' + className + '">' + "</span>";
           },
         }}
-        className="font-Poppins"
+        className="w-full h-full font-Poppins"
       >
-        <SwiperSlide>
-          <SizeWithHeaderComponent>
-            <NewHereComponent
-              onClick={() => console.log("start questionnaire")}
-            />
-          </SizeWithHeaderComponent>
+        <SwiperSlide className="flex justify-center items-center h-full">
+          <NewHereComponent
+            onClick={() => console.log("start questionnaire")}
+          />
         </SwiperSlide>
-        <SwiperSlide>
-          <SizeWithHeaderComponent>
-            <StartKoreanJourneyComponent
-              onClick={() => console.log("Join Now")}
-            />
-          </SizeWithHeaderComponent>
+        <SwiperSlide className="flex justify-center items-center h-full">
+          <StartKoreanJourneyComponent
+            onClick={() => console.log("Join Now")}
+          />
         </SwiperSlide>
-        <SwiperSlide>
-          <SizeWithHeaderComponent>
-            <ReadReviewsComponent onClick={() => console.log("Read Reviews")} />
-          </SizeWithHeaderComponent>
+        <SwiperSlide className="flex justify-center items-center h-full">
+          <ReadReviewsComponent onClick={() => console.log("Read Reviews")} />
         </SwiperSlide>
       </Swiper>
-      <div className="relative hidden lg:flex">
-        <div className="absolute bottom-0 left-0 w-[380px] h-[380px] rounded-tr-full bg-primary opacity-65 border-t-[1px] border-r-[1px]"></div>
-        <div className="absolute bottom-0 right-0 w-[380px] h-[380px] rounded-tl-full bg-primary opacity-65 border-t-[1px] border-r-[1px]"></div>
-      </div>
-    </>
+      <DoubleCircles />
+    </div>
   );
 };

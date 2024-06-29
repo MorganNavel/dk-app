@@ -1,36 +1,28 @@
-import { BsGraphUp } from "react-icons/bs";
-import { CustomButtonPrimary } from "@/components/reusable/Button/CustomButtonPrimary";
+import graph from "@public/assets/img/graph.png";
+import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
+import { ItemLayout } from "./ItemLayout";
 interface ReadReviewsProps {
   onClick: () => void;
 }
-
+const title = "Join Hundreds of Successful Learners";
+const description =
+  "We've helped hundreds of learners achieve their Korean language goals. You can be the next one!";
+const buttonText = "Read Reviews";
+const imageSizeDesktop = "150";
+const imageSizeMobile = "150";
 export const ReadReviewsComponent = ({ onClick }: ReadReviewsProps) => {
   return (
     <>
-      <div className="flex justify-center items-center h-full">
-        <div className="flex flex-col items-center text-primary space-y-12">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold drop-shadow-md">
-              Join Hundreds of Successful Learners
-            </h2>
-            <p className="text-xl text-center max-w-sm mx-auto pt-6 relative">
-              We've helped hundreds of learners achieve their Korean language
-              goals. You can be the next one!
-            </p>
-          </div>
-          <BsGraphUp
-            width={150}
-            height={150}
-            className="text-9xl text-gray-400 mb-12  "
-          />
-
-          <CustomButtonPrimary
-            onClick={onClick}
-            text="Read Reviews"
-            className="py-3 px-12 text-xl"
-          />
-        </div>
-      </div>
+      <ItemLayout
+        title={title}
+        description={description}
+        buttonText={buttonText}
+        image={graph.src}
+        imageSizeDesktop={imageSizeDesktop}
+        imageSizeMobile={imageSizeMobile}
+        imageAlt={"graph"}
+        onClick={onClick}
+      />
     </>
   );
 };

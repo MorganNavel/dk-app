@@ -1,4 +1,4 @@
-import { CustomButtonPrimary } from "@/components/reusable/Button/CustomButtonPrimary";
+import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import eLearningImg from "@public/assets/img/e-learning.png";
 
 export const ELearningComponent = () => {

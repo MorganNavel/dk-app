@@ -1,29 +1,26 @@
-import { CustomButtonPrimary } from "@/components/reusable/Button/CustomButtonPrimary";
+import questionMark from "@public/assets/img/question-mark.png";
+import { ItemLayout } from "./ItemLayout";
 interface NewHereProps {
   onClick: () => void;
 }
-
+const title = "New Here?";
+const description =
+  "Get personalized resources based on your interests, and needs. Visit our questionnaire to start your customized learning journey!";
+const buttonText = "Start Questionnaire";
+const image = questionMark.src;
+const imageSizeMobile = "150";
 export const NewHereComponent = ({ onClick }: NewHereProps) => {
   return (
     <>
-      <div className="flex justify-center items-center h-full">
-        <div className="flex flex-col items-center text-primary space-y-12">
-          <div className="text-center">
-            <h2 className="text-4xl font-bold drop-shadow-md mb-12">
-              New Here?
-            </h2>
-            <p className="text-xl text-center max-w-md mx-auto mb-12">
-              Get personalized resources based on your interests, and needs.
-              Visit our questionnaire to start your customized learning journey!
-            </p>
-          </div>
-          <CustomButtonPrimary
-            onClick={onClick}
-            text="Start Questionnaire"
-            className="py-3 px-10 text-xl"
-          />
-        </div>
-      </div>
+      <ItemLayout
+        title={title}
+        description={description}
+        buttonText={buttonText}
+        image={image}
+        imageSizeMobile={imageSizeMobile}
+        imageAlt={"question-mark"}
+        onClick={onClick}
+      />
     </>
   );
 };
