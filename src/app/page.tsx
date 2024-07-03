@@ -2,6 +2,7 @@
 import Header from "@/components/Header";
 import { Caroussel } from "@/components/home/carrousel/FirstCaroussel";
 import { ELearningComponent } from "@/components/home/ELearningComponent";
+import { OnlineClassesComponent } from "@/components/home/OnlineClassesComponent";
 
 export default function Home() {
   return (
@@ -12,7 +13,12 @@ export default function Home() {
           <Caroussel />
         </div>
 
-        <ELearningComponent />
+        <ELearningComponent
+          onClick={() => {
+            console.log("learn more");
+          }}
+        />
+        <OnlineClassesComponent onClick={() => console.log("learn more")} />
       </div>
     </>
   );

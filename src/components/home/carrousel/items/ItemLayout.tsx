@@ -1,13 +1,15 @@
 import graph from "@public/assets/img/graph.png";
 import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
+import { StaticImport } from "next/dist/shared/lib/get-img-props";
+import Image from "next/image";
 interface ItemLayoutProps {
   title: string;
   description: string;
   buttonText: string;
-  image?: string;
-  imageSizeDesktop?: string;
-  imageSizeMobile?: string;
-  imageAlt?: string;
+  image: StaticImport;
+  imageSizeDesktop?: number;
+  imageSizeMobile?: number;
+  imageAlt: string;
   onClick: () => void;
 }
 
@@ -34,7 +36,7 @@ export const ItemLayout = ({
                 {description}
               </p>
             </div>
-            <img
+            <Image
               src={image}
               alt={imageAlt}
               height={imageSizeMobile}
@@ -47,17 +49,17 @@ export const ItemLayout = ({
               className="py-3 px-10 text-xl"
             />
           </div>
-          {imageSizeDesktop ? (
-            <img
-              src={image}
-              alt="rocket"
-              height={imageSizeDesktop}
-              width={imageSizeDesktop}
-              className="hidden lg:flex"
-            />
-          ) : null}
         </div>
       </div>
+      {imageSizeDesktop ? (
+        <Image
+          src={image}
+          alt="rocket"
+          height={imageSizeDesktop}
+          width={imageSizeDesktop}
+          className="absolute hidden lg:flex transform -translate-x-1/2 -translate-y-1/2 top-1/2 right-24"
+        />
+      ) : null}
     </>
   );
 };

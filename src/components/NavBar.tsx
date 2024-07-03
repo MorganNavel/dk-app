@@ -7,14 +7,15 @@ import { LuShoppingCart } from "react-icons/lu";
 import { LuCalendarClock } from "react-icons/lu";
 import { CustomSquareButton } from "@/components/reusable/Button/CustomSquareButton";
 import logo from "@public/assets/img/logo.png";
+import Image from "next/image";
 
 export const Navbar = () => {
   const { user } = useUser();
   return (
     <>
       <div className="flex justify-center lg:ml-5">
-        <img
-          src={logo.src}
+        <Image
+          src={logo}
           alt="logo"
           className="w-auto h-[53px] lg:w-[143px] lg:h-[96px]"
         />

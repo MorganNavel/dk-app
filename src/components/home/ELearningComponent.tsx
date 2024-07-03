@@ -1,12 +1,16 @@
 import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import eLearningImg from "@public/assets/img/e-learning.png";
+import Image from "next/image";
+interface ELearningComponentProps {
+  onClick: () => void;
+}
 
-export const ELearningComponent = () => {
+export const ELearningComponent = ({ onClick }: ELearningComponentProps) => {
   return (
     <>
       <div className="h-screen flex flex-col lg:flex-row items-center lg:items-center">
-        <img
-          src={eLearningImg.src}
+        <Image
+          src={eLearningImg}
           alt="Elearning icons"
           title="elearning icons"
           className="lg:hidden mt-6 mr-2 h-[175px] w-[300px]"
@@ -28,12 +32,12 @@ export const ELearningComponent = () => {
           </p>
           <CustomButtonPrimary
             text="Learn more"
-            onClick={() => console.log("learn more")}
+            onClick={onClick}
             className="py-3 px-12 text-xl mb-6 mt-12"
           />
         </div>
-        <img
-          src={eLearningImg.src}
+        <Image
+          src={eLearningImg}
           alt="Elearning icons"
           title="elearning icons"
           className="hidden lg:block h-[291px] w-[500px]"
