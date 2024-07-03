@@ -15,7 +15,7 @@ export function CustomButtonPrimary({
     <>
       <button
         onClick={onClick}
-        className={`bg-primary transition-all duration-300 hover:bg-white border-2 border-white hover:border-primary hover:text-primary text-white rounded-full ${className}`}
+        className={`bg-primary transition-all duration-300 hover:bg-white border-2 border-primary hover:text-primary text-white rounded-full ${className}`}
       >
         {text}
       </button>
