@@ -8,8 +8,8 @@ const title = "Join Hundreds of Successful Learners";
 const description =
   "We've helped hundreds of learners achieve their Korean language goals. You can be the next one!";
 const buttonText = "Read Reviews";
-const imageSizeDesktop = "150";
-const imageSizeMobile = "150";
+const imageSizeDesktop = 150;
+const imageSizeMobile = 150;
 export const ReadReviewsComponent = ({ onClick }: ReadReviewsProps) => {
   return (
     <>
@@ -17,7 +17,7 @@ export const ReadReviewsComponent = ({ onClick }: ReadReviewsProps) => {
         title={title}
         description={description}
         buttonText={buttonText}
-        image={graph.src}
+        image={graph}
         imageSizeDesktop={imageSizeDesktop}
         imageSizeMobile={imageSizeMobile}
         imageAlt={"graph"}

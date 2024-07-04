@@ -29,7 +29,6 @@ export const Caroussel = () => {
         pagination={{
           clickable: true,
           renderBullet: (index, className) => {
-            console.log(className);
             return '<span class="' + className + '">' + "</span>";
           },
         }}

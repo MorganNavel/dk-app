@@ -7,8 +7,8 @@ const title = "New Here?";
 const description =
   "Get personalized resources based on your interests, and needs. Visit our questionnaire to start your customized learning journey!";
 const buttonText = "Start Questionnaire";
-const image = questionMark.src;
-const imageSizeMobile = "150";
+const image = questionMark;
+const imageSizeMobile = 150;
 export const NewHereComponent = ({ onClick }: NewHereProps) => {
   return (
     <>
