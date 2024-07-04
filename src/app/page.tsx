@@ -1,5 +1,5 @@
 "use client";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header"
 import { Caroussel } from "@/components/home/carrousel/FirstCaroussel";
 import { ELearningComponent } from "@/components/home/ELearningComponent";
 import { OnlineClassesComponent } from "@/components/home/OnlineClassesComponent";

@@ -3,7 +3,7 @@ interface SidebarItemProps {
   children: JSX.Element;
   href: string;
 }
-export default function SidebarItem({
+export function SidebarItem({
   text,
   children,
   href,

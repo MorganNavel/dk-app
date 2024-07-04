@@ -3,7 +3,7 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FiYoutube } from "react-icons/fi";
 import { FaPeopleGroup } from "react-icons/fa6";
 
-const DropdownSidebar = (props: {
+export const DropdownSidebar = (props: {
   title: string;
   children: React.ReactNode;
 }) => {
@@ -41,4 +41,3 @@ const DropdownSidebar = (props: {
   );
 };
 
-export default DropdownSidebar;

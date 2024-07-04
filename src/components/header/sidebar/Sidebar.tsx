@@ -1,19 +1,19 @@
 import React, { useEffect } from "react";
 import { IoIosClose } from "react-icons/io";
-import SidebarItem from "./SidebarItems";
+import { SidebarItem } from "./SidebarItems";
 import { TbCertificate } from "react-icons/tb";
 import { FaEuroSign } from "react-icons/fa";
 import { IoIosSchool } from "react-icons/io";
 import { FaUserGraduate } from "react-icons/fa";
 import { User } from "@/types/User";
-import DropdownSidebar from "../reusable/dropdown/SidebarDropdown";
+import { DropdownSidebar } from "@/components/reusable/dropdown/SidebarDropdown";
 
 interface SidebarProps {
   isOpen: boolean;
   user: User;
   onClose: () => void;
 }
-const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
+export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
   useEffect(() => {
     const handleOutsideClick = (event: Event) => {
       if (!isOpen) return;
@@ -127,4 +127,3 @@ const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
   );
 };
 
-export default Sidebar;

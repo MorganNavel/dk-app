@@ -1,8 +1,8 @@
 "use client";
 import { PiSignOutBold } from "react-icons/pi";
-import CustomDropdown from "./reusable/dropdown/Dropdown";
+import CustomDropdown from "@/components/reusable/dropdown/Dropdown";
 import { MdOutlineManageAccounts } from "react-icons/md";
-import { useUser } from "./context/useUser";
+import { useUser } from "../context/useUser";
 import { LuShoppingCart } from "react-icons/lu";
 import { LuCalendarClock } from "react-icons/lu";
 import { CustomSquareButton } from "@/components/reusable/Button/CustomSquareButton";

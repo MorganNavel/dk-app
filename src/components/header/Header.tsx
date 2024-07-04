@@ -1,17 +1,10 @@
 "use client";
 import "@/globals.css";
 import { IoIosMenu } from "react-icons/io";
-import logo from "@public/assets/img/logo.png";
-import { useEffect, useState } from "react";
-import Sidebar from "./sidebar/Sidebar";
-import { User } from "@/types/User";
-import CustomDropdown from "./reusable/dropdown/Dropdown";
-import { PiSignOutBold } from "react-icons/pi";
-import { MdOutlineManageAccounts } from "react-icons/md";
-import { LuShoppingCart } from "react-icons/lu";
-import { LuCalendarClock } from "react-icons/lu";
+import { useState } from "react";
+import { Sidebar } from "./sidebar/Sidebar";
 import { Navbar } from "./NavBar";
-import { useUser } from "./context/useUser";
+import { useUser } from "@/components/context/useUser"
 export default function Header() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const { user } = useUser();
