@@ -1,25 +1,25 @@
 {
-  "generals" : {
-    "signin":"Se connecter",
-    "signup":"S'inscrire",
+  "generals": {
+    "signin": "Se connecter",
+    "signup": "S'inscrire",
     "signout": "Se déconnecter",
     "others": "Autres",
     "learnMore": "En savoir plus",
     "joinNow": "Rejoignez-nous",
-    "menu": "Menu"
+    "menu": "Menu",
+    "readReviews": "Voir les avis"
   },
   "header": {
-    "levelTest" : "Test de niveau",
-    "pricing" : "Tarifs",
-    "videos" :  {
+    "levelTest": "Test de niveau",
+    "pricing": "Tarifs",
+    "videos": {
       "title": "Vidéos",
       "grammar": "Grammaire",
       "vocabulary": "Vocabulaire",
       "conjugation": "Conjugaison",
       "conversation": "Conversation"
-      
     },
-    "takeClasses" :  {
+    "takeClasses": {
       "title": "Prendre des cours",
       "beginner": "Débutant",
       "intermediate1": "Intermediaire 1",
@@ -30,9 +30,36 @@
     "teachers": {
       "title": "Enseignants",
       "danbeepark": "Danbee Park"
-    } 
+    }
   },
   "home": {
-    
+    "intro": {
+      "slider": {
+        "newHere": {
+          "title": "Nouveau Ici ?",
+          "description": "Obtenez du contenu en fonction de vos intérêts et besoins. Visitez notre questionnaire pour commencer votre parcours d'apprentissage personnalisé!",
+          "buttonText": "Commencer le questionnaire"
+        },
+        "startKoreanJourney": {
+          "title": "Commencez votre voyage coréen !",
+          "description": "Débloquez votre potentiel et plongez dans le monde de la langue et de la culture coréennes. Rejoignez-nous aujourd'hui et faites le premier pas vers la maîtrise du coréen !",
+          "buttonText": "Rejoignez-nous"
+        },
+        "readRewiews": {
+          "title": "Rejoignez des centaines d'apprenants satistfait",
+          "description": "Nous avons aidé des centaines d'apprenants à atteindre leurs objectifs en langue coréenne. Vous pouvez être le prochain !"
+        }
+      }
+    },
+    "eLearning": {
+      "title": "Maîtrisez le coréen : Des cours d'experts vous attendent. ",
+      "p1": "Commencez votre parcours de maîtrise du coréen avec nos leçons vidéo animées par des experts ! Notre programme prend en charge tous les niveaux, du débutant à l'avancé.",
+      "p2": "Profitez d'une variété de ressources pour les conversations quotidiennes et la préparation aux examens, rendant votre apprentissage à la fois engageant et efficace !"
+    },
+    "onlineClasses": {
+      "title": "Tutorat personnalisé avec des professeurs expérimentés",
+      "p1": "Découvrez la flexibilité de nos cours, que vous préfériez des séances personnalisées en tête-à-tête ou des cours de groupe stimulants.",
+      "p2": "Apprenez le coréen en toute confiance aux côtés de nos instructeurs expérimentés qui adaptent chaque leçon à vos besoins individuels."
+    }
   }
 }

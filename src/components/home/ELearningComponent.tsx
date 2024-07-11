@@ -1,11 +1,13 @@
 import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import eLearningImg from "@public/assets/img/e-learning.png";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 interface ELearningComponentProps {
   onClick: () => void;
 }
 
 export const ELearningComponent = ({ onClick }: ELearningComponentProps) => {
+  const t = useTranslations();
   return (
     <>
       <div className="h-screen flex flex-col lg:flex-row items-center lg:items-center">
@@ -17,21 +19,19 @@ export const ELearningComponent = ({ onClick }: ELearningComponentProps) => {
         />
         <div className="flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh] lg:mx-[15vw]">
           <h1
-            className="text-xl lg:text-2xl font-semibold font-Poppins max-w-xs lg: max-w-lg  text-center lg:text-left"
+            className="text-xl lg:text-2xl font-semibold font-Poppins max-w-sm lg: max-w-lg  text-center lg:text-left"
             style={{ fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
           >
-            Your Korean Mastery: Expert Courses Await!
+            {t("home.eLearning.title")}
           </h1>
           <p className="lg:max-w-md max-w-md mt-6 lg:text-lg text-md text-justify lg:text-left">
-            Start your Korean fluency journey with our expert-led video lessons!
-            Our curriculum supports all levels, from beginner to advanced.
+            {t("home.eLearning.p1")}
           </p>
           <p className="lg:max-w-md max-w-md mt-6 lg:text-lg text-md text-justify">
-            Enjoy a variety of resources for daily conversations and exam prep,
-            keeping your learning engaging and effective!
+            {t("home.eLearning.p2")}
           </p>
           <CustomButtonPrimary
-            text="Learn more"
+            text={t("generals.learnMore")}
             onClick={onClick}
             className="py-3 px-12 text-xl mb-6 mt-12"
           />

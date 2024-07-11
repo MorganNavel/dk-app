@@ -1,4 +1,3 @@
-import graph from "@public/assets/img/graph.png";
 import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";

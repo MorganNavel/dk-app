@@ -1,16 +1,14 @@
-import { ReactNode } from "react";
-
 interface GreenButtonProps {
   onClick: () => void;
   text: string;
   className?: string;
 }
 
-export function CustomButtonPrimary({
+export const CustomButtonPrimary = ({
   onClick,
   text,
   className,
-}: GreenButtonProps) {
+}: GreenButtonProps) => {
   return (
     <>
       <button
@@ -21,4 +19,4 @@ export function CustomButtonPrimary({
       </button>
     </>
   );
-}
+};

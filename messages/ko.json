@@ -1,37 +1,66 @@
 {
-  "generals" : {
-    "signin":"Sign In",
-    "signup":"Sign Up",
+  "generals": {
+    "signin": "Sign In",
+    "signup": "Sign Up",
     "signout": "Sign Out",
     "others": "Others",
     "learnMore": "Learn More",
     "joinNow": "Join Now",
-    "menu": "Menu"
+    "menu": "Menu",
+    "readReviews": "Read Reviews"
+  },
+  "header": {
+    "levelTest": "Level Test",
+    "pricing": "Pricing",
+    "videos": {
+      "title": "Videos",
+      "grammar": "Grammar",
+      "vocabulary": "Vocabulary",
+      "conjugation": "Conjugation",
+      "conversation": "Conversation"
+    },
+    "takeClasses": {
+      "title": "Take Classes",
+      "beginner": "Beginner",
+      "intermediate1": "Intermediate 1",
+      "intermediate2": "Intermediate 2",
+      "topik": "TOPIK",
+      "advanced": "Advanced"
+    },
+    "teachers": {
+      "title": "Teachers",
+      "danbeepark": "Danbee Park"
+    }
   },
   "home": {
-    "header": {
-      "levelTest" : "Level Test",
-      "pricing" : "Pricing",
-      "videos" :  {
-        "title": "Videos",
-        "grammar": "Grammar",
-        "vocabulary": "Vocabulary",
-        "conjugation": "Conjugation",
-        "conversation": "Conversation"
-        
-      },
-      "takeClasses" :  {
-        "title": "Take Classes",
-        "beginner": "Beginner",
-        "intermediate1": "Intermediate 1",
-        "intermediate2": "Intermediate 2",
-        "topik": "TOPIK",
-        "advanced": "Advanced"
-      },
-      "teachers": {
-        "title": "Teachers",
-        "danbeepark": "Danbee Park"
-      } 
+    "intro": {
+      "slider": {
+        "newHere": {
+          "title": "New Here?",
+          "description": "Get personalized resources based on your interests, and needs. Visit our questionnaire to start your customized learning journey!",
+          "buttonText": "Start Questionnaire"
+        },
+        "startKoreanJourney": {
+          "title": "Start Your Korean Journey!",
+          "description": "Unlock your potential and dive into the world of Korean language and culture. Join us today and take the first step towards mastering Korean!",
+          "buttonText": "Join Now"
+        },
+        "readRewiews": {
+          "title": "Join Hundreds of Successful Learners",
+          "description": "We've helped hundreds of learners achieve their Korean language goals. You can be the next one!",
+          "buttonText": "Read Reviews"
+        }
+      }
+    },
+    "eLearning": {
+      "title": "Your Korean Mastery: Expert Courses Await!",
+      "p1": "Start your Korean fluency journey with our expert-led video lessons! Our curriculum supports all levels, from beginner to advanced.",
+      "p2": "Enjoy a variety of resources for daily conversations and exam prep, keeping your learning engaging and effective!"
+    },
+    "onlineClasses": {
+      "title": "Personalized Tutoring with Experienced Instructors",
+      "p1": "Discover the flexibility of our courses, whether you prefer personalized one-on-one sessions or engaging group classes.",
+      "p2": "Learn Korean with confidence alongside our experienced instructors who tailor each lesson to your individual needs."
     }
   }
 }

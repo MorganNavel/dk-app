@@ -1,22 +1,20 @@
 import questionMark from "@public/assets/img/question-mark.png";
 import { ItemLayout } from "./ItemLayout";
+import { useTranslations } from "next-intl";
 interface NewHereProps {
   onClick: () => void;
 }
-const title = "New Here?";
-const description =
-  "Get personalized resources based on your interests, and needs. Visit our questionnaire to start your customized learning journey!";
-const buttonText = "Start Questionnaire";
-const image = questionMark;
 const imageSizeMobile = 150;
+
 export const NewHereComponent = ({ onClick }: NewHereProps) => {
+  const t = useTranslations("home.intro.slider.newHere");
   return (
     <>
       <ItemLayout
-        title={title}
-        description={description}
-        buttonText={buttonText}
-        image={image}
+        title={t("title")}
+        description={t("description")}
+        buttonText={t("buttonText")}
+        image={questionMark}
         imageSizeMobile={imageSizeMobile}
         imageAlt={"question-mark"}
         onClick={onClick}
