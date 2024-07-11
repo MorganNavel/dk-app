@@ -7,13 +7,18 @@ import { IoIosSchool } from "react-icons/io";
 import { FaUserGraduate } from "react-icons/fa";
 import { User } from "@/types/User";
 import { DropdownSidebar } from "@/components/reusable/dropdown/SidebarDropdown";
+import { useTranslations } from "next-intl";
+
 
 interface SidebarProps {
   isOpen: boolean;
   user: User;
   onClose: () => void;
 }
+
 export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
+  const t = useTranslations();
+
   useEffect(() => {
     const handleOutsideClick = (event: Event) => {
       if (!isOpen) return;
@@ -47,7 +52,7 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
             </p>
           </div>
         ) : (
-          <h2>Menu</h2>
+          <h2>{t("generals.menu")}</h2>
         )}
         <button onClick={onClose}>
           <IoIosClose className="w-6 h-6" />
@@ -66,28 +71,28 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
           <li className="py-1 ">
             <SidebarItem
               href="/pricing"
-              text="Pricing"
+              text={t("header.pricing")}
             >
               <FaEuroSign className="h-5 w-5" />
             </SidebarItem>
           </li>
           <li>
-            <DropdownSidebar title="Videos">
+            <DropdownSidebar title={t("header.videos.title")}>
               <div className="flex-col bg-hoverMobile mr-4">
                 <p className="py-1 text-center  border-b ">
-                  <a>Grammar</a>
+                  <a>{t("header.videos.grammar")}</a>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>Vocabulary</a>
+                  <a>{t("header.videos.vocabulary")}</a>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>Conjugation</a>
+                  <a>{t("header.videos.conjugation")}</a>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>Conversation</a>
+                  <a>{t("header.videos.conversation")}</a>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>Other</a>
+                  <a>{t("generals.others")}</a>
                 </p>
               </div>
             </DropdownSidebar>
@@ -96,7 +101,10 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
             <DropdownSidebar title="Teachers">
               <div className="flex-col bg-hoverMobile mr-4">
                 <p className="py-1 text-center  border-b ">
-                  <a> Danbee Park </a>
+                  <a> {t("header.teachers.danbeepark")} </a>
+                </p>
+                <p className="py-1 text-center  border-b ">
+                  <a> {t("generals.others")} </a>
                 </p>
               </div>
             </DropdownSidebar>
@@ -104,7 +112,7 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
           <li className="py-1 ">
             <SidebarItem
               href="/tutoring"
-              text="Take Classes"
+              text={t("header.takeClasses.title")}
             >
               <IoIosSchool className="h-5 w-5" />
             </SidebarItem>
@@ -114,11 +122,11 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
         <div className="min-h-screen flex flex-col items-center">
           {user.idUser != -1 ? (
             <button className="border-2 border-textColor rounded-md px-9 py-3">
-              <a href="/sign-out">Sign Out</a>
+              <a href="/sign-out">{t("generals.singout")}</a>
             </button>
           ) : (
             <button className="border-2 border-textColor rounded-md px-9 py-3">
-              <a href="/sign-in">Sign In</a>
+              <a href="/sign-in">{t("generals.signin")}</a>
             </button>
           )}
         </div>

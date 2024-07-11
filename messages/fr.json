@@ -1,0 +1,38 @@
+{
+  "generals" : {
+    "signin":"Se connecter",
+    "signup":"S'inscrire",
+    "signout": "Se déconnecter",
+    "others": "Autres",
+    "learnMore": "En savoir plus",
+    "joinNow": "Rejoignez-nous",
+    "menu": "Menu"
+  },
+  "header": {
+    "levelTest" : "Test de niveau",
+    "pricing" : "Tarifs",
+    "videos" :  {
+      "title": "Vidéos",
+      "grammar": "Grammaire",
+      "vocabulary": "Vocabulaire",
+      "conjugation": "Conjugaison",
+      "conversation": "Conversation"
+      
+    },
+    "takeClasses" :  {
+      "title": "Prendre des cours",
+      "beginner": "Débutant",
+      "intermediate1": "Intermediaire 1",
+      "intermediate2": "Intermediaire 2",
+      "topik": "TOPIK",
+      "advanced": "Avancé"
+    },
+    "teachers": {
+      "title": "Enseignants",
+      "danbeepark": "Danbee Park"
+    } 
+  },
+  "home": {
+    
+  }
+}

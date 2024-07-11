@@ -8,9 +8,11 @@ import { LuCalendarClock } from "react-icons/lu";
 import { CustomSquareButton } from "@/components/reusable/Button/CustomSquareButton";
 import logo from "@public/assets/img/logo.png";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export const Navbar = () => {
   const { user } = useUser();
+  const t = useTranslations();
   return (
     <>
       <div className="flex justify-center lg:ml-5">
@@ -28,7 +30,7 @@ export const Navbar = () => {
             href="#"
             className=""
           >
-            Level Test
+            {t("header.levelTest")}
           </a>
         </div>
         <div>
@@ -36,64 +38,64 @@ export const Navbar = () => {
             href="#"
             className=""
           >
-            Pricing
+            {t("header.pricing")}
           </a>
         </div>
 
         <CustomDropdown
-          title="Videos"
+          title={t("header.videos.title")}
           isUserProfil={false}
         >
           <div className="flex-col bg-primary text-md font-normal">
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Grammar</a>
+              <a>{t("header.videos.grammar")}</a>
             </p>
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Vocabulary</a>
+              <a>{t("header.videos.vocabulary")}</a>
             </p>
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Conjugation</a>
+              <a>{t("header.videos.conversation")}</a>
             </p>
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Conversation</a>
+              <a>{t("header.videos.conjugation")}</a>
             </p>
             <p className="py-2 text-center  hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Other</a>
+              <a>{t("generals.others")}</a>
             </p>
           </div>
         </CustomDropdown>
         <CustomDropdown
-          title="Take Classes"
+          title={t("header.takeClasses.title")}
           isUserProfil={false}
         >
           <div className="flex-col bg-primary text-md font-normal">
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Beginner</a>
+              <a>{t("header.takeClasses.beginner")}</a>
             </p>
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Intermediate 1</a>
+              <a>{t("header.takeClasses.intermediate1")}</a>
             </p>
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Intermediate 2</a>
+              <a>{t("header.takeClasses.intermediate2")}</a>
             </p>
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>TOPIK</a>
+              <a>{t("header.takeClasses.topik")}</a>
             </p>
             <p className="py-2 text-center hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Advanced</a>
+              <a>{t("header.takeClasses.advanced")}</a>
             </p>
           </div>
         </CustomDropdown>
         <CustomDropdown
-          title="Take Classes"
+          title={t("header.teachers.title")}
           isUserProfil={false}
         >
           <div className="flex-col bg-primary text-md font-normal">
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Danbee Park</a>
+              <a>{t("header.teachers.danbeepark")}</a>
             </p>
             <p className="py-2 text-center   hover:bg-hoverMobile hover:cursor-pointer">
-              <a>Other</a>
+              <a>{t("generals.others")}</a>
             </p>
           </div>
         </CustomDropdown>
@@ -109,25 +111,25 @@ export const Navbar = () => {
                 <p className="py-2 px-3  border-b hover:bg-hoverMobile hover:cursor-pointer">
                   <a className="flex items-center">
                     <MdOutlineManageAccounts className="mr-1 text-textColor w-7 h-7 " />
-                    My Account
+                    {t("header.profile.myaccount")}
                   </a>
                 </p>
                 <p className="py-2 px-3  border-b hover:bg-hoverMobile hover:cursor-pointer">
                   <a className="flex items-center">
                     <LuShoppingCart className="mr-1 text-textColor w-7 h-7" />
-                    Orders
+                    {t("home.header.profile.orders")}
                   </a>
                 </p>
                 <p className="py-2 px-3 border-b hover:bg-hoverMobile hover:cursor-pointer">
                   <a className="flex items-center">
                     <LuCalendarClock className="mr-1 text-textColor w-7 h-7" />
-                    Subscriptions
+                    {t("home.header.profile.subscriptions")}
                   </a>
                 </p>
                 <p className=" py-2 px-3 hover:bg-hoverMobile hover:cursor-pointer">
                   <a className="flex items-center">
                     <PiSignOutBold className="mr-1 text-textColor w-7 h-7" />
-                    Sign Out
+                    {t("generals.signout")}
                   </a>
                 </p>
               </div>
@@ -136,7 +138,7 @@ export const Navbar = () => {
         ) : (
           <CustomSquareButton
             href="/sign-in"
-            text="Sign In"
+            text={t("generals.signin")}
           />
         )}
       </div>

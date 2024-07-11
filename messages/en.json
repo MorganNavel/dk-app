@@ -1,0 +1,47 @@
+{
+  "generals" : {
+    "signin":"Sign In",
+    "signup":"Sign Up",
+    "signout": "Sign Out",
+    "others": "Others",
+    "learnMore": "Learn More",
+    "joinNow": "Join Now",
+    "menu": "Menu"
+  },
+  "header": {
+    "levelTest" : "Level Test",
+    "pricing" : "Pricing",
+    "videos" :  {
+      "title": "Videos",
+      "grammar": "Grammar",
+      "vocabulary": "Vocabulary",
+      "conjugation": "Conjugation",
+      "conversation": "Conversation"
+    },
+    "takeClasses" :  {
+      "title": "Take Classes",
+      "beginner": "Beginner",
+      "intermediate1": "Intermediate 1",
+      "intermediate2": "Intermediate 2",
+      "topik": "TOPIK",
+      "advanced": "Advanced"
+    },
+    "teachers": {
+      "title": "Teachers",
+      "danbeepark": "Danbee Park"
+    } 
+  },
+  "home": {
+    "first": {
+      "slider":{
+        "1":{
+          "title":"New Here?",
+          "description": "Get personalized resources based on your interests, and needs. Visit our questionnaire to start your customized learning journey!"
+
+        }
+      }
+    }
+     
+  }
+  
+}
