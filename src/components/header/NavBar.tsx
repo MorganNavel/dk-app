@@ -24,7 +24,7 @@ export const Navbar = () => {
       </div>
       <div className="invisible lg:hidden"></div>
 
-      <div className="hidden lg:flex text-lg space-x-10 xl:text-[20px] xl:space-x-14  font-semibold">
+      <div className="hidden lg:flex text-lg space-x-8 xl:text-[20px]  font-semibold">
         <div>
           <a
             href="#"
