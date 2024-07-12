@@ -4,10 +4,10 @@ import { renderStars } from "@/app/[locale]/utils/renderStars";
 interface CommentProps {
     fullname: string;
     comment: string;
-    note: number;
+    rating: number;
 }
 
-export const Comment = ({ fullname, comment, note }: CommentProps) => {
+export const Comment = ({ fullname, comment, rating }: CommentProps) => {
 
     return (
         <div className="flex flex-col items-center p-4 m-2 ">
@@ -16,7 +16,7 @@ export const Comment = ({ fullname, comment, note }: CommentProps) => {
                 <p className="text-justify mt-4">- {fullname} -</p>
                 <div className="flex flex-col items-center mt-4">
                     <div className="flex mt-2">
-                        {renderStars(note).map((star, index) => (
+                        {renderStars(rating).map((star, index) => (
                             <span key={index} className="text-yellow-500">{star}</span>
                         ))}
                     </div>

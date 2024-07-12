@@ -7,7 +7,8 @@
     "learnMore": "Learn More",
     "joinNow": "Join Now",
     "menu": "Menu",
-    "readReviews": "Read Reviews"
+    "readReviews": "Read Reviews",
+    "average" : "Average"
   },
   "header": {
     "levelTest": "Level Test",
@@ -61,6 +62,23 @@
       "title": "Personalized Tutoring with Experienced Instructors",
       "p1": "Discover the flexibility of our courses, whether you prefer personalized one-on-one sessions or engaging group classes.",
       "p2": "Learn Korean with confidence alongside our experienced instructors who tailor each lesson to your individual needs."
+    },
+    "reviews": {
+      "title": "Students' Reviews",
+      "comments" : {
+        "1": {
+          "fullname": "Iris",
+          "comment": "Danbee est une très bonne professeure. Elle est gentille et le fait qu'elle parle français aide beaucoup pour progresser et comprendre le cours. Elle explique les choses très clairement et prend le temps de répondre aux questions. Je vous la recommande fortement !"
+        },
+        "2": {
+          "fullname": "Théo",
+          "comment": "Tres bon professeur, explique de maniere simple et clair les mots / phrases qui sont nouveau pour moi, et me permet de m'entrainer a discuter dans des contexte interessant !! Merci !!"
+        },
+        "3": {
+          "fullname": "Benjamin",
+          "comment": "I'm at the beginning of my learning and I needed someone to give me a good base! Very good teacher who takes the time to correct pronunciation and explain, I always have a good time."
+        }
+      }
     }
   }
 }

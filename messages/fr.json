@@ -7,7 +7,9 @@
     "learnMore": "En savoir plus",
     "joinNow": "Rejoignez-nous",
     "menu": "Menu",
-    "readReviews": "Voir les avis"
+    "readReviews": "Voir les avis",
+    "average" : "Moyenne"
+
   },
   "header": {
     "levelTest": "Test de niveau",
@@ -60,6 +62,23 @@
       "title": "Tutorat personnalisé avec des professeurs expérimentés",
       "p1": "Découvrez la flexibilité de nos cours, que vous préfériez des séances personnalisées en tête-à-tête ou des cours de groupe stimulants.",
       "p2": "Apprenez le coréen en toute confiance aux côtés de nos instructeurs expérimentés qui adaptent chaque leçon à vos besoins individuels."
+    },
+    "reviews": {
+      "title": "Avis des étudiants",
+      "comments" : {
+        "1": {
+          "fullname": "Iris",
+          "comment": "Danbee est une très bonne professeure. Elle est gentille et le fait qu'elle parle français aide beaucoup pour progresser et comprendre le cours. Elle explique les choses très clairement et prend le temps de répondre aux questions. Je vous la recommande fortement !"
+        },
+        "2": {
+          "fullname": "Théo",
+          "comment": "Tres bon professeur, explique de maniere simple et clair les mots / phrases qui sont nouveau pour moi, et me permet de m'entrainer a discuter dans des contexte interessant !! Merci !!"
+        },
+        "3": {
+          "fullname": "Benjamin",
+          "comment": "I'm at the beginning of my learning and I needed someone to give me a good base! Very good teacher who takes the time to correct pronunciation and explain, I always have a good time."
+        }
+      }
     }
   }
 }
