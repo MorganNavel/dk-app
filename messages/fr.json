@@ -32,6 +32,11 @@
     "teachers": {
       "title": "Enseignants",
       "danbeepark": "Danbee Park"
+    },
+    "profile": {
+      "myaccount": "Mon compte",
+      "subscriptions": "Abonnements",
+      "orders": "Commandes"
     }
   },
   "home": {
