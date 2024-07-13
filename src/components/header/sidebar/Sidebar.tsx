@@ -61,18 +61,12 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
       <nav className="ml-4 mt-4">
         <ul className="pb-14">
           <li className="py-1 ">
-            <SidebarItem
-              href="/level-test"
-              text="Level Test"
-            >
+            <SidebarItem href="/level-test" text="Level Test">
               <TbCertificate className=" h-5 w-5" />
             </SidebarItem>
           </li>
           <li className="py-1 ">
-            <SidebarItem
-              href="/pricing"
-              text={t("header.pricing")}
-            >
+            <SidebarItem href="/pricing" text={t("header.pricing")}>
               <FaEuroSign className="h-5 w-5" />
             </SidebarItem>
           </li>
@@ -110,10 +104,7 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
             </DropdownSidebar>
           </li>
           <li className="py-1 ">
-            <SidebarItem
-              href="/tutoring"
-              text={t("header.takeClasses.title")}
-            >
+            <SidebarItem href="/tutoring" text={t("header.takeClasses.title")}>
               <IoIosSchool className="h-5 w-5" />
             </SidebarItem>
           </li>
@@ -122,7 +113,7 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
         <div className="min-h-screen flex flex-col items-center">
           {user.idUser != -1 ? (
             <button className="border-2 border-textColor rounded-md px-9 py-3">
-              <a href="/sign-out">{t("generals.singout")}</a>
+              <a href="/sign-out">{t("generals.signout")}</a>
             </button>
           ) : (
             <button className="border-2 border-textColor rounded-md px-9 py-3">

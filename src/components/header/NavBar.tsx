@@ -26,26 +26,17 @@ export const Navbar = () => {
 
       <div className="hidden lg:flex text-lg space-x-8 xl:text-[20px]  font-semibold">
         <div>
-          <a
-            href="#"
-            className=""
-          >
+          <a href="#" className="">
             {t("header.levelTest")}
           </a>
         </div>
         <div>
-          <a
-            href="#"
-            className=""
-          >
+          <a href="#" className="">
             {t("header.pricing")}
           </a>
         </div>
 
-        <CustomDropdown
-          title={t("header.videos.title")}
-          isUserProfil={false}
-        >
+        <CustomDropdown title={t("header.videos.title")} isUserProfil={false}>
           <div className="flex-col bg-primary text-md font-normal">
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
               <a>{t("header.videos.grammar")}</a>
@@ -86,10 +77,7 @@ export const Navbar = () => {
             </p>
           </div>
         </CustomDropdown>
-        <CustomDropdown
-          title={t("header.teachers.title")}
-          isUserProfil={false}
-        >
+        <CustomDropdown title={t("header.teachers.title")} isUserProfil={false}>
           <div className="flex-col bg-primary text-md font-normal">
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
               <a>{t("header.teachers.danbeepark")}</a>
@@ -117,13 +105,13 @@ export const Navbar = () => {
                 <p className="py-2 px-3  border-b hover:bg-hoverMobile hover:cursor-pointer">
                   <a className="flex items-center">
                     <LuShoppingCart className="mr-1 text-textColor w-7 h-7" />
-                    {t("home.header.profile.orders")}
+                    {t("header.profile.orders")}
                   </a>
                 </p>
                 <p className="py-2 px-3 border-b hover:bg-hoverMobile hover:cursor-pointer">
                   <a className="flex items-center">
                     <LuCalendarClock className="mr-1 text-textColor w-7 h-7" />
-                    {t("home.header.profile.subscriptions")}
+                    {t("header.profile.subscriptions")}
                   </a>
                 </p>
                 <p className=" py-2 px-3 hover:bg-hoverMobile hover:cursor-pointer">
@@ -136,10 +124,7 @@ export const Navbar = () => {
             </CustomDropdown>
           </>
         ) : (
-          <CustomSquareButton
-            href="/sign-in"
-            text={t("generals.signin")}
-          />
+          <CustomSquareButton href="/sign-in" text={t("generals.signin")} />
         )}
       </div>
     </>

@@ -15,11 +15,11 @@ interface UserContextType {
 
 const UserContext = createContext<UserContextType>({
   user: {
-    idUser: -1,
-    firstname: "",
-    lastname: "",
-    email: "",
-    phone: "",
+    idUser: 1,
+    firstname: "morgan",
+    lastname: "navel",
+    email: "morgan@gmail.com",
+    phone: "truc",
   },
   setUser: () => {},
 });
