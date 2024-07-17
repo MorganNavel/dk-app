@@ -2,6 +2,7 @@ import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundBut
 import onlineClassImg from "@public/assets/img/online-class.png";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+
 interface OnlineClassesComponentProps {
   onClick: () => void;
 }
@@ -12,9 +13,9 @@ export const OnlineClassesComponent = ({
   const t = useTranslations();
   return (
     <div className="h-screen flex flex-col lg:flex-row items-center">
-      <div className="hidden h-screen w-1/2 lg:flex justify-center items-center bg-primary">
+      <div className="hidden lg:flex h-screen w-1/2 justify-center items-center bg-primary">
         <div
-          className="bg-white p-3 flex justify-center items-center rounded-lg  p-[4vw]"
+          className="bg-white p-3 flex justify-center items-center rounded-lg"
           style={{ width: "30vw", height: "32vw" }}
         >
           <Image
@@ -26,7 +27,7 @@ export const OnlineClassesComponent = ({
         </div>
       </div>
 
-      <div className="flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh]">
+      <div className="flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh] lg:mt-0">
         <h1
           className="text-xl lg:text-2xl font-semibold font-Poppins max-w-md lg:max-w-lg text-center lg:text-left"
           style={{ fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
@@ -48,7 +49,7 @@ export const OnlineClassesComponent = ({
       <div className="lg:hidden h-screen w-full flex justify-center items-center bg-primary">
         <div
           className="bg-white flex justify-center items-center rounded-lg p-3"
-          style={{ width: "50vw", height: "52vw" }}
+          style={{ width: "40vw", height: "42vw" }}
         >
           <Image
             src={onlineClassImg}

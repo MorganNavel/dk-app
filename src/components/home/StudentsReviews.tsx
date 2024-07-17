@@ -5,9 +5,11 @@ import { Caroussel } from "./carrousel/Caroussel";
 
 export const StudentsReviews = () => {
   const t = useTranslations();
-  const config = {
+  const config: {
+    [key: string]: { className: string; component: JSX.Element };
+  } = {
     c1: {
-      className: "",
+      className: "mb-12 mt-12",
       component: (
         <Comment
           fullname={t("home.reviews.comments.1.fullname")}
@@ -17,7 +19,7 @@ export const StudentsReviews = () => {
       ),
     },
     c2: {
-      className: "",
+      className: "mb-12 mt-12",
       component: (
         <Comment
           fullname={t("home.reviews.comments.2.fullname")}
@@ -27,7 +29,7 @@ export const StudentsReviews = () => {
       ),
     },
     c3: {
-      className: "",
+      className: "mb-12 mt-12",
       component: (
         <Comment
           fullname={t("home.reviews.comments.3.fullname")}
@@ -38,47 +40,34 @@ export const StudentsReviews = () => {
     },
   };
   return (
-    <div className="h-screen">
-      <div className=" hidden lg:flex w-full fex flex-col justify-between">
-        <h1 className="text-4xl font-bold text-center text-primary drop-shadow mt-13">
-          {t("home.reviews.title")}
-        </h1>
-        <div className="flex justify-center mt-8">
-          <h2 className="text-2xl font-bold text-center text-primary drop-shadow flex items-center text-primary">
-            <p className="mr-5">{t("generals.average")} : </p>
-            <span className="flex text-yellow-500">{renderStars(5)}</span>
-          </h2>
-        </div>
+    <>
+      <div className="h-screen hidden lg:flex">
+        <div className="w-full fex flex-col">
+          <h1 className="text-4xl font-bold text-center text-primary drop-shadow mt-13">
+            {t("home.reviews.title")}
+          </h1>
+          <div className="flex justify-center mt-8">
+            <h2 className="text-2xl font-bold text-center text-primary drop-shadow flex items-center text-primary">
+              <p className="mr-5">{t("generals.average")} : </p>
+              <span className="flex text-yellow-500">{renderStars(5)}</span>
+            </h2>
+          </div>
 
-        <div className="flex justify-center transform translate-y-1/">
-          <div className="bg-primary w-[5px]"></div>
-          <Comment
-            fullname={t("home.reviews.comments.1.fullname")}
-            comment={t("home.reviews.comments.1.comment")}
-            rating={5}
-          />
-          <div className="bg-primary w-[5px] "></div>
-          <Comment
-            fullname={t("home.reviews.comments.2.fullname")}
-            comment={t("home.reviews.comments.2.comment")}
-            rating={5}
-          />
-          <div className="bg-primary w-[5px] "></div>
-          <Comment
-            fullname={t("home.reviews.comments.3.fullname")}
-            comment={t("home.reviews.comments.3.comment")}
-            rating={5}
-          />
-          <div className="bg-primary w-[5px]"></div>
+          <div className="flex justify-center transform translate-y-1/4">
+            {Object.keys(config).map((key, index) => (
+              <>
+                <div className="bg-primary w-[5px]" />
+                {config[key].component}
+              </>
+            ))}
+            <div className="bg-primary w-[5px]" />
+          </div>
         </div>
       </div>
-      <div className="lg:hidden">
-        <Caroussel
-          config={config}
-          children={undefined}
-          className="h-screen"
-        />
-      </div>
-    </div>
+      <Caroussel
+        config={config}
+        className="lg:hidden h-full "
+      />
+    </>
   );
 };

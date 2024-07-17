@@ -13,12 +13,16 @@ export default function Home() {
           <Header />
           <FirstCaroussel />
         </div>
+        <hr className="hidden lg:flex" />
+
         <ELearningComponent
           onClick={() => {
             console.log("learn more");
           }}
         />
+        <hr className="hidden lg:flex" />
         <OnlineClassesComponent onClick={() => console.log("learn more")} />
+        <hr className="hidden lg:flex" />
         <StudentsReviews />
       </div>
     </>
