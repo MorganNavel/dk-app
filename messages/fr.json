@@ -39,6 +39,23 @@
       "orders": "Commandes"
     }
   },
+  "footer": {
+    "services": "Services",
+    "aboutUs": "À propos de nous",
+    "contactUs": "Contactez-nous",
+    "terms": "Termes et Conditions",
+    "privacy": "Politique de confidentialité",
+    "faq": "Questions",
+    "pricing":"Tarifs",
+    "videos": "Vidéo",
+    "classes": "Prendre des cours",
+    "ressources": "Ressources",
+    "dkTeam": "Équipe Danbee Korean",
+    "newsletter": "Newsletter",
+    "copyRight": "© 2024 Danbee Korean. All rights reserved.",
+    "home": "Accueil",
+    "cookies": "Paramètres des cookies"
+  },
   "home": {
     "intro": {
       "slider": {

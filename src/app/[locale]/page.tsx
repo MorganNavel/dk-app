@@ -1,4 +1,5 @@
 "use client";
+import { Footer } from "@/components/footer/Footer";
 import Header from "@/components/header/Header";
 import { FirstCaroussel } from "@/components/home/carrousel/FirstCarrousel";
 import { ELearningComponent } from "@/components/home/ELearningComponent";
@@ -24,6 +25,7 @@ export default function Home() {
         <OnlineClassesComponent onClick={() => console.log("learn more")} />
         <hr className="hidden lg:flex" />
         <StudentsReviews />
+        <Footer />
       </div>
     </>
   );

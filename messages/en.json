@@ -38,6 +38,23 @@
       "orders": "Orders"
     }
   },
+  "footer": {
+    "services": "Services",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy",
+    "faq": "FAQ",
+    "pricing":"Pricing",
+    "videos": "Videos",
+    "classes": "Take Classes",
+    "ressources": "Resources",
+    "dkTeam": "Danbee Korean Team",
+    "newsletter": "Newsletter",
+    "copyRight": "© 2024 Danbee Korean. All rights reserved.",
+    "home": "Home",
+    "cookies": "Cookies Settings"
+  },
   "home": {
     "intro": {
       "slider": {
