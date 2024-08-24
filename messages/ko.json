@@ -8,7 +8,8 @@
     "joinNow": "Join Now",
     "menu": "Menu",
     "readReviews": "Read Reviews",
-    "average" : "Average"
+    "average": "Average",
+    "requiredField": "Required field"
   },
   "header": {
     "levelTest": "Level Test",
@@ -40,7 +41,7 @@
     "terms": "Terms and Conditions",
     "privacy": "Privacy Policy",
     "faq": "FAQ",
-    "pricing":"Pricing",
+    "pricing": "Pricing",
     "videos": "Videos",
     "classes": "Take Classes",
     "ressources": "Resources",
@@ -82,7 +83,7 @@
     },
     "reviews": {
       "title": "Students' Reviews",
-      "comments" : {
+      "comments": {
         "1": {
           "fullname": "Iris",
           "comment": "Danbee est une très bonne professeure. Elle est gentille et le fait qu'elle parle français aide beaucoup pour progresser et comprendre le cours. Elle explique les choses très clairement et prend le temps de répondre aux questions. Je vous la recommande fortement !"
