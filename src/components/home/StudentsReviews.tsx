@@ -1,4 +1,4 @@
-import { renderStars } from "@/app/[locale]/utils/renderStars";
+import { renderStars } from "@/utils/renderStars";
 import { useTranslations } from "next-intl";
 import { Comment } from "@/components/reusable/Comment";
 import { Caroussel } from "./carrousel/Caroussel";

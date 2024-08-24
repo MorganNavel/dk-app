@@ -1,4 +1,4 @@
-import { renderStars } from "@/app/[locale]/utils/renderStars";
+import { renderStars } from "@/utils/renderStars";
 
 interface CommentProps {
   fullname: string;
@@ -17,10 +17,7 @@ export const Comment = ({ fullname, comment, rating }: CommentProps) => {
         <div className="flex flex-col items-center mt-3 lg:mt-4">
           <div className="flex lg:mt-2">
             {renderStars(rating).map((star, index) => (
-              <span
-                key={index}
-                className="text-yellow-500"
-              >
+              <span key={index} className="text-yellow-500">
                 {star}
               </span>
             ))}
