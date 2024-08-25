@@ -8,7 +8,9 @@ import { FaUserGraduate } from "react-icons/fa";
 import { User } from "@/types/User";
 import { DropdownSidebar } from "@/components/reusable/dropdown/SidebarDropdown";
 import { useTranslations } from "next-intl";
-
+import Link from "next/link";
+import { FiYoutube } from "react-icons/fi";
+import { FaPeopleGroup } from "react-icons/fa6";
 
 interface SidebarProps {
   isOpen: boolean;
@@ -71,53 +73,119 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
             </SidebarItem>
           </li>
           <li>
-            <DropdownSidebar title={t("header.videos.title")}>
+            <DropdownSidebar
+              title={t("header.videos.title")}
+              icon={<FiYoutube className="h-5 w-5 flex justify-start" />}
+            >
               <div className="flex-col bg-hoverMobile mr-4">
                 <p className="py-1 text-center  border-b ">
-                  <a>{t("header.videos.grammar")}</a>
+                  <Link href="/videos/grammar">
+                    {t("header.videos.grammar")}
+                  </Link>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>{t("header.videos.vocabulary")}</a>
+                  <Link href="/videos/vocabulary">
+                    {t("header.videos.vocabulary")}
+                  </Link>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>{t("header.videos.conjugation")}</a>
+                  <Link href="/videos/conversation">
+                    {t("header.videos.conversation")}
+                  </Link>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>{t("header.videos.conversation")}</a>
+                  <Link href="/videos/conjugation">
+                    {t("header.videos.conjugation")}
+                  </Link>
                 </p>
                 <p className="py-1 text-center  border-b">
-                  <a>{t("generals.others")}</a>
+                  <Link href="/videos">{t("generals.others")}</Link>
                 </p>
               </div>
             </DropdownSidebar>
           </li>
           <li>
-            <DropdownSidebar title="Teachers">
+            <DropdownSidebar
+              title="Teachers"
+              icon={<FaPeopleGroup className="h-5 w-5 flex justify-start" />}
+            >
               <div className="flex-col bg-hoverMobile mr-4">
                 <p className="py-1 text-center  border-b ">
-                  <a> {t("header.teachers.danbeepark")} </a>
+                  <Link
+                    href={{
+                      pathname: "teacher",
+                      query: { firstname: "Danbee", lastname: "Park" },
+                    }}
+                  >
+                    {t("header.teachers.danbeepark")}
+                  </Link>
                 </p>
                 <p className="py-1 text-center  border-b ">
-                  <a> {t("generals.others")} </a>
+                  <Link href="/teachers">{t("generals.others")}</Link>
                 </p>
               </div>
             </DropdownSidebar>
           </li>
           <li className="py-1 ">
-            <SidebarItem href="/tutoring" text={t("header.takeClasses.title")}>
-              <IoIosSchool className="h-5 w-5" />
-            </SidebarItem>
+            <DropdownSidebar
+              title={t("header.takeLessons.title")}
+              icon={<IoIosSchool className="h-5 w-5" />}
+            >
+              <div className="flex-col bg-hoverMobile mr-4">
+                <p className="py-1 text-center  border-b ">
+                  <Link
+                    href={{ pathname: "lessons", query: { level: "beginner" } }}
+                  >
+                    {t("header.takeLessons.beginner")}
+                  </Link>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <Link
+                    href={{
+                      pathname: "lessons",
+                      query: { level: "intermediate1" },
+                    }}
+                  >
+                    {t("header.takeLessons.intermediate1")}
+                  </Link>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <Link
+                    href={{
+                      pathname: "lessons",
+                      query: { level: "intermediate2" },
+                    }}
+                  >
+                    {t("header.takeLessons.intermediate2")}
+                  </Link>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <Link
+                    href={{ pathname: "lessons", query: { level: "topik" } }}
+                  >
+                    {t("header.takeLessons.topik")}
+                  </Link>
+                </p>
+                <p className="py-1 text-center  border-b">
+                  <Link
+                    href={{ pathname: "lessons", query: { level: "advanced" } }}
+                  >
+                    {t("header.takeLessons.advanced")}
+                  </Link>
+                </p>
+              </div>
+            </DropdownSidebar>
           </li>
         </ul>
 
         <div className="min-h-screen flex flex-col items-center">
           {user.idUser != -1 ? (
             <button className="border-2 border-textColor rounded-md px-9 py-3">
-              <a href="/sign-out">{t("generals.signout")}</a>
+              <Link href="/sign-out">{t("generals.signout")}</Link>
             </button>
           ) : (
             <button className="border-2 border-textColor rounded-md px-9 py-3">
-              <a href="/sign-in">{t("generals.signin")}</a>
+              <Link href="/auth">{t("generals.signin")}</Link>
             </button>
           )}
         </div>
@@ -125,4 +193,3 @@ export const Sidebar = ({ isOpen, user, onClose }: SidebarProps) => {
     </div>
   );
 };
-

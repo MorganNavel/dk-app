@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaUserGraduate } from "react-icons/fa";
+import Link from "next/link";
 
 interface DropdownProps {
   title: string;
   children: React.ReactNode;
-  isUserProfil: boolean;
+  isUserProfil?: boolean;
+  href?: string;
 }
 
 const CustomDropdown = ({
   title,
   children,
   isUserProfil = false,
+  href,
 }: DropdownProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -30,7 +33,7 @@ const CustomDropdown = ({
           </span>
         ) : null}
 
-        <span>{title}</span>
+        {href ? <Link href={href}>{title}</Link> : <span>{title}</span>}
         <IoIosArrowDown
           className={`text-textColor transition-transform transform ${
             isHovered ? "rotate-180" : ""
