@@ -55,19 +55,16 @@ export const StudentsReviews = () => {
 
           <div className="flex justify-center transform translate-y-1/4">
             {Object.keys(config).map((key, index) => (
-              <>
-                <div className="bg-primary w-[5px]" />
+              <div key={key} className="flex">
+                <span className="bg-primary w-[5px]" />
                 {config[key].component}
-              </>
+              </div>
             ))}
             <div className="bg-primary w-[5px]" />
           </div>
         </div>
       </div>
-      <Caroussel
-        config={config}
-        className="lg:hidden h-full "
-      />
+      <Caroussel config={config} className="lg:hidden h-full " />
     </>
   );
 };
