@@ -64,7 +64,7 @@ export const Navbar = () => {
           <div className="flex-col bg-primary text-md font-normal">
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
               <Link
-                href={{ pathname: "courses", query: { level: "beginner" } }}
+                href={{ pathname: "lessons", query: { level: "beginner" } }}
               >
                 {t("header.takeLessons.beginner")}
               </Link>
@@ -72,7 +72,7 @@ export const Navbar = () => {
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
               <Link
                 href={{
-                  pathname: "courses",
+                  pathname: "lessons",
                   query: { level: "intermediate1" },
                 }}
               >
@@ -82,7 +82,7 @@ export const Navbar = () => {
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
               <Link
                 href={{
-                  pathname: "courses",
+                  pathname: "lessons",
                   query: { level: "intermediate2" },
                 }}
               >
@@ -90,13 +90,13 @@ export const Navbar = () => {
               </Link>
             </p>
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href={{ pathname: "courses", query: { level: "topik" } }}>
+              <Link href={{ pathname: "lessons", query: { level: "topik" } }}>
                 {t("header.takeLessons.topik")}
               </Link>
             </p>
             <p className="py-2 text-center hover:bg-hoverMobile hover:cursor-pointer">
               <Link
-                href={{ pathname: "courses", query: { level: "advanced" } }}
+                href={{ pathname: "lessons", query: { level: "advanced" } }}
               >
                 {t("header.takeLessons.advanced")}
               </Link>
