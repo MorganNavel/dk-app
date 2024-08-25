@@ -1,4 +1,3 @@
-"use client";
 import { FormProvider, useForm } from "react-hook-form";
 import { useState } from "react";
 import IconButton from "@mui/material/IconButton";
@@ -7,8 +6,9 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import { ControllableInput } from "@/components/ControllableInput";
+import { SignInInput } from "@/types/User";
 
-const SignIn = () => {
+export const SignInForm = () => {
   const methods = useForm({
     defaultValues: {
       email: "",
@@ -17,22 +17,33 @@ const SignIn = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: SignInInput) => {
     console.log(data);
   };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
-        <div className="flex flex-row">
-          <ControllableInput name="email" label="Email" required />
+      <form onSubmit={methods.handleSubmit(onSubmit)} className="flex flex-col">
+        <div className="mb-4">
+          <ControllableInput
+            name="email"
+            label="Email"
+            required
+            className="w-full rounded-md bg-white"
+          />
+        </div>
+
+        <div className="mb-6">
           <ControllableInput
             name="password"
             label="Password"
             type={showPassword ? "text" : "password"}
             required
+            className="w-full border rounded-md bg-white"
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -41,18 +52,19 @@ const SignIn = () => {
                     onClick={togglePasswordVisibility}
                     edge="end"
                   >
-                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                    {showPassword ? (
+                      <VisibilityOff className="text-primary" />
+                    ) : (
+                      <Visibility className="text-primary" />
+                    )}
                   </IconButton>
                 </InputAdornment>
               ),
             }}
           />
-
-          <CustomButtonPrimary text="Sign In" type="submit" />
         </div>
+        <CustomButtonPrimary text="Sign In" type="submit" className="p-3" />
       </form>
     </FormProvider>
   );
 };
-
-export default SignIn;

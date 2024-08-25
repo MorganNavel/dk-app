@@ -23,6 +23,7 @@ export const ControllableInput = ({
   required = false,
   onChange,
   size = "medium",
+  className,
   ...props
 }: ControllableInputProps) => {
   const t = useTranslations("generals");
@@ -39,6 +40,7 @@ export const ControllableInput = ({
           label={label}
           value={value}
           error={!!fieldState.error}
+          className={className}
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChange && onChange(e);
             field.onChange(e);
