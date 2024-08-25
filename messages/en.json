@@ -21,8 +21,8 @@
       "conjugation": "Conjugation",
       "conversation": "Conversation"
     },
-    "takeClasses": {
-      "title": "Take Classes",
+    "takeLessons": {
+      "title": "Take Lessons",
       "beginner": "Beginner",
       "intermediate1": "Intermediate 1",
       "intermediate2": "Intermediate 2",
@@ -48,7 +48,7 @@
     "faq": "FAQ",
     "pricing": "Pricing",
     "videos": "Videos",
-    "classes": "Take Classes",
+    "classes": "Take Lessons",
     "ressources": "Resources",
     "dkTeam": "Danbee Korean Team",
     "newsletter": "Newsletter",
