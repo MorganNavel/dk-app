@@ -43,10 +43,7 @@ export const Caroussel = ({ config, children, className }: CarousselProps) => {
         className="w-full h-full font-Poppins"
       >
         {Object.keys(config).map((key, index) => (
-          <SwiperSlide
-            key={index}
-            className={config[key].className}
-          >
+          <SwiperSlide key={index} className={config[key].className}>
             {config[key].component}
           </SwiperSlide>
         ))}

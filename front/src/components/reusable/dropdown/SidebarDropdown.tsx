@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-import { FiYoutube } from "react-icons/fi";
-import { FaPeopleGroup } from "react-icons/fa6";
 
 interface DropdownProps {
   title: string;
