@@ -1,6 +1,8 @@
 import { API_Response } from "../types/Response";
-import { Response, Request } from "express";
-import { STATUT_CODES } from "../utils/codeStatus";
+import { Request } from "express";
+import { User } from "../storage/initDb";
+import { STATUT_CODES } from "../utils/statusCode";
+
 export class AuthService {
   static instance: AuthService;
   constructor() {
@@ -31,6 +33,17 @@ export class AuthService {
         error: "Passwords don't match",
       };
     }
+
+    User.create({
+      email,
+      password,
+      firstname,
+      name,
+      nationality,
+      languages,
+      description,
+    });
+
     return { code: STATUT_CODES.CREATED, data: { email, password } };
   }
 }

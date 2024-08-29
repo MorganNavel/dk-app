@@ -1,5 +1,7 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, DataTypes } from "sequelize";
 import dotenv from "dotenv";
+import { UserModel } from "../models/UserModel";
+import { readFileSync } from "fs";
 
 dotenv.config();
 const ENV = process.env.NODE_ENV || "development";
@@ -12,12 +14,15 @@ interface Config {
   DB_NAME: string;
 }
 
-async function getConfig(): Promise<Config | undefined> {
+function getConfig(): Config | undefined {
   if (ENV === "production") {
-    const response = await fetch("/etc/envs/dk-app/config.json");
-    const config = await response.json();
-    if (!config) return undefined;
-    return config as Config;
+    try {
+      const configFile = readFileSync("/etc/envs/dk-app/config.json", "utf-8");
+      return JSON.parse(configFile) as Config;
+    } catch (error) {
+      console.error(error);
+      return undefined;
+    }
   }
 
   if (ENV === "development") {
@@ -32,30 +37,34 @@ async function getConfig(): Promise<Config | undefined> {
 
   return undefined;
 }
+const config: Config | undefined = getConfig();
+if (!config) {
+  throw new Error("No config found");
+}
 
-export async function connectToDb() {
+const sequelize = new Sequelize({
+  dialect: "mysql",
+  username: config.DB_USERNAME,
+  password: config.DB_PASSWORD,
+  database: config.DB_NAME,
+  host: config.DB_HOST,
+  port: config.DB_PORT,
+  logging(sql, timing) {
+    console.log(`SQL: ${sql} (${timing}ms)`);
+  },
+});
+
+const User = UserModel(sequelize, DataTypes);
+
+async function connectToDb() {
   try {
-    const config: Config | undefined = await getConfig();
-    if (!config) {
-      throw new Error("No config found");
-    }
-    const sequelize = new Sequelize({
-      dialect: "mysql",
-      username: config.DB_USERNAME,
-      password: config.DB_PASSWORD,
-      database: config.DB_NAME,
-      host: config.DB_HOST,
-      port: config.DB_PORT,
-      logging(sql, timing) {
-        console.log(`SQL: ${sql} (${timing}ms)`);
-      },
-    });
-
     await sequelize.authenticate();
     await sequelize.sync({ force: false });
     console.log("Connected to database");
-    return sequelize;
+    return { sequelize, User };
   } catch (error) {
     console.error(error);
   }
 }
+
+export { connectToDb, User };

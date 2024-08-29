@@ -17,17 +17,36 @@ function UserModel(sequelize: Sequelize, DataTypes: any) {
         allowNull: false,
       },
       email: {
-        type: DataTypes.email,
+        type: DataTypes.STRING,
         allowNull: false,
         unique: true,
+        validate: {
+          isEmail: {
+            msg: "Must be a valid email address",
+          },
+        },
       },
       password: {
         type: DataTypes.STRING,
         allowNull: false,
       },
+      languages: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      nationality: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
+      description: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+      },
     },
     {
       timestamps: true,
+      createdAt: true,
+      updatedAt: false,
       sequelize,
     }
   );
