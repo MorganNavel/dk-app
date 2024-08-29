@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+
 dotenv.config();
 const ENV = process.env.NODE_ENV || "development";
 
@@ -38,13 +39,18 @@ export async function connectToDb() {
     if (!config) {
       throw new Error("No config found");
     }
-    const sequelize = new Sequelize(
-      `mysql://${config.DB_USERNAME}:${config.DB_PASSWORD}@${config.DB_HOST}:${config.DB_PORT}/${config.DB_NAME}`,
-      {
-        logging: false,
-        dialect: "mysql",
-      }
-    );
+    const sequelize = new Sequelize({
+      dialect: "mysql",
+      username: config.DB_USERNAME,
+      password: config.DB_PASSWORD,
+      database: config.DB_NAME,
+      host: config.DB_HOST,
+      port: config.DB_PORT,
+      logging(sql, timing) {
+        console.log(`SQL: ${sql} (${timing}ms)`);
+      },
+    });
+
     await sequelize.authenticate();
     await sequelize.sync({ force: false });
     console.log("Connected to database");

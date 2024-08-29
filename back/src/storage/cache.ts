@@ -6,8 +6,8 @@ export function initCache() {
   const redisConfig = getRedisConf();
 
   const redisClient = createClient({
-    username: redisConfig.REDIS_USERNAME,
-    password: redisConfig.REDIS_PASSWORD,
+    // username: redisConfig.REDIS_USERNAME,
+    // password: redisConfig.REDIS_PASSWORD,
     socket: {
       host: redisConfig.REDIS_HOST,
       port: redisConfig.REDIS_PORT,

@@ -1,5 +1,5 @@
 import express from "express";
-import authRooter from "./routes/Auth";
+import authRouter from "./auth/AuthRouter";
 import { connectToDb } from "./storage/initDb";
 import morgan from "morgan";
 import { displayApiAddresses } from "./utils/displayAddresses";
@@ -24,7 +24,7 @@ app.use(
 
 app.use(morgan("dev"));
 
-app.use("/auth", authRooter);
+app.use("/auth", authRouter);
 
 app.listen(3001, () => {
   displayApiAddresses();
