@@ -6,6 +6,7 @@ import { displayApiAddresses } from "./utils/displayAddresses";
 import session from "express-session";
 import { initCache } from "./storage/cache";
 import { getRedisConf } from "./utils/env";
+import videoRouter from "./video/VideoRouter";
 
 const app = express();
 
@@ -28,12 +29,17 @@ app.use(
 );
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(morgan("dev"));
 
-app.use("/auth", authRouter);
+const apiV1Router = express.Router();
+app.use("/api/v1", apiV1Router);
+
+apiV1Router.use("/auth", authRouter);
+apiV1Router.use("/videos", videoRouter);
 
 app.listen(3001, () => {
   displayApiAddresses();
   console.log("Press CTRL-C to stop\n");
 });
+
+export { redisClient };

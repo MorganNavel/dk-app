@@ -2,6 +2,7 @@ import { Sequelize, DataTypes } from "sequelize";
 import dotenv from "dotenv";
 import { UserModel } from "../models/UserModel";
 import { readFileSync } from "fs";
+import { VideoModel } from "../models/VideoModel";
 
 dotenv.config();
 const ENV = process.env.NODE_ENV || "development";
@@ -55,16 +56,17 @@ const sequelize = new Sequelize({
 });
 
 const User = UserModel(sequelize, DataTypes);
+const Video = VideoModel(sequelize, DataTypes);
 
 async function connectToDb() {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ force: false });
     console.log("Connected to database");
-    return { sequelize, User };
+    return sequelize;
   } catch (error) {
     console.error(error);
   }
 }
 
-export { connectToDb, User };
+export { connectToDb, User, Video };
