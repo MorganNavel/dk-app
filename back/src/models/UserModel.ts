@@ -1,5 +1,12 @@
 import { Model, Sequelize } from "sequelize";
-class User extends Model {}
+class User extends Model {
+  public idUser!: number;
+  public name!: string;
+  public firstname!: string;
+  public email!: string;
+  public password_hash!: string;
+  public languages!: string;
+}
 function UserModel(sequelize: Sequelize, DataTypes: any) {
   User.init(
     {
@@ -41,6 +48,9 @@ function UserModel(sequelize: Sequelize, DataTypes: any) {
       description: {
         type: DataTypes.TEXT,
         allowNull: true,
+      },
+      role: {
+        type: DataTypes.ENUM("student", "teacher", "admin"),
       },
     },
     {

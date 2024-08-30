@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 import { AuthController } from "./AuthController";
 import {
   validateSignUpInput,
@@ -6,7 +6,7 @@ import {
 } from "./middlewares/authValidation";
 import { isSignedIn } from "../utils/authMiddleware";
 
-const authRouter = express.Router();
+const authRouter = Router();
 
 authRouter.post("/signup", validateSignUpInput, AuthController.signUp);
 authRouter.post("/signin", validateSignInInput, AuthController.signIn);
