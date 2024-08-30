@@ -10,3 +10,8 @@ export const SignUpScheme = joi.object({
   languages: joi.array().items(joi.string()),
   description: joi.string(),
 });
+
+export const SignInScheme = joi.object({
+  email: joi.string().email().required(),
+  password: joi.string().min(6).required(),
+});

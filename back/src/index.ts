@@ -19,8 +19,15 @@ app.use(
     resave: false,
     saveUninitialized: false,
     secret: redisConfig.SECRET_KEY,
+    cookie: {
+      secure: false, // true si vous utilisez HTTPS
+      httpOnly: true,
+      maxAge: 1000 * 60 * 10, // Millisecondes
+    },
   })
 );
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 app.use(morgan("dev"));
 

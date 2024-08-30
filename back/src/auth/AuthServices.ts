@@ -1,7 +1,9 @@
 import { API_Response } from "../types/Response";
-import { Request } from "express";
+import { Request, Response } from "express";
 import { User } from "../storage/initDb";
-import { STATUT_CODES } from "../utils/statusCode";
+import { STATUS_CODES } from "../utils/statusCodes";
+import bcrypt from "bcrypt";
+import { AppSession } from "../types/Session";
 
 export class AuthService {
   static instance: AuthService;
@@ -11,7 +13,7 @@ export class AuthService {
     }
     AuthService.instance = this;
   }
-  async signup(req: Request): Promise<API_Response> {
+  async signUp(req: Request): Promise<API_Response> {
     const {
       email,
       password,
@@ -23,27 +25,79 @@ export class AuthService {
       description,
     } = req.body;
 
-    if (!email || !password || !confirmPassword) {
-      return { code: STATUT_CODES.BAD_REQUEST, error: "Missing fields" };
-    }
-
     if (password !== confirmPassword) {
       return {
-        code: STATUT_CODES.BAD_REQUEST,
+        code: STATUS_CODES.BAD_REQUEST,
         error: "Passwords don't match",
       };
     }
+    const hashedPassword = await bcrypt.hash(password, 10);
+    try {
+      const user = await User.create({
+        email,
+        firstname,
+        name,
+        password_hash: hashedPassword,
+        nationality,
+        languages,
+        description,
+      });
+      const { password_hash, ...userWithoutPassword } = user.dataValues;
+      return { code: STATUS_CODES.CREATED, data: userWithoutPassword };
+    } catch (error: any) {
+      return {
+        code: STATUS_CODES.BAD_REQUEST,
+        error: error.errors[0].message,
+      };
+    }
+  }
 
-    User.create({
-      email,
-      password,
-      firstname,
-      name,
-      nationality,
-      languages,
-      description,
+  async signIn(req: Request): Promise<API_Response> {
+    const { email, password } = req.body;
+    try {
+      const user = await User.findOne({
+        where: { email },
+      });
+      if (!user) {
+        return {
+          code: STATUS_CODES.BAD_REQUEST,
+          error: "Email or password is incorrect",
+        };
+      }
+      const { password_hash, ...userWithoutPassword } = user.dataValues;
+      const isMatch = await bcrypt.compare(password, password_hash);
+      if (!isMatch) {
+        return {
+          code: STATUS_CODES.BAD_REQUEST,
+          error: "Email or password is incorrect",
+        };
+      }
+      const session = req.session as AppSession;
+      session.user = userWithoutPassword;
+      return { code: STATUS_CODES.OK, data: userWithoutPassword };
+    } catch (error: any) {
+      return {
+        code: STATUS_CODES.BAD_REQUEST,
+        error: error,
+      };
+    }
+  }
+
+  async signOut(req: Request, res: Response): Promise<API_Response> {
+    const session = req.session as AppSession;
+
+    session.destroy((err) => {
+      if (!err) res.clearCookie("sid");
     });
-
-    return { code: STATUT_CODES.CREATED, data: { email, password } };
+    if ((req.session as AppSession)?.user) {
+      console.log(session);
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: "Error while signing out",
+      };
+    }
+    return {
+      code: STATUS_CODES.OK,
+    };
   }
 }

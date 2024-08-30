@@ -26,7 +26,7 @@ function UserModel(sequelize: Sequelize, DataTypes: any) {
           },
         },
       },
-      password: {
+      password_hash: {
         type: DataTypes.STRING,
         allowNull: false,
       },
