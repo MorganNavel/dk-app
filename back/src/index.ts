@@ -1,12 +1,13 @@
 import express from "express";
-import authRouter from "./auth/AuthRouter";
+import authRouter from "./feat/auth/AuthRouter";
 import { connectToDb } from "./storage/initDb";
 import morgan from "morgan";
 import { displayApiAddresses } from "./utils/displayAddresses";
 import session from "express-session";
 import { initCache } from "./storage/cache";
 import { getRedisConf } from "./utils/env";
-import videoRouter from "./video/VideoRouter";
+import videoRouter from "./feat/video/VideoRouter";
+import userRouter from "./feat/user/UserRouter";
 
 const app = express();
 
@@ -35,7 +36,8 @@ const apiV1Router = express.Router();
 app.use("/api/v1", apiV1Router);
 
 apiV1Router.use("/auth", authRouter);
-apiV1Router.use("/videos", videoRouter);
+apiV1Router.use("/video", videoRouter);
+apiV1Router.use("/user", userRouter);
 
 app.listen(3001, () => {
   displayApiAddresses();
