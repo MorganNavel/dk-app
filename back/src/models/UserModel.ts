@@ -1,13 +1,41 @@
-import { Model, Sequelize } from "sequelize";
-class User extends Model {
+import { Model, DataTypes, Optional, Sequelize } from "sequelize";
+import { sequelize } from "../storage/initDb";
+
+type UserRole = "student" | "teacher" | "admin";
+
+interface UserAttributes {
+  idUser: number;
+  name: string;
+  firstname: string;
+  email: string;
+  password_hash: string;
+  languages?: string;
+  nationality?: string;
+  description?: string;
+  role: UserRole;
+}
+
+interface UserCreationAttributes extends Optional<UserAttributes, "idUser"> {}
+
+class User
+  extends Model<UserAttributes, UserCreationAttributes>
+  implements UserAttributes
+{
   public idUser!: number;
   public name!: string;
   public firstname!: string;
   public email!: string;
   public password_hash!: string;
-  public languages!: string;
+  public languages?: string;
+  public nationality?: string;
+  public description?: string;
+  public role!: UserRole;
+
+  public readonly createdAt!: Date;
+  public readonly updatedAt!: Date;
 }
-function UserModel(sequelize: Sequelize, DataTypes: any) {
+
+function initUser(sequelize: Sequelize) {
   User.init(
     {
       idUser: {
@@ -24,7 +52,7 @@ function UserModel(sequelize: Sequelize, DataTypes: any) {
         allowNull: false,
       },
       email: {
-        type: DataTypes.STRING,
+        type: DataTypes.STRING(390),
         allowNull: false,
         unique: true,
         validate: {
@@ -51,16 +79,16 @@ function UserModel(sequelize: Sequelize, DataTypes: any) {
       },
       role: {
         type: DataTypes.ENUM("student", "teacher", "admin"),
+        allowNull: false,
       },
     },
     {
+      sequelize,
       timestamps: true,
       createdAt: true,
       updatedAt: false,
-      sequelize,
     }
   );
-
-  return User;
 }
-export { UserModel, User };
+
+export { initUser, User, UserRole };

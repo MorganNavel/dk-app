@@ -1,9 +1,9 @@
 import { API_Response } from "@/types/Response";
 import { Request, Response } from "express";
-import { User } from "@/storage/initDb";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import bcrypt from "bcrypt";
 import { AppSession } from "@/types/Session";
+import { User } from "@/models/UserModel";
 
 export class AuthService {
   static instance: AuthService;
@@ -41,6 +41,7 @@ export class AuthService {
         nationality,
         languages,
         description,
+        role: "student",
       });
       const { password_hash, ...userWithoutPassword } = user.dataValues;
       return { code: STATUS_CODES.CREATED, data: userWithoutPassword };

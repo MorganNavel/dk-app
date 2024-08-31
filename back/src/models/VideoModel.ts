@@ -1,4 +1,4 @@
-import { Model, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize } from "sequelize";
 class Video extends Model {
   public idVideo!: number;
   public title!: string;
@@ -10,7 +10,8 @@ class Video extends Model {
   public views!: number;
   public likes!: number;
 }
-function VideoModel(sequelize: Sequelize, DataTypes: any) {
+
+function initVideo(sequelize: Sequelize) {
   Video.init(
     {
       idVideo: {
@@ -59,7 +60,6 @@ function VideoModel(sequelize: Sequelize, DataTypes: any) {
       sequelize,
     }
   );
-
-  return Video;
 }
-export { VideoModel, Video };
+
+export { initVideo, Video };

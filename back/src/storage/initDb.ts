@@ -1,8 +1,9 @@
-import { Sequelize, DataTypes } from "sequelize";
+import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
-import { UserModel } from "../models/UserModel";
 import { readFileSync } from "fs";
-import { VideoModel } from "../models/VideoModel";
+import { initUser, User } from "@/models/UserModel";
+import { initLesson, Lesson } from "@/models/LessonModel";
+import { initVideo, Video } from "@/models/VideoModel";
 
 dotenv.config();
 const ENV = process.env.NODE_ENV || "development";
@@ -54,19 +55,21 @@ const sequelize = new Sequelize({
     console.log(`SQL: ${sql} (${timing}ms)`);
   },
 });
-
-const User = UserModel(sequelize, DataTypes);
-const Video = VideoModel(sequelize, DataTypes);
-
+initUser(sequelize);
+initLesson(sequelize);
+initVideo(sequelize);
+User.hasMany(Lesson, { foreignKey: "idLesson", as: "lessons" });
+Lesson.belongsTo(User, { foreignKey: "idTeacher", as: "teacher" });
+Video.belongsTo(User, { foreignKey: "idTeacher", as: "teacher" });
 async function connectToDb() {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ force: true });
+
     console.log("Connected to database");
-    return sequelize;
   } catch (error) {
     console.error(error);
   }
 }
 
-export { connectToDb, User, Video };
+export { connectToDb, sequelize };

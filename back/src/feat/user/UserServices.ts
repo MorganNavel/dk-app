@@ -1,5 +1,5 @@
+import { User } from "@/models/UserModel";
 import { API_Response } from "@/types/Response";
-import { User } from "@/storage/initDb";
 import { STATUS_CODES } from "@/utils/statusCodes";
 
 export class UserServices {
