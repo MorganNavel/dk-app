@@ -1,6 +1,6 @@
-import { Video } from "../models/VideoModel";
-import { API_Response } from "../types/Response";
-import { STATUS_CODES } from "../utils/statusCodes";
+import { Video } from "@/models/VideoModel";
+import { API_Response } from "@/types/Response";
+import { STATUS_CODES } from "@/utils/statusCodes";
 import { Request } from "express";
 
 export class VideoServices {

@@ -1,9 +1,9 @@
-import { API_Response } from "../../types/Response";
+import { API_Response } from "@/types/Response";
 import { Request, Response } from "express";
-import { User } from "../../storage/initDb";
-import { STATUS_CODES } from "../../utils/statusCodes";
+import { User } from "@/storage/initDb";
+import { STATUS_CODES } from "@/utils/statusCodes";
 import bcrypt from "bcrypt";
-import { AppSession } from "../../types/Session";
+import { AppSession } from "@/types/Session";
 
 export class AuthService {
   static instance: AuthService;
