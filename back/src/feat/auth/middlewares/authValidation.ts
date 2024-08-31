@@ -1,4 +1,4 @@
-import { validateFields } from "../../utils/validation";
+import { validateFields } from "@/utils/validation";
 import { SignUpScheme, SignInScheme } from "../schemes/authValidators";
 import { Request, Response, NextFunction } from "express";
 
