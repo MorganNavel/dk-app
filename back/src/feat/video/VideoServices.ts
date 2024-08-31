@@ -12,15 +12,18 @@ export class VideoServices {
     VideoServices.instance = this;
   }
 
-  async getVideos(limit: number, offset: number): Promise<API_Response> {
+  async getVideos(
+    limit: number | undefined,
+    offset: number | undefined
+  ): Promise<API_Response> {
     try {
       const videos = await Video.findAll({
-        limit: limit,
-        offset: offset,
+        limit: limit || 5,
+        offset: offset || 0,
       });
       return {
         code: STATUS_CODES.OK,
-        data: videos.map((video) => video.dataValues),
+        data: videos,
       };
     } catch (error: any) {
       return {

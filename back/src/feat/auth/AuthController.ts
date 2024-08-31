@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthService } from "./authServices";
-import { API_Response } from "../types/Response";
+import { API_Response } from "../../types/Response";
 const authServices = new AuthService();
 
 export class AuthController {
