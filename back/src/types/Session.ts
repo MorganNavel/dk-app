@@ -14,4 +14,6 @@ interface UserSession {
   avatar?: string;
   nationality?: string;
   views?: number;
+  role?: string;
+  rating?: number;
 }

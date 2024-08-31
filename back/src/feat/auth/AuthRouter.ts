@@ -4,7 +4,7 @@ import {
   validateSignUpInput,
   validateSignInInput,
 } from "./middlewares/authValidation";
-import { isSignedIn } from "@/utils/authMiddleware";
+import { isSignedIn } from "@/utils/middlewares/authMiddleware";
 
 const authRouter = Router();
 
