@@ -11,12 +11,24 @@ export class UserServices {
     this.instance = this;
   }
 
-  public async getAll(): Promise<API_Response> {
+  public async getAllStudents(): Promise<API_Response> {
+    return {
+      code: STATUS_CODES.NOT_IMPLEMENTED,
+    };
+  }
+  public async getAllTeachers(): Promise<API_Response> {
     try {
-      const users = await User.findAll();
-      return { code: STATUS_CODES.OK, data: users };
+      const teachers = await User.findAll({ where: { role: "teacher" } });
+      const teachersWithoutPassword = teachers.map((teacher) => {
+        const { password_hash, ...teacherWithoutPassword } = teacher.dataValues;
+        return teacherWithoutPassword;
+      });
+      return { code: STATUS_CODES.OK, data: teachersWithoutPassword };
     } catch (error: any) {
-      return { code: STATUS_CODES.BAD_REQUEST, error: error.errors[0].message };
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: error.errors[0].message,
+      };
     }
   }
 
@@ -29,7 +41,10 @@ export class UserServices {
       const { password_hash, ...userWithoutPassword } = user.dataValues;
       return { code: STATUS_CODES.OK, data: userWithoutPassword };
     } catch (error: any) {
-      return { code: STATUS_CODES.BAD_REQUEST, error: error.errors[0].message };
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: error.errors[0].message,
+      };
     }
   }
 
@@ -42,7 +57,10 @@ export class UserServices {
       const { password_hash, ...userWithoutPassword } = user.dataValues;
       return { code: STATUS_CODES.OK, data: userWithoutPassword };
     } catch (error: any) {
-      return { code: STATUS_CODES.BAD_REQUEST, error: error.errors[0].message };
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: error.errors[0].message,
+      };
     }
   }
 
@@ -70,7 +88,10 @@ export class UserServices {
       await user.destroy();
       return { code: STATUS_CODES.OK };
     } catch (error: any) {
-      return { code: STATUS_CODES.BAD_REQUEST, error: error.errors[0].message };
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: error.errors[0].message,
+      };
     }
   }
 }
