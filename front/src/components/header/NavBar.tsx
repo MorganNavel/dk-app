@@ -2,7 +2,7 @@
 import { PiSignOutBold } from "react-icons/pi";
 import CustomDropdown from "@/components/reusable/dropdown/Dropdown";
 import { MdOutlineManageAccounts } from "react-icons/md";
-import { useUser } from "../context/useUser";
+import { useProfile } from "../context/useProfile";
 import { LuShoppingCart } from "react-icons/lu";
 import { LuCalendarClock } from "react-icons/lu";
 import { CustomSquareButton } from "@/components/reusable/Button/CustomSquareButton";
@@ -10,9 +10,25 @@ import logo from "@public/assets/img/logo.png";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { apiCall } from "@/utils/apiCall";
+import { UserProfile } from "@/types/User";
 
 export const Navbar = () => {
-  const { user } = useUser();
+  const { profile } = useProfile();
+  const [teachers, setTeachers] = useState<UserProfile[] | null>(null);
+
+  async function getTeachers() {
+    const teachers = await apiCall<ApiResponse<UserProfile[]>>(
+      "/api/v1/user/teachers"
+    );
+    setTeachers(teachers.data);
+  }
+
+  useEffect(() => {
+    getTeachers();
+  }, []);
+
   const t = useTranslations();
   return (
     <>
@@ -60,6 +76,7 @@ export const Navbar = () => {
             </p>
           </div>
         </CustomDropdown>
+
         <CustomDropdown title={t("header.takeLessons.title")} href="/lessons">
           <div className="flex-col bg-primary text-md font-normal">
             <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
@@ -103,18 +120,24 @@ export const Navbar = () => {
             </p>
           </div>
         </CustomDropdown>
+
         <CustomDropdown title={t("header.teachers.title")} href="/teachers">
           <div className="flex-col bg-primary text-md font-normal">
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link
-                href={{
-                  pathname: "teacher",
-                  query: { firstname: "Danbee", lastname: "Park" },
-                }}
-              >
-                {t("header.teachers.danbeepark")}
-              </Link>
-            </p>
+            {teachers &&
+              teachers.map((teacher, index) => (
+                <p
+                  key={index}
+                  className=" py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"
+                >
+                  <Link
+                    href={{
+                      pathname: "teacher/" + teacher.idUser + "/profile",
+                    }}
+                  >
+                    <span>{teacher.firstname + " " + teacher.name}</span>
+                  </Link>
+                </p>
+              ))}
             <p className="py-2 text-center   hover:bg-hoverMobile hover:cursor-pointer">
               <Link href="/teachers">{t("generals.others")}</Link>
             </p>
@@ -122,10 +145,10 @@ export const Navbar = () => {
         </CustomDropdown>
       </div>
       <div className="hidden text-lg lg:flex mr-9">
-        {user.idUser != -1 ? (
+        {profile.idUser != -1 ? (
           <>
             <CustomDropdown
-              title={user.firstname.charAt(0) + " ." + user.lastname}
+              title={profile.firstname.charAt(0) + " ." + profile.name}
               isUserProfil={true}
             >
               <div className="flex-col bg-primary text-md font-normal">

@@ -7,6 +7,7 @@ import { SignUpForm } from "@/components/SignUpForm";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Header } from "@/components/header/Header";
+import { Toaster } from "sonner";
 
 const AuthPage = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -60,6 +61,7 @@ const AuthPage = () => {
           transition={{ duration: 0.5 }}
         ></motion.div>
       </div>
+      <Toaster richColors />
     </LocalizationProvider>
   );
 };

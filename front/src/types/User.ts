@@ -1,29 +1,26 @@
-interface User {
-  idUser: number;
-  firstname: string;
-  lastname: string;
-  email: string;
-  password?: string;
-  description?: string;
-  phone: string;
-}
+type UserRole = "student" | "teacher" | "admin";
 
-interface UserOutput {
+interface UserProfile {
   idUser: number;
   firstname: string;
-  lastname: string;
+  name: string;
   email: string;
-  description?: string;
-  phone: string;
+  languages?: Array<string>;
+  nationality?: Array<string>;
+  description: string;
+  password: string;
+  role: UserRole;
 }
 
 interface SignUpInput {
   firstname: string;
-  lastname: string;
+  name: string;
   email: string;
   password: string;
   confirmPassword: string;
-  phone: string;
+  role?: UserRole;
+  description?: string;
+  languages?: Array<string>;
 }
 
 interface SignInInput {
@@ -31,4 +28,4 @@ interface SignInInput {
   password: string;
 }
 
-export type { User, SignUpInput, SignInInput, UserOutput };
+export type { UserProfile, SignUpInput, SignInInput };
