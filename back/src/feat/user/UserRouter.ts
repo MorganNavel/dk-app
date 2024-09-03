@@ -4,13 +4,18 @@ import { isSignedIn } from "@/utils/middlewares/authMiddleware";
 import { isAdmin, isTeacher } from "@/utils/middlewares/roleMiddlewares";
 const userRouter = Router();
 
-userRouter.get("/:idUser/profile", isSignedIn, UserController.getUserProfile);
 userRouter.get(
-  "/students/all",
+  "/:idUser/profile" /*, isSignedIn*/,
+  UserController.getUserProfile
+);
+userRouter.get(
+  "/students",
   isSignedIn,
   isTeacher,
   UserController.getAllStudents
 );
+userRouter.get("/teachers", UserController.getAllTeachers);
+userRouter.get("/me", isSignedIn, UserController.getMe);
 userRouter.put("/:idUser", isSignedIn, isAdmin, UserController.update);
 userRouter.put("/me", isSignedIn, UserController.updateMe);
 
