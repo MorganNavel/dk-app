@@ -12,16 +12,17 @@ import Link from "next/link";
 import { FiYoutube } from "react-icons/fi";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { apiCall } from "@/utils/apiCall";
+import { useProfile } from "@/components/context/useProfile";
 
 interface SidebarProps {
   isOpen: boolean;
-  profile: UserProfile;
   onClose: () => void;
 }
 
-export const Sidebar = ({ isOpen, profile, onClose }: SidebarProps) => {
+export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
   const t = useTranslations();
   const [teachers, setTeachers] = useState<UserProfile[] | null>(null);
+  const { profile } = useProfile();
 
   useEffect(() => {
     const handleOutsideClick = (event: Event) => {
