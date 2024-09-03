@@ -1,5 +1,4 @@
 import { Model, DataTypes, Optional, Sequelize } from "sequelize";
-import { sequelize } from "../storage/initDb";
 
 type UserRole = "student" | "teacher" | "admin";
 
