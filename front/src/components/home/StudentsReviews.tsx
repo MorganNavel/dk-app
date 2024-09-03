@@ -1,3 +1,4 @@
+"use client";
 import { renderStars } from "@/utils/renderStars";
 import { useTranslations } from "next-intl";
 import { Comment } from "@/components/reusable/Comment";

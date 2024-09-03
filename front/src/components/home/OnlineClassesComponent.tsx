@@ -1,3 +1,4 @@
+"use client";
 import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import onlineClassImg from "@public/assets/img/online-class.png";
 import { useTranslations } from "next-intl";
@@ -7,9 +8,7 @@ interface OnlineClassesComponentProps {
   onClick: () => void;
 }
 
-export const OnlineClassesComponent = ({
-  onClick,
-}: OnlineClassesComponentProps) => {
+export const OnlineClassesComponent = () => {
   const t = useTranslations();
   return (
     <div className="h-screen flex flex-col lg:flex-row items-center">
@@ -42,7 +41,7 @@ export const OnlineClassesComponent = ({
         </p>
         <CustomButtonPrimary
           text={t("generals.learnMore")}
-          onClick={onClick}
+          onClick={() => console.log("learn more")}
           className="py-3 px-12 text-xl mb-6 mt-4 lg:mt-12"
         />
       </div>

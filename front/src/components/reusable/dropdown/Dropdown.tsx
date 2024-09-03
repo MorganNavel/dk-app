@@ -3,6 +3,14 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaUserGraduate } from "react-icons/fa";
 import Link from "next/link";
 
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownSection,
+  DropdownItem,
+} from "@nextui-org/dropdown";
+import { Button } from "@nextui-org/react";
 interface DropdownProps {
   title: string;
   children: React.ReactNode;
@@ -17,6 +25,44 @@ const CustomDropdown = ({
   href,
 }: DropdownProps) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Dropdown isOpen={isHovered} onMouseLeave={() => setIsHovered(false)}>
+      <DropdownTrigger
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <Button
+          variant="light"
+          color="primary"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          className="text-textColor text-lg font-semibold"
+        >
+          Open Menu
+          <IoIosArrowDown
+            className={`text-textColor transition-transform transform ${
+              isHovered ? "rotate-180" : ""
+            }`}
+          />
+        </Button>
+      </DropdownTrigger>
+      <DropdownMenu
+        aria-label="Static Actions"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <DropdownSection>
+          <DropdownItem>
+            <Link href="/videos/grammar">Grammar</Link>
+          </DropdownItem>
+          <DropdownItem>
+            <Link href="/videos/vocabulary">Vocabulary</Link>
+          </DropdownItem>
+        </DropdownSection>
+      </DropdownMenu>
+    </Dropdown>
+  );
 
   return (
     <div

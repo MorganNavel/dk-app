@@ -3,11 +3,9 @@ import { IoIosMenu } from "react-icons/io";
 import { useState } from "react";
 import { Sidebar } from "./sidebar/Sidebar";
 import { Navbar } from "./NavBar";
-import { useProfile } from "@/components/context/useProfile";
+
 export const Header = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const { profile } = useProfile();
-
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
   };
@@ -25,7 +23,7 @@ export const Header = () => {
           <Navbar />
         </div>
       </div>
-      <Sidebar isOpen={sidebarOpen} profile={profile} onClose={toggleSidebar} />
+      <Sidebar isOpen={sidebarOpen} onClose={toggleSidebar} />
     </div>
   );
 };

@@ -8,7 +8,6 @@ interface UserProfile {
   languages?: Array<string>;
   nationality?: Array<string>;
   description: string;
-  password: string;
   role: UserRole;
 }
 

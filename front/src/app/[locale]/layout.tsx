@@ -1,3 +1,4 @@
+import { ProfileProvider } from "@/components/context/useProfile";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
@@ -19,9 +20,11 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          {children}
-        </NextIntlClientProvider>
+        <ProfileProvider>
+          <NextIntlClientProvider messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </ProfileProvider>
       </body>
     </html>
   );
