@@ -8,8 +8,28 @@ import { initCache } from "./storage/cache";
 import { getRedisConf } from "./utils/env";
 import videoRouter from "./feat/video/VideoRouter";
 import userRouter from "./feat/user/UserRouter";
+import cors from "cors";
 
 const app = express();
+
+const allowedOrigins = ["http://192.168.1.27:3000", "http://localhost:3000"];
+
+const corsOptions = {
+  origin: (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void
+  ) => {
+    if (allowedOrigins.indexOf(origin ?? "") !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true,
+};
+app.use(cors(corsOptions));
 
 connectToDb();
 const { redisClient, redisStore } = initCache();
