@@ -4,6 +4,7 @@ import { readFileSync } from "fs";
 import { initUser, User } from "@/models/UserModel";
 import { initLesson, Lesson } from "@/models/LessonModel";
 import { initVideo, Video } from "@/models/VideoModel";
+// import bcrypt from "bcrypt";
 
 dotenv.config();
 const ENV = process.env.NODE_ENV || "development";
@@ -65,6 +66,17 @@ async function connectToDb() {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
+
+    // await User.create({
+    //   name: "Park",
+    //   firstname: "Danbee",
+    //   email: "ilovelanguages@naver.com",
+    //   password_hash: bcrypt.hashSync("26122002", 10),
+    //   role: "teacher",
+    //   languages: "French;English;Korean",
+    //   nationality: "Korean",
+    //   description: "I am a language lover",
+    // });
 
     console.log("Connected to database");
   } catch (error) {
