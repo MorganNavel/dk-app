@@ -1,8 +1,8 @@
 "use client";
-import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import eLearningImg from "@public/assets/img/e-learning.png";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { Button } from "@ui/button";
 
 export const ELearningComponent = () => {
   const t = useTranslations();
@@ -28,13 +28,13 @@ export const ELearningComponent = () => {
           <p className="lg:max-w-md max-w-md mt-6 lg:text-lg text-md text-justify">
             {t("home.eLearning.p2")}
           </p>
-          <CustomButtonPrimary
-            text={t("generals.learnMore")}
-            onClick={() => {
-              console.log("learn more");
-            }}
-            className="py-3 px-12 text-xl mb-6 mt-12"
-          />
+
+          <Button
+            onClick={() => console.log("learn more")}
+            variant={"round-outline"}
+          >
+            {t("generals.learnMore")}
+          </Button>
         </div>
         <Image
           src={eLearningImg}

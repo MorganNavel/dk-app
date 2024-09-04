@@ -1,11 +1,10 @@
 "use client";
 import { PiSignOutBold } from "react-icons/pi";
-import CustomDropdown from "@/components/reusable/dropdown/Dropdown";
+import { CustomDropdown } from "@/components/reusable/dropdown/Dropdown";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { useProfile } from "../context/useProfile";
 import { LuShoppingCart } from "react-icons/lu";
 import { LuCalendarClock } from "react-icons/lu";
-import { CustomSquareButton } from "@/components/reusable/Button/CustomSquareButton";
 import logo from "@public/assets/img/logo.png";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
@@ -13,6 +12,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiCall } from "@/utils/apiCall";
 import { UserProfile } from "@/types/User";
+import { DropdownMenuItem, DropdownMenuSeparator } from "@ui/dropdown-menu";
+import { Button } from "@ui/button";
 
 export const Navbar = () => {
   const { profile } = useProfile();
@@ -44,104 +45,98 @@ export const Navbar = () => {
       <div className="invisible lg:hidden"></div>
 
       <div className="hidden lg:flex text-lg space-x-8 xl:text-[20px]  font-semibold">
-        <div>
-          <Link href="/level-test">{t("header.levelTest")}</Link>
-        </div>
-        <div>
-          <Link href="/pricing">{t("header.pricing")}</Link>
-        </div>
+        <Link className="text-white" href="/level-test">
+          {t("header.levelTest")}
+        </Link>
+        <Link className="text-white" href="/pricing">
+          {t("header.pricing")}
+        </Link>
+        <CustomDropdown title={t("header.videos.title")} className="text-white">
+          <DropdownMenuItem>
+            <Link href="/videos/grammar">
+              <p className="text-lg">{t("header.videos.grammar")}</p>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/videos/vocabulary">
+              <p className="text-lg">{t("header.videos.vocabulary")}</p>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/videos/conversation">
+              <p className="text-lg">{t("header.videos.conversation")}</p>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href="/videos/conjugation">
+              <p className="text-lg">{t("header.videos.conjugation")}</p>
+            </Link>
+          </DropdownMenuItem>
 
-        <CustomDropdown title={t("header.videos.title")} href="/videos">
-          <div className="flex-col bg-primary text-md font-normal">
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href="/videos/grammar">{t("header.videos.grammar")}</Link>
-            </p>
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href="/videos/vocabulary">
-                {t("header.videos.vocabulary")}
-              </Link>
-            </p>
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href="/videos/conversation">
-                {t("header.videos.conversation")}
-              </Link>
-            </p>
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href="/videos/conjugation">
-                {t("header.videos.conjugation")}
-              </Link>
-            </p>
-            <p className="py-2 text-center  hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href="/videos">{t("generals.others")}</Link>
-            </p>
-          </div>
+          <DropdownMenuItem>
+            <Link href="/videos">
+              <p className="text-lg">{t("generals.others")}</p>
+            </Link>
+          </DropdownMenuItem>
+        </CustomDropdown>
+        <CustomDropdown
+          title={t("header.takeLessons.title")}
+          className="text-white"
+        >
+          <DropdownMenuItem>
+            <Link href={{ pathname: "lessons", query: { level: "beginner" } }}>
+              <p className="text-lg">{t("header.takeLessons.beginner")}</p>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link
+              href={{ pathname: "lessons", query: { level: "intermediate1" } }}
+            >
+              <p className="text-lg">{t("header.takeLessons.intermediate1")}</p>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link
+              href={{ pathname: "lessons", query: { level: "intermediate2" } }}
+            >
+              <p className="text-lg">{t("header.takeLessons.intermediate2")}</p>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={{ pathname: "lessons", query: { level: "topik" } }}>
+              <p className="text-lg">{t("header.takeLessons.topik")}</p>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Link href={{ pathname: "lessons", query: { level: "advanced" } }}>
+              <p className="text-lg">{t("header.takeLessons.advanced")}</p>
+            </Link>
+          </DropdownMenuItem>
         </CustomDropdown>
 
-        <CustomDropdown title={t("header.takeLessons.title")} href="/lessons">
-          <div className="flex-col bg-primary text-md font-normal">
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link
-                href={{ pathname: "lessons", query: { level: "beginner" } }}
-              >
-                {t("header.takeLessons.beginner")}
-              </Link>
-            </p>
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link
-                href={{
-                  pathname: "lessons",
-                  query: { level: "intermediate1" },
-                }}
-              >
-                {t("header.takeLessons.intermediate1")}
-              </Link>
-            </p>
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link
-                href={{
-                  pathname: "lessons",
-                  query: { level: "intermediate2" },
-                }}
-              >
-                {t("header.takeLessons.intermediate2")}
-              </Link>
-            </p>
-            <p className="py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href={{ pathname: "lessons", query: { level: "topik" } }}>
-                {t("header.takeLessons.topik")}
-              </Link>
-            </p>
-            <p className="py-2 text-center hover:bg-hoverMobile hover:cursor-pointer">
-              <Link
-                href={{ pathname: "lessons", query: { level: "advanced" } }}
-              >
-                {t("header.takeLessons.advanced")}
-              </Link>
-            </p>
-          </div>
-        </CustomDropdown>
-
-        <CustomDropdown title={t("header.teachers.title")} href="/teachers">
-          <div className="flex-col bg-primary text-md font-normal">
-            {teachers &&
-              teachers.map((teacher, index) => (
-                <p
-                  key={index}
-                  className=" py-2 text-center  border-b hover:bg-hoverMobile hover:cursor-pointer"
+        <CustomDropdown
+          title={t("header.teachers.title")}
+          className="text-white"
+        >
+          {teachers &&
+            teachers.map((teacher, index) => (
+              <DropdownMenuItem key={index}>
+                <Link
+                  href={{
+                    pathname: "teacher/" + teacher.idUser + "/profile",
+                  }}
                 >
-                  <Link
-                    href={{
-                      pathname: "teacher/" + teacher.idUser + "/profile",
-                    }}
-                  >
-                    <span>{teacher.firstname + " " + teacher.name}</span>
-                  </Link>
-                </p>
-              ))}
-            <p className="py-2 text-center   hover:bg-hoverMobile hover:cursor-pointer">
-              <Link href="/teachers">{t("generals.others")}</Link>
-            </p>
-          </div>
+                  <p className="text-lg">
+                    {teacher.firstname + " " + teacher.name}
+                  </p>
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          <DropdownMenuItem>
+            <Link href="/teachers">
+              <p className="text-lg">{t("generals.others")}</p>
+            </Link>
+          </DropdownMenuItem>
         </CustomDropdown>
       </div>
       <div className="hidden text-lg lg:flex mr-9">
@@ -149,38 +144,44 @@ export const Navbar = () => {
           <>
             <CustomDropdown
               title={profile.firstname.charAt(0) + " ." + profile.name}
-              isUserProfil={true}
+              className="text-white"
             >
-              <div className="flex-col bg-primary text-md font-normal">
-                <p className="py-2 px-3  border-b hover:bg-hoverMobile hover:cursor-pointer">
-                  <Link className="flex items-center" href="/myaccount">
-                    <MdOutlineManageAccounts className="mr-1 text-textColor w-7 h-7 " />
-                    {t("header.profile.myaccount")}
-                  </Link>
-                </p>
-                <p className="py-2 px-3  border-b hover:bg-hoverMobile hover:cursor-pointer">
-                  <Link className="flex items-center" href="/orders">
-                    <LuShoppingCart className="mr-1 text-textColor w-7 h-7" />
-                    {t("header.profile.orders")}
-                  </Link>
-                </p>
-                <p className="py-2 px-3 border-b hover:bg-hoverMobile hover:cursor-pointer">
-                  <Link className="flex items-center" href="/subscriptions">
-                    <LuCalendarClock className="mr-1 text-textColor w-7 h-7" />
-                    {t("header.profile.subscriptions")}
-                  </Link>
-                </p>
-                <p className=" py-2 px-3 hover:bg-hoverMobile hover:cursor-pointer">
-                  <Link className="flex items-center" href="/">
-                    <PiSignOutBold className="mr-1 text-textColor w-7 h-7" />
-                    {t("generals.signout")}
-                  </Link>
-                </p>
-              </div>
+              <DropdownMenuItem>
+                <Link href="/myaccount" className="flex items-center">
+                  <MdOutlineManageAccounts className="mr-3 text-textColor w-5 h-5 " />
+
+                  <p className="text-lg">{t("header.profile.myaccount")}</p>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/orders" className="flex items-center">
+                  <LuShoppingCart className="mr-3 text-textColor w-5 h-5" />
+
+                  <p className="text-lg">{t("header.profile.orders")}</p>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/subscriptions" className="flex items-center">
+                  <LuCalendarClock className="mr-3 text-textColor w-5 h-5" />
+
+                  <p className="text-lg">{t("header.profile.subscriptions")}</p>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Link href="/" className="flex items-center">
+                  <PiSignOutBold className="mr-3 text-textColor w-5 h-5" />
+                  <p className="text-lg">{t("generals.signout")}</p>
+                </Link>
+              </DropdownMenuItem>
             </CustomDropdown>
           </>
         ) : (
-          <CustomSquareButton href="/auth" text={t("generals.signin")} />
+          <Button variant={"square-outline"} className="px-9 py-6">
+            <Link className="text-white" href="/auth">
+              {t("generals.signin")}
+            </Link>
+          </Button>
         )}
       </div>
     </>

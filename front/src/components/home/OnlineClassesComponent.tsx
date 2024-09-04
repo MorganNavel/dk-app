@@ -1,8 +1,8 @@
 "use client";
-import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import onlineClassImg from "@public/assets/img/online-class.png";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
+import { Button } from "@ui/button";
 
 interface OnlineClassesComponentProps {
   onClick: () => void;
@@ -39,11 +39,13 @@ export const OnlineClassesComponent = () => {
         <p className="lg:max-w-md max-w-md mt-4 lg:mt-6 lg:text-lg text-md text-justify">
           {t("home.onlineClasses.p2")}
         </p>
-        <CustomButtonPrimary
-          text={t("generals.learnMore")}
+
+        <Button
           onClick={() => console.log("learn more")}
-          className="py-3 px-12 text-xl mb-6 mt-4 lg:mt-12"
-        />
+          variant={"round-outline"}
+        >
+          {t("generals.learnMore")}
+        </Button>
       </div>
       <div className="lg:hidden h-screen w-full flex justify-center items-center bg-primary">
         <div

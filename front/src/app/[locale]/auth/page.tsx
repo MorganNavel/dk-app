@@ -8,6 +8,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Header } from "@/components/header/Header";
 import { Toaster } from "sonner";
+import { Button } from "@/components/ui/button";
 
 const AuthPage = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -19,22 +20,24 @@ const AuthPage = () => {
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
         <div className="relative w-full max-w-md mb-8">
           <div className="flex justify-around">
-            <button
+            <Button
+              variant={"none"}
               onClick={() => setIsSignIn(true)}
               className={`text-lg font-semibold pb-2 ${
                 isSignIn ? "text-primary" : "text-gray-400"
               }`}
             >
               Sign In
-            </button>
-            <button
+            </Button>
+            <Button
+              variant={"none"}
               onClick={() => setIsSignIn(false)}
               className={`text-lg font-semibold pb-2 ${
                 !isSignIn ? "text-primary" : "text-gray-400"
               }`}
             >
               Sign Up
-            </button>
+            </Button>
           </div>
 
           <motion.div

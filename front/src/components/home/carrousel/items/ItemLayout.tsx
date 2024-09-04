@@ -1,4 +1,4 @@
-import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
+import { Button } from "@ui/button";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 interface ItemLayoutProps {
@@ -42,11 +42,10 @@ export const ItemLayout = ({
               width={imageSizeMobile}
               className="lg:hidden mb-6 mt-6"
             />
-            <CustomButtonPrimary
-              onClick={onClick}
-              text={buttonText}
-              className="py-3 px-10 text-xl"
-            />
+
+            <Button onClick={onClick} variant={"round-outline"}>
+              {buttonText}
+            </Button>
           </div>
         </div>
       </div>

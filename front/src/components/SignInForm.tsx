@@ -4,9 +4,9 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { CustomButtonPrimary } from "@/components/reusable/Button/CustomRoundButton";
 import { ControllableInput } from "@/components/ControllableInput";
 import { SignInInput } from "@/types/User";
+import { Button } from "./ui/button";
 
 export const SignInForm = () => {
   const methods = useForm({
@@ -63,7 +63,9 @@ export const SignInForm = () => {
             }}
           />
         </div>
-        <CustomButtonPrimary text="Sign In" type="submit" className="p-3" />
+        <Button type="submit" variant={"round-outline"}>
+          Sign In
+        </Button>
       </form>
     </FormProvider>
   );
