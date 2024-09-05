@@ -1,11 +1,8 @@
 "use client";
-import { IoIosMenu } from "react-icons/io";
-import { useState } from "react";
 import { Sidebar } from "./sidebar/Sidebar";
 import { Navbar } from "./NavBar";
 
 export const Header = () => {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div>
