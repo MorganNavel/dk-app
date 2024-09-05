@@ -210,7 +210,7 @@ export const NavbarV1 = () => {
       <Link className="text-white" href="/">
           {t("home")}
         </Link>
-        <Link className="text-white" href="/parkdanbee/profile">
+        <Link className="text-white" href="/park-danbee/profile">
         {t("myprofile")}
         </Link>
         <Link className="text-white" href="/about-us">

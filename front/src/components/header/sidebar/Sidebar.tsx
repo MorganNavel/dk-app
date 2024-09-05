@@ -13,6 +13,12 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { apiCall } from "@/utils/apiCall";
 import { useProfile } from "@/components/context/useProfile";
 import { Button } from "@ui/button";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { FaRegEnvelope } from "react-icons/fa";
+import { ImProfile } from "react-icons/im";
+
+
+
 import {
   Sheet,
   SheetClose,
@@ -215,3 +221,68 @@ export const Sidebar = () => {
     </Sheet>
   );
 };
+
+
+
+export const SidebarV1 = () => {
+  const t = useTranslations();
+
+  return (
+    <Sheet>
+      <SheetTrigger className="lg:hidden">
+        <div className="bg-primary-foreground rounded-md">
+        <IoIosMenu className="text-background w-7 h-7" />
+        </div>
+      </SheetTrigger>
+      <SheetContent side="left" className="bg-primary-foreground text-white">
+        <SheetHeader className="mb-5">
+          <SheetTitle className="font-semibold text-2xl text-white">
+            <h2>{t("generals.menu")}</h2>
+          </SheetTitle>
+        </SheetHeader>
+        <div className="flex flex-col items-center w-full">
+          <div className="w-full">
+            <span className="absolute position-start">
+              <ImProfile  className="h-6 w-6" />
+            </span>
+            <Link href="/park-danbee/profile">
+              <p className="text-center flex-1 font-semibold">
+                {t("header.myprofile")}
+              </p>
+            </Link>
+          </div>
+          <hr className="w-full my-4"/>
+          <div className="w-full">
+            <span className="absolute position-start">
+              <IoInformationCircleOutline className="h-6 w-6" />
+            </span>
+            <Link href="/about-us">
+              <p className="text-center flex-1 font-semibold">
+                {t("header.aboutUs")}
+              </p>
+            </Link>
+          </div>
+          <hr className="w-full my-4"/>
+          <div className="w-full">
+            <span className="absolute position-start">
+              <FaRegEnvelope className="h-6 w-6" />
+
+            </span>
+            <Link href="/contact">
+              <p className="text-center flex-1 font-semibold">
+                {t("header.contact")}
+              </p>
+            </Link>
+          </div>
+          <hr className="w-full my-4"/>
+
+        
+        
+        </div>
+
+        
+      </SheetContent>
+    </Sheet>
+  );
+};
+
