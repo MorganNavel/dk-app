@@ -22,7 +22,6 @@ const UserContext = createContext<UserContextType>({
     languages: [],
     nationality: [],
     description: "",
-    password: "",
     role: "student",
   },
   setProfile: () => {},
@@ -37,20 +36,18 @@ export const ProfileProvider = ({ children }: { children: ReactNode }) => {
     languages: [],
     nationality: [],
     description: "",
-    password: "",
     role: "student",
   });
 
   useEffect(() => {
     setProfile({
       idUser: -1,
-      firstname: "",
-      name: "",
+      firstname: "morgan",
+      name: "navel",
       email: "",
       languages: [],
       nationality: [],
       description: "",
-      password: "",
       role: "student",
     });
   }, []);
