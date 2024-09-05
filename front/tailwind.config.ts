@@ -21,8 +21,10 @@ const config: Config = {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
+			"disabled-button": 'hsl(var(--disabled-button))',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			"primary-foreground": 'hsl(var(--primary-foreground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
