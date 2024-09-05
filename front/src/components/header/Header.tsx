@@ -1,6 +1,6 @@
 "use client";
 import { Sidebar } from "./sidebar/Sidebar";
-import { Navbar } from "./NavBar";
+import { Navbar, NavbarV1 } from "./NavBar";
 
 export const Header = () => {
 
@@ -11,7 +11,7 @@ export const Header = () => {
           <div className=" p-0.5 rounded-lg bg-hoverMobile lg:hidden">
             <Sidebar />
           </div>
-          <Navbar />
+          <NavbarV1 />
         </div>
       </div>
     </div>

@@ -37,7 +37,11 @@
       "myaccount": "My Account",
       "subscriptions": "Subscriptions",
       "orders": "Orders"
-    }
+    },
+    "home":"Home",
+    "myprofile": "My Profile",
+    "aboutUs":"About Us",
+    "contact":"Contact"
   },
   "footer": {
     "services": "Services",

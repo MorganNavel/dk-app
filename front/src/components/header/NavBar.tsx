@@ -27,7 +27,7 @@ export const Navbar = () => {
   }
 
   useEffect(() => {
-    getTeachers();
+    // getTeachers();
   }, []);
 
   const t = useTranslations();
@@ -184,6 +184,43 @@ export const Navbar = () => {
           </Button>
         )}
       </div>
+    </>
+  );
+};
+
+
+
+export const NavbarV1 = () => {
+
+  const t = useTranslations("header");
+  return (
+    <>
+      <div className="flex justify-center lg:ml-5">
+        <Link href="/">
+          <Image
+            src={logo}
+            alt="logo"
+            className="w-auto h-[53px] lg:w-[143px] lg:h-[96px]"
+          />
+        </Link>
+      </div>
+      <div className="invisible lg:hidden"></div>
+
+      <div className="hidden lg:flex text-lg space-x-8 xl:text-[20px]  font-semibold">
+      <Link className="text-white" href="/">
+          {t("home")}
+        </Link>
+        <Link className="text-white" href="/parkdanbee/profile">
+        {t("myprofile")}
+        </Link>
+        <Link className="text-white" href="/about-us">
+          {t("aboutUs")}
+        </Link>
+        <Link className="text-white" href="/contact">
+        {t("contact")}
+        </Link>
+      </div>
+      <div className="hidden text-lg lg:flex mr-9"/>  
     </>
   );
 };
