@@ -50,12 +50,14 @@ export const Sidebar = () => {
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden">
+        <div className="bg-primary-foreground rounded-md">
         <IoIosMenu className="text-background w-7 h-7" />
+        </div>
       </SheetTrigger>
-      <SheetContent side="left">
-        <SheetHeader>
-          <SheetTitle>
-            {profile.idUser === -1 ? (
+      <SheetContent side="left" className="bg-primary-foreground text-white">
+        <SheetHeader className="mb-5">
+          <SheetTitle className="font-semibold text-2xl text-white">
+            {profile.idUser !== -1 ? (
               <div className="flex items-center space-x-4 overflow-hidden">
                 <div className="p-2 rounded-3xl bg-hoverMobile">
                   <FaUserGraduate className="h-6 w-6" />
@@ -69,36 +71,38 @@ export const Sidebar = () => {
             )}
           </SheetTitle>
         </SheetHeader>
-
-        <Accordion type="single" collapsible>
-          <AccordionItem value="pricing">
-            <AccordionTrigger>
-              <span>
+        <div className="flex flex-col items-center w-full">
+            <div className="w-full">
+              <span className="absolute position-start">
                 <FaEuroSign className="h-6 w-6" />
               </span>
-              {t("header.pricing")}
-            </AccordionTrigger>
-          </AccordionItem>
-        </Accordion>
-
-        <Accordion type="single" collapsible>
+              <Link href="/pricing">
+                <p className="text-center flex-1 font-semibold">
+                  {t("header.pricing")}
+                </p>
+              </Link>
+            </div>
+        <hr className="divide-primary w-full mt-4"/>
+        <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="videos">
             <AccordionTrigger>
               <span>
                 <FiYoutube className="h-6 w-6" />
               </span>
-              {t("header.videos.title")}
+              <p >
+                {t("header.videos.title")}
+              </p>
             </AccordionTrigger>
-            <AccordionContent>
-              <p className="py-1 text-center  border-b ">
+            <AccordionContent className="divide-y-1 divide-gray">
+              <p className="py-1 text-center">
                 <Link href="/videos/grammar">{t("header.videos.grammar")}</Link>
               </p>
-              <p className="py-1 text-center  border-b">
+              <p className="py-1 text-center">
                 <Link href="/videos/vocabulary">
                   {t("header.videos.vocabulary")}
                 </Link>
               </p>
-              <p className="py-1 text-center  border-b">
+              <p className="py-1 text-center">
                 <Link href="/videos/conversation">
                   {t("header.videos.conversation")}
                 </Link>
@@ -112,7 +116,7 @@ export const Sidebar = () => {
           </AccordionItem>
         </Accordion>
 
-        <Accordion type="single" collapsible>
+        <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="teachers">
             <AccordionTrigger>
               <span>
@@ -120,9 +124,9 @@ export const Sidebar = () => {
               </span>
               {t("header.teachers.title")}
             </AccordionTrigger>
-            <AccordionContent>
+            <AccordionContent className="divide-y-1 divide-gray">
               {teachers?.map((teacher, index) => (
-                <p key={index} className="py-1 text-center  border-b w-full ">
+                <p key={index} className="py-1 text-center w-full ">
                   <Link
                     href={{
                       pathname: "teacher/" + teacher.idUser + "/profile",
@@ -139,7 +143,7 @@ export const Sidebar = () => {
           </AccordionItem>
         </Accordion>
 
-        <Accordion type="single" collapsible>
+        <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="lessons">
             <AccordionTrigger>
               <span>
@@ -147,15 +151,15 @@ export const Sidebar = () => {
               </span>
               {t("header.takeLessons.title")}
             </AccordionTrigger>
-            <AccordionContent>
-              <p className="py-1 text-center  border-b">
+            <AccordionContent className="divide-y-1 divide-gray">
+              <p className="py-1 text-center">
                 <Link
                   href={{ pathname: "lessons", query: { level: "beginner" } }}
                 >
                   {t("header.takeLessons.beginner")}
                 </Link>
               </p>
-              <p className="py-1 text-center border-b">
+              <p className="py-1 text-center">
                 <Link
                   href={{
                     pathname: "lessons",
@@ -165,7 +169,7 @@ export const Sidebar = () => {
                   {t("header.takeLessons.intermediate1")}
                 </Link>
               </p>
-              <p className="py-1 text-center  border-b ">
+              <p className="py-1 text-center ">
                 <Link
                   href={{
                     pathname: "lessons",
@@ -175,7 +179,7 @@ export const Sidebar = () => {
                   {t("header.takeLessons.intermediate2")}
                 </Link>
               </p>
-              <p className="py-1 text-center  border-b ">
+              <p className="py-1 text-center ">
                 <Link href={{ pathname: "lessons", query: { level: "topik" } }}>
                   {t("header.takeLessons.topik")}
                 </Link>
@@ -190,15 +194,20 @@ export const Sidebar = () => {
             </AccordionContent>
           </AccordionItem>
         </Accordion>
+        </div>
 
         <SheetFooter>
-          {profile.idUser != -1 ? (
-            <Button variant="square-outline">
-              <Link href="/sign-out">{t("generals.signout")}</Link>
-            </Button>
-          ) : (
-            <Button variant="square-outline">
-              <Link href="/auth">{t("generals.signin")}</Link>
+          {profile.idUser !== -1 ? (
+            <Button variant={"square-outline"} className="mt-5 px-8 py-7">
+              <Link className="text-white" href="/sign-out">
+              {t("generals.signout")}
+              </Link>
+            </Button>        
+          ) : (  
+            <Button variant={"square-outline"} className="mt-5 px-8 py-7">
+              <Link className="text-white" href="/auth">
+                {t("generals.signin")}
+              </Link>
             </Button>
           )}
         </SheetFooter>
