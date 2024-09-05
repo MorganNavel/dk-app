@@ -17,7 +17,7 @@ export const ELearningComponent = () => {
         />
         <div className="flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh] lg:mx-[15vw]">
           <h1
-            className="text-xl lg:text-2xl font-semibold font-Poppins max-w-sm lg: max-w-lg  text-center lg:text-left"
+            className="text-xl lg:text-2xl font-semibold font-Poppins max-w-sm lg:  text-center lg:text-left"
             style={{ fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
           >
             {t("home.eLearning.title")}
@@ -30,11 +30,13 @@ export const ELearningComponent = () => {
           </p>
 
           <Button
-            onClick={() => console.log("learn more")}
             variant={"round-outline"}
+            onClick={() => console.log("learn more")}
+            className="mt-6 px-7 py-6 text-lg"
           >
             {t("generals.learnMore")}
           </Button>
+
         </div>
         <Image
           src={eLearningImg}

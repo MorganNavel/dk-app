@@ -177,7 +177,7 @@ export const Navbar = () => {
             </CustomDropdown>
           </>
         ) : (
-          <Button variant={"square-outline"} className="px-9 py-6">
+          <Button variant={"square-outline"} className="px-8 py-7">
             <Link className="text-white" href="/auth">
               {t("generals.signin")}
             </Link>

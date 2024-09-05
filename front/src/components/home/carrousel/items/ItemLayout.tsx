@@ -31,7 +31,7 @@ export const ItemLayout = ({
               <h2 className="text-2xl font-bold drop-shadow-md my-4 lg:text-4xl  lg:my-16">
                 {title}
               </h2>
-              <p className="text-lg max-w-xs text-center lg:max-w-md mx-auto lg:text-xl  lg:my-16">
+              <p className="text-lg text-black max-w-xs text-center lg:max-w-md mx-auto lg:text-xl  lg:my-16">
                 {description}
               </p>
             </div>
@@ -43,7 +43,7 @@ export const ItemLayout = ({
               className="lg:hidden mb-6 mt-6"
             />
 
-            <Button onClick={onClick} variant={"round-outline"}>
+            <Button onClick={onClick} variant={"round-outline"} className="py-5 px-8 text-lg font-semibold">
               {buttonText}
             </Button>
           </div>

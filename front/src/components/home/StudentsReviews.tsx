@@ -48,7 +48,7 @@ export const StudentsReviews = () => {
             {t("home.reviews.title")}
           </h1>
           <div className="flex justify-center mt-8">
-            <h2 className="text-2xl font-bold text-center text-primary drop-shadow flex items-center text-primary">
+            <h2 className="text-2xl font-bold text-center drop-shadow flex items-center text-primary">
               <p className="mr-5">{t("generals.average")} : </p>
               <span className="flex text-yellow-500">{renderStars(5)}</span>
             </h2>
