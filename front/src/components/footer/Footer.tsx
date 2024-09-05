@@ -32,7 +32,7 @@ export const Footer = () => {
   ];
   return (
     <>
-      <div className="bg-primary text-textColor">
+      <div className="bg-primary text-white">
         <div className="flex flex-col items-center mt-13">
           <div className="flex space-x-9 lg:space-x-64 ">
             <div className="flex flex-col space-y-1">
