@@ -1,5 +1,5 @@
 "use client";
-import { Sidebar, SidebarV1 } from "./sidebar/Sidebar";
+import { Sidebar, SidebarV1 } from "./Sidebar";
 import { Navbar, NavbarV1 } from "./NavBar";
 
 export const Header = () => {

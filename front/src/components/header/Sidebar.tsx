@@ -5,7 +5,6 @@ import { FaEuroSign } from "react-icons/fa";
 import { IoIosSchool } from "react-icons/io";
 import { FaUserGraduate } from "react-icons/fa";
 import { UserProfile } from "@/types/User";
-import { DropdownSidebar } from "@/components/reusable/dropdown/SidebarDropdown";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FiYoutube } from "react-icons/fi";
@@ -21,12 +20,9 @@ import { ImProfile } from "react-icons/im";
 
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
-  SheetOverlay,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";

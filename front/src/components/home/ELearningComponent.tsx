@@ -8,7 +8,7 @@ export const ELearningComponent = () => {
   const t = useTranslations();
   return (
     <>
-      <div className="h-screen flex flex-col lg:flex-row items-center lg:items-center">
+      <div className="text-green-950 h-screen flex flex-col lg:flex-row items-center lg:items-center">
         <Image
           src={eLearningImg}
           alt="Elearning icons"
@@ -17,7 +17,7 @@ export const ELearningComponent = () => {
         />
         <div className="flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh] lg:mx-[15vw]">
           <h1
-            className="text-xl lg:text-2xl font-semibold font-Poppins max-w-sm lg:  text-center lg:text-left"
+            className="  text-xl lg:text-2xl font-semibold font-Poppins max-w-sm lg:  text-center lg:text-left"
             style={{ fontSize: "clamp(1.5rem, 2.5vw, 2rem)" }}
           >
             {t("home.eLearning.title")}

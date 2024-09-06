@@ -2,8 +2,8 @@
 import "@/globals.css";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { SignInForm } from "@/components/SignInForm";
-import { SignUpForm } from "@/components/SignUpForm";
+import { SignInForm } from "@/components/auth/SignInForm";
+import { SignUpForm } from "@/components/auth/SignUpForm";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { Header } from "@/components/header/Header";

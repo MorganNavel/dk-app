@@ -1,6 +1,5 @@
 "use client";
 import { PiSignOutBold } from "react-icons/pi";
-import { CustomDropdown } from "@/components/reusable/dropdown/Dropdown";
 import { MdOutlineManageAccounts } from "react-icons/md";
 import { useProfile } from "../context/useProfile";
 import { LuShoppingCart } from "react-icons/lu";
@@ -13,6 +12,7 @@ import { useEffect, useState } from "react";
 import { apiCall } from "@/utils/apiCall";
 import { UserProfile } from "@/types/User";
 import { DropdownMenuItem, DropdownMenuSeparator } from "@ui/dropdown-menu";
+import { CustomDropdown } from "@/components/reusable/Dropdown";
 import { Button } from "@ui/button";
 
 export const Navbar = () => {

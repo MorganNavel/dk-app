@@ -6,9 +6,8 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { ControllableInput } from "@/components/ControllableInput";
 import { SignInInput } from "@/types/User";
-import { ControllableDatePicker } from "./ControllableDatePicker";
-import dayjs from "dayjs";
-import { Button } from "./ui/button";
+import { ControllableDatePicker } from "../ControllableDatePicker";
+import { Button } from "../ui/button";
 
 export const SignUpForm = () => {
   const methods = useForm({

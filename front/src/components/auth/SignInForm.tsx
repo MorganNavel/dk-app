@@ -6,7 +6,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { ControllableInput } from "@/components/ControllableInput";
 import { SignInInput } from "@/types/User";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 
 export const SignInForm = () => {
   const methods = useForm({

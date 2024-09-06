@@ -21,6 +21,7 @@ const config: Config = {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))'
   			},
+			"color-black": "green-950",
 			"disabled-button": 'hsl(var(--disabled-button))',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

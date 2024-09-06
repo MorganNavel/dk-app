@@ -1,5 +1,5 @@
 import "@/globals.css";
-import { Footer } from "@/components/footer/Footer";
+import { Footer } from "@/components/Footer";
 import { Header } from "@/components/header/Header";
 import { FirstCaroussel } from "@/components/home/carrousel/FirstCarrousel";
 import { ELearningComponent } from "@/components/home/ELearningComponent";

@@ -11,7 +11,7 @@ interface OnlineClassesComponentProps {
 export const OnlineClassesComponent = () => {
   const t = useTranslations();
   return (
-    <div className="h-screen flex flex-col lg:flex-row items-center">
+    <div className="text-green-950 h-screen flex flex-col lg:flex-row items-center">
       <div className="hidden lg:flex h-screen w-1/2 justify-center items-center bg-primary">
         <div
           className="bg-white p-3 flex justify-center items-center rounded-lg"
