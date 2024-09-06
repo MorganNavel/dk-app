@@ -12,7 +12,7 @@ import { ReactNode } from "react";
 
 type ConfigType = {
   [key: string]: {
-    className: string;
+    className?: string;
     component: ReactNode;
   };
 };

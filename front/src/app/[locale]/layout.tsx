@@ -1,4 +1,5 @@
 import { ProfileProvider } from "@/components/context/useProfile";
+import { Header } from "@/components/header/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 
@@ -22,7 +23,10 @@ export default async function LocaleLayout({
       <body>
         <ProfileProvider>
           <NextIntlClientProvider messages={messages}>
-            {children}
+            <div className="flex flex-col">
+              <Header />
+              {children}
+            </div>
           </NextIntlClientProvider>
         </ProfileProvider>
       </body>

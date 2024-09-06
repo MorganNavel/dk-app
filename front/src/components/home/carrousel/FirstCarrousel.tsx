@@ -8,13 +8,11 @@ import { StartKoreanJourneyComponent } from "./items/StartKoreanJourney";
 export const FirstCaroussel = () => {
   const config = {
     newHere: {
-      className: "flex justify-center items-center h-full",
       component: (
         <NewHereComponent onClick={() => console.log("start questionnaire")} />
       ),
     },
     startKoreanJourney: {
-      className: "flex justify-center items-center h-full",
       component: (
         <StartKoreanJourneyComponent
           onClick={() => console.log("learn more")}
@@ -22,14 +20,13 @@ export const FirstCaroussel = () => {
       ),
     },
     readReviews: {
-      className: "flex justify-center items-center h-full",
       component: <ReadReviewsComponent onClick={() => console.log("read")} />,
     },
   };
   return (
     <Caroussel
       config={config}
-      className="h-screen flex flex-col justify-center items-center"
+      className="h-[87vh] flex flex-col justify-center items-center"
     >
       <DoubleCircles />
     </Caroussel>
