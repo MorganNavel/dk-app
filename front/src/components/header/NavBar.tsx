@@ -188,10 +188,7 @@ export const Navbar = () => {
   );
 };
 
-
-
 export const NavbarV1 = () => {
-
   const t = useTranslations("header");
   return (
     <>
@@ -207,20 +204,20 @@ export const NavbarV1 = () => {
       <div className="invisible lg:hidden"></div>
 
       <div className="hidden lg:flex text-lg space-x-8 xl:text-[20px]  font-semibold">
-      <Link className="text-white" href="/">
+        <Link className="text-white" href="/">
           {t("home")}
         </Link>
         <Link className="text-white" href="/park-danbee/profile">
-        {t("myprofile")}
+          {t("myprofile")}
         </Link>
         <Link className="text-white" href="/about-us">
           {t("aboutUs")}
         </Link>
         <Link className="text-white" href="/contact">
-        {t("contact")}
+          {t("contact")}
         </Link>
       </div>
-      <div className="hidden text-lg lg:flex mr-9"/>  
+      <div className="hidden text-lg lg:flex mr-9" />
     </>
   );
 };

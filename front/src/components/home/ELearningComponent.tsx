@@ -36,7 +36,6 @@ export const ELearningComponent = () => {
           >
             {t("generals.learnMore")}
           </Button>
-
         </div>
         <Image
           src={eLearningImg}

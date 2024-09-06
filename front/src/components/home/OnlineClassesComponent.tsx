@@ -44,7 +44,6 @@ export const OnlineClassesComponent = () => {
           onClick={() => console.log("learn more")}
           variant={"round-outline"}
           className="mt-6 px-7 py-6 text-lg mb-6"
-
         >
           {t("generals.learnMore")}
         </Button>

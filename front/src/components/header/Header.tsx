@@ -3,7 +3,6 @@ import { Sidebar, SidebarV1 } from "./Sidebar";
 import { Navbar, NavbarV1 } from "./NavBar";
 
 export const Header = () => {
-
   return (
     <div>
       <div className="fixed z-50 top-0 lg:static w-full text-textColor bg-gradient-to-b from-[#57A773] to-[#539B70] h-[81px] lg:h-[118px]">
