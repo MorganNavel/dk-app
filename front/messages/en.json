@@ -9,7 +9,10 @@
     "menu": "Menu",
     "readReviews": "Read Reviews",
     "average": "Average",
-    "requiredField": "Required field"
+    "requiredField": "Required field",
+    "fr": "French",
+    "en": "English",
+    "ko": "Korean"
   },
   "header": {
     "levelTest": "Level Test",

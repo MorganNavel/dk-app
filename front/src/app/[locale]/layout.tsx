@@ -26,7 +26,7 @@ export default async function LocaleLayout({
       <body>
         <ProfileProvider>
           <NextIntlClientProvider messages={messages}>
-            <div className="flex flex-col">
+            <div className='flex flex-col'>
               <Header />
               {children}
               <Footer />

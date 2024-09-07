@@ -14,6 +14,7 @@ import { UserProfile } from "@/types/User";
 import { DropdownMenuItem, DropdownMenuSeparator } from "@ui/dropdown-menu";
 import { CustomDropdown } from "@/components/reusable/Dropdown";
 import { Button } from "@ui/button";
+import { LanguageSelect } from "../reusable/LanguageSelect";
 
 export const Navbar = () => {
   const { profile } = useProfile();
@@ -33,90 +34,90 @@ export const Navbar = () => {
   const t = useTranslations();
   return (
     <>
-      <div className="flex justify-center lg:ml-5">
-        <Link href="/">
+      <div className='flex justify-center lg:ml-5'>
+        <Link href='/'>
           <Image
             src={logo}
-            alt="logo"
-            className="w-auto h-[53px] lg:w-[143px] lg:h-[96px]"
+            alt='logo'
+            className='w-auto h-[53px] lg:w-[143px] lg:h-[96px]'
           />
         </Link>
       </div>
-      <div className="invisible lg:hidden"></div>
+      <div className='invisible lg:hidden'></div>
 
-      <div className="hidden lg:flex text-lg space-x-8 xl:text-[20px]  font-semibold">
-        <Link className="text-white" href="/level-test">
+      <div className='hidden lg:flex text-lg space-x-8 xl:text-[20px]  font-semibold'>
+        <Link className='text-white' href='/level-test'>
           {t("header.levelTest")}
         </Link>
-        <Link className="text-white" href="/pricing">
+        <Link className='text-white' href='/pricing'>
           {t("header.pricing")}
         </Link>
-        <CustomDropdown title={t("header.videos.title")} className="text-white">
+        <CustomDropdown title={t("header.videos.title")} className='text-white'>
           <DropdownMenuItem>
-            <Link href="/videos/grammar">
-              <p className="text-lg">{t("header.videos.grammar")}</p>
+            <Link href='/videos/grammar'>
+              <p className='text-lg'>{t("header.videos.grammar")}</p>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/videos/vocabulary">
-              <p className="text-lg">{t("header.videos.vocabulary")}</p>
+            <Link href='/videos/vocabulary'>
+              <p className='text-lg'>{t("header.videos.vocabulary")}</p>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/videos/conversation">
-              <p className="text-lg">{t("header.videos.conversation")}</p>
+            <Link href='/videos/conversation'>
+              <p className='text-lg'>{t("header.videos.conversation")}</p>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Link href="/videos/conjugation">
-              <p className="text-lg">{t("header.videos.conjugation")}</p>
+            <Link href='/videos/conjugation'>
+              <p className='text-lg'>{t("header.videos.conjugation")}</p>
             </Link>
           </DropdownMenuItem>
 
           <DropdownMenuItem>
-            <Link href="/videos">
-              <p className="text-lg">{t("generals.others")}</p>
+            <Link href='/videos'>
+              <p className='text-lg'>{t("generals.others")}</p>
             </Link>
           </DropdownMenuItem>
         </CustomDropdown>
         <CustomDropdown
           title={t("header.takeLessons.title")}
-          className="text-white"
+          className='text-white'
         >
           <DropdownMenuItem>
             <Link href={{ pathname: "lessons", query: { level: "beginner" } }}>
-              <p className="text-lg">{t("header.takeLessons.beginner")}</p>
+              <p className='text-lg'>{t("header.takeLessons.beginner")}</p>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
               href={{ pathname: "lessons", query: { level: "intermediate1" } }}
             >
-              <p className="text-lg">{t("header.takeLessons.intermediate1")}</p>
+              <p className='text-lg'>{t("header.takeLessons.intermediate1")}</p>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link
               href={{ pathname: "lessons", query: { level: "intermediate2" } }}
             >
-              <p className="text-lg">{t("header.takeLessons.intermediate2")}</p>
+              <p className='text-lg'>{t("header.takeLessons.intermediate2")}</p>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href={{ pathname: "lessons", query: { level: "topik" } }}>
-              <p className="text-lg">{t("header.takeLessons.topik")}</p>
+              <p className='text-lg'>{t("header.takeLessons.topik")}</p>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Link href={{ pathname: "lessons", query: { level: "advanced" } }}>
-              <p className="text-lg">{t("header.takeLessons.advanced")}</p>
+              <p className='text-lg'>{t("header.takeLessons.advanced")}</p>
             </Link>
           </DropdownMenuItem>
         </CustomDropdown>
 
         <CustomDropdown
           title={t("header.teachers.title")}
-          className="text-white"
+          className='text-white'
         >
           {teachers &&
             teachers.map((teacher, index) => (
@@ -126,59 +127,59 @@ export const Navbar = () => {
                     pathname: "teacher/" + teacher.idUser + "/profile",
                   }}
                 >
-                  <p className="text-lg">
+                  <p className='text-lg'>
                     {teacher.firstname + " " + teacher.name}
                   </p>
                 </Link>
               </DropdownMenuItem>
             ))}
           <DropdownMenuItem>
-            <Link href="/teachers">
-              <p className="text-lg">{t("generals.others")}</p>
+            <Link href='/teachers'>
+              <p className='text-lg'>{t("generals.others")}</p>
             </Link>
           </DropdownMenuItem>
         </CustomDropdown>
       </div>
-      <div className="hidden text-lg lg:flex mr-9">
+      <div className='hidden text-lg lg:flex mr-9'>
         {profile.idUser != -1 ? (
           <>
             <CustomDropdown
               title={profile.firstname.charAt(0) + " ." + profile.name}
-              className="text-white"
+              className='text-white'
             >
               <DropdownMenuItem>
-                <Link href="/myaccount" className="flex items-center">
-                  <MdOutlineManageAccounts className="mr-3 text-textColor w-5 h-5 " />
+                <Link href='/myaccount' className='flex items-center'>
+                  <MdOutlineManageAccounts className='mr-3 text-textColor w-5 h-5 ' />
 
-                  <p className="text-lg">{t("header.profile.myaccount")}</p>
+                  <p className='text-lg'>{t("header.profile.myaccount")}</p>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/orders" className="flex items-center">
-                  <LuShoppingCart className="mr-3 text-textColor w-5 h-5" />
+                <Link href='/orders' className='flex items-center'>
+                  <LuShoppingCart className='mr-3 text-textColor w-5 h-5' />
 
-                  <p className="text-lg">{t("header.profile.orders")}</p>
+                  <p className='text-lg'>{t("header.profile.orders")}</p>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/subscriptions" className="flex items-center">
-                  <LuCalendarClock className="mr-3 text-textColor w-5 h-5" />
+                <Link href='/subscriptions' className='flex items-center'>
+                  <LuCalendarClock className='mr-3 text-textColor w-5 h-5' />
 
-                  <p className="text-lg">{t("header.profile.subscriptions")}</p>
+                  <p className='text-lg'>{t("header.profile.subscriptions")}</p>
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>
-                <Link href="/" className="flex items-center">
-                  <PiSignOutBold className="mr-3 text-textColor w-5 h-5" />
-                  <p className="text-lg">{t("generals.signout")}</p>
+                <Link href='/' className='flex items-center'>
+                  <PiSignOutBold className='mr-3 text-textColor w-5 h-5' />
+                  <p className='text-lg'>{t("generals.signout")}</p>
                 </Link>
               </DropdownMenuItem>
             </CustomDropdown>
           </>
         ) : (
-          <Button variant={"square-outline"} className="px-8 py-7">
-            <Link className="text-white" href="/auth">
+          <Button variant={"square-outline"} className='px-8 py-7'>
+            <Link className='text-white' href='/auth'>
               {t("generals.signin")}
             </Link>
           </Button>
@@ -195,18 +196,18 @@ export const NavbarV1 = () => {
 
   return (
     <>
-      <div className="flex justify-center lg:ml-5">
-        <Link href="/">
+      <div className='flex justify-center lg:ml-5'>
+        <Link href='/'>
           <Image
             src={logo}
-            alt="logo"
-            className="w-auto h-[53px] lg:w-[143px] lg:h-[96px]"
+            alt='logo'
+            className='w-auto h-[53px] lg:w-[143px] lg:h-[96px]'
           />
         </Link>
       </div>
-      <div className="invisible lg:hidden"></div>
+      <div className='invisible lg:hidden'></div>
 
-      <div className="hidden lg:flex text-lg space-x-8 xl:text-[20px] font-semibold">
+      <div className='hidden lg:flex text-lg space-x-8 xl:text-[20px] font-semibold'>
         {[
           { path: "/", label: t("home") },
           { path: "/park-danbee/profile", label: t("myprofile") },
@@ -221,7 +222,7 @@ export const NavbarV1 = () => {
           >
             {link.label}
             {activeLink === link.path && (
-              <span className="rounded-full absolute bottom-0 left-0 w-full h-1 bg-white" />
+              <span className='rounded-full absolute bottom-0 left-0 w-full h-1 bg-white' />
             )}
             <span
               className={`${
@@ -232,7 +233,9 @@ export const NavbarV1 = () => {
         ))}
       </div>
 
-      <div className="hidden text-lg lg:flex mr-9" />
+      <div className='hidden text-lg lg:flex mr-9'>
+        <LanguageSelect />
+      </div>
     </>
   );
 };

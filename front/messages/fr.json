@@ -10,7 +10,9 @@
     "readReviews": "Voir les avis",
     "average": "Moyenne",
     "requiredField": "Champ obligatoire",
-    "followInstagram": "Suivez-nous sur Instagram"
+    "fr": "French",
+    "en": "English",
+    "ko": "Korean"
   },
   "header": {
     "levelTest": "Test de niveau",
