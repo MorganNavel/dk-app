@@ -1,7 +1,7 @@
+import "@/globals.css";
+
+import { TeacherProfile } from "@/components/TeacherProfile";
+
 export default async function Profile() {
-    return (
-        <div>
-            <h1>Hello world !</h1>
-        </div>
-    );
+  return <TeacherProfile />;
 }

@@ -1,74 +1,72 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;500;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 @layer base {
   :root {
-    --background: 0 0% 100%; /* blanc pur */
-    --foreground: 0 0% 3.9%; /* presque noir */
-    --card: 0 0% 100%; /* blanc pur */
-    --card-foreground: 0 0% 3.9%; /* presque noir */
-    --popover: 0 0% 100%; /* blanc pur */
-    --popover-foreground: 0 0% 3.9%; /* presque noir */
-    
-    --primary: 141 31% 50%; /* couleur primaire, vert doux */
-    --primary-foreground: 141 35% 44%; /* légèrement plus sombre que le primaire pour des éléments de texte ou icônes */
+    --background: 0 0% 100%; /* Blanc pur pour un fond clair */
+    --foreground: 0 0% 20%; /* Gris très foncé pour le texte principal */
+    --card: 0 0% 98%; /* Gris très clair pour les cartes */
+    --card-foreground: 0 0% 20%; /* Gris foncé pour le texte des cartes */
+    --popover: 0 0% 98%; /* Gris très clair pour les popovers */
+    --popover-foreground: 0 0% 20%; /* Gris foncé pour le texte des popovers */
 
-    --disabled-button: 141 31% 50%; /* couleur très pâle pour un bouton désactivé, vert très clair */
-    
-    --secondary: 141 20% 70%; /* couleur secondaire dans le vert, clair */
-    --secondary-foreground: 141 25% 40%; /* couleur secondaire pour le texte, un vert moyen plus doux */
+    --primary: 141 31% 50%; /* Couleur primaire (vert doux) */
+    --primary-light: 141 31% 60%; /* Version plus claire de la couleur primaire */
+    --primary-dark: 141 31% 40%; /* Version plus sombre de la couleur primaire */
+    --primary-foreground: 0 0% 100%; /* Blanc pour le texte sur le bouton primaire */
 
-    --muted: 0 0% 96.1%; /* gris très pâle pour éléments secondaires */
-    --muted-foreground: 0 0% 45.1%; /* gris moyen pour le texte sur les éléments muets */
+    --disabled-button: 141 31% 80%; /* Vert très pâle pour les boutons désactivés */
 
-    --accent: 141 20% 70%; /* même couleur que le secondaire, pour créer une harmonie dans les accents */
-    --accent-foreground: 0 0% 9%; /* très foncé, presque noir, pour contrastes */
+    --secondary: 141 20% 70%; /* Couleur secondaire (vert clair) */
+    --secondary-light: 141 20% 80%; /* Version plus claire de la couleur secondaire */
+    --secondary-dark: 141 20% 60%; /* Version plus sombre de la couleur secondaire */
+    --secondary-foreground: 0 0% 20%; /* Gris foncé pour le texte secondaire */
 
-    --destructive: 0 84.2% 60.2%; /* rouge vif pour les actions destructrices */
-    --destructive-foreground: 0 0% 98%; /* presque blanc pour contraste sur le rouge */
+    --muted: 0 0% 96%; /* Gris très pâle pour les éléments secondaires */
+    --muted-foreground: 0 0% 50%; /* Gris moyen pour le texte sur les éléments muets */
 
-    --border: 0 0% 89.8%; /* gris clair pour les bordures */
-    --input: 0 0% 89.8%; /* même couleur pour les champs de formulaire */
-    --ring: 0 0% 3.9%; /* noir intense pour l'accentuation des focus sur les éléments interactifs */
-    
-    --chart-1: 12 76% 61%; 
-    --chart-2: 173 58% 39%; 
-    --chart-3: 197 37% 24%; 
-    --chart-4: 43 74% 66%; 
+    --accent: 0 0% 20%; /* Gris très foncé pour les accents */
+    --accent-light: 0 0% 30%; /* Version plus claire pour des accents moins intenses */
+    --accent-foreground: 0 0% 90%; /* Gris très clair pour le texte sur les accents */
+
+    --destructive: 0 84% 60%; /* Rouge vif pour les actions destructrices */
+    --destructive-light: 0 84% 70%; /* Version plus claire du rouge pour des éléments moins critiques */
+    --destructive-foreground: 0 0% 100%; /* Blanc pour le texte sur le rouge */
+
+    --border: 0 0% 90%; /* Gris clair pour les bordures */
+    --input: 0 0% 90%; /* Même couleur pour les champs de formulaire */
+    --ring: 0 0% 20%; /* Gris foncé pour les accents de focus sur les éléments interactifs */
+
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    
-    --radius: 0.5rem; 
-  }
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 141, 20%, 70%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --card-background: 0 0% 100%; /* Blanc pur pour le fond des cartes */
+    --card-border: 0 0% 90%; /* Gris très clair pour les bordures */
+    --card-text: 0 0% 20%; /* Gris foncé pour le texte sur les cartes */
+
+    --card-primary-background: 141 31% 90%; /* Vert très clair pour les cartes primaires */
+    --card-primary-text: 0 0% 10%; /* Gris très foncé pour le texte sur les cartes primaires */
+
+    --card-secondary-background: 141 31% 80%; /* Vert clair pour les cartes secondaires */
+    --card-secondary-text: 0 0% 15%; /* Gris très foncé pour le texte sur les cartes secondaires */
+
+    --card-accent-background: 141 31% 70%; /* Vert moyen pour les cartes d'accent */
+    --card-accent-text: 0 0% 20%; /* Gris foncé pour le texte sur les cartes d'accent */
+
+    --card-disabled-background: 0 0% 96%; /* Gris très clair pour les cartes désactivées */
+    --card-disabled-text: 0 0% 60%; /* Gris moyen pour le texte sur les cartes désactivées */
+
+    --radius: 0.5rem;
   }
 }
+
 @layer base {
   * {
     @apply border-border;

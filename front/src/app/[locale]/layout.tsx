@@ -1,7 +1,10 @@
+import "@/globals.css";
+
 import { ProfileProvider } from "@/components/context/useProfile";
 import { Header } from "@/components/header/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { Footer } from "@/components/Footer";
 
 export default async function LocaleLayout({
   children,
@@ -26,6 +29,7 @@ export default async function LocaleLayout({
             <div className="flex flex-col">
               <Header />
               {children}
+              <Footer />
             </div>
           </NextIntlClientProvider>
         </ProfileProvider>

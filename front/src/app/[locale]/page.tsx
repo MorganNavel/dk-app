@@ -15,7 +15,6 @@ export default async function Home() {
       <OnlineClassesComponent />
       <hr className="hidden lg:flex" />
       <StudentsReviews />
-      <Footer />
     </>
   );
 }
