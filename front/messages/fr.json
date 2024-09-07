@@ -9,7 +9,8 @@
     "menu": "Menu",
     "readReviews": "Voir les avis",
     "average": "Moyenne",
-    "requiredField": "Champ obligatoire"
+    "requiredField": "Champ obligatoire",
+    "followInstagram": "Suivez-nous sur Instagram"
   },
   "header": {
     "levelTest": "Test de niveau",
@@ -38,10 +39,10 @@
       "subscriptions": "Abonnements",
       "orders": "Commandes"
     },
-    "home":"Accueil",
+    "home": "Accueil",
     "myprofile": "Mon profil",
     "aboutUs": "À propos de nous",
-    "contact":"Contact"
+    "contact": "Contact"
   },
   "footer": {
     "services": "Services",
@@ -104,6 +105,36 @@
           "fullname": "Benjamin",
           "comment": "I'm at the beginning of my learning and I needed someone to give me a good base! Very good teacher who takes the time to correct pronunciation and explain, I always have a good time."
         }
+      }
+    }
+  },
+  "profile": {
+    "Danbee-Park": {
+      "instagram": {
+        "title": "Découvrez la culture et la langue coréenne",
+        "description": "Plongez dans le monde riche et diversifié de la culture et de la langue coréennes. Rejoignez-moi sur Instagram pour être informé des dernières nouvelles !",
+        "follow": "Suivez-moi sur Instagram"
+      },
+      "slogan": "Tuteur qui parle couramment le français, l'anglais. Du Hangul à la maîtrise totale : ensemble, conquérons le coréen !",
+      "paragraphs": {
+        "0": "Je me présente, je suis Danbee Park et j'étudie la langue coréennepour devenir professeur de coréen en France. Je suis née en Corée du Sud et j'ai grandi là-bas. Je suis actuellement à Montpellier, en France, car je suis également passionnée par ce pays. Mes passe-temps sont les langues étrangères et la musculation 🏋🏻‍♀️. Je peux donner des cours en coréen, en français, et en anglais. J'ai hâte de vous rencontrer et de vous aider à apprendre le coréen.",
+        "1": "Je suis actuellement en train d'étudier afin d'obtenir un certificat de professeur de langue coréenne. Je gère mes cours de manière personnalisée en analysant les besoins de chacun pour offrir les meilleures conditions d'apprentissage. Mes cours utilisent des manuels scolaires ainsi que des ressources que je crée moi-même. Tous les niveaux sont les bienvenus, du débutant à l'avancé.",
+        "2": "Je dirigerai un cours de personnalisation en fonction de la situation et des attentes de l'élève. Je vais essayer de rendre amusant pour les étudiants d'apprendre le coréen en utilisant diverses méthodes."
+      },
+      "skills": {
+        "title": "Mes compétences & Qualifications",
+        "certificate": "Certificat pédagogique de langue coréenne",
+        "personalized": "Cours particuliers & personnalisés",
+        "adapt": "Adaptation des cours aux besoins de l'élève",
+        "listen": "Attentive et à l'écoute des besoins de l'élève",
+        "multiLevel": "Capacité à enseigner à différents niveaux de langue",
+        "lngs": "Langues: Coréen (Native), Japonais (C1), Français (B2), and Anglais (B2)"
+      },
+      "video": "Vidéo de présentation",
+      "preply": {
+        "title": "Vous voulez apprendre le coréen avec moi ?",
+        "description": "Rejoignez-moi sur Preply pour des cours de coréen personnalisés et adaptés à vos besoins.",
+        "buttonText": "Rejoignez-moi sur Preply dès maintenant🚀 !"
       }
     }
   }

@@ -38,10 +38,10 @@
       "subscriptions": "Subscriptions",
       "orders": "Orders"
     },
-    "home":"Home",
+    "home": "Home",
     "myprofile": "My Profile",
-    "aboutUs":"About Us",
-    "contact":"Contact"
+    "aboutUs": "About Us",
+    "contact": "Contact"
   },
   "footer": {
     "services": "Services",
@@ -105,6 +105,36 @@
           "fullname": "Benjamin",
           "comment": "I'm at the beginning of my learning and I needed someone to give me a good base! Very good teacher who takes the time to correct pronunciation and explain, I always have a good time."
         }
+      }
+    }
+  },
+  "profile": {
+    "Danbee-Park": {
+      "instagram": {
+        "title": "Discover Korean Culture and Language",
+        "description": "Dive into the rich and diverse world of Korean culture and language. Join me on Instagram for updates and insights.",
+        "follow": "Follow me on Instagram"
+      },
+      "slogan": "Tutor fluent in French and English. From Hangul to full mastery: together, let's conquer Korean!",
+      "paragraphs": {
+        "0": "Hello, I am Danbee Park, and I am studying the Korean language to become a Korean teacher in France. I was born and raised in South Korea. I am currently in Montpellier, France, as I am also passionate about this country. My hobbies are foreign languages and weightlifting 🏋🏻‍♀️. I can teach in Korean, French, and English. I look forward to meeting you and helping you learn Korean.",
+        "1": "I am currently studying to obtain a Korean language teaching certificate. I manage my lessons in a personalized way by analyzing each student's needs to offer the best learning conditions. My lessons use textbooks as well as resources I create myself. All levels are welcome, from beginner to advanced.",
+        "2": "I will lead a personalized course based on the student's situation and expectations. I will try to make learning Korean fun for students by using various methods."
+      },
+      "skills": {
+        "title": "My Skills & Qualifications",
+        "certificate": "Korean Language Teaching Certificate",
+        "personalized": "Private & Personalized Lessons",
+        "adapt": "Adaptation of lessons to the student's needs",
+        "listen": "Attentive and responsive to the student's needs",
+        "multiLevel": "Ability to teach different language levels",
+        "lngs": "Languages: Korean (Native), Japanese (C1), French (B2), and English (B2)"
+      },
+      "video": "Introduction Video",
+      "preply": {
+        "title": "Want to learn Korean with me?",
+        "description": "Join me on Preply for personalized Korean lessons tailored to your needs.",
+        "buttonText": "Join me on Preply now 🚀!"
       }
     }
   }
