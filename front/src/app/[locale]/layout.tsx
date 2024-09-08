@@ -5,6 +5,11 @@ import { Header } from "@/components/header/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Footer } from "@/components/Footer";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 export default async function LocaleLayout({
   children,
@@ -26,11 +31,12 @@ export default async function LocaleLayout({
       <body>
         <ProfileProvider>
           <NextIntlClientProvider messages={messages}>
-            <div className='flex flex-col'>
+            <ResizablePanelGroup direction='vertical'>
               <Header />
+              <ResizableHandle />
               {children}
               <Footer />
-            </div>
+            </ResizablePanelGroup>
           </NextIntlClientProvider>
         </ProfileProvider>
       </body>
