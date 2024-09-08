@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import { readFileSync } from "fs";
 import { initUser, User } from "@/models/UserModel";
 import { initLesson, Lesson } from "@/models/LessonModel";
-import { initVideo, Video } from "@/models/VideoModel";
+import { Group, initGroup } from "@/models/GroupModel";
 // import bcrypt from "bcrypt";
 
 dotenv.config();
@@ -58,10 +58,12 @@ const sequelize = new Sequelize({
 });
 initUser(sequelize);
 initLesson(sequelize);
-initVideo(sequelize);
+initGroup(sequelize);
 User.hasMany(Lesson, { foreignKey: "idLesson", as: "lessons" });
 Lesson.belongsTo(User, { foreignKey: "idTeacher", as: "teacher" });
-Video.belongsTo(User, { foreignKey: "idTeacher", as: "teacher" });
+Lesson.belongsTo(Group, { foreignKey: "idGroup", as: "group" });
+User.belongsTo(Group, { foreignKey: "idGroup", as: "group" });
+
 async function connectToDb() {
   try {
     await sequelize.authenticate();

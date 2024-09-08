@@ -6,9 +6,9 @@ import { displayApiAddresses } from "./utils/displayAddresses";
 import session from "express-session";
 import { initCache } from "./storage/cache";
 import { getRedisConf } from "./utils/env";
-import videoRouter from "./feat/video/VideoRouter";
 import userRouter from "./feat/user/UserRouter";
 import cors from "cors";
+import lessonRouter from "./feat/lesson/LessonRouter";
 
 const app = express();
 
@@ -56,8 +56,8 @@ const apiV1Router = express.Router();
 app.use("/api/v1", apiV1Router);
 
 apiV1Router.use("/auth", authRouter);
-apiV1Router.use("/video", videoRouter);
 apiV1Router.use("/user", userRouter);
+apiV1Router.get("group", lessonRouter);
 
 app.listen(3001, () => {
   displayApiAddresses();

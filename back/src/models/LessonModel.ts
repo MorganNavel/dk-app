@@ -3,12 +3,11 @@ class Lesson extends Model {
   public idLesson!: number;
   public title!: string;
   public description!: string;
-  public price!: number;
   public url!: string;
-  public typeLesson!: string;
-  public startDateTime!: Date;
-  public endDateTime!: Date;
+  public startDate!: Date;
+  public duration!: number;
   public idTeacher!: number;
+  public globalPrice!: number;
 }
 function initLesson(sequelize: Sequelize) {
   Lesson.init(
@@ -18,23 +17,16 @@ function initLesson(sequelize: Sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
-      title: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      description: {
-        type: DataTypes.TEXT,
-        allowNull: true,
-      },
-      price: {
+      globalPrice: {
         type: DataTypes.FLOAT,
         allowNull: true,
+        comment: "Price gain for the teacher on the lesson",
       },
       url: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      start: {
+      startDate: {
         type: DataTypes.DATE,
         allowNull: false,
       },
@@ -46,9 +38,10 @@ function initLesson(sequelize: Sequelize) {
           min: 30,
         },
       },
-      typeLesson: {
-        type: DataTypes.ENUM("single", "group"),
-        allowNull: false,
+      students: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        comment: "List of students",
       },
     },
     {
