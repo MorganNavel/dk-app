@@ -7,7 +7,6 @@ import { getMessages } from "next-intl/server";
 import { Footer } from "@/components/Footer";
 import {
   ResizableHandle,
-  ResizablePanel,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
