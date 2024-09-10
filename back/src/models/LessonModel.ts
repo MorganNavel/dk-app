@@ -7,7 +7,7 @@ class Lesson extends Model {
   public startDate!: Date;
   public duration!: number;
   public earned!: number;
-  public idTeacher!: number;
+  public status!: string;
 }
 function initLesson(sequelize: Sequelize) {
   Lesson.init(
@@ -26,8 +26,8 @@ function initLesson(sequelize: Sequelize) {
         allowNull: true,
       },
       url: {
-        type: DataTypes.STRING,
-        allowNull: false,
+        type: DataTypes.TEXT,
+        allowNull: true,
       },
       startDate: {
         type: DataTypes.DATE,
@@ -40,6 +40,17 @@ function initLesson(sequelize: Sequelize) {
         validate: {
           min: 30,
         },
+        defaultValue: 50,
+      },
+      earned: {
+        type: DataTypes.FLOAT,
+        allowNull: false,
+        defaultValue: 0,
+      },
+      status: {
+        type: DataTypes.ENUM("planned", "done", "cancelled"),
+        allowNull: false,
+        defaultValue: "planned",
       },
     },
     {

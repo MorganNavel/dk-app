@@ -10,6 +10,7 @@ import userRouter from "./feat/user/UserRouter";
 import cors from "cors";
 import bookingRouter from "./feat/booking/BookingRouter";
 import pricingRouter from "./feat/pricing/PricingRouter";
+import lessonRouter from "./feat/lesson/LessonRouter";
 
 const app = express();
 
@@ -60,6 +61,7 @@ apiV1Router.use("/auth", authRouter);
 apiV1Router.use("/user", userRouter);
 apiV1Router.use("/booking", bookingRouter);
 apiV1Router.use("/pricing", pricingRouter);
+apiV1Router.use("/lesson", lessonRouter);
 app.listen(3001, () => {
   displayApiAddresses();
   console.log("Press CTRL-C to stop\n");
