@@ -5,11 +5,13 @@ import { isTeacher } from "@/utils/middlewares/roleMiddlewares";
 
 const lessonRouter = Router();
 
-lessonRouter.post(
-  "/create",
+lessonRouter.post("/create", isSignedIn, isTeacher, LessonController.create);
+
+lessonRouter.patch(
+  "/:idLesson",
   isSignedIn,
   isTeacher,
-  LessonController.createLesson
+  LessonController.update
 );
 
 export default lessonRouter;
