@@ -8,7 +8,8 @@ import { initCache } from "./storage/cache";
 import { getRedisConf } from "./utils/env";
 import userRouter from "./feat/user/UserRouter";
 import cors from "cors";
-import lessonRouter from "./feat/lesson/LessonRouter";
+import bookingRouter from "./feat/booking/BookingRouter";
+import pricingRouter from "./feat/pricing/PricingRouter";
 
 const app = express();
 
@@ -57,8 +58,8 @@ app.use("/api/v1", apiV1Router);
 
 apiV1Router.use("/auth", authRouter);
 apiV1Router.use("/user", userRouter);
-apiV1Router.get("group", lessonRouter);
-
+apiV1Router.use("/booking", bookingRouter);
+apiV1Router.use("/pricing", pricingRouter);
 app.listen(3001, () => {
   displayApiAddresses();
   console.log("Press CTRL-C to stop\n");

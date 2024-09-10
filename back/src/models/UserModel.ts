@@ -2,7 +2,7 @@ import { Model, DataTypes, Optional, Sequelize } from "sequelize";
 
 type UserRole = "student" | "teacher" | "admin";
 
-interface UserAttributes {
+interface IUser {
   idUser: number;
   name: string;
   firstname: string;
@@ -14,12 +14,9 @@ interface UserAttributes {
   role: UserRole;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, "idUser"> {}
+interface UserCreationAttributes extends Optional<IUser, "idUser"> {}
 
-class User
-  extends Model<UserAttributes, UserCreationAttributes>
-  implements UserAttributes
-{
+class User extends Model<IUser, UserCreationAttributes> implements IUser {
   public idUser!: number;
   public name!: string;
   public firstname!: string;
@@ -90,4 +87,4 @@ function initUser(sequelize: Sequelize) {
   );
 }
 
-export { initUser, User, UserRole };
+export { initUser, User, UserRole, IUser };

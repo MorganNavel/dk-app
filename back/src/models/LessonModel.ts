@@ -6,8 +6,8 @@ class Lesson extends Model {
   public url!: string;
   public startDate!: Date;
   public duration!: number;
+  public earned!: number;
   public idTeacher!: number;
-  public globalPrice!: number;
 }
 function initLesson(sequelize: Sequelize) {
   Lesson.init(
@@ -17,10 +17,13 @@ function initLesson(sequelize: Sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
-      globalPrice: {
-        type: DataTypes.FLOAT,
+      title: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      description: {
+        type: DataTypes.TEXT,
         allowNull: true,
-        comment: "Price gain for the teacher on the lesson",
       },
       url: {
         type: DataTypes.STRING,
@@ -37,11 +40,6 @@ function initLesson(sequelize: Sequelize) {
         validate: {
           min: 30,
         },
-      },
-      students: {
-        type: DataTypes.JSON,
-        allowNull: true,
-        comment: "List of students",
       },
     },
     {

@@ -3,7 +3,8 @@ import dotenv from "dotenv";
 import { readFileSync } from "fs";
 import { initUser, User } from "@/models/UserModel";
 import { initLesson, Lesson } from "@/models/LessonModel";
-import { Group, initGroup } from "@/models/GroupModel";
+import { initPricing, Pricing } from "@/models/PricingModel";
+import { Booking, initBooking } from "@/models/BookingModel";
 // import bcrypt from "bcrypt";
 
 dotenv.config();
@@ -58,16 +59,22 @@ const sequelize = new Sequelize({
 });
 initUser(sequelize);
 initLesson(sequelize);
-initGroup(sequelize);
-User.hasMany(Lesson, { foreignKey: "idLesson", as: "lessons" });
-Lesson.belongsTo(User, { foreignKey: "idTeacher", as: "teacher" });
-Lesson.belongsTo(Group, { foreignKey: "idGroup", as: "group" });
-User.belongsTo(Group, { foreignKey: "idGroup", as: "group" });
+initPricing(sequelize);
+initBooking(sequelize);
+
+Booking.belongsTo(User, { as: "user", foreignKey: "idUser" });
+
+Lesson.hasMany(Booking, { as: "bookings", foreignKey: "idLesson" });
+Booking.belongsTo(Lesson, { as: "lesson", foreignKey: "idLesson" });
+
+Lesson.belongsTo(User, { as: "teacher", foreignKey: "idUser" });
+
+User.belongsTo(Pricing, { as: "pricing", foreignKey: "idPricing" });
 
 async function connectToDb() {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true });
+    await sequelize.sync({ force: false });
 
     // await User.create({
     //   name: "Park",

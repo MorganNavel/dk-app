@@ -67,20 +67,14 @@ export function getEnvConf(): Env {
 export function getRedisConf(): RedisEnv {
   const { REDIS_HOST, REDIS_PORT, SECRET_KEY, REDIS_PASSWORD, REDIS_USERNAME } =
     process.env;
-  if (
-    !REDIS_HOST ||
-    !REDIS_PORT ||
-    !SECRET_KEY ||
-    !REDIS_PASSWORD ||
-    !REDIS_USERNAME
-  ) {
+  if (!REDIS_HOST || !REDIS_PORT || !SECRET_KEY) {
     throw new Error("Some Redis environment variables are missing");
   }
   return {
     REDIS_HOST,
     REDIS_PORT: parseInt(REDIS_PORT),
     SECRET_KEY,
-    REDIS_PASSWORD,
-    REDIS_USERNAME,
+    REDIS_PASSWORD: REDIS_PASSWORD ?? "",
+    REDIS_USERNAME: REDIS_USERNAME ?? "",
   };
 }

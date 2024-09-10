@@ -8,6 +8,7 @@ function isTeacher(req: Request, res: Response, next: NextFunction) {
       error: "Unauthorized",
     });
   }
+  next();
 }
 
 function isStudent(req: Request, res: Response, next: NextFunction) {
@@ -18,6 +19,7 @@ function isStudent(req: Request, res: Response, next: NextFunction) {
       error: "Unauthorized",
     });
   }
+  next();
 }
 
 function isAdmin(req: Request, res: Response, next: NextFunction) {
@@ -28,6 +30,7 @@ function isAdmin(req: Request, res: Response, next: NextFunction) {
       error: "Unauthorized",
     });
   }
+  next();
 }
 
 export { isTeacher, isStudent, isAdmin };
