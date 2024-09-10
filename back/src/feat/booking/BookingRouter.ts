@@ -1,7 +1,7 @@
-import { isStudent } from "@/utils/middlewares/roleMiddlewares";
+import { isStudent } from "@/utils/middlewares/role";
 import { Router } from "express";
 import { BookingController } from "./BookingController";
-import { isSignedIn } from "@/utils/middlewares/authMiddleware";
+import { isSignedIn } from "@/utils/middlewares/auth";
 
 const bookingRouter = Router();
 

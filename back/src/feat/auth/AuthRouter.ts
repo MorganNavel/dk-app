@@ -1,10 +1,7 @@
 import { Router } from "express";
 import { AuthController } from "./AuthController";
-import {
-  validateSignUpInput,
-  validateSignInInput,
-} from "./middlewares/authValidation";
-import { isSignedIn } from "@/utils/middlewares/authMiddleware";
+import { validateSignUpInput, validateSignInInput } from "./middlewares";
+import { isSignedIn } from "@/utils/middlewares/auth";
 
 const authRouter = Router();
 

@@ -1,13 +1,10 @@
 import { Router } from "express";
 import { UserController } from "./UserController";
-import { isSignedIn } from "@/utils/middlewares/authMiddleware";
-import { isAdmin, isTeacher } from "@/utils/middlewares/roleMiddlewares";
+import { isSignedIn } from "@/utils/middlewares/auth";
+import { isAdmin, isTeacher } from "@/utils/middlewares/role";
 const userRouter = Router();
 
-userRouter.get(
-  "/:idUser/profile" /*, isSignedIn*/,
-  UserController.getUserProfile
-);
+userRouter.get("/:idUser/profile", isSignedIn, UserController.getUserProfile);
 userRouter.get(
   "/students",
   isSignedIn,

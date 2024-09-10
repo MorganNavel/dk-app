@@ -2,33 +2,16 @@ import { Model, DataTypes, Optional, Sequelize } from "sequelize";
 
 type UserRole = "student" | "teacher" | "admin";
 
-interface IUser {
-  idUser: number;
-  name: string;
-  firstname: string;
-  email: string;
-  password_hash: string;
-  languages?: string;
-  nationality?: string;
-  description?: string;
-  role: UserRole;
-}
-
-interface UserCreationAttributes extends Optional<IUser, "idUser"> {}
-
-class User extends Model<IUser, UserCreationAttributes> implements IUser {
-  public idUser!: number;
-  public name!: string;
-  public firstname!: string;
-  public email!: string;
-  public password_hash!: string;
-  public languages?: string;
-  public nationality?: string;
-  public description?: string;
-  public role!: UserRole;
-
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+class User extends Model {
+  idUser!: number;
+  name!: string;
+  firstname!: string;
+  email!: string;
+  password_hash!: string;
+  languages?: string | undefined;
+  nationality?: string | undefined;
+  description?: string | undefined;
+  role!: UserRole;
 }
 
 function initUser(sequelize: Sequelize) {
@@ -75,6 +58,7 @@ function initUser(sequelize: Sequelize) {
       },
       role: {
         type: DataTypes.ENUM("student", "teacher", "admin"),
+        defaultValue: "student",
         allowNull: false,
       },
     },
@@ -87,4 +71,4 @@ function initUser(sequelize: Sequelize) {
   );
 }
 
-export { initUser, User, UserRole, IUser };
+export { initUser, User, UserRole };

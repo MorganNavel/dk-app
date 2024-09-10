@@ -1,5 +1,5 @@
-import { validateFields } from "@/utils/validation";
-import { SignUpScheme, SignInScheme } from "../schemes/authValidators";
+import { validateBody } from "@/utils/validation";
+import { SignUpScheme, SignInScheme } from "./schemes";
 import { Request, Response, NextFunction } from "express";
 
 export function validateSignUpInput(
@@ -7,7 +7,7 @@ export function validateSignUpInput(
   res: Response,
   next: NextFunction
 ) {
-  validateFields(SignUpScheme)(req, res, next);
+  validateBody(SignUpScheme)(req, res, next);
 }
 
 export function validateSignInInput(
@@ -15,5 +15,5 @@ export function validateSignInInput(
   res: Response,
   next: NextFunction
 ) {
-  validateFields(SignInScheme)(req, res, next);
+  validateBody(SignInScheme)(req, res, next);
 }
