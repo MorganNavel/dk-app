@@ -5,6 +5,12 @@ import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
 
 export class BookingServices {
+  /**
+   * Create a booking for a lesson
+   * @param idUser User identification number
+   * @param idLesson Lesson identification number
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
   static async createBooking(
     idUser: number,
     idLesson: number
@@ -40,6 +46,13 @@ export class BookingServices {
       };
     }
   }
+  /**
+   * Get all bookings for a lesson
+   * @param idUser User identification number
+   * @param role User's role (teacher, student or admin)
+   * @param idLesson Lesson identification number
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
   static async getAllBookings(
     idUser: number,
     role: string,
@@ -47,7 +60,12 @@ export class BookingServices {
   ): Promise<API_Response> {
     return this.getAllBookingsByLesson(idUser, idLesson, role);
   }
-
+  /**
+   * Get all the bookings for a lesson
+   * @param idUser User identification number
+   * @param idLesson Lesson identification number
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
   private static async getAllBookingsTeacher(
     idUser: number,
     idLesson: number
@@ -78,7 +96,13 @@ export class BookingServices {
       };
     }
   }
-
+  /**
+   * Get all the bookings for a lesson
+   * @param idUser User identification number
+   * @param idLesson Lesson identification number
+   * @param role User's role (teacher, student or admin)
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
   static async getAllBookingsByLesson(
     idUser: number,
     idLesson: number,
@@ -104,6 +128,11 @@ export class BookingServices {
     }
   }
 
+  /**
+   * Get all the bookings
+   * @param idUser User identification number
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
   static async getAllBookingsByStudent(idUser: number): Promise<API_Response> {
     try {
       const bookingsFetched = await Booking.findAll({
@@ -123,6 +152,38 @@ export class BookingServices {
         return { ...booking.dataValues, lesson };
       });
       return { code: STATUS_CODES.OK, data: bookingsFinal };
+    } catch (error) {
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: error as string,
+      };
+    }
+  }
+  /**
+   * Delete a booking - only the student who booked the lesson can delete it
+   * @param idUser User identification number
+   * @param idLesson User identification number
+   * @param idBooking Booking identification number
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
+  static async deleteBooking(
+    idUser: number,
+    idLesson: number,
+    idBooking: number
+  ): Promise<API_Response> {
+    try {
+      const booking = await Booking.findByPk(idBooking);
+      if (!booking) {
+        return { code: STATUS_CODES.BAD_REQUEST };
+      }
+      const isUnauthorized =
+        booking.dataValues.idUser !== idUser ||
+        booking.dataValues.idLesson !== idLesson;
+      if (isUnauthorized) {
+        return { code: STATUS_CODES.UNAUTHORIZED };
+      }
+      await booking.destroy();
+      return { code: STATUS_CODES.OK };
     } catch (error) {
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,

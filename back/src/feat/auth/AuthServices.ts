@@ -6,6 +6,11 @@ import { AppSession } from "@/types/Session";
 import { User } from "@/models/UserModel";
 
 export class AuthService {
+  /**
+   * Create a new user
+   * @param req Request - Body: contains all the user's information
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
   static async signUp(req: Request): Promise<API_Response> {
     const {
       email,
@@ -46,6 +51,11 @@ export class AuthService {
     }
   }
 
+  /**
+   * Sign in a user - create a user session
+   * @param req Request - Body: contains the user's email and password
+   * @returns
+   */
   static async signIn(req: Request): Promise<API_Response> {
     const { email, password } = req.body;
     try {
@@ -76,7 +86,12 @@ export class AuthService {
       };
     }
   }
-
+  /**
+   *
+   * @param req Request - Session: contains the user's session
+   * @param res Response
+   * @returns API_Response : { code: number, data?: any, error?: string }
+   */
   static async signOut(req: Request, res: Response): Promise<API_Response> {
     const session = req.session as AppSession;
 
@@ -84,7 +99,6 @@ export class AuthService {
       if (!err) res.clearCookie("sid");
     });
     if ((req.session as AppSession)?.user) {
-      console.log(session);
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,
         error: "Error while signing out",
