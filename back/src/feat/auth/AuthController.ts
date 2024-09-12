@@ -3,11 +3,10 @@ import { AuthService } from "./AuthServices";
 import { API_Response } from "@/types/Response";
 import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
-const authServices = new AuthService();
 
 export class AuthController {
   static async signIn(req: Request, res: Response) {
-    const response = await authServices.signIn(req);
+    const response = await AuthService.signIn(req);
     return res.status(response.code).json(response);
   }
 
@@ -19,12 +18,12 @@ export class AuthController {
         error: "You are already signed in",
       });
     }
-    const response: API_Response = await authServices.signUp(req);
+    const response: API_Response = await AuthService.signUp(req);
     return res.status(response.code).json(response);
   }
 
   static async signOut(req: Request, res: Response) {
-    const response: API_Response = await authServices.signOut(req, res);
+    const response: API_Response = await AuthService.signOut(req, res);
     return res.status(response.code).json(response);
   }
 }

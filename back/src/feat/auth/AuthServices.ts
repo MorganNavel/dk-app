@@ -6,14 +6,7 @@ import { AppSession } from "@/types/Session";
 import { User } from "@/models/UserModel";
 
 export class AuthService {
-  static instance: AuthService;
-  constructor() {
-    if (AuthService.instance) {
-      return AuthService.instance;
-    }
-    AuthService.instance = this;
-  }
-  async signUp(req: Request): Promise<API_Response> {
+  static async signUp(req: Request): Promise<API_Response> {
     const {
       email,
       password,
@@ -53,7 +46,7 @@ export class AuthService {
     }
   }
 
-  async signIn(req: Request): Promise<API_Response> {
+  static async signIn(req: Request): Promise<API_Response> {
     const { email, password } = req.body;
     try {
       const user = await User.findOne({
@@ -84,7 +77,7 @@ export class AuthService {
     }
   }
 
-  async signOut(req: Request, res: Response): Promise<API_Response> {
+  static async signOut(req: Request, res: Response): Promise<API_Response> {
     const session = req.session as AppSession;
 
     session.destroy((err) => {
