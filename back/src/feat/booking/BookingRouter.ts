@@ -1,22 +1,35 @@
-import { isStudent } from "@/utils/middlewares/role";
+import { isStudent, isTeacher } from "@/utils/middlewares/role";
 import { Router } from "express";
 import { BookingController } from "./BookingController";
 import { isSignedIn } from "@/utils/middlewares/auth";
+import lessonRouter from "../lesson/LessonRouter";
 
 const bookingRouter = Router();
 
 bookingRouter.post(
-  "/lesson/:idLesson/create",
+  "/:idLesson/booking/create",
   isSignedIn,
   isStudent,
   BookingController.createBooking
 );
 bookingRouter.get(
-  "/lesson/:idLesson/all",
+  "/:idLesson/booking/all",
   isSignedIn,
-  isStudent,
   BookingController.getAllBookings
 );
-bookingRouter.delete("/:idBooking/delete", BookingController.deleteBooking);
+bookingRouter.get(
+  "/booking/all",
+  isSignedIn,
+  isStudent,
+  BookingController.getAllBookingsByStudent
+);
+bookingRouter.delete(
+  "/:idLesson/booking/:idBooking/delete",
+  isSignedIn,
+  isStudent,
+  BookingController.deleteBooking
+);
+
+lessonRouter.use("/", bookingRouter);
 
 export default bookingRouter;

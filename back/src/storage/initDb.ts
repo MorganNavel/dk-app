@@ -64,8 +64,8 @@ initBooking(sequelize);
 
 Booking.belongsTo(User, { foreignKey: "idUser" });
 
-Lesson.hasMany(Booking, { foreignKey: "idLesson" });
-Booking.belongsTo(Lesson, { foreignKey: "idLesson" });
+Lesson.hasMany(Booking, { as: "bookings", foreignKey: "idLesson" });
+Booking.belongsTo(Lesson, { as: "lesson", foreignKey: "idLesson" });
 
 Lesson.belongsTo(User, { foreignKey: "idTeacher" });
 

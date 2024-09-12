@@ -59,7 +59,7 @@ app.use("/api/v1", apiV1Router);
 
 apiV1Router.use("/auth", authRouter);
 apiV1Router.use("/user", userRouter);
-apiV1Router.use("/booking", bookingRouter);
+apiV1Router.use("/", bookingRouter);
 apiV1Router.use("/pricing", pricingRouter);
 apiV1Router.use("/lesson", lessonRouter);
 app.listen(3001, () => {
