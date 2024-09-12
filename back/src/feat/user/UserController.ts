@@ -25,8 +25,8 @@ export class UserController {
       const response = await userServices.getUserProfile(email as string);
       return res.status(response.code).json(response);
     }
-    const id = parseInt(req.params.id);
-    const response = await userServices.getUserProfileById(id);
+    const idUser = parseInt(req.params.idUser);
+    const response = await userServices.getUserProfileById(idUser);
     return res.status(response.code).json(response);
   }
   public static async getMe(req: Request, res: Response) {
