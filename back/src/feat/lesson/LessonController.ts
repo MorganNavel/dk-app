@@ -2,18 +2,19 @@ import { Lesson } from "@/models/LessonModel";
 import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Request, Response } from "express";
+import { LessonServices } from "./LessonServices";
 export class LessonController {
   static async create(req: Request, res: Response) {
     const { title, description, duration, startDate } = req.body;
-    const session = req.session as AppSession;
-    const idTeacher = session.user;
+    const { idUser } = (req.session as AppSession).user;
+
     try {
       const lesson = await Lesson.create({
         title,
         description,
         duration,
         startDate,
-        idTeacher,
+        idTeacher: idUser,
       });
       /* TODO: 
         - Create an URL for the lesson (Google Meet, Zoom, etc.)      
@@ -38,105 +39,50 @@ export class LessonController {
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No field selected" });
-    try {
-      const lesson = await Lesson.findByPk(idLesson);
-      if (!lesson)
-        return res
-          .status(STATUS_CODES.INTERNAL_SERVER_ERROR)
-          .json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR });
-
-      console.log(lesson.dataValues.idTeacher, idUser);
-      if (lesson.dataValues.idTeacher !== idUser) {
-        return res
-          .status(STATUS_CODES.UNAUTHORIZED)
-          .json({ code: STATUS_CODES.UNAUTHORIZED });
-      }
-      await lesson.update({ startDate, duration });
-      return res.status(STATUS_CODES.OK).json({ code: STATUS_CODES.OK });
-    } catch (error) {
-      return res
-        .status(STATUS_CODES.INTERNAL_SERVER_ERROR)
-        .json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR });
-    }
+    const response = await LessonServices.updateLesson(idUser!, idLesson, {
+      startDate,
+      duration,
+      title,
+      description,
+      url,
+      earned,
+    });
+    return res.status(response.code).json(response);
   }
   static async getAll(req: Request, res: Response) {
-    const { idUser } = (req.session as AppSession).user;
-    try {
-      const lessons = await Lesson.findAll({ where: { idTeacher: idUser } });
-      if (!lessons)
-        return res
-          .status(STATUS_CODES.NOT_FOUND)
-          .json({ code: STATUS_CODES.NOT_FOUND });
-      return res
-        .status(STATUS_CODES.OK)
-        .json({ code: STATUS_CODES.OK, data: lessons });
-    } catch (error) {
-      return res
-        .status(STATUS_CODES.INTERNAL_SERVER_ERROR)
-        .json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR });
+    const { idUser, role } = (req.session as AppSession).user;
+    if (idUser && role !== "teacher") {
+      const response = await LessonServices.getAllFromTeacher(idUser);
+      return res.status(response.code).json(response);
     }
+    const response = await LessonServices.getAll();
+    return res.status(response.code).json(response);
   }
   static async getOne(req: Request, res: Response) {
-    try {
-      const lesson = await LessonController.getLessonWithTeacher(req, res);
-      return res
-        .status(STATUS_CODES.OK)
-        .json({ code: STATUS_CODES.OK, data: lesson });
-    } catch (error) {
-      return res
-        .status(STATUS_CODES.INTERNAL_SERVER_ERROR)
-        .json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR });
-    }
+    const { idUser } = (req.session as AppSession).user;
+    const idLesson = parseInt(req.params.idLesson);
+    const response = await LessonServices.getOne(idUser!, idLesson);
+    return res.status(response.code).json(response);
   }
 
   static async updateStatus(req: Request, res: Response) {
-    try {
-      const lesson = await LessonController.getLessonWithTeacher(req, res);
-      if (!lesson) return;
-      lesson.update({ status: req.query.status });
-      return res.json({ code: STATUS_CODES.OK });
-    } catch (error) {
+    const { idUser } = (req.session as AppSession).user;
+    const idLesson = parseInt(req.params.idLesson);
+    const { status } = req.query;
+    if (!status)
       return res
-        .status(STATUS_CODES.INTERNAL_SERVER_ERROR)
-        .json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR });
-    }
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ code: STATUS_CODES.BAD_REQUEST, error: "No status selected" });
+    const response = await LessonServices.updateLesson(idUser!, idLesson, {
+      status,
+    });
+    return res.status(response.code).json(response);
   }
 
   static async delete(req: Request, res: Response) {
     const { idUser } = (req.session as AppSession).user;
     const idLesson = parseInt(req.params.idLesson);
-    try {
-      const lesson = await Lesson.findByPk(idLesson);
-      if (!lesson)
-        return res
-          .status(STATUS_CODES.NOT_FOUND)
-          .json({ code: STATUS_CODES.NOT_FOUND });
-      if (lesson.dataValues.idTeacher !== idUser)
-        return res
-          .status(STATUS_CODES.UNAUTHORIZED)
-          .json({ code: STATUS_CODES.UNAUTHORIZED });
-      lesson.destroy();
-      return res.status(STATUS_CODES.OK).json({ code: STATUS_CODES.OK });
-    } catch (error) {
-      return res
-        .status(STATUS_CODES.INTERNAL_SERVER_ERROR)
-        .json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR });
-    }
-  }
-
-  private static async getLessonWithTeacher(
-    req: Request,
-    res: Response
-  ): Promise<Lesson | undefined> {
-    const { idUser } = (req.session as AppSession).user;
-    const idLesson = parseInt(req.params.idLesson);
-    const lesson = await Lesson.findOne({
-      where: { idLesson, idTeacher: idUser },
-    });
-    if (!lesson) {
-      res.status(STATUS_CODES.NOT_FOUND).json({ code: STATUS_CODES.NOT_FOUND });
-      return;
-    }
-    return lesson;
+    const response = await LessonServices.deleteLesson(idLesson, idUser!);
+    return res.status(response.code).json(response);
   }
 }

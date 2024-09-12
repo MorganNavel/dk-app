@@ -2,14 +2,14 @@ import joi from "joi";
 
 export const CreateScheme = joi.object({
   title: joi.string().required(),
-  desciption: joi.string(),
+  description: joi.string(),
   duration: joi.number(),
   startDate: joi.date().greater("now").required(),
 });
 
 export const UpdateScheme = joi.object({
   title: joi.string(),
-  desciption: joi.string(),
+  description: joi.string(),
   duration: joi.number(),
   startDate: joi.date().greater("now"),
   earned: joi.number(),

@@ -32,7 +32,7 @@ lessonRouter.patch(
   validateUpdateStatusInput,
   LessonController.updateStatus
 );
-lessonRouter.get("/all", isSignedIn, isTeacher, LessonController.getAll);
+lessonRouter.get("/all", LessonController.getAll);
 lessonRouter.get("/:idLesson", isSignedIn, isTeacher, LessonController.getOne);
 
 lessonRouter.delete(

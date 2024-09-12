@@ -8,6 +8,7 @@ class Lesson extends Model {
   public duration!: number;
   public earned!: number;
   public status!: string;
+  public groupSize!: number;
 }
 function initLesson(sequelize: Sequelize) {
   Lesson.init(
@@ -51,6 +52,11 @@ function initLesson(sequelize: Sequelize) {
         type: DataTypes.ENUM("planned", "done", "cancelled"),
         allowNull: false,
         defaultValue: "planned",
+      },
+      groupSize: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 2,
       },
     },
     {
