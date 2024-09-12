@@ -5,15 +5,15 @@ export interface AppSession extends Session {
 }
 
 interface UserSession {
-  idUser?: number;
-  name?: string;
-  firstname?: string;
-  email?: string;
+  idUser: number;
+  name: string;
+  firstname: string;
+  email: string;
   languages?: string;
   description?: string;
   avatar?: string;
   nationality?: string;
   views?: number;
-  role?: string;
+  role: string;
   rating?: number;
 }
