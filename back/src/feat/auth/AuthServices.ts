@@ -4,6 +4,7 @@ import { STATUS_CODES } from "@/utils/statusCodes";
 import bcrypt from "bcrypt";
 import { AppSession } from "@/types/Session";
 import { User } from "@/models/UserModel";
+import { ArrayToString } from "@/utils/helpers";
 
 export class AuthService {
   /**
@@ -20,6 +21,7 @@ export class AuthService {
       languages,
       firstname,
       name,
+      links,
       description,
     } = req.body;
 
@@ -36,17 +38,17 @@ export class AuthService {
         firstname,
         name,
         password_hash: hashedPassword,
-        nationality,
-        languages,
+        nationality: ArrayToString(nationality),
+        languages: ArrayToString(languages),
         description,
-        role: "student",
+        links,
       });
       const { password_hash, ...userWithoutPassword } = user.dataValues;
       return { code: STATUS_CODES.CREATED, data: userWithoutPassword };
     } catch (error: any) {
       return {
         code: STATUS_CODES.BAD_REQUEST,
-        error: error.errors[0].message,
+        error: error,
       };
     }
   }

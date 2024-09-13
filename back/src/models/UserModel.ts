@@ -1,4 +1,5 @@
-import { Model, DataTypes, Optional, Sequelize } from "sequelize";
+import { Model, DataTypes, Sequelize } from "sequelize";
+import { Json } from "sequelize/types/utils";
 
 type UserRole = "student" | "teacher" | "admin";
 
@@ -8,9 +9,10 @@ class User extends Model {
   firstname!: string;
   email!: string;
   password_hash!: string;
-  languages?: string | undefined;
-  nationality?: string | undefined;
-  description?: string | undefined;
+  languages?: string;
+  nationality?: string;
+  links?: Json;
+  description?: string;
   role!: UserRole;
   nbLesson?: number;
 }
@@ -46,11 +48,11 @@ function initUser(sequelize: Sequelize) {
         allowNull: false,
       },
       languages: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       nationality: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
       },
       description: {
@@ -61,6 +63,15 @@ function initUser(sequelize: Sequelize) {
         type: DataTypes.ENUM("student", "teacher", "admin"),
         defaultValue: "student",
         allowNull: false,
+      },
+      nbLessons: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+      },
+      links: {
+        type: DataTypes.JSON,
+        allowNull: true,
+        defaultValue: {},
       },
     },
     {
