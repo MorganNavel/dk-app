@@ -2,9 +2,9 @@ import { Model, DataTypes, Sequelize } from "sequelize";
 
 class Pricing extends Model {
   public idPricing!: number;
-  public type!: string;
+  public currency!: string;
   public price!: string;
-  public nbMaxLesson!: number;
+  public nbLessons!: number;
 }
 function initPricing(sequelize: Sequelize) {
   Pricing.init(
@@ -14,15 +14,15 @@ function initPricing(sequelize: Sequelize) {
         primaryKey: true,
         autoIncrement: true,
       },
-      type: {
+      currency: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       price: {
-        type: DataTypes.TEXT,
+        type: DataTypes.FLOAT,
         allowNull: true,
       },
-      nbMaxLesson: {
+      nbLessons: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

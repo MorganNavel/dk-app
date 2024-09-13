@@ -12,6 +12,7 @@ class User extends Model {
   nationality?: string | undefined;
   description?: string | undefined;
   role!: UserRole;
+  nbLesson?: number;
 }
 
 function initUser(sequelize: Sequelize) {
