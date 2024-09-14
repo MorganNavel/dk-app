@@ -44,10 +44,13 @@ export class AuthService {
         links,
       });
       const { password_hash, ...userWithoutPassword } = user.dataValues;
-      return { code: STATUS_CODES.CREATED, data: userWithoutPassword };
+      return {
+        code: STATUS_CODES.CREATED,
+        data: { ...userWithoutPassword, languages, nationality },
+      };
     } catch (error: any) {
       return {
-        code: STATUS_CODES.BAD_REQUEST,
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
         error: error,
       };
     }
@@ -83,7 +86,7 @@ export class AuthService {
       return { code: STATUS_CODES.OK, data: userWithoutPassword };
     } catch (error: any) {
       return {
-        code: STATUS_CODES.BAD_REQUEST,
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
         error: error,
       };
     }
@@ -96,18 +99,24 @@ export class AuthService {
    */
   static async signOut(req: Request, res: Response): Promise<API_Response> {
     const session = req.session as AppSession;
-
-    session.destroy((err) => {
-      if (!err) res.clearCookie("sid");
-    });
-    if ((req.session as AppSession)?.user) {
+    try {
+      session.destroy((err) => {
+        if (!err) res.clearCookie("sid");
+      });
+      if ((req.session as AppSession)?.user) {
+        return {
+          code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+          error: "Error while signing out",
+        };
+      }
+      return {
+        code: STATUS_CODES.OK,
+      };
+    } catch (error: any) {
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,
-        error: "Error while signing out",
+        error: error,
       };
     }
-    return {
-      code: STATUS_CODES.OK,
-    };
   }
 }

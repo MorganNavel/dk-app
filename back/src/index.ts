@@ -11,10 +11,14 @@ import cors from "cors";
 import bookingRouter from "./feat/booking/BookingRouter";
 import pricingRouter from "./feat/pricing/PricingRouter";
 import lessonRouter from "./feat/lesson/LessonRouter";
-
+import swagger from "./utils/swagger";
 const app = express();
 
-const allowedOrigins = ["http://192.168.1.27:3000", "http://localhost:3000"];
+const allowedOrigins = [
+  "http://192.168.1.27:3000",
+  "http://localhost:3000",
+  "http://localhost:3001",
+];
 
 const corsOptions = {
   origin: (
@@ -65,6 +69,7 @@ apiV1Router.use("/lesson", lessonRouter);
 app.listen(3001, () => {
   displayApiAddresses();
   console.log("Press CTRL-C to stop\n");
+  swagger(app);
 });
 
 export { redisClient };
