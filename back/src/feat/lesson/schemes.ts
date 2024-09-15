@@ -6,6 +6,9 @@ import joi from "joi";
  *   schemas:
  *     CreateLessonInput:
  *       type: object
+ *       required:
+ *        - title
+ *        - startDate
  *       example:
  *        title: "My lesson"
  *        description: "This is a lesson"
@@ -61,23 +64,8 @@ export const UpdateScheme = joi.object({
 /**
  * @openapi
  * components:
- *   schemas:
- *     CreateLessonInput:
- *       type: object
- *       properties:
- *         title:
- *           type: string
- *           example: "My lesson"
- *         status:
- *           type: string
- *           enum:
- *             - "planned"
- *             - "done"
- *             - "cancelled"
- *           description: "The status of the lesson"
- *           example: "planned"
  *   parameters:
- *     StatusQueryParam:
+ *     UpdateStatusInput:
  *       name: status
  *       in: query
  *       required: true
@@ -90,7 +78,6 @@ export const UpdateScheme = joi.object({
  *         description: "The status of the lesson"
  *         example: "planned"
  */
-
 export const UpdateStatusScheme = joi.object({
   status: joi.string().valid("planned", "done", "cancelled").required(),
 });

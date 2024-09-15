@@ -5,6 +5,12 @@ import joi from "joi";
  *   schemas:
  *     SignUpInput:
  *       type: object
+ *       required:
+ *        - firstname
+ *        - name
+ *        - email
+ *        - password
+ *        - confirmPassword
  *       example:
  *        firstname: "john"
  *        name: "doe"
@@ -58,6 +64,9 @@ export const SignUpScheme = joi.object({
  *   schemas:
  *     SignInInput:
  *       type: object
+ *       required:
+ *        - email
+ *        - password
  *       example:
  *        email: "john.doe@email.com"
  *        password: "johndoepassword"

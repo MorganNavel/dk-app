@@ -6,6 +6,12 @@ import joi from "joi";
  *   schemas:
  *     UpdateUserInput:
  *       type: object
+ *       required:
+ *        - firstname
+ *        - name
+ *        - email
+ *        - password
+ *        - confirmPassword
  *       example:
  *        firstname: "john"
  *        name: "doe"

@@ -25,12 +25,6 @@ export class AuthService {
       description,
     } = req.body;
 
-    if (password !== confirmPassword) {
-      return {
-        code: STATUS_CODES.BAD_REQUEST,
-        error: "Passwords don't match",
-      };
-    }
     const hashedPassword = await bcrypt.hash(password, 10);
     try {
       const user = await User.create({
@@ -70,7 +64,7 @@ export class AuthService {
       if (!user) {
         return {
           code: STATUS_CODES.BAD_REQUEST,
-          error: "Email or password is incorrect",
+          error: "Email or password incorrect",
         };
       }
       const { password_hash, ...userWithoutPassword } = user.dataValues;
@@ -78,7 +72,7 @@ export class AuthService {
       if (!isMatch) {
         return {
           code: STATUS_CODES.BAD_REQUEST,
-          error: "Email or password is incorrect",
+          error: "Email or password incorrect",
         };
       }
       const session = req.session as AppSession;

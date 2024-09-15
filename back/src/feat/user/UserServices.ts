@@ -2,6 +2,7 @@ import { User } from "@/models/UserModel";
 import { API_Response } from "@/types/Response";
 import { StringToArray } from "@/utils/helpers";
 import { STATUS_CODES } from "@/utils/statusCodes";
+import bcrypt from "bcrypt";
 
 export class UserServices {
   static async getAllStudents(): Promise<API_Response> {
@@ -96,10 +97,23 @@ export class UserServices {
     fields: { [key: string]: any },
     id: number
   ): Promise<API_Response> {
+    const { password, confirmPassword, ...fieldsWithoutPassword } = fields;
+
     try {
       const user = await User.findByPk(id);
       if (!user) {
-        return { code: STATUS_CODES.NOT_FOUND, error: "User not found" };
+        return {
+          code: STATUS_CODES.NOT_FOUND,
+          error: "Email or Password incorrect",
+        };
+      }
+      const { passwordHash } = user.dataValues.password_hash;
+      const isMatch = await bcrypt.compare(password, passwordHash);
+      if (!isMatch) {
+        return {
+          code: STATUS_CODES.BAD_REQUEST,
+          error: "Email or Password incorrect",
+        };
       }
 
       if (fields["role"])

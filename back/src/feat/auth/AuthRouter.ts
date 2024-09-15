@@ -24,6 +24,8 @@ const authRouter = Router();
  *         $ref: '#/components/responses/201'
  *       '400':
  *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
  *       '500':
  *         $ref: '#/components/responses/500'
  */
@@ -48,6 +50,8 @@ authRouter.post("/signup", validateSignUpInput, AuthController.signUp);
  *         $ref: '#/components/responses/200'
  *       '400':
  *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
  *       '500':
  *         $ref: '#/components/responses/500'
  */
@@ -64,10 +68,12 @@ authRouter.post("/signin", validateSignInInput, AuthController.signIn);
  *     responses:
  *       '200':
  *         description: Successfully signed out
+ *       '400':
+ *         $ref: '#/components/responses/400'
  *       '401':
- *         description: Unauthorized
+ *         $ref: '#/components/responses/401'
  *       '500':
- *         description: Internal Server Error
+ *         $ref: '#/components/responses/500'
  */
 authRouter.post("/signout", isSignedIn, AuthController.signOut);
 

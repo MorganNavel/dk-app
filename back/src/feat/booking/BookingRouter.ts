@@ -6,17 +6,54 @@ import lessonRouter from "../lesson/LessonRouter";
 
 const bookingRouter = Router();
 /**
- * A student can book a lesson
+ * @openapi
+ * /lesson/{idLesson}/booking:
+ *   post:
+ *     summary: Create a new booking
+ *     description: Create a new booking
+ *     tags:
+ *       - Booking
+ *     parameters:
+ *      - $ref: '#/components/parameters/idLessonType'
+ *     responses:
+ *       '200':
+ *         $ref: '#/components/responses/200'
+ *       '400':
+ *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
+ *       '404':
+ *         $ref: '#/components/responses/404'
+ *       '500':
+ *         $ref: '#/components/responses/500'
  */
 bookingRouter.post(
-  "/:idLesson/booking/create",
+  "/:idLesson/booking",
   isSignedIn,
   isStudent,
   BookingController.createBooking
 );
 /**
- * A teacher can see all bookings for his lesson
- * A student can see all bookings for a lesson
+ * @openapi
+ * /lesson/{idLesson}/booking/all:
+ *   get:
+ *     summary: Create a new booking
+ *     description: Create a new booking
+ *     tags:
+ *       - Booking
+ *     parameters:
+ *      - $ref: '#/components/parameters/idLessonType'
+ *     responses:
+ *       '200':
+ *         $ref: '#/components/responses/200'
+ *       '400':
+ *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
+ *       '404':
+ *         $ref: '#/components/responses/404'
+ *       '500':
+ *         $ref: '#/components/responses/500'
  */
 bookingRouter.get(
   "/:idLesson/booking/all",
@@ -24,7 +61,24 @@ bookingRouter.get(
   BookingController.getAllBookings
 );
 /**
- * A student can see all his current bookings (future only and for any lessons)
+ * @openapi
+ * /booking/all:
+ *   get:
+ *     summary: Create a new booking
+ *     description: Create a new booking
+ *     tags:
+ *       - Booking
+ *     responses:
+ *       '200':
+ *         $ref: '#/components/responses/200'
+ *       '400':
+ *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
+ *       '404':
+ *         $ref: '#/components/responses/404'
+ *       '500':
+ *         $ref: '#/components/responses/500'
  */
 bookingRouter.get(
   "/booking/all",
@@ -33,10 +87,30 @@ bookingRouter.get(
   BookingController.getAllBookingsByStudent
 );
 /**
- * A student can delete (cancel) a booking
+ * @openapi
+ * /lesson/{idLesson}/booking/{idBooking}:
+ *   delete:
+ *     summary: Delete a booking
+ *     description: Delete a booking
+ *     tags:
+ *       - Booking
+ *     parameters:
+ *      - $ref: '#/components/parameters/idLessonType'
+ *      - $ref: '#/components/parameters/idBookingType'
+ *     responses:
+ *       '200':
+ *         $ref: '#/components/responses/200'
+ *       '400':
+ *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
+ *       '404':
+ *         $ref: '#/components/responses/404'
+ *       '500':
+ *         $ref: '#/components/responses/500'
  */
 bookingRouter.delete(
-  "/:idLesson/booking/:idBooking/delete",
+  "/:idLesson/booking/:idBooking",
   isSignedIn,
   isStudent,
   BookingController.deleteBooking
