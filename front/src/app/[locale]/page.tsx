@@ -1,5 +1,4 @@
 import "@/globals.css";
-import { Footer } from "@/components/Footer";
 import { FirstCaroussel } from "@/components/home/carrousel/FirstCarrousel";
 import { ELearningComponent } from "@/components/home/ELearningComponent";
 import { OnlineClassesComponent } from "@/components/home/OnlineClassesComponent";
@@ -9,11 +8,11 @@ export default async function Home() {
   return (
     <>
       <FirstCaroussel />
-      <hr className="hidden lg:flex" />
+      <hr className='hidden lg:flex' />
       <ELearningComponent />
-      <hr className="hidden lg:flex" />
+      <hr className='hidden lg:flex' />
       <OnlineClassesComponent />
-      <hr className="hidden lg:flex" />
+      <hr className='hidden lg:flex' />
       <StudentsReviews />
     </>
   );

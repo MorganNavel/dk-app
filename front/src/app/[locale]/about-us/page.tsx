@@ -1,7 +1,7 @@
 import "@/globals.css";
 import { useTranslations } from "next-intl";
 
-export default async function AboutUs() {
+export default function AboutUs() {
   const t = useTranslations();
   return (
     <div>
