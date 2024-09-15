@@ -12,7 +12,8 @@
     "requiredField": "Champ obligatoire",
     "fr": "Français",
     "en": "English",
-    "ko": "Korean"
+    "ko": "Korean",
+    "notImplemented": "Cette fonctionnalité n'est pas encore implémentée."
   },
   "header": {
     "levelTest": "Test de niveau",

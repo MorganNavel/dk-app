@@ -9,6 +9,37 @@ import {
   ResizableHandle,
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
+import favicon from "@public/favicon.ico";
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  switch (locale) {
+    case "en":
+      return {
+        title: "Danbee Korean - Learn with Ease",
+        icons: {
+          icon: favicon.src,
+        },
+      };
+    case "fr":
+      return {
+        title: "Danbee Korean - Apprenez en Toute Simplicité",
+        icons: {
+          icon: favicon.src,
+        },
+      };
+    case "ko":
+      return {
+        title: "Danbee Korean - Learn with Ease",
+        icons: {
+          icon: favicon.src,
+        },
+      };
+  }
+}
 
 export default async function LocaleLayout({
   children,

@@ -1,9 +1,11 @@
 import "@/globals.css";
+import { useTranslations } from "next-intl";
 
 export default async function AboutUs() {
+  const t = useTranslations();
   return (
     <div>
-      <h1>Hello world !</h1>
+      <h1>{t("generals.notImplemented")}</h1>
     </div>
   );
 }

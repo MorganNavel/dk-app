@@ -12,7 +12,8 @@
     "requiredField": "Required field",
     "fr": "Français",
     "en": "English",
-    "ko": "한국"
+    "ko": "한국",
+    "notImplemented": "This feature is not implemented yet."
   },
   "header": {
     "levelTest": "Level Test",
