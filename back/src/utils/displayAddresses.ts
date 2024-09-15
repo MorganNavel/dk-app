@@ -1,6 +1,6 @@
 import os from "os";
 
-function getNetworkAddresses() {
+export function getNetworkAddresses() {
   const interfaces = os.networkInterfaces();
   const addresses: string[] = [];
 
@@ -15,10 +15,9 @@ function getNetworkAddresses() {
   return addresses;
 }
 
-export function displayApiAddresses() {
+export function displayApiAddresses(addresses: string[]) {
   const environment = process.env.NODE_ENV || "development";
   const port = process.env.PORT || 3001;
-  const addresses = getNetworkAddresses();
 
   console.log(`API is running in ${environment} mode.\n`);
   console.log("Accessible addresses:");
@@ -33,5 +32,3 @@ export function displayApiAddresses() {
     });
   }
 }
-
-displayApiAddresses();

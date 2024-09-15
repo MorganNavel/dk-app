@@ -2,8 +2,10 @@ import { Express, Request, Response } from "express";
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
+import dotenv from "dotenv";
+dotenv.config();
+const PORT = parseInt(process.env.API_PORT || "3001");
 
-// Définir les options pour swagger-jsdoc
 const options: swaggerJsdoc.Options = {
   definition: {
     openapi: "3.0.0",
@@ -30,66 +32,6 @@ const options: swaggerJsdoc.Options = {
             error: {
               type: "object",
               description: "Optional error details",
-            },
-          },
-        },
-        SignUpInput: {
-          type: "object",
-          required: [
-            "firstname",
-            "name",
-            "email",
-            "password",
-            "confirmPassword",
-          ],
-          properties: {
-            firstname: {
-              type: "string",
-            },
-            name: {
-              type: "string",
-            },
-            email: {
-              type: "string",
-            },
-            password: {
-              type: "string",
-            },
-            confirmPassword: {
-              type: "string",
-            },
-            nationality: {
-              type: "array",
-              items: {
-                type: "string",
-              },
-              example: ["French", "English"],
-            },
-            languages: {
-              type: "object",
-              additionalProperties: {
-                type: "string",
-              },
-              example: {
-                LinkedIn: "https://www.linkedin.com/in/johndoe",
-                Instagram: "https://www.instagram.com/johndoe",
-              },
-            },
-            description: {
-              type: "string",
-              example: "I am a language lover",
-            },
-          },
-        },
-        SignInInput: {
-          type: "object",
-          required: ["email", "password"],
-          properties: {
-            email: {
-              type: "string",
-            },
-            password: {
-              type: "string",
             },
           },
         },
@@ -188,10 +130,40 @@ const options: swaggerJsdoc.Options = {
           },
         },
       },
+      parameters: {
+        idLessonType: {
+          type: "string",
+          in: "path",
+          required: true,
+          name: "idLesson",
+          description: "The ID of the lesson",
+        },
+        idUserType: {
+          type: "string",
+          in: "path",
+          required: true,
+          name: "idUser",
+          description: "The ID of the user",
+        },
+        idBookType: {
+          type: "string",
+          in: "path",
+          required: true,
+          name: "idBooking",
+          description: "The ID of the book",
+        },
+        idPricingType: {
+          type: "string",
+          in: "path",
+          required: true,
+          name: "idPricing",
+          description: "The ID of the pricing",
+        },
+      },
     },
     servers: [
       {
-        url: "http://localhost:3001/api/v1",
+        url: `http://192.168.1.27:${PORT}/api/v1`,
       },
     ],
   },
@@ -205,15 +177,15 @@ const options: swaggerJsdoc.Options = {
 
 const specs = swaggerJsdoc(options);
 
-function swagger(app: Express, port: number = 3001) {
+function swagger(app: Express, addresses: string[], port: number = 3001) {
   app.use("/swagger", swaggerUi.serve, swaggerUi.setup(specs));
 
   app.get("/swagger.json", (req: Request, res: Response) => {
     res.setHeader("Content-Type", "application/json");
     res.send(specs);
   });
-
-  console.log(`Swagger is running on http://localhost:${port}/swagger`);
+  for (const address of addresses)
+    console.log(`Swagger is running on http://${address}:${port}/swagger`);
 }
 
 export default swagger;
