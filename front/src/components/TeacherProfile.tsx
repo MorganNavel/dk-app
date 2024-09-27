@@ -28,7 +28,7 @@ export const TeacherProfile = () => {
   };
 
   return (
-    <div className='max-w-xs lg:max-w-4xl mx-auto my-12 font-Poppins'>
+    <div className='max-w-xs lg:max-w-4xl mx-auto font-Poppins'>
       <Card className='bg-card text-card-foreground p-6 rounded-lg text-center mb-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl'>
         <CardContent>
           <CardTitle className='text-xl font-semibold mb-4'>
@@ -145,14 +145,16 @@ export const TeacherProfile = () => {
               `profile.${teacher.firstname}-${teacher.name}.preply.description`
             )}
           </p>
-          <Button variant='round-outline'>
+          <Button variant='round-outline' className='w-full py-5 '>
             <Link
               href={teacher.preply}
-              className='flex items-center justify-center'
+              className='flex items-center justify-center '
             >
-              {t(
-                `profile.${teacher.firstname}-${teacher.name}.preply.buttonText`
-              )}
+              <p className='text-wrap'>
+                {t(
+                  `profile.${teacher.firstname}-${teacher.name}.preply.buttonText`
+                )}
+              </p>
             </Link>
           </Button>
         </CardContent>

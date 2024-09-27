@@ -1,24 +1,23 @@
-FROM node:latest as build
+FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json .
-COPY package-lock.json .
+COPY package.json pnpm-lock.yaml ./
 
-RUN npm install
+RUN npm install -g pnpm && pnpm install
 
 COPY . .
 
-RUN npm run build
+RUN pnpm build
 
-FROM node:alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-COPY --from=build /app/.next ./.next
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/package.json ./package.json
+COPY --from=builder /app ./
+
+RUN pnpm install --prod
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["pnpm", "start"]

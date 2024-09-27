@@ -18,7 +18,7 @@
     --primary: 141 31% 50%; /* Couleur primaire (vert doux) */
     --primary-light: 141 31% 60%; /* Version plus claire de la couleur primaire */
     --primary-dark: 141 31% 40%; /* Version plus sombre de la couleur primaire */
-    --primary-foreground: 0 0% 100%; /* Blanc pour le texte sur le bouton primaire */
+    --primary-foreground: 141 31% 60%; /* Blanc pour le texte sur le bouton primaire */
 
     --disabled-button: 141 31% 80%; /* Vert très pâle pour les boutons désactivés */
 
