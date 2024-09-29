@@ -21,25 +21,6 @@ const config: Config = {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
-        "color-black": "green-950",
-        "disabled-button": "hsl(var(--disabled-button))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        "primary-foreground": "hsl(var(--primary-foreground))",
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-          border: "hsl(var(--border))",
-          shadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Légère ombre pour les cartes
-          hover: {
-            DEFAULT: "hsl(var(--card-hover))", // Couleur de fond des cartes au survol
-            shadow: "0 8px 12px rgba(0, 0, 0, 0.2)", // Ombre plus prononcée au survol
-          },
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
@@ -55,6 +36,23 @@ const config: Config = {
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
+        },
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        "primary-foreground": "hsl(var(--primary-foreground))",
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+          border: "hsl(var(--border))",
+          shadow: "0 4px 6px rgba(0, 0, 0, 0.1)", // Ombre légère pour les cartes
+          hover: {
+            DEFAULT: "hsl(var(--card-hover))", // Couleur de fond au survol
+            shadow: "0 8px 12px rgba(0, 0, 0, 0.2)", // Ombre au survol
+          },
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

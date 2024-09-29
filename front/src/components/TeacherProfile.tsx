@@ -12,7 +12,7 @@ const teacher = {
 
   videoUrl: "https://www.youtube.com/embed/_bElur05Tlk",
   instagram:
-    "https://www.instagram.com/danbee_korean?igsh=MXhhYTF6Mm43bTMwaA==",
+    "https://www.instagram.com/korean_with_danbee?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   preply:
     "https://preply.com/ko/tutor/4335957?fbclid=PAZXh0bgNhZW0CMTEAAaYhRBvCMGNAW_l-YfWZLQw2_Khd9sIibqvVO45MW7xJ5F82AXc11kT2v78_aem_LWQIPl6oU-KeLmnf7DCj4Q",
 };
@@ -28,7 +28,7 @@ export const TeacherProfile = () => {
   };
 
   return (
-    <div className='max-w-xs lg:max-w-4xl mx-auto font-Poppins'>
+    <div className='max-w-xs lg:max-w-4xl mx-auto font-Poppins pt-32 pb-32 lg:pt-12 lg:pb-12'>
       <Card className='bg-card text-card-foreground p-6 rounded-lg text-center mb-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl'>
         <CardContent>
           <CardTitle className='text-xl font-semibold mb-4'>
