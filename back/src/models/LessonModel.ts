@@ -1,4 +1,5 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
+import { User } from "./UserModel";
 class Lesson extends Model {
   public idLesson!: number;
   public title!: string;
@@ -9,6 +10,7 @@ class Lesson extends Model {
   public earned!: number;
   public status!: string;
   public groupSize!: number;
+  public teacher!: User;
 }
 function initLesson(sequelize: Sequelize) {
   Lesson.init(

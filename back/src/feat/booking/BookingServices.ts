@@ -1,5 +1,6 @@
 import { Booking } from "@/models/BookingModel";
 import { Lesson } from "@/models/LessonModel";
+import { User } from "@/models/UserModel";
 import { API_Response } from "@/types/Response";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
@@ -185,6 +186,43 @@ export class BookingServices {
       await booking.destroy();
       return { code: STATUS_CODES.OK };
     } catch (error) {
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: error as string,
+      };
+    }
+  }
+  static async getAllApproachingLessons() {
+    try {
+      const bookings = await Booking.findAll({
+        include: [
+          { model: Lesson, as: "lesson" },
+          { model: User, as: "user"}
+        ],
+        where: {
+        startDate: {
+          [Op.gte]: Date.now(),
+          [Op.lte]: Date.now() + (20* 60000)
+        }
+      }})
+      const bookingsApproachingByLesson = await bookings.reduce(async (acc: Record<string, any>, booking) => {
+        const lesson = booking.dataValues.lesson;
+        const user = booking.dataValues.user;
+        const teacher = await Lesson.findOne({
+          include: { model: User, as: "teacher" },
+          where: {
+          idLesson: lesson.idLesson
+        }})
+        lesson.teacher = teacher?.dataValues;
+        if (!acc[lesson.idLesson]) {
+          acc[lesson.idLesson] = {lesson: lesson, users: []};
+        }
+        acc[lesson.idLesson].users.push(user);
+        return acc;
+      }, {});
+      return { code: STATUS_CODES.OK, data: bookingsApproachingByLesson}
+
+    } catch (error){
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,
         error: error as string,
