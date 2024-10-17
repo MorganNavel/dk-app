@@ -144,7 +144,7 @@ export class BookingServices {
       });
 
       let bookings = bookingsFetched.filter(
-        (booking: Booking) => booking.dataValues.lesson.startDate <= new Date()
+        (booking: Booking) => booking.dataValues.lesson.startDate >= Date.now()
       );
       let bookingsFinal = bookings.map((booking: Booking) => {
         let lesson = booking.dataValues.lesson;
