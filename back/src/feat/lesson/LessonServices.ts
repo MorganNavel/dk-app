@@ -1,8 +1,6 @@
 import { Lesson } from "@/models/LessonModel";
 import { API_Response } from "@/types/Response";
-import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
-import { Request, Response } from "express";
 import { Op } from "sequelize";
 export class LessonServices {
   /**
@@ -16,7 +14,7 @@ export class LessonServices {
         where: {
           idTeacher,
           startDate: {
-            [Op.gte]: new Date(),
+            [Op.gte]: Date.now(),
           },
         },
       });
@@ -35,7 +33,7 @@ export class LessonServices {
       const lessons = await Lesson.findAll({
         where: {
           startDate: {
-            [Op.gte]: new Date(),
+            [Op.gte]: Date.now(),
           },
         },
       });
@@ -126,7 +124,7 @@ export class LessonServices {
       where: {
         idLesson,
         idTeacher,
-        startDate: { [Op.gte]: new Date() },
+        startDate: { [Op.gte]: Date.now() },
       },
     });
     if (!lesson) {
