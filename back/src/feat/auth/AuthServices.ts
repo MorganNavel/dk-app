@@ -16,7 +16,6 @@ export class AuthService {
     const {
       email,
       password,
-      confirmPassword,
       nationality,
       languages,
       firstname,
