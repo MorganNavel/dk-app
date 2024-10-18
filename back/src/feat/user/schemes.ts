@@ -56,5 +56,5 @@ export const UpdateScheme = joi.object({
   nationality: joi.array().items(joi.string()),
   languages: joi.array().items(joi.string()),
   description: joi.string(),
-  links: joi.array().items(joi.string()),
+  links: joi.object().pattern(joi.string(), joi.string()),
 });
