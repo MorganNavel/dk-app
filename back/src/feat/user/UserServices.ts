@@ -51,7 +51,7 @@ export class UserServices {
             ...userWithoutPassword,
             nationality: StringToArray(nationality),
             languages: StringToArray(languages),
-            links: JSON.parse(links),
+            links: links,
           },
         },
       };
