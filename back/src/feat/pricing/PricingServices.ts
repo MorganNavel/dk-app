@@ -65,7 +65,7 @@ export class PricingServices {
       if (!user) {
         return { code: STATUS_CODES.NOT_FOUND, error: "User not found" };
       }
-      const nbLessons = user.dataValues.nbLessons + pricing.nbLessons;
+      const nbLessons = user.nbLessons + pricing.nbLessons;
       const updatedUser = await user.update({ nbLessons });
       const { password_hash, ...userValues } = updatedUser.dataValues;
       return { code: STATUS_CODES.OK, data: { user: userValues } };

@@ -23,9 +23,9 @@ export class BookingServices {
       if (!lesson) {
         return { code: STATUS_CODES.NOT_FOUND };
       }
-      const bookings = lesson.dataValues.bookings;
+      const bookings = lesson.bookings;
 
-      if (bookings.length >= lesson.dataValues.groupSize) {
+      if (bookings.length >= lesson.groupSize) {
         return {
           code: STATUS_CODES.INTERNAL_SERVER_ERROR,
           error: "Lesson full",
@@ -33,8 +33,8 @@ export class BookingServices {
       }
 
       const booking = await Booking.create({
-        startDate: lesson.dataValues.startDate,
-        duration: lesson.dataValues.duration,
+        startDate: lesson.startDate,
+        duration: lesson.duration,
         tarif: 0,
         idUser,
         idLesson,
@@ -85,11 +85,8 @@ export class BookingServices {
       if (!lesson) {
         return { code: STATUS_CODES.BAD_REQUEST };
       }
-      console.log(lesson.dataValues);
-      let bookings = lesson.dataValues.bookings.map(
-        (booking: Booking) => booking.dataValues
-      );
-      return { code: STATUS_CODES.OK, data: bookings };
+      
+      return { code: STATUS_CODES.OK, data: lesson.bookings };
     } catch (error) {
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,
@@ -144,12 +141,11 @@ export class BookingServices {
       });
 
       let bookings = bookingsFetched.filter(
-        (booking: Booking) => booking.dataValues.lesson.startDate >= Date.now()
+        (booking: Booking) => booking.lesson.startDate.getTime() >= Date.now()
       );
       let bookingsFinal = bookings.map((booking: Booking) => {
-        let lesson = booking.dataValues.lesson;
-        lesson["earned"] = undefined;
-        lesson["url"] = undefined;
+        let lesson = booking.lesson;
+        lesson.earned = 0;
         return { ...booking.dataValues, lesson };
       });
       return { code: STATUS_CODES.OK, data: bookingsFinal };
@@ -205,17 +201,21 @@ export class BookingServices {
           [Op.lte]: Date.now() + (20* 60000)
         }
       }})
-      const bookingsApproachingByLesson = await bookings.reduce(async (acc: Record<string, any>, booking) => {
-        const lesson = booking.dataValues.lesson;
-        const user = booking.dataValues.user;
-        const teacher = await Lesson.findOne({
+      
+      
+      const bookingsApproachingByLesson = await bookings.reduce(async (acc: Record<string, any>, b) => {
+        const { lesson, user } = b;
+        const lessonWithTeacher = await Lesson.findOne({
           include: { model: User, as: "teacher" },
           where: {
-          idLesson: lesson.idLesson
-        }})
-        lesson.teacher = teacher?.dataValues;
+            idLesson: lesson.idLesson
+          }
+        });
+
+        if(!lessonWithTeacher) return {code: STATUS_CODES.NOT_FOUND, error: "Lesson Not Found"}
+        lesson.teacher = lessonWithTeacher.teacher;
         if (!acc[lesson.idLesson]) {
-          acc[lesson.idLesson] = {lesson: lesson, users: []};
+          acc[lesson.idLesson] = { lesson: lesson, users: [] };
         }
         acc[lesson.idLesson].users.push(user);
         return acc;
@@ -230,3 +230,5 @@ export class BookingServices {
     }
   }
 }
+
+
