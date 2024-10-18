@@ -84,14 +84,14 @@ pricingRouter.post(
 );
 /**
  * @openapi
- * /lesson/{idLesson}/buy:
+ * /pricing/{idPricing}/buy:
  *   post:
- *     summary: Update a lesson
- *     description: Update a lesson
+ *     summary: Buy lessons
+ *     description: Buy lessons
  *     tags:
- *       - Lesson
+ *       - Pricing
  *     parameters:
- *      - $ref: '#/components/parameters/idLessonType'
+ *      - $ref: '#/components/parameters/idPricingType'
  *     responses:
  *       '200':
  *         $ref: '#/components/responses/200'
