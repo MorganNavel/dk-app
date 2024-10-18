@@ -1,4 +1,5 @@
 import { Lesson } from "@/models/LessonModel";
+import { User } from "@/models/UserModel";
 import { API_Response } from "@/types/Response";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
@@ -31,6 +32,7 @@ export class LessonServices {
   static async getAll() {
     try {
       const lessons = await Lesson.findAll({
+        include: { model: User, as : "teacher"},
         where: {
           startDate: {
             [Op.gte]: Date.now(),
@@ -38,7 +40,12 @@ export class LessonServices {
         },
       });
       if (!lessons) return { code: STATUS_CODES.NOT_FOUND };
-      return { code: STATUS_CODES.OK, data: lessons };
+      const lessonsClean = lessons.map((l: Lesson) => {
+        const { url, earned, idTeacher, ...lesson } = l.dataValues;
+        const { password_hash, email, nbLessons,...teacher} = l.teacher
+        return lesson
+      })
+      return { code: STATUS_CODES.OK, data: lessonsClean };
     } catch (error) {
       return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
     }
