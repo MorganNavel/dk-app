@@ -59,9 +59,10 @@ export class LessonController {
    * Get all lessons depending on the user's role
    */
   static async getAll(req: Request, res: Response) {
-    const { idUser, role } = (req.session as AppSession).user;
-    if (idUser && role !== "teacher") {
-      const response = await LessonServices.getAllFromTeacher(idUser);
+    const user  = (req.session as AppSession).user;
+
+    if (req.session && user?.role == "teacher") {
+      const response = await LessonServices.getAllFromTeacher(user.idUser);
       return res.status(response.code).json(response);
     }
     const response = await LessonServices.getAll();
