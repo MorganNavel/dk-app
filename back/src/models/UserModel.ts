@@ -14,7 +14,7 @@ class User extends Model {
   links?: Json;
   description?: string;
   role!: UserRole;
-  nbLesson?: number;
+  nbLessons!: number;
 }
 
 function initUser(sequelize: Sequelize) {

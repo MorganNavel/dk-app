@@ -1,5 +1,6 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
 import { User } from "./UserModel";
+import { Booking } from "./BookingModel";
 class Lesson extends Model {
   public idLesson!: number;
   public title!: string;
@@ -11,6 +12,7 @@ class Lesson extends Model {
   public status!: string;
   public groupSize!: number;
   public teacher!: User;
+  public bookings!: Booking []
 }
 function initLesson(sequelize: Sequelize) {
   Lesson.init(
