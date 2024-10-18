@@ -16,6 +16,8 @@ import pricingRouter from "./feat/pricing/PricingRouter";
 import lessonRouter from "./feat/lesson/LessonRouter";
 import swagger from "./utils/swagger";
 import dotenv from "dotenv";
+import cron from "node-cron";
+import { approachingLessons } from "./utils/helpers";
 dotenv.config();
 const app = express();
 const PORT = parseInt(process.env.API_PORT || "3001");
@@ -24,6 +26,9 @@ const APP_PORT = parseInt(process.env.APP_PORT || "3000");
 const allowedOrigins = [
   `http://192.168.1.27:${PORT}`,
   `http://192.168.1.27:3000`,
+  `http://localhost:${PORT}`,
+  `http://10.34.3.79:${PORT}`,
+
 ];
 
 const corsOptions = {
@@ -44,6 +49,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 connectToDb();
+approachingLessons()
+// cron.schedule("*/2 * * * *", approachingLessons)
+
 const { redisClient, redisStore } = initCache();
 const redisConfig = getRedisConf();
 
