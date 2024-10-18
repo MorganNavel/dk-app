@@ -6,30 +6,6 @@ import { validateUpdateInput } from "./middlewares";
 const userRouter = Router();
 /**
  * @openapi
- * /user/{idUser}:
- *   get:
- *     summary: Get a user
- *     description: Get a user
- *     tags:
- *       - User
- *     parameters:
- *      - $ref: '#/components/parameters/idUserType'
- *     responses:
- *      '201':
- *        $ref: '#/components/responses/200'
- *      '400':
- *        $ref: '#/components/responses/400'
- *      '401':
- *        $ref: '#/components/responses/401'
- *      '404':
- *        $ref: '#/components/responses/404'
- *      '500':
- *        $ref: '#/components/responses/500'
- *
- */
-userRouter.get("/:idUser", UserController.getUserProfile);
-/**
- * @openapi
  * /user/students:
  *  get:
  *   summary: Get all students of a teacher
@@ -96,7 +72,7 @@ userRouter.get("/teachers", UserController.getAllTeachers);
  *      $ref: '#/components/responses/404'
  *    '500':
  *      $ref: '#/components/responses/500'
- *
+*
  */
 userRouter.get("/me", isSignedIn, UserController.getMe);
 /**
@@ -126,25 +102,22 @@ userRouter.get("/me", isSignedIn, UserController.getMe);
  *        $ref: '#/components/responses/404'
  *      '500':
  *        $ref: '#/components/responses/500'
- *
- */
+*
+*/
 userRouter.patch(
-  "/:idUser",
+  "/me",
   validateUpdateInput,
   isSignedIn,
-  isAdmin,
-  UserController.update
+  UserController.updateMe
 );
 /**
  * @openapi
- * /user/{idUser}:
+ * /user:
  *   patch:
  *     summary: Delete a user
  *     description: Delete a user
  *     tags:
  *       - User
- *     parameters:
- *      - $ref: '#/components/parameters/idUserType'
  *     requestBody:
  *      required: true
  *      content:
@@ -165,19 +138,22 @@ userRouter.patch(
  *
  */
 userRouter.patch(
-  "/me",
+  "/:idUser",
   validateUpdateInput,
   isSignedIn,
-  UserController.updateMe
+  isAdmin,
+  UserController.update
 );
 /**
  * @openapi
- * /user/{idUser}:
+ * /user:
  *   delete:
  *     summary: Update my profile
  *     description: Update my profile
  *     tags:
  *       - User
+ *     parameters:
+ *      - $ref: '#/components/parameters/idUserType'
  *     responses:
  *       '200':
  *         $ref: '#/components/responses/200'
@@ -192,4 +168,28 @@ userRouter.patch(
  */
 userRouter.delete("/:idUser", isSignedIn, isAdmin, UserController.delete);
 
+/**
+ * @openapi
+ * /user/{idUser}:
+ *   get:
+ *     summary: Get a user
+ *     description: Get a user
+ *     tags:
+ *       - User
+ *     parameters:
+ *      - $ref: '#/components/parameters/idUserType'
+ *     responses:
+ *      '201':
+ *        $ref: '#/components/responses/200'
+ *      '400':
+ *        $ref: '#/components/responses/400'
+ *      '401':
+ *        $ref: '#/components/responses/401'
+ *      '404':
+ *        $ref: '#/components/responses/404'
+ *      '500':
+ *        $ref: '#/components/responses/500'
+ *
+ */
+userRouter.get("/:idUser", UserController.getUserProfile);
 export default userRouter;
