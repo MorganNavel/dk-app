@@ -1,0 +1,73 @@
+import { Input } from "../ui/input";
+import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
+import {
+  Control,
+  FieldPath,
+  FieldValues,
+  RegisterOptions,
+} from "react-hook-form";
+import { useTranslations } from "next-intl";
+
+interface ControlledInputProps<T extends FieldValues> {
+  name: FieldPath<T>;
+  control: Control<T>;
+  rules?: Omit<
+    RegisterOptions<T>,
+    "setValueAs" | "disabled" | "valueAsNumber" | "valueAsDate"
+  >;
+  onChange?: (v: any) => void;
+  label: string;
+  required?: boolean;
+  className?: string;
+  type?: string;
+}
+
+export const ControlledInput = <T extends FieldValues>({
+  name,
+  control,
+  rules = {},
+  label,
+  required = false,
+  onChange,
+  ...props
+}: ControlledInputProps<T>) => {
+  const t = useTranslations("generals");
+  return (
+    <FormField
+      name={name}
+      control={control}
+      rules={{
+        required: { value: required, message: t("requiredField") },
+      }}
+      render={({ field, fieldState }) => (
+        <FormItem>
+          <>
+            <FormLabel>{label}</FormLabel>
+            <FormControl>
+              <>
+                <Input
+                  {...field}
+                  {...props}
+                  aria-invalid={!!fieldState.error}
+                  aria-describedby={`${name}-error`}
+                  onBlur={() => {
+                    field.onBlur();
+                  }}
+                  onChange={(e) => {
+                    onChange && onChange(e);
+                    field.onChange && field.onChange(e);
+                  }}
+                />
+                {fieldState.error && (
+                  <span id={`${name}-error`} className="text-red-500">
+                    {fieldState.error.message}
+                  </span>
+                )}
+              </>
+            </FormControl>
+          </>
+        </FormItem>
+      )}
+    />
+  );
+};

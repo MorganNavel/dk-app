@@ -61,7 +61,7 @@ export default async function LocaleLayout({
       <body>
         <ProfileProvider>
           <NextIntlClientProvider messages={messages}>
-            <ResizablePanelGroup direction='vertical'>
+            <ResizablePanelGroup direction="vertical">
               <Header />
               <ResizableHandle />
               {children}
