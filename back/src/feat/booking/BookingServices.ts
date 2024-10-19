@@ -85,7 +85,7 @@ export class BookingServices {
       if (!lesson) {
         return { code: STATUS_CODES.BAD_REQUEST };
       }
-      
+
       return { code: STATUS_CODES.OK, data: lesson.bookings };
     } catch (error) {
       return {
@@ -193,36 +193,39 @@ export class BookingServices {
       const bookings = await Booking.findAll({
         include: [
           { model: Lesson, as: "lesson" },
-          { model: User, as: "user"}
+          { model: User, as: "user" },
         ],
         where: {
-        startDate: {
-          [Op.gte]: Date.now(),
-          [Op.lte]: Date.now() + (20* 60000)
-        }
-      }})
-      
-      
-      const bookingsApproachingByLesson = await bookings.reduce(async (acc: Record<string, any>, b) => {
-        const { lesson, user } = b;
-        const lessonWithTeacher = await Lesson.findOne({
-          include: { model: User, as: "teacher" },
-          where: {
-            idLesson: lesson.idLesson
+          startDate: {
+            [Op.gte]: Date.now(),
+            [Op.lte]: Date.now() + 20 * 60000,
+          },
+        },
+      });
+
+      const bookingsApproachingByLesson = await bookings.reduce(
+        async (acc: Record<string, any>, b) => {
+          const { lesson, user } = b;
+          const lessonWithTeacher = await Lesson.findOne({
+            include: { model: User, as: "teacher" },
+            where: {
+              idLesson: lesson.idLesson,
+            },
+          });
+
+          if (!lessonWithTeacher)
+            return { code: STATUS_CODES.NOT_FOUND, error: "Lesson Not Found" };
+          lesson.teacher = lessonWithTeacher.teacher;
+          if (!acc[lesson.idLesson]) {
+            acc[lesson.idLesson] = { lesson: lesson, users: [] };
           }
-        });
-
-        if(!lessonWithTeacher) return {code: STATUS_CODES.NOT_FOUND, error: "Lesson Not Found"}
-        lesson.teacher = lessonWithTeacher.teacher;
-        if (!acc[lesson.idLesson]) {
-          acc[lesson.idLesson] = { lesson: lesson, users: [] };
-        }
-        acc[lesson.idLesson].users.push(user);
-        return acc;
-      }, {});
-      return { code: STATUS_CODES.OK, data: bookingsApproachingByLesson}
-
-    } catch (error){
+          acc[lesson.idLesson].users.push(user);
+          return acc;
+        },
+        {}
+      );
+      return { code: STATUS_CODES.OK, data: bookingsApproachingByLesson };
+    } catch (error) {
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,
         error: error as string,
@@ -230,5 +233,3 @@ export class BookingServices {
     }
   }
 }
-
-

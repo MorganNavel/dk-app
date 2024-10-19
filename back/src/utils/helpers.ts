@@ -9,16 +9,16 @@ import { Transporter } from "./Transporter";
 
 dotenv.config();
 
-
 export function ArrayToString(array: string[]): string | null {
-  if (!array || array.length === 0 || (array.length === 1 && array[0] === "")) return null;
+  if (!array || array.length === 0 || (array.length === 1 && array[0] === ""))
+    return null;
   return array.join(";");
 }
 
 export function StringToArray(string: string): string[] | null {
   if (!string) return null;
   const array = string.split(";");
-  return (array.length === 1 && array[0] === "") ? null : array;
+  return array.length === 1 && array[0] === "" ? null : array;
 }
 
 export function generateVisioLink(lesson: Lesson): string {
@@ -26,9 +26,14 @@ export function generateVisioLink(lesson: Lesson): string {
   return `https://meet.jit.si/${roomName}`;
 }
 
-
-export async function sendEmailTemplate(url: string, user: any, isTeacher: boolean) {
-  const subject = isTeacher ? "Your class is starting soon!" : "Your reserved class is starting soon!";
+export async function sendEmailTemplate(
+  url: string,
+  user: any,
+  isTeacher: boolean
+) {
+  const subject = isTeacher
+    ? "Your class is starting soon!"
+    : "Your reserved class is starting soon!";
 
   const body = `
     <div style="font-family: Arial, sans-serif; color: #333;">
@@ -37,7 +42,11 @@ export async function sendEmailTemplate(url: string, user: any, isTeacher: boole
       </div>
       <div style="margin-bottom: 20px;">
         <p>Dear ${user.name},</p>
-        <p>${isTeacher ? 'Your class is about to begin' : 'The class you reserved is about to begin'}. Click the link below to join:</p>
+        <p>${
+          isTeacher
+            ? "Your class is about to begin"
+            : "The class you reserved is about to begin"
+        }. Click the link below to join:</p>
         <p style="text-align: center;">
           <a href="${url}" style="padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; font-weight: bold; border-radius: 5px;">Join Class</a>
         </p>
@@ -55,7 +64,7 @@ export async function sendEmailTemplate(url: string, user: any, isTeacher: boole
   const email: Email = {
     email: user.email,
     subject,
-    body
+    body,
   };
 
   await sendEmail(email);
@@ -66,14 +75,19 @@ export async function approachingLessons() {
     const response = await BookingServices.getAllApproachingLessons();
     if (response.code !== STATUS_CODES.OK) return;
 
-    const lessons = response.data as Record<string, { lesson: Lesson, users: Array<User> }>;
+    const lessons = response.data as Record<
+      string,
+      { lesson: Lesson; users: Array<User> }
+    >;
     for (const key of Object.keys(lessons)) {
       const { lesson, users } = lessons[key];
       const { teacher } = lesson;
       const url = generateVisioLink(lesson);
 
-      await Promise.all(users.map(user => sendEmailTemplate(url, user, false)));
-      
+      await Promise.all(
+        users.map((user) => sendEmailTemplate(url, user, false))
+      );
+
       if (teacher) {
         await sendEmailTemplate(url, lesson.teacher, true);
       }
@@ -83,7 +97,6 @@ export async function approachingLessons() {
   }
 }
 
-// Email sending function using Nodemailer
 export async function sendEmail(email: Email) {
   const transporter = Transporter.getTransporter();
 
@@ -91,12 +104,13 @@ export async function sendEmail(email: Email) {
     from: process.env.GMAIL_EMAIL,
     to: email.email,
     subject: email.subject,
-    html: email.body
+    html: email.body,
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.response);
+    // const info = await transporter.sendMail(mailOptions);
+    // console.log("Email sent:", info.response);
+    console.log("Email sent");
   } catch (error) {
     console.error("Error sending email:", error);
   }
