@@ -15,6 +15,7 @@
     "ko": "Korean",
     "notImplemented": "This feature is not implemented yet.",
     "alreadyAccount": "Already have an account ?",
+    "noAccount": "Doesn't have an account yet ?",
     "user-profile": {
       "email": "Email",
       "name": "Name",

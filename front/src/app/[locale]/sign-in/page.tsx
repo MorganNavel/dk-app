@@ -1,7 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
-import LNGS from "@/types/languages";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "@/components/fields/ControlledInput";
 import {
@@ -10,7 +9,6 @@ import {
   CardHeader,
   CardContent,
 } from "@/components/ui/card";
-import { ControlledMultiSelect } from "@/components/fields/ControlledMultiSelect";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 
@@ -45,7 +43,7 @@ export default function SignUp() {
     <div className="flex items-center justify-center min-h-screen p-4 bg-[#F4F4F4]">
       <Card className="lg:max-w-md max-w-sm w-full">
         <CardHeader className="text-center text-2xl font-bold text-primary">
-          {t("generals.signup")}
+          {t("generals.signin")}
         </CardHeader>
         <CardContent>
           <Form {...methods}>
@@ -59,39 +57,12 @@ export default function SignUp() {
                 control={methods.control}
                 required
               />
-              <ControlledInput
-                label={t("generals.user-profile.firstname")}
-                name={"firstname"}
-                control={methods.control}
-                required
-              />
-              <ControlledInput
-                label={t("generals.user-profile.name")}
-                name={"name"}
-                control={methods.control}
-                required
-              />
+
               <ControlledInput
                 label={t("generals.user-profile.password")}
                 name={"password"}
                 control={methods.control}
                 type="password"
-                required
-              />
-              <ControlledInput
-                label={t("generals.user-profile.confirmPassword")}
-                name={"confirmPassword"}
-                control={methods.control}
-                type="password"
-                required
-              />
-
-              <ControlledMultiSelect
-                control={methods.control}
-                name="languages"
-                options={LNGS}
-                label={t("generals.user-profile.lngs")}
-                placeholder={t("generals.user-profile.speakingLngs")}
                 required
               />
 
@@ -107,12 +78,12 @@ export default function SignUp() {
         </CardContent>
         <CardFooter className="justify-center">
           <p className="text-sm">
-            {t("generals.alreadyAccount")}{" "}
+            {t("generals.noAccount")}{" "}
             <Link
-              href="/sign-in"
+              href="/sign-up"
               className="hover:underline text-primary font-semibold"
             >
-              {t("generals.signin")}
+              {t("generals.signup")}
             </Link>
           </p>
         </CardFooter>

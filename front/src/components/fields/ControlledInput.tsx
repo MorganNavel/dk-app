@@ -56,7 +56,6 @@ export const ControlledInput = <T extends FieldValues>({
                 aria-describedby={`${name}-error`}
                 onBlur={field.onBlur}
                 onChange={(e) => {
-                  console.log(e);
                   field.onChange(e.target.value);
                   onChange && onChange(e.target.value);
                 }}
