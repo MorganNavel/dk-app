@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { IoIosClose, IoIosMenu } from "react-icons/io";
 import { TbCertificate } from "react-icons/tb";
@@ -41,6 +42,7 @@ export const Sidebar = () => {
       "/api/v1/user/teachers"
     );
     setTeachers(teachers.data);
+    setTeachers([]);
   }
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export const Sidebar = () => {
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden">
-        <div className="bg-primary-foreground rounded-md">
+        <div className="bg-black rounded-md">
           <IoIosMenu className="text-background w-7 h-7" />
         </div>
       </SheetTrigger>
@@ -224,11 +226,11 @@ export const SidebarV1 = () => {
   return (
     <Sheet>
       <SheetTrigger className="lg:hidden">
-        <div className="bg-primary-foreground rounded-md">
+        <div className="bg-emerald-700 rounded-md">
           <IoIosMenu className="text-background w-7 h-7" />
         </div>
       </SheetTrigger>
-      <SheetContent side="left" className="bg-primary-foreground text-white">
+      <SheetContent side="left" className="bg-primary text-white">
         <SheetHeader className="mb-5">
           <SheetTitle className="font-semibold text-2xl text-white">
             <h2>{t("generals.menu")}</h2>

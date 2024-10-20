@@ -4,6 +4,7 @@ import { Caroussel } from "./Caroussel";
 import { NewHereComponent } from "./items/NewHere";
 import { ReadReviewsComponent } from "./items/ReadReviews";
 import { StartKoreanJourneyComponent } from "./items/StartKoreanJourney";
+import { ClassNames } from "@emotion/react";
 
 export const FirstCaroussel = () => {
   const config = {
