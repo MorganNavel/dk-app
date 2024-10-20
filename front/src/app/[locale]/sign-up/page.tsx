@@ -12,6 +12,8 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import { ControlledMultiSelect } from "@/components/fields/ControlledMultiSelect";
+import Link from "next/link";
+import { useTranslations } from "next-intl";
 
 interface SignUpFields {
   email: string;
@@ -32,9 +34,9 @@ export default function SignUp() {
       password: "",
       confirmPassword: "",
       languages: "",
-      links: "",
     },
   });
+  const t = useTranslations();
 
   const onSubmit: SubmitHandler<SignUpFields> = (data) => {
     console.log(data);
@@ -42,9 +44,9 @@ export default function SignUp() {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4 bg-[#F4F4F4]">
-      <Card className="max-w-sm w-full">
+      <Card className="lg:max-w-md max-w-sm w-full">
         <CardHeader className="text-center text-2xl font-bold text-primary">
-          Sign Up
+          {t("generals.signup")}
         </CardHeader>
         <CardContent>
           <Form {...methods}>
@@ -53,39 +55,45 @@ export default function SignUp() {
               className="bg-[#F9F9F9] px-4 py-6 rounded-lg"
             >
               <ControlledInput
-                label={"Email"}
+                label={t("generals.user-profile.email")}
                 name={"email"}
                 control={methods.control}
+                required
               />
               <ControlledInput
-                label={"Firstname"}
+                label={t("generals.user-profile.firstname")}
                 name={"firstname"}
                 control={methods.control}
+                required
               />
               <ControlledInput
-                label={"Name"}
+                label={t("generals.user-profile.name")}
                 name={"name"}
                 control={methods.control}
+                required
               />
               <ControlledInput
-                label={"Password"}
+                label={t("generals.user-profile.password")}
                 name={"password"}
                 control={methods.control}
                 type="password"
+                required
               />
               <ControlledInput
-                label={"Confirm Password"}
+                label={t("generals.user-profile.confirmPassword")}
                 name={"confirmPassword"}
                 control={methods.control}
                 type="password"
+                required
               />
 
               <ControlledMultiSelect
                 control={methods.control}
                 name="languages"
                 options={LNGS}
-                label="Languages"
-                placeholder="Select your speaking languages"
+                label={t("generals.user-profile.lngs")}
+                placeholder={t("generals.user-profile.speakingLngs")}
+                required
               />
 
               <Button
@@ -93,12 +101,22 @@ export default function SignUp() {
                 type={"submit"}
                 className="w-full mt-4"
               >
-                Submit
+                {t("generals.submit")}
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="text-center">Sign In</CardFooter>
+        <CardFooter className="justify-center">
+          <p className="text-sm">
+            {t("generals.alreadyAccount")}{" "}
+            <Link
+              href="/sign-in"
+              className="hover:underline text-primary font-semibold"
+            >
+              {t("generals.signin")}
+            </Link>
+          </p>
+        </CardFooter>
       </Card>
     </div>
   );

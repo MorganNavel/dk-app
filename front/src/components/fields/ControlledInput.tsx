@@ -15,7 +15,7 @@ interface ControlledInputProps<T extends FieldValues> {
     RegisterOptions<T>,
     "setValueAs" | "disabled" | "valueAsNumber" | "valueAsDate"
   >;
-  onChange?: (v: any) => void;
+  onChange?: (value: any) => void;
   label: string;
   required?: boolean;
   className?: string;
@@ -32,40 +32,46 @@ export const ControlledInput = <T extends FieldValues>({
   ...props
 }: ControlledInputProps<T>) => {
   const t = useTranslations("generals");
+
   return (
     <FormField
       name={name}
       control={control}
       rules={{
         required: { value: required, message: t("requiredField") },
+        ...rules,
       }}
       render={({ field, fieldState }) => (
         <FormItem>
-          <>
-            <FormLabel>{label}</FormLabel>
-            <FormControl>
-              <>
-                <Input
-                  {...field}
-                  {...props}
-                  aria-invalid={!!fieldState.error}
-                  aria-describedby={`${name}-error`}
-                  onBlur={() => {
-                    field.onBlur();
-                  }}
-                  onChange={(e) => {
-                    onChange && onChange(e);
-                    field.onChange && field.onChange(e);
-                  }}
-                />
-                {fieldState.error && (
-                  <span id={`${name}-error`} className="text-red-500">
-                    {fieldState.error.message}
-                  </span>
-                )}
-              </>
-            </FormControl>
-          </>
+          <FormLabel>
+            {label}
+            {required && <span className="text-red-500"> *</span>}
+          </FormLabel>
+          <FormControl>
+            <>
+              <Input
+                {...field}
+                {...props}
+                aria-invalid={!!fieldState.error}
+                aria-describedby={`${name}-error`}
+                onBlur={field.onBlur}
+                onChange={(e) => {
+                  console.log(e);
+                  field.onChange(e.target.value);
+                  onChange && onChange(e.target.value);
+                }}
+              />
+
+              {fieldState.error && (
+                <span
+                  id={`${name}-error`}
+                  className="text-red-500 text-xs mt-1"
+                >
+                  {fieldState.error.message}
+                </span>
+              )}
+            </>
+          </FormControl>
         </FormItem>
       )}
     />

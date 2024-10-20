@@ -13,7 +13,17 @@
     "fr": "Français",
     "en": "English",
     "ko": "한국",
-    "notImplemented": "This feature is not implemented yet."
+    "notImplemented": "This feature is not implemented yet.",
+    "user-profile": {
+      "email": "Email",
+      "name": "Name",
+      "firstname": "Firstname",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "lngs": "Languages",
+      "speakingLngs": "Select your speaking languages"
+    },
+    "submit": "Submit"
   },
   "header": {
     "levelTest": "Level Test",

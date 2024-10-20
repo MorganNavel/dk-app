@@ -57,19 +57,15 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale}>
-      <body>
-        <ProfileProvider>
-          <NextIntlClientProvider messages={messages}>
-            <ResizablePanelGroup direction="vertical">
-              <Header />
-              <ResizableHandle />
-              {children}
-              <Footer />
-            </ResizablePanelGroup>
-          </NextIntlClientProvider>
-        </ProfileProvider>
-      </body>
-    </html>
+    <ProfileProvider>
+      <NextIntlClientProvider messages={messages}>
+        <ResizablePanelGroup direction="vertical">
+          <Header />
+          <ResizableHandle />
+          {children}
+          <Footer />
+        </ResizablePanelGroup>
+      </NextIntlClientProvider>
+    </ProfileProvider>
   );
 }

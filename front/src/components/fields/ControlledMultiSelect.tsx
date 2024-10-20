@@ -6,6 +6,7 @@ import {
   RegisterOptions,
 } from "react-hook-form";
 import { MultiSelect } from "../ui/multi-select";
+import { useTranslations } from "next-intl";
 
 interface Option {
   label: string;
@@ -25,6 +26,7 @@ interface ControlledMultiSelectProps<T extends FieldValues> {
   placeholder?: string;
   className?: string;
   size?: string;
+  required?: boolean;
 }
 
 export const ControlledMultiSelect = <T extends FieldValues>({
@@ -36,17 +38,26 @@ export const ControlledMultiSelect = <T extends FieldValues>({
   label,
   placeholder,
   size = "md",
+  required = false,
   ...props
 }: ControlledMultiSelectProps<T>) => {
+  const t = useTranslations("generals");
+
   return (
     <FormField
       name={name}
       control={control}
-      rules={rules}
+      rules={{
+        required: { value: required, message: t("requiredField") },
+        ...rules,
+      }}
       render={({ field, fieldState }) => (
         <FormItem>
           <>
-            <FormLabel>{label}</FormLabel>
+            <FormLabel>
+              {label}
+              {required && <span className="text-red-500"> *</span>}
+            </FormLabel>
 
             <FormControl>
               <>
@@ -62,10 +73,14 @@ export const ControlledMultiSelect = <T extends FieldValues>({
                   maxCount={5}
                   {...field}
                   {...props}
+                  asChild
                 />
 
                 {fieldState.error && (
-                  <span id={`${name}-error`} className="text-red-500">
+                  <span
+                    id={`${name}-error`}
+                    className="text-red-500 text-xs mt-1"
+                  >
                     {fieldState.error.message}
                   </span>
                 )}

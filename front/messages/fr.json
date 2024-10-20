@@ -13,7 +13,18 @@
     "fr": "Français",
     "en": "English",
     "ko": "Korean",
-    "notImplemented": "Cette fonctionnalité n'est pas encore implémentée."
+    "notImplemented": "Cette fonctionnalité n'est pas encore implémentée.",
+    "alreadyAccount": "Déjà inscrit ?",
+    "user-profile": {
+      "email": "Email",
+      "name": "Nom",
+      "firstname": "Prénom",
+      "password": "Mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "lngs": "Langues",
+      "speakingLngs": "Sélectionnez les langues parler"
+    },
+    "submit": "Valider"
   },
   "header": {
     "levelTest": "Test de niveau",

@@ -17,7 +17,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html>
+    <html lang="en">
       <body>{children}</body>
     </html>
   );
