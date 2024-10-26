@@ -10,6 +10,8 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import favicon from "@public/favicon.ico";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { Toaster } from "sonner";
 
 export async function generateMetadata({
   params: { locale },
@@ -57,15 +59,18 @@ export default async function LocaleLayout({
   }
 
   return (
-    <ProfileProvider>
-      <NextIntlClientProvider messages={messages}>
-        <ResizablePanelGroup direction="vertical">
-          <Header />
-          <ResizableHandle />
-          {children}
-          <Footer />
-        </ResizablePanelGroup>
-      </NextIntlClientProvider>
-    </ProfileProvider>
+    <ReactQueryProvider>
+      <ProfileProvider>
+        <NextIntlClientProvider messages={messages}>
+          <ResizablePanelGroup direction='vertical'>
+            <Header />
+            <ResizableHandle />
+            {children}
+            <Footer />
+            <Toaster richColors />
+          </ResizablePanelGroup>
+        </NextIntlClientProvider>
+      </ProfileProvider>
+    </ReactQueryProvider>
   );
 }
