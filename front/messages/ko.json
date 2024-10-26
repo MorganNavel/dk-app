@@ -10,20 +10,53 @@
     "readReviews": "Read Reviews",
     "average": "Average",
     "requiredField": "Required field",
-    "fr": "Français",
+    "unauthorized": "You are not authorized to access this ressource.",
+    "fr": "French",
     "en": "English",
-    "ko": "한국",
+    "ko": "Korean",
     "notImplemented": "This feature is not implemented yet.",
+    "alreadyAccount": "Already have an account ?",
+    "noAccount": "Doesn't have an account yet ?",
+    "unexpectedError": "An unexpected error occurred. Please try again later.",
     "user-profile": {
-      "email": "Email",
-      "name": "Name",
-      "firstname": "Firstname",
-      "password": "Password",
-      "confirmPassword": "Confirm password",
-      "lngs": "Languages",
-      "speakingLngs": "Select your speaking languages"
+      "label": {
+        "email": "Email",
+        "name": "Name",
+        "firstname": "Firstname",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "lngs": "Languages"
+      },
+      "placeholder": {
+        "email": "Enter your email",
+        "name": "Enter your name",
+        "firstname": "Enter your firstname",
+        "password": "Enter your password",
+        "confirmPassword": "Confirm your password",
+        "lngs": "Select your speaking languages"
+      }
     },
     "submit": "Submit"
+  },
+  "signup": {
+    "passwordMissmatch": "Password must be the same",
+    "emailFormat": "Email format is invalid",
+    "passwordLength": "Password must be at least 6 characters long",
+    "min": {
+      "password": "Password must be at least 6 characters long",
+      "name": "Name must be at least 3 characters long",
+      "firstname": "Firstname must be at least 3 characters long"
+    },
+    "message": {
+      "success": "Your account has been successfully created. You can now sign in.",
+      "error": "An error occurred while creating your account. Please try again later."
+    }
+  },
+  "signin": {
+    "message": {
+      "success": "You have successfully signed in.",
+      "error": "Password or email is incorrect. Please try again."
+    }
   },
   "header": {
     "levelTest": "Level Test",
@@ -142,7 +175,7 @@
         "adapt": "Adaptation of lessons to the student's needs",
         "listen": "Attentive and responsive to the student's needs",
         "multiLevel": "Ability to teach different language levels",
-        "lngs": "Languages: Korean (Native), Japanese (N2/C1), French (B2), and English (B2)"
+        "lngs": "Languages: Korean (Native), Japanese (C1), French (B2), and English (B2)"
       },
       "video": "Introduction Video",
       "preply": {

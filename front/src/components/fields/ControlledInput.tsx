@@ -7,8 +7,10 @@ import {
   RegisterOptions,
 } from "react-hook-form";
 import { useTranslations } from "next-intl";
+import React from "react";
 
-interface ControlledInputProps<T extends FieldValues> {
+interface ControlledInputProps<T extends FieldValues>
+  extends React.ComponentProps<typeof Input> {
   name: FieldPath<T>;
   control: Control<T>;
   rules?: Omit<
@@ -18,8 +20,6 @@ interface ControlledInputProps<T extends FieldValues> {
   onChange?: (value: any) => void;
   label: string;
   required?: boolean;
-  className?: string;
-  type?: string;
 }
 
 export const ControlledInput = <T extends FieldValues>({
@@ -45,7 +45,7 @@ export const ControlledInput = <T extends FieldValues>({
         <FormItem>
           <FormLabel>
             {label}
-            {required && <span className="text-red-500"> *</span>}
+            {required && <span className='text-red-500'> *</span>}
           </FormLabel>
           <FormControl>
             <>
@@ -64,7 +64,7 @@ export const ControlledInput = <T extends FieldValues>({
               {fieldState.error && (
                 <span
                   id={`${name}-error`}
-                  className="text-red-500 text-xs mt-1"
+                  className='text-red-500 text-xs mt-1'
                 >
                   {fieldState.error.message}
                 </span>
