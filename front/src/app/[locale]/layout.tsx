@@ -1,6 +1,5 @@
 import "@/globals.css";
 
-import { ProfileProvider } from "@/components/context/useProfile";
 import { Header } from "@/components/header/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -60,17 +59,15 @@ export default async function LocaleLayout({
 
   return (
     <ReactQueryProvider>
-      <ProfileProvider>
-        <NextIntlClientProvider messages={messages}>
-          <ResizablePanelGroup direction='vertical'>
-            <Header />
-            <ResizableHandle />
-            {children}
-            <Footer />
-            <Toaster richColors />
-          </ResizablePanelGroup>
-        </NextIntlClientProvider>
-      </ProfileProvider>
+      <NextIntlClientProvider messages={messages}>
+        <ResizablePanelGroup direction='vertical'>
+          <Header />
+          <ResizableHandle />
+          {children}
+          <Footer />
+          <Toaster richColors />
+        </ResizablePanelGroup>
+      </NextIntlClientProvider>
     </ReactQueryProvider>
   );
 }

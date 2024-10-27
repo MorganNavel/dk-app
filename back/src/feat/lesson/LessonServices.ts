@@ -32,7 +32,7 @@ export class LessonServices {
   static async getAll() {
     try {
       const lessons = await Lesson.findAll({
-        include: { model: User, as : "teacher"},
+        include: { model: User, as: "teacher" },
         where: {
           startDate: {
             [Op.gte]: Date.now(),
@@ -41,10 +41,11 @@ export class LessonServices {
       });
       if (!lessons) return { code: STATUS_CODES.NOT_FOUND };
       const lessonsClean = lessons.map((l: Lesson) => {
-        const { url, earned, idTeacher, ...lesson } = l.dataValues;
-        const { password_hash, email, nbLessons,...teacher} = l.teacher
-        return lesson
-      })
+        const { url, earned, ...lesson } = l;
+        const { password_hash, nbLessons, links, ...teacher } = l.teacher;
+        lesson.teacher = teacher as User;
+        return lesson;
+      });
       return { code: STATUS_CODES.OK, data: lessonsClean };
     } catch (error) {
       return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };

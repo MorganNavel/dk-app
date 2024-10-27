@@ -28,7 +28,7 @@ const allowedOrigins = [
   `http://192.168.1.27:3000`,
   `http://localhost:${PORT}`,
   `http://10.34.3.79:${PORT}`,
-
+  `http://localhost:${APP_PORT}`,
 ];
 
 const corsOptions = {
@@ -49,7 +49,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 connectToDb();
-approachingLessons()
+approachingLessons();
 // cron.schedule("*/2 * * * *", approachingLessons)
 
 const { redisClient, redisStore } = initCache();
@@ -62,7 +62,7 @@ app.use(
     saveUninitialized: false,
     secret: redisConfig.SECRET_KEY,
     cookie: {
-      secure: false,
+      secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: 1000 * 60 * 10,
     },

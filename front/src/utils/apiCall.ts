@@ -9,6 +9,7 @@ export async function apiCall<T>(
     ...options,
     headers: {
       "Content-Type": "application/json",
+
       ...options?.headers,
     },
   };
@@ -18,6 +19,7 @@ export async function apiCall<T>(
   }
   const urlBase = process.env.API_BASE_URL || "http://localhost:3001/api/v1";
   const response = await fetch(urlBase + url, config);
+  console.log(response);
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.code);

@@ -13,6 +13,7 @@ class User extends Model {
   nationality?: string;
   links?: Json;
   description?: string;
+  rating?: number;
   role!: UserRole;
   nbLessons!: number;
 }
@@ -72,6 +73,10 @@ function initUser(sequelize: Sequelize) {
         type: DataTypes.JSON,
         allowNull: true,
         defaultValue: {},
+      },
+      rating: {
+        type: DataTypes.FLOAT,
+        allowNull: true,
       },
     },
     {

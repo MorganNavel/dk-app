@@ -4,7 +4,7 @@ import { STATUS_CODES } from "@/utils/statusCodes";
 import bcrypt from "bcrypt";
 import { AppSession } from "@/types/Session";
 import { User } from "@/models/UserModel";
-import { ArrayToString } from "@/utils/helpers";
+import { ArrayToString, StringToArray } from "@/utils/helpers";
 
 export class AuthService {
   /**
@@ -42,6 +42,7 @@ export class AuthService {
         data: { ...userWithoutPassword, languages, nationality },
       };
     } catch (error: any) {
+      console.log(error);
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,
         error: error,
@@ -66,7 +67,8 @@ export class AuthService {
           error: "Email or password incorrect",
         };
       }
-      const { password_hash, ...userWithoutPassword } = user.dataValues;
+      const { password_hash, nationality, languages, ...userWithoutPassword } =
+        user.dataValues;
       const isMatch = await bcrypt.compare(password, password_hash);
       if (!isMatch) {
         return {
@@ -74,6 +76,8 @@ export class AuthService {
           error: "Email or password incorrect",
         };
       }
+      (userWithoutPassword as any).languages = StringToArray(languages);
+      (userWithoutPassword as any).nationality = StringToArray(nationality);
       const session = req.session as AppSession;
       session.user = userWithoutPassword;
       return { code: STATUS_CODES.OK, data: userWithoutPassword };

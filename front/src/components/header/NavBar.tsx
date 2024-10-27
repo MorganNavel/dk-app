@@ -1,7 +1,6 @@
 "use client";
 import { PiSignOutBold } from "react-icons/pi";
 import { MdOutlineManageAccounts } from "react-icons/md";
-import { useProfile } from "../context/useProfile";
 import { LuShoppingCart } from "react-icons/lu";
 import { LuCalendarClock } from "react-icons/lu";
 import logo from "@public/assets/img/logo.png";
@@ -15,21 +14,11 @@ import { DropdownMenuItem, DropdownMenuSeparator } from "@ui/dropdown-menu";
 import { CustomDropdown } from "@/components/reusable/Dropdown";
 import { Button } from "@ui/button";
 import { LanguageSelect } from "../reusable/LanguageSelect";
+import { useProfile } from "../hooks/useProfile";
 
 export const Navbar = () => {
   const { profile } = useProfile();
   const [teachers, setTeachers] = useState<UserProfile[] | null>(null);
-
-  async function getTeachers() {
-    const teachers = await apiCall<ApiResponse<UserProfile[]>>(
-      "/api/v1/user/teachers"
-    );
-    setTeachers(teachers.data);
-  }
-
-  useEffect(() => {
-    // getTeachers();
-  }, []);
 
   const t = useTranslations();
   return (
@@ -141,7 +130,7 @@ export const Navbar = () => {
         </CustomDropdown>
       </div>
       <div className='hidden text-lg lg:flex mr-9'>
-        {profile.idUser != -1 ? (
+        {profile ? (
           <>
             <CustomDropdown
               title={profile.firstname.charAt(0) + " ." + profile.name}
