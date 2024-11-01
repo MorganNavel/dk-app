@@ -62,7 +62,29 @@ async function connectToDb() {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
-
+    const password = await bcrypt.hash("password", 10);
+    const t = await User.create({
+      firstname: "Danbee",
+      name: "Park",
+      email: "danbee.korean@gmail.com",
+      languages: "fr,en,ko,jp",
+      password_hash: password,
+      role: "teacher",
+    });
+    const s = await User.create({
+      firstname: "Morgan",
+      name: "Navel",
+      email: "navelmorgan34@gmail.com",
+      languages: "fr,en",
+      password_hash: password,
+      role: "student",
+    });
+    const l = await Lesson.create({
+      title: "Korean lesson",
+      description: "Learn Korean with me",
+      startDate: new Date(),
+      idTeacher: t.idUser,
+    });
     const pricing = await Pricing.create({
       price: 10,
       currency: "USD",

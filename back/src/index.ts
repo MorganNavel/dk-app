@@ -23,29 +23,13 @@ const app = express();
 const PORT = parseInt(process.env.API_PORT || "3001");
 const APP_PORT = parseInt(process.env.APP_PORT || "3000");
 
-const allowedOrigins = [
-  `http://192.168.1.27:${PORT}`,
-  `http://192.168.1.27:3000`,
-  `http://localhost:${PORT}`,
-  `http://10.34.3.79:${PORT}`,
-  `http://localhost:${APP_PORT}`,
-];
-
 const corsOptions = {
-  origin: (
-    origin: string | undefined,
-    callback: (err: Error | null, allow?: boolean) => void
-  ) => {
-    if (allowedOrigins.indexOf(origin ?? "") !== -1 || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: "http://localhost:3000",
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+  allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 
 connectToDb();
@@ -65,6 +49,7 @@ app.use(
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
       maxAge: 1000 * 60 * 10,
+      sameSite: "lax",
     },
   })
 );

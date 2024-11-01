@@ -1,3 +1,4 @@
+import { Booking } from "@/models/BookingModel";
 import { Lesson } from "@/models/LessonModel";
 import { User } from "@/models/UserModel";
 import { API_Response } from "@/types/Response";
@@ -32,7 +33,10 @@ export class LessonServices {
   static async getAll() {
     try {
       const lessons = await Lesson.findAll({
-        include: { model: User, as: "teacher" },
+        include: [
+          { model: User, as: "teacher" },
+          { model: Booking, as: "bookings" },
+        ],
         where: {
           startDate: {
             [Op.gte]: Date.now(),
@@ -41,13 +45,16 @@ export class LessonServices {
       });
       if (!lessons) return { code: STATUS_CODES.NOT_FOUND };
       const lessonsClean = lessons.map((l: Lesson) => {
-        const { url, earned, ...lesson } = l;
-        const { password_hash, nbLessons, links, ...teacher } = l.teacher;
+        const { url, earned, bookings, ...lesson } = l.dataValues;
+        const { password_hash, nbLessons, links, ...teacher } =
+          lesson.teacher.dataValues;
         lesson.teacher = teacher as User;
+        lesson.nbParticipants = bookings.length;
         return lesson;
       });
       return { code: STATUS_CODES.OK, data: lessonsClean };
     } catch (error) {
+      console.error(error);
       return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
     }
   }

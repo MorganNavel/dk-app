@@ -18,7 +18,7 @@ function initBooking(sequelize: Sequelize) {
         autoIncrement: true,
       },
       startDate: {
-        type: DataTypes.DATE,
+        type: "TIMESTAMP",
         allowNull: false,
       },
       duration: {

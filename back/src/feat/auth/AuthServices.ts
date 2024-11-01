@@ -80,6 +80,7 @@ export class AuthService {
       (userWithoutPassword as any).nationality = StringToArray(nationality);
       const session = req.session as AppSession;
       session.user = userWithoutPassword;
+      console.log(req.session);
       return { code: STATUS_CODES.OK, data: userWithoutPassword };
     } catch (error: any) {
       return {
