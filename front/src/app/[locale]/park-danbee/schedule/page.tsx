@@ -1,10 +1,5 @@
-import ScheduleComponent from "@/components/Scheduler";
+import LessonCalendar from "@/components/LessonCalendar";
 
 export default function SchedulePage() {
-
-
-    return (
-        ScheduleComponent()
-
-    )
+  return <LessonCalendar />;
 }

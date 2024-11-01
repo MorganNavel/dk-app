@@ -15,18 +15,17 @@ export const useProfile = () => {
         const options: RequestInit = {
           credentials: "include",
         };
-        const response = await apiCall<ApiResponse<ProfileMe>>(
+        const data = await apiCall<ProfileMe>(
           "/user/me",
           undefined,
           undefined,
           options
         );
-        return response.data ?? null;
+        return data ?? null;
       } catch (error) {
         return null;
       }
     },
   });
-
   return { profile, isLoading, isError, error };
 };

@@ -17,8 +17,11 @@
     "alreadyAccount": "Déjà inscrit ?",
     "noAccount": "Pas encore inscrit ?",
     "error": {
-      "unexpected": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
-      "unauthorized": "Vous n'êtes pas autorisé à accéder à cette ressource."
+      "unexpectedError": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+      "unauthorized": "Vous n'êtes pas autorisé à accéder à cette ressource.",
+      "notFound": "La ressource demandée n'a pas été trouvée.",
+      "badRequest": "La requête était invalide. Veuillez réessayer.",
+      "forbidden": "Vous n'êtes pas autorisé à accéder à cette ressource."
     },
     "user-profile": {
       "label": {
