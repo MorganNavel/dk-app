@@ -85,6 +85,12 @@ async function connectToDb() {
       startDate: new Date(),
       idTeacher: t.idUser,
     });
+    // await Lesson.create({
+    //   title: "Korean lesson",
+    //   description: "Learn Korean with me",
+    //   startDate: new Date(),
+    //   idTeacher: t.idUser,
+    // });
     const pricing = await Pricing.create({
       price: 10,
       currency: "USD",

@@ -9,13 +9,13 @@ import { Event } from "react-big-calendar";
 
 interface ScheduleEventProps {
   event: Event & { resource: LessonEventDetails };
+  open: boolean;
 }
 
-export const ScheduleEvent = ({ event }: ScheduleEventProps) => {
+export const ScheduleEvent = ({ event, open }: ScheduleEventProps) => {
   const lessonDate = event.start ? new Date(event.start) : new Date();
   const lessonEnd = event.end ? new Date(event.end) : new Date();
   const lesson = event.resource as LessonEventDetails;
-  console.log(lesson);
 
   const formatTime = (date: Date) => {
     return `${date.getUTCHours().toString().padStart(2, "0")}:${date
@@ -25,14 +25,9 @@ export const ScheduleEvent = ({ event }: ScheduleEventProps) => {
   };
 
   return (
-    <Popover>
+    <Popover isOpen={open}>
       <PopoverTrigger>
-        <div className='w-full bg-primary text-white rounded-lg cursor-pointer'>
-          <p className='text-xs font-medium truncate'>{event.title}</p>
-          <p className='text-xs font-medium'>
-            {formatTime(lessonDate)} - {formatTime(lessonEnd)}
-          </p>
-        </div>
+        <div></div>
       </PopoverTrigger>
       <PopoverContent className='p-3 bg-white shadow-md rounded-lg w-56'>
         <h4 className='text-md font-bold'>{event.title}</h4>

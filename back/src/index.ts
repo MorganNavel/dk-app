@@ -24,7 +24,7 @@ const PORT = parseInt(process.env.API_PORT || "3001");
 const APP_PORT = parseInt(process.env.APP_PORT || "3000");
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
   credentials: true,
