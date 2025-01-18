@@ -1,10 +1,10 @@
 import { Pricing } from "@/models/PricingModel";
 import { User } from "@/models/UserModel";
-import { API_Response } from "@/types/Response";
+import { ApiResponse } from "@/types/Response";
 import { STATUS_CODES } from "@/utils/statusCodes";
 
 export class PricingServices {
-  static async getPricings(): Promise<API_Response> {
+  static async getPricings(): Promise<ApiResponse> {
     try {
       const pricings = await Pricing.findAll();
       if (pricings.length === 0) {
@@ -18,7 +18,7 @@ export class PricingServices {
       };
     }
   }
-  static async getPricing(idPricing: number): Promise<API_Response> {
+  static async getPricing(idPricing: number): Promise<ApiResponse> {
     try {
       const pricing = await Pricing.findByPk(idPricing);
       if (!pricing) {
@@ -32,7 +32,7 @@ export class PricingServices {
       };
     }
   }
-  static async createPricing(body: any): Promise<API_Response> {
+  static async createPricing(body: any): Promise<ApiResponse> {
     const { price, nbLessons, ...pricingValues } = body;
 
     try {
@@ -55,7 +55,7 @@ export class PricingServices {
   static async buyPricing(
     idUser: number,
     idPricing: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const pricing = await Pricing.findByPk(idPricing);
       if (!pricing) {
@@ -79,7 +79,7 @@ export class PricingServices {
   static async updatePricing(
     idPricing: number,
     body: any
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const pricing = await Pricing.findByPk(idPricing);
       if (!pricing) {
@@ -94,7 +94,7 @@ export class PricingServices {
       };
     }
   }
-  static async deletePricing(idPricing: number): Promise<API_Response> {
+  static async deletePricing(idPricing: number): Promise<ApiResponse> {
     try {
       const pricing = await Pricing.findByPk(idPricing);
       if (!pricing) {

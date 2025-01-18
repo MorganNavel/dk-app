@@ -3,7 +3,6 @@ import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Response, Request } from "express";
 import { BookingServices } from "./BookingServices";
-import { API_Response } from "@/types/Response";
 
 export class BookingController {
   /**
@@ -13,7 +12,7 @@ export class BookingController {
     const idLesson = parseInt(req.params.idLesson);
     const session = req.session as AppSession;
     const { idUser } = session.user;
-    const response = await BookingServices.createBooking(idUser!, idLesson);
+    const response = await BookingServices.createBooking(idUser, idLesson);
     return res.status(response.code).json(response);
   }
   /**

@@ -1,4 +1,4 @@
-import { API_Response } from "@/types/Response";
+import { ApiResponse } from "@/types/Response";
 import { Request, Response } from "express";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import bcrypt from "bcrypt";
@@ -10,9 +10,9 @@ export class AuthService {
   /**
    * Create a new user
    * @param req Request - Body: contains all the user's information
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async signUp(req: Request): Promise<API_Response> {
+  static async signUp(req: Request): Promise<ApiResponse> {
     const {
       email,
       password,
@@ -55,7 +55,7 @@ export class AuthService {
    * @param req Request - Body: contains the user's email and password
    * @returns
    */
-  static async signIn(req: Request): Promise<API_Response> {
+  static async signIn(req: Request): Promise<ApiResponse> {
     const { email, password } = req.body;
     try {
       const user = await User.findOne({
@@ -76,8 +76,8 @@ export class AuthService {
           error: "Email or password incorrect",
         };
       }
-      (userWithoutPassword as any).languages = StringToArray(languages);
-      (userWithoutPassword as any).nationality = StringToArray(nationality);
+      userWithoutPassword.languages = StringToArray(languages);
+      userWithoutPassword.nationality = StringToArray(nationality);
       const session = req.session as AppSession;
       session.user = userWithoutPassword;
       console.log(req.session);
@@ -93,9 +93,9 @@ export class AuthService {
    *
    * @param req Request - Session: contains the user's session
    * @param res Response
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async signOut(req: Request, res: Response): Promise<API_Response> {
+  static async signOut(req: Request, res: Response): Promise<ApiResponse> {
     const session = req.session as AppSession;
     try {
       session.destroy((err) => {

@@ -41,7 +41,7 @@ export class UserController {
   }
   public static async updateMe(req: Request, res: Response) {
     const session = req.session as AppSession;
-    const response = await UserServices.update(req.body, session.user.idUser!!);
+    const response = await UserServices.update(req.body, session.user.idUser);
     return res.status(response.code).json(response);
   }
 

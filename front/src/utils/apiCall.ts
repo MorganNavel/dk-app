@@ -14,7 +14,6 @@ export async function apiCall<T>(
       ...options?.headers,
     },
   };
-  console.log(config);
   if (method !== "GET" && body) {
     config.body = JSON.stringify(body);
   }

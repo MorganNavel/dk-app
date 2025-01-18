@@ -1,7 +1,7 @@
 import { Booking } from "@/models/BookingModel";
 import { Lesson } from "@/models/LessonModel";
 import { User } from "@/models/UserModel";
-import { API_Response } from "@/types/Response";
+import { ApiResponse } from "@/types/Response";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
 
@@ -10,12 +10,12 @@ export class BookingServices {
    * Create a booking for a lesson
    * @param idUser User identification number
    * @param idLesson Lesson identification number
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async createBooking(
     idUser: number,
     idLesson: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await Lesson.findByPk(idLesson, {
         include: [{ model: Booking, as: "bookings" }],
@@ -52,25 +52,25 @@ export class BookingServices {
    * @param idUser User identification number
    * @param role User's role (teacher, student or admin)
    * @param idLesson Lesson identification number
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async getAllBookings(
     idUser: number,
     role: string,
     idLesson: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     return this.getAllBookingsByLesson(idUser, idLesson, role);
   }
   /**
    * Get all the bookings for a lesson
    * @param idUser User identification number
    * @param idLesson Lesson identification number
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   private static async getAllBookingsTeacher(
     idUser: number,
     idLesson: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await Lesson.findOne({
         where: {
@@ -99,18 +99,19 @@ export class BookingServices {
    * @param idUser User identification number
    * @param idLesson Lesson identification number
    * @param role User's role (teacher, student or admin)
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async getAllBookingsByLesson(
     idUser: number,
     idLesson: number,
     role: string
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     switch (role) {
-      case "teacher":
+      case "teacher": {
         const response = await this.getAllBookingsTeacher(idUser, idLesson);
         return response;
-      case "student":
+      }
+      case "student": {
         const bookings = await Booking.findAll({
           where: {
             idUser,
@@ -121,6 +122,7 @@ export class BookingServices {
           },
         });
         return { code: STATUS_CODES.OK, data: bookings };
+      }
       default:
         return { code: STATUS_CODES.BAD_REQUEST };
     }
@@ -129,9 +131,9 @@ export class BookingServices {
   /**
    * Get all the bookings
    * @param idUser User identification number
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async getAllBookingsByStudent(idUser: number): Promise<API_Response> {
+  static async getAllBookingsByStudent(idUser: number): Promise<ApiResponse> {
     try {
       const bookingsFetched = await Booking.findAll({
         include: { model: Lesson, as: "lesson" },
@@ -161,13 +163,13 @@ export class BookingServices {
    * @param idUser User identification number
    * @param idLesson User identification number
    * @param idBooking Booking identification number
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async deleteBooking(
     idUser: number,
     idLesson: number,
     idBooking: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const booking = await Booking.findByPk(idBooking);
       if (!booking) {
@@ -203,7 +205,7 @@ export class BookingServices {
         },
       });
 
-      const bookingsApproachingByLesson = await bookings.reduce(
+      const bookingsApproachingByLesson = bookings.reduce(
         async (acc: Record<string, any>, b) => {
           const { lesson, user } = b;
           const lessonWithTeacher = await Lesson.findOne({

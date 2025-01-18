@@ -1,11 +1,11 @@
 import { User } from "@/models/UserModel";
-import { API_Response } from "@/types/Response";
+import { ApiResponse } from "@/types/Response";
 import { StringToArray } from "@/utils/helpers";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import bcrypt from "bcrypt";
 
 export class UserServices {
-  static async getAllStudents(): Promise<API_Response> {
+  static async getAllStudents(): Promise<ApiResponse> {
     /*
      TODO: - Get all students from a teacher and filter them depending on teacher input
     */
@@ -13,7 +13,7 @@ export class UserServices {
       code: STATUS_CODES.NOT_IMPLEMENTED,
     };
   }
-  static async getAllTeachers(): Promise<API_Response> {
+  static async getAllTeachers(): Promise<ApiResponse> {
     try {
       const teachers = await User.findAll({ where: { role: "teacher" } });
       const teachersWithoutPassword = teachers.map((teacher) => {
@@ -30,7 +30,7 @@ export class UserServices {
     }
   }
 
-  static async getUserProfileById(id: number): Promise<API_Response> {
+  static async getUserProfileById(id: number): Promise<ApiResponse> {
     try {
       const user = await User.findByPk(id);
       if (!user) {
@@ -63,7 +63,7 @@ export class UserServices {
     }
   }
 
-  static async getUserProfile(email: string): Promise<API_Response> {
+  static async getUserProfile(email: string): Promise<ApiResponse> {
     try {
       const user = await User.findOne({ where: { email } });
       if (!user) {
@@ -96,10 +96,16 @@ export class UserServices {
   static async update(
     fields: { [key: string]: any },
     id: number
-  ): Promise<API_Response> {
-    const { password, confirmPassword, ...fieldsWithoutPassword } = fields;
+  ): Promise<ApiResponse> {
+    const { password, confirmPassword } = fields;
 
     try {
+      if (password && password !== confirmPassword) {
+        return {
+          code: STATUS_CODES.BAD_REQUEST,
+          error: "Passwords do not match",
+        };
+      }
       const user = await User.findByPk(id);
       if (!user) {
         return {
@@ -128,7 +134,7 @@ export class UserServices {
     }
   }
 
-  static async delete(id: number): Promise<API_Response> {
+  static async delete(id: number): Promise<ApiResponse> {
     try {
       const user = await User.findByPk(id);
       if (!user) {

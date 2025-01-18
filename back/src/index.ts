@@ -20,8 +20,8 @@ import cron from "node-cron";
 import { approachingLessons } from "./utils/helpers";
 dotenv.config();
 const app = express();
-const PORT = parseInt(process.env.API_PORT || "3001");
-const APP_PORT = parseInt(process.env.APP_PORT || "3000");
+const PORT = parseInt(process.env.API_PORT ?? "3001");
+const APP_PORT = parseInt(process.env.APP_PORT ?? "3000");
 
 const corsOptions = {
   origin: true,

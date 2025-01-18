@@ -1,16 +1,16 @@
 import { Booking } from "@/models/BookingModel";
 import { Lesson } from "@/models/LessonModel";
 import { User } from "@/models/UserModel";
-import { API_Response } from "@/types/Response";
+import { ApiResponse } from "@/types/Response";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
 export class LessonServices {
   /**
    * Get all lessons from a teacher (future only)
    * @param idTeacher Teacher identification number (Teacher is a User)
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async getAllFromTeacher(idTeacher: number): Promise<API_Response> {
+  static async getAllFromTeacher(idTeacher: number): Promise<ApiResponse> {
     try {
       const lessons = await Lesson.findAll({
         where: {
@@ -28,7 +28,7 @@ export class LessonServices {
   }
   /**
    * Get all lessons (future only)
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async getAll() {
     try {
@@ -62,12 +62,12 @@ export class LessonServices {
    * Get a lesson from a teacher (future only)
    * @param idTeacher Teacher identification number (Teacher is a User)
    * @param idLesson Lesson identification number
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async getOne(
     idTeacher: number,
     idLesson: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await LessonServices.getLessonWithTeacher(
         idTeacher,
@@ -83,12 +83,12 @@ export class LessonServices {
    * Delete a lesson
    * @param idLesson Lesson identification number
    * @param idTeacher Teacher identification number (Teacher is a User)
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async deleteLesson(
     idLesson: number,
     idTeacher: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await Lesson.findByPk(idLesson);
       if (!lesson) return { code: STATUS_CODES.NOT_FOUND };
@@ -105,13 +105,13 @@ export class LessonServices {
    * @param idTeacher Teacher identification number (Teacher is a User)
    * @param idLesson Lesson identification number
    * @param body Request body, fields to update
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async updateLesson(
     idTeacher: number,
     idLesson: number,
     body: any
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await Lesson.findByPk(idLesson);
       if (!lesson) return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };

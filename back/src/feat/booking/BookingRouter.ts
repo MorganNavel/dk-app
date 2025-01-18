@@ -1,4 +1,4 @@
-import { isStudent, isTeacher } from "@/utils/middlewares/role";
+import { isStudent } from "@/utils/middlewares/role";
 import { Router } from "express";
 import { BookingController } from "./BookingController";
 import { isSignedIn } from "@/utils/middlewares/auth";
