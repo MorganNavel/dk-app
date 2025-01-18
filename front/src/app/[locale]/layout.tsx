@@ -41,15 +41,13 @@ export async function generateMetadata({
       };
   }
 }
-
-export default async function LocaleLayout({
-  children,
-  params: { locale },
-}: {
+interface LocaleLayoutProps {
   children: React.ReactNode;
   params: { locale: string };
-}) {
+}
+export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   let messages;
+  const locale = props.params.locale;
   try {
     messages = await getMessages({ locale });
   } catch (error) {
@@ -63,7 +61,7 @@ export default async function LocaleLayout({
         <ResizablePanelGroup direction='vertical'>
           <Header />
           <ResizableHandle />
-          {children}
+          {props.children}
           <Footer />
           <Toaster richColors />
         </ResizablePanelGroup>

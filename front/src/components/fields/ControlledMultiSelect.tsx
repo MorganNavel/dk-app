@@ -56,7 +56,7 @@ export const ControlledMultiSelect = <T extends FieldValues>({
           <>
             <FormLabel>
               {label}
-              {required && <span className="text-red-500"> *</span>}
+              {required && <span className='text-red-500'> *</span>}
             </FormLabel>
 
             <FormControl>
@@ -68,7 +68,7 @@ export const ControlledMultiSelect = <T extends FieldValues>({
                     onValueChange && onValueChange(values);
                   }}
                   placeholder={placeholder}
-                  variant="default"
+                  variant='default'
                   animation={2}
                   maxCount={5}
                   {...field}
@@ -79,7 +79,7 @@ export const ControlledMultiSelect = <T extends FieldValues>({
                 {fieldState.error && (
                   <span
                     id={`${name}-error`}
-                    className="text-red-500 text-xs mt-1"
+                    className='text-red-500 text-xs mt-1'
                   >
                     {fieldState.error.message}
                   </span>

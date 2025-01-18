@@ -11,14 +11,12 @@ export async function generateMetadata() {
   };
 }
 
-export default async function LocaleLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function LocaleLayout(
+  props: Readonly<{ children: React.ReactNode }>
+) {
   return (
-    <html lang="en">
-      <body>{children}</body>
+    <html lang='en'>
+      <body>{props.children}</body>
     </html>
   );
 }

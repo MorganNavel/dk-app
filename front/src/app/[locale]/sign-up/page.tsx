@@ -63,90 +63,94 @@ export default function SignUp() {
     mutation.mutate(data);
   };
   return (
-    <>
-      <div className='flex items-center justify-center min-h-screen p-4 bg-[#F4F4F4]'>
-        <Card className='lg:max-w-md max-w-sm w-full'>
-          <CardHeader className='text-center text-2xl font-bold text-primary'>
-            {t("generals.signup")}
-          </CardHeader>
-          <CardContent>
-            <Form {...methods}>
-              <form
-                onSubmit={methods.handleSubmit(onSubmit)}
-                className='bg-[#F9F9F9] px-4 py-6 rounded-lg'
-              >
-                <ControlledInput
-                  label={t("generals.user-profile.label.email")}
-                  name={"email"}
-                  placeholder={t("generals.user-profile.placeholder.email")}
-                  control={methods.control}
-                  required
-                />
-                <ControlledInput
-                  label={t("generals.user-profile.label.firstname")}
-                  name={"firstname"}
-                  placeholder={t("generals.user-profile.placeholder.firstname")}
-                  control={methods.control}
-                  required
-                />
-                <ControlledInput
-                  label={t("generals.user-profile.label.name")}
-                  name={"name"}
-                  placeholder={t("generals.user-profile.placeholder.name")}
-                  control={methods.control}
-                  required
-                />
-                <ControlledInput
-                  label={t("generals.user-profile.label.password")}
-                  name={"password"}
-                  placeholder={t("generals.user-profile.placeholder.password")}
-                  control={methods.control}
-                  type='password'
-                  required
-                />
-                <ControlledInput
-                  label={t("generals.user-profile.label.confirmPassword")}
-                  name={"confirmPassword"}
-                  placeholder={t(
-                    "generals.user-profile.placeholder.confirmPassword"
-                  )}
-                  control={methods.control}
-                  type='password'
-                  required
-                />
+    <div className='flex items-center justify-center min-h-screen p-4 '>
+      <Card className='lg:max-w-md max-w-sm w-full'>
+        <CardHeader className='text-center text-2xl font-bold text-primary'>
+          {t("generals.signup")}
+        </CardHeader>
+        <CardContent>
+          <Form {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className=' px-4 py-6 rounded-lg '
+            >
+              <ControlledInput
+                label={t("generals.user-profile.label.email")}
+                name={"email"}
+                placeholder={t("generals.user-profile.placeholder.email")}
+                control={methods.control}
+                className='bg-background'
+                required
+              />
+              <ControlledInput
+                label={t("generals.user-profile.label.firstname")}
+                name={"firstname"}
+                placeholder={t("generals.user-profile.placeholder.firstname")}
+                control={methods.control}
+                className='bg-background'
+                required
+              />
+              <ControlledInput
+                label={t("generals.user-profile.label.name")}
+                name={"name"}
+                placeholder={t("generals.user-profile.placeholder.name")}
+                control={methods.control}
+                className='bg-background'
+                required
+              />
+              <ControlledInput
+                label={t("generals.user-profile.label.password")}
+                name={"password"}
+                placeholder={t("generals.user-profile.placeholder.password")}
+                control={methods.control}
+                type='password'
+                className='bg-background'
+                required
+              />
+              <ControlledInput
+                label={t("generals.user-profile.label.confirmPassword")}
+                name={"confirmPassword"}
+                placeholder={t(
+                  "generals.user-profile.placeholder.confirmPassword"
+                )}
+                control={methods.control}
+                type='password'
+                className='bg-background'
+                required
+              />
 
-                <ControlledMultiSelect
-                  control={methods.control}
-                  name='languages'
-                  options={LNGS}
-                  label={t("generals.user-profile.label.lngs")}
-                  placeholder={t("generals.user-profile.placeholder.lngs")}
-                  required
-                />
+              <ControlledMultiSelect
+                control={methods.control}
+                name='languages'
+                options={LNGS}
+                label={t("generals.user-profile.label.lngs")}
+                placeholder={t("generals.user-profile.placeholder.lngs")}
+                required
+                className='bg-background'
+              />
 
-                <Button
-                  variant={"round-outline"}
-                  type={"submit"}
-                  className='w-full mt-4'
-                >
-                  {t("generals.submit")}
-                </Button>
-              </form>
-            </Form>
-          </CardContent>
-          <CardFooter className='justify-center'>
-            <p className='text-sm'>
-              {t("generals.alreadyAccount")}{" "}
-              <Link
-                href='/sign-in'
-                className='hover:underline text-primary font-semibold'
+              <Button
+                variant={"round-outline"}
+                type={"submit"}
+                className='w-full mt-4'
               >
-                {t("generals.signin")}
-              </Link>
-            </p>
-          </CardFooter>
-        </Card>
-      </div>
-    </>
+                {t("generals.submit")}
+              </Button>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter className='justify-center'>
+          <p className='text-sm'>
+            {t("generals.alreadyAccount")}{" "}
+            <Link
+              href='/sign-in'
+              className='hover:underline text-primary font-semibold'
+            >
+              {t("generals.signin")}
+            </Link>
+          </p>
+        </CardFooter>
+      </Card>
+    </div>
   );
 }

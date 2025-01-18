@@ -3,12 +3,8 @@ import { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ClassNames } from "@emotion/react";
 
 interface CustomDropdownProps {
   children: any;
@@ -25,7 +21,7 @@ export function CustomDropdown({
   return (
     <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
       <DropdownMenuTrigger className={className}>
-        <div className="flex items-center gap-2">
+        <div className='flex items-center gap-2'>
           <span>{title}</span>
           <IoIosArrowDown className={`transition ${!isOpen && "rotate-180"}`} />
         </div>
