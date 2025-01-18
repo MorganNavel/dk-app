@@ -24,8 +24,8 @@ export async function apiCall<T>(
       : "https://192.168.1.21:3001/api/v1";
   const response = await fetch(urlBase + url, config);
   if (!response.ok) {
-    const error = await response.json();
-    throw new Error(error.code);
+    const error: T = await response.json();
+    throw new Error(JSON.stringify(error));
   }
   const data = await response.json();
   return data.data;

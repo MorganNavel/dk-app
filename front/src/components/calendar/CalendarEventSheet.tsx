@@ -3,6 +3,11 @@ import { LessonEventDetails } from "@/types/types";
 import moment from "moment";
 import LNGS from "@/types/languages";
 import { Button } from "@ui/button";
+import { apiCall } from "@/utils/apiCall";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+import { errorToasts } from "@/utils/toast";
 
 interface EventSheetProps {
   selectedEvent: LessonEventDetails | null;
@@ -14,6 +19,14 @@ function formatTime(date: Date | undefined): string {
 }
 
 const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
+  const bookLesson = async () => {
+    return await apiCall<ApiResponse<any>>(
+      `/lesson/${selectedEvent?.resource.idLesson}/booking/`,
+      "POST"
+    );
+  };
+  const t = useTranslations();
+
   const renderLanguages = (languages: string | string[] | undefined) => {
     if (!languages) return "Pas de langue";
 
@@ -33,6 +46,26 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const { resource, start, end } = selectedEvent ?? {};
   const { description, nbParticipants, groupSize, teacher } = resource || {};
   const { firstname, name, languages } = teacher || {};
+  const mutation = useMutation({
+    mutationFn: bookLesson,
+    onError: (error) => {
+      const err: ApiResponse<any> = JSON.parse(error.message);
+      if (err.code === 401) {
+        return;
+      }
+
+      errorToasts(t, err);
+    },
+    onSuccess: () => {
+      toast.success("Leçon réservée avec succès");
+      setSelectedEvent(null);
+    },
+  });
+  const isLoading = mutation.isPending;
+
+  function onSubmit() {
+    mutation.mutateAsync();
+  }
 
   return (
     <Sheet open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>

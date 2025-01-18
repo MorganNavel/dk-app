@@ -29,7 +29,7 @@ interface SignInFields {
   languages: string;
 }
 const signIn = async (data: SignInFields): Promise<any> => {
-  return await apiCall("/auth/signin", "POST", data);
+  return await apiCall<ApiResponse<any>>("/auth/signin", "POST", data);
 };
 export default function SignIn() {
   const t = useTranslations();
@@ -48,11 +48,12 @@ export default function SignIn() {
   const mutation = useMutation({
     mutationFn: signIn,
     onError: (error) => {
-      if (error.message === "400") {
+      const err: ApiResponse<any> = JSON.parse(error.message);
+      if (err.code === 400) {
         toast.error(t("signin.message.error"));
         return;
       }
-      errorToasts(t, error);
+      errorToasts(t, err);
     },
     onSuccess: (data) => {
       toast.success(t("signin.message.success"));

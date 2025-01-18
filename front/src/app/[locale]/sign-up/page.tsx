@@ -19,6 +19,7 @@ import { toast } from "sonner";
 import { SignUpScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { errorToasts } from "@/utils/toast";
 
 interface SignUpFields {
   email: string;
@@ -54,7 +55,8 @@ export default function SignUp() {
   const mutation = useMutation({
     mutationFn: signUp,
     onError: (error) => {
-      toast.error(t("signup.message.error"));
+      const err: ApiResponse<any> = JSON.parse(error.message);
+      errorToasts(t, err);
     },
     onSuccess: (data) => {
       toast.success(t("signup.message.success"));
