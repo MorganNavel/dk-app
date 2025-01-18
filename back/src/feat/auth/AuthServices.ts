@@ -1,22 +1,21 @@
-import { API_Response } from "@/types/Response";
+import { ApiResponse } from "@/types/Response";
 import { Request, Response } from "express";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import bcrypt from "bcrypt";
 import { AppSession } from "@/types/Session";
 import { User } from "@/models/UserModel";
-import { ArrayToString } from "@/utils/helpers";
+import { ArrayToString, StringToArray } from "@/utils/helpers";
 
 export class AuthService {
   /**
    * Create a new user
    * @param req Request - Body: contains all the user's information
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async signUp(req: Request): Promise<API_Response> {
+  static async signUp(req: Request): Promise<ApiResponse> {
     const {
       email,
       password,
-      confirmPassword,
       nationality,
       languages,
       firstname,
@@ -43,6 +42,7 @@ export class AuthService {
         data: { ...userWithoutPassword, languages, nationality },
       };
     } catch (error: any) {
+      console.log(error);
       return {
         code: STATUS_CODES.INTERNAL_SERVER_ERROR,
         error: error,
@@ -55,7 +55,7 @@ export class AuthService {
    * @param req Request - Body: contains the user's email and password
    * @returns
    */
-  static async signIn(req: Request): Promise<API_Response> {
+  static async signIn(req: Request): Promise<ApiResponse> {
     const { email, password } = req.body;
     try {
       const user = await User.findOne({
@@ -67,7 +67,8 @@ export class AuthService {
           error: "Email or password incorrect",
         };
       }
-      const { password_hash, ...userWithoutPassword } = user.dataValues;
+      const { password_hash, nationality, languages, ...userWithoutPassword } =
+        user.dataValues;
       const isMatch = await bcrypt.compare(password, password_hash);
       if (!isMatch) {
         return {
@@ -75,8 +76,11 @@ export class AuthService {
           error: "Email or password incorrect",
         };
       }
+      userWithoutPassword.languages = StringToArray(languages);
+      userWithoutPassword.nationality = StringToArray(nationality);
       const session = req.session as AppSession;
       session.user = userWithoutPassword;
+      console.log(req.session);
       return { code: STATUS_CODES.OK, data: userWithoutPassword };
     } catch (error: any) {
       return {
@@ -89,9 +93,9 @@ export class AuthService {
    *
    * @param req Request - Session: contains the user's session
    * @param res Response
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async signOut(req: Request, res: Response): Promise<API_Response> {
+  static async signOut(req: Request, res: Response): Promise<ApiResponse> {
     const session = req.session as AppSession;
     try {
       session.destroy((err) => {

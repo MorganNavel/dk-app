@@ -9,14 +9,12 @@ import ParkDanbeeAvatar from "@public/assets/img/park-danbee-avatar.jpg";
 const teacher = {
   name: "Park",
   firstname: "Danbee",
-
-  videoUrl: "https://www.youtube.com/embed/_bElur05Tlk",
+  videoUrl: "https://www.youtube.com/embed/Uo4ci4cOPtA",
   instagram:
-    "https://www.instagram.com/danbee_korean?igsh=MXhhYTF6Mm43bTMwaA==",
+    "https://www.instagram.com/korean_with_danbee?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==",
   preply:
     "https://preply.com/ko/tutor/4335957?fbclid=PAZXh0bgNhZW0CMTEAAaYhRBvCMGNAW_l-YfWZLQw2_Khd9sIibqvVO45MW7xJ5F82AXc11kT2v78_aem_LWQIPl6oU-KeLmnf7DCj4Q",
 };
-
 export const TeacherProfile = () => {
   const t = useTranslations();
   const getParagraphs = (key: string, size: number = 3) => {
@@ -28,17 +26,17 @@ export const TeacherProfile = () => {
   };
 
   return (
-    <div className='max-w-xs lg:max-w-4xl mx-auto font-Poppins'>
+    <div className='justify-center max-w-4xl lg:mx-auto mr-5 ml-5 font-Poppins pt-32 pb-32 lg:pt-12 lg:pb-12 '>
       <Card className='bg-card text-card-foreground p-6 rounded-lg text-center mb-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl'>
         <CardContent>
-          <CardTitle className='text-xl font-semibold mb-4'>
+          <CardTitle className='text-xl lg:text-2xl font-semibold mb-4'>
             {t(
               `profile.${
                 teacher.firstname + "-" + teacher.name
               }.instagram.title`
             )}
           </CardTitle>
-          <p className='text-md mb-6 '>
+          <p className='text-md lg:text-lg mb-6 '>
             {t(
               `profile.${
                 teacher.firstname + "-" + teacher.name
@@ -59,30 +57,32 @@ export const TeacherProfile = () => {
           </Button>
         </CardContent>
       </Card>
+
       <section className='font-Poppins'>
         <div className='flex flex-col lg:flex-row items-center lg:space-x-8'>
           <Image
             src={ParkDanbeeAvatar}
             alt={`${teacher.firstname} ${teacher.name}'s photo`}
-            className=' rounded-full h-32 w-32'
+            className='rounded-full h-32 w-32 lg:h-48 lg:w-48'
           />
           <div className='flex flex-col items-center lg:items-start'>
             <div className='flex items-center space-x-5'>
-              <h1 className='text-3xl font-bold mb-2'>{`${teacher.firstname} ${teacher.name}`}</h1>
+              <h1 className='text-2xl lg:text-4xl font-bold mb-2'>{`${teacher.firstname} ${teacher.name}`}</h1>
             </div>
 
-            <p className='text-md text-balance text-center lg:text-left'>
+            <p className='text-md lg:text-lg text-center lg:text-left text-balance'>
               {t(`profile.${teacher.firstname + "-" + teacher.name}.slogan`)}
             </p>
           </div>
         </div>
+
         <div className='mt-5 text-justify'>
           <div>
             {getParagraphs(
               `profile.${teacher.firstname + "-" + teacher.name}.paragraphs`,
               3
             ).map((text, index) => (
-              <p className='text-lg text-green-950 mb-4' key={index}>
+              <p className='text-lg lg:text-xl text-green-950 mb-4' key={index}>
                 {text}
               </p>
             ))}
@@ -93,7 +93,7 @@ export const TeacherProfile = () => {
       <div className='my-8'>
         <Card>
           <CardContent>
-            <CardTitle className='p-3 text-2xl font-bold'>
+            <CardTitle className='text-2xl lg:text-3xl p-3 font-bold'>
               {t(
                 `profile.${teacher.firstname + "-" + teacher.name}.skills.title`
               )}
@@ -107,7 +107,7 @@ export const TeacherProfile = () => {
                 "multiLevel",
                 "lngs",
               ].map((key, index) => (
-                <li key={index} className='text-gray-800'>
+                <li key={index} className='text-gray-800 text-md lg:text-lg'>
                   {t(
                     `profile.${
                       teacher.firstname + "-" + teacher.name
@@ -121,7 +121,7 @@ export const TeacherProfile = () => {
       </div>
 
       <div className='my-8'>
-        <h2 className='text-2xl font-semibold mb-4'>
+        <h2 className='text-2xl lg:text-3xl font-semibold mb-4'>
           {t(`profile.${teacher.firstname}-${teacher.name}.video`)}
         </h2>
         <div className='relative w-full h-0 pb-[56.25%]'>
@@ -137,18 +137,18 @@ export const TeacherProfile = () => {
 
       <Card className='bg-card text-card-foreground p-6 rounded-lg text-center mb-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl'>
         <CardContent>
-          <CardTitle className='text-xl font-semibold mb-4'>
+          <CardTitle className='text-xl lg:text-2xl font-semibold mb-4'>
             {t(`profile.${teacher.firstname}-${teacher.name}.preply.title`)}
           </CardTitle>
-          <p className='text-md mb-6 '>
+          <p className='text-md lg:text-lg mb-6'>
             {t(
               `profile.${teacher.firstname}-${teacher.name}.preply.description`
             )}
           </p>
-          <Button variant='round-outline' className='w-full py-5 '>
+          <Button variant='round-outline' className='w-full py-5'>
             <Link
               href={teacher.preply}
-              className='flex items-center justify-center '
+              className='flex items-center justify-center'
             >
               <p className='text-wrap'>
                 {t(

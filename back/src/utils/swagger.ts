@@ -165,6 +165,9 @@ const options: swaggerJsdoc.Options = {
       {
         url: `http://192.168.1.27:${PORT}/api/v1`,
       },
+      {
+        url: `http://localhost:${PORT}/api/v1`,
+      },
     ],
   },
   apis: [

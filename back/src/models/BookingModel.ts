@@ -1,9 +1,13 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
+import { Lesson } from "./LessonModel";
+import { User } from "./UserModel";
 
 class Booking extends Model {
   public idGroup!: number;
   public title!: string;
   public description!: string;
+  public lesson!: Lesson;
+  public user!: User;
 }
 function initBooking(sequelize: Sequelize) {
   Booking.init(
@@ -14,7 +18,7 @@ function initBooking(sequelize: Sequelize) {
         autoIncrement: true,
       },
       startDate: {
-        type: DataTypes.DATE,
+        type: "TIMESTAMP",
         allowNull: false,
       },
       duration: {

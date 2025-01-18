@@ -32,7 +32,7 @@ const getLngDisplay = (lng: string) => {
     case "ko":
       return (
         <>
-          <span>한국</span>
+          <span>한국어</span>
           <Image src={koFlag} alt={lng} width={20} height={20} />
         </>
       );
@@ -80,7 +80,7 @@ export const LanguageSelect = () => {
 
           <SelectItem value="ko">
             <div className="flex items-center space-x-2">
-              <span>한국</span>
+              <span>한국어</span>
               <Image src={koFlag} alt="Korean" width={20} height={20} />
             </div>
           </SelectItem>

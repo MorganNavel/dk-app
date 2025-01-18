@@ -1,4 +1,4 @@
-export interface API_Response {
+export interface ApiResponse {
   code: number;
   error?: string | object;
   data?: object;

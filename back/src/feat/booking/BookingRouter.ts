@@ -1,4 +1,4 @@
-import { isStudent, isTeacher } from "@/utils/middlewares/role";
+import { isStudent } from "@/utils/middlewares/role";
 import { Router } from "express";
 import { BookingController } from "./BookingController";
 import { isSignedIn } from "@/utils/middlewares/auth";
@@ -37,8 +37,8 @@ bookingRouter.post(
  * @openapi
  * /lesson/{idLesson}/booking/all:
  *   get:
- *     summary: Create a new booking
- *     description: Create a new booking
+ *     summary: Get bookings from lesson
+ *     description: Get bookings from lesson
  *     tags:
  *       - Booking
  *     parameters:
@@ -64,8 +64,8 @@ bookingRouter.get(
  * @openapi
  * /booking/all:
  *   get:
- *     summary: Create a new booking
- *     description: Create a new booking
+ *     summary: Get all bookings
+ *     description: Get all bookings
  *     tags:
  *       - Booking
  *     responses:

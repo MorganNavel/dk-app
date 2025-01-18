@@ -13,7 +13,55 @@
     "fr": "French",
     "en": "English",
     "ko": "Korean",
-    "notImplemented": "This feature is not implemented yet."
+    "notImplemented": "This feature is not implemented yet.",
+    "alreadyAccount": "Already have an account ?",
+    "noAccount": "Doesn't have an account yet ?",
+    "error": {
+      "unexpectedError": "An unexpected error occurred. Please try again later.",
+      "unauthorized": "You are not authorized to access this ressource.",
+      "notFound": "The requested ressource was not found.",
+      "badRequest": "The request was invalid. Please try again.",
+      "forbidden": "You are not allowed to access this ressource."
+    },
+    "user-profile": {
+      "label": {
+        "email": "Email",
+        "name": "Name",
+        "firstname": "Firstname",
+        "password": "Password",
+        "confirmPassword": "Confirm password",
+        "lngs": "Languages"
+      },
+      "placeholder": {
+        "email": "Enter your email",
+        "name": "Enter your name",
+        "firstname": "Enter your firstname",
+        "password": "Enter your password",
+        "confirmPassword": "Confirm your password",
+        "lngs": "Select your speaking languages"
+      }
+    },
+    "submit": "Submit"
+  },
+  "signup": {
+    "passwordMissmatch": "Password must be the same",
+    "emailFormat": "Email format is invalid",
+    "passwordLength": "Password must be at least 6 characters long",
+    "min": {
+      "password": "Password must be at least 6 characters long",
+      "name": "Name must be at least 3 characters long",
+      "firstname": "Firstname must be at least 3 characters long"
+    },
+    "message": {
+      "success": "Your account has been successfully created. You can now sign in.",
+      "error": "An error occurred while creating your account. Please try again later."
+    }
+  },
+  "signin": {
+    "message": {
+      "success": "You have successfully signed in.",
+      "error": "Password or email is incorrect. Please try again."
+    }
   },
   "header": {
     "levelTest": "Level Test",

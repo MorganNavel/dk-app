@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { IoIosClose, IoIosMenu } from "react-icons/io";
 import { TbCertificate } from "react-icons/tb";
@@ -10,7 +11,6 @@ import Link from "next/link";
 import { FiYoutube } from "react-icons/fi";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { apiCall } from "@/utils/apiCall";
-import { useProfile } from "@/components/context/useProfile";
 import { Button } from "@ui/button";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { FaRegEnvelope } from "react-icons/fa";
@@ -30,34 +30,24 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import { useProfile } from "../hooks/useProfile";
 
 export const Sidebar = () => {
   const t = useTranslations();
   const [teachers, setTeachers] = useState<UserProfile[] | null>(null);
   const { profile } = useProfile();
 
-  async function getTeachers() {
-    const teachers = await apiCall<ApiResponse<UserProfile[]>>(
-      "/api/v1/user/teachers"
-    );
-    setTeachers(teachers.data);
-  }
-
-  useEffect(() => {
-    getTeachers();
-  }, []);
-
   return (
     <Sheet>
       <SheetTrigger className='lg:hidden'>
-        <div className='bg-primary-foreground rounded-md'>
+        <div className='bg-black rounded-md'>
           <IoIosMenu className='text-background w-7 h-7' />
         </div>
       </SheetTrigger>
       <SheetContent side='left' className='bg-primary-foreground text-white'>
         <SheetHeader className='mb-5'>
           <SheetTitle className='font-semibold text-2xl text-white'>
-            {profile.idUser !== -1 ? (
+            {profile ? (
               <div className='flex items-center space-x-4 overflow-hidden'>
                 <div className='p-2 rounded-3xl bg-hoverMobile'>
                   <FaUserGraduate className='h-6 w-6' />
@@ -199,7 +189,7 @@ export const Sidebar = () => {
         </div>
 
         <SheetFooter>
-          {profile.idUser !== -1 ? (
+          {profile ? (
             <Button variant={"square-outline"} className='mt-5 px-8 py-7'>
               <Link className='text-white' href='/sign-out'>
                 {t("generals.signout")}
@@ -224,11 +214,11 @@ export const SidebarV1 = () => {
   return (
     <Sheet>
       <SheetTrigger className='lg:hidden'>
-        <div className='bg-primary-foreground rounded-md'>
+        <div className='bg-emerald-700 rounded-md'>
           <IoIosMenu className='text-background w-7 h-7' />
         </div>
       </SheetTrigger>
-      <SheetContent side='left' className='bg-primary-foreground text-white'>
+      <SheetContent side='left' className='bg-primary text-white'>
         <SheetHeader className='mb-5'>
           <SheetTitle className='font-semibold text-2xl text-white'>
             <h2>{t("generals.menu")}</h2>

@@ -1,5 +1,5 @@
 "use client";
-import { DoubleCircles } from "@/components/DoubleCircles";
+import { DoubleCircles } from "@/components/shapes/DoubleCircles";
 import { Caroussel } from "./Caroussel";
 import { NewHereComponent } from "./items/NewHere";
 import { ReadReviewsComponent } from "./items/ReadReviews";
@@ -26,7 +26,7 @@ export const FirstCaroussel = () => {
   return (
     <Caroussel
       config={config}
-      className="h-[88vh] flex flex-col justify-center items-center"
+      className='h-[88vh] flex flex-col justify-center items-center'
     >
       <DoubleCircles />
     </Caroussel>

@@ -1,22 +1,22 @@
+import { Booking } from "@/models/BookingModel";
 import { Lesson } from "@/models/LessonModel";
-import { API_Response } from "@/types/Response";
-import { AppSession } from "@/types/Session";
+import { User } from "@/models/UserModel";
+import { ApiResponse } from "@/types/Response";
 import { STATUS_CODES } from "@/utils/statusCodes";
-import { Request, Response } from "express";
 import { Op } from "sequelize";
 export class LessonServices {
   /**
    * Get all lessons from a teacher (future only)
    * @param idTeacher Teacher identification number (Teacher is a User)
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async getAllFromTeacher(idTeacher: number): Promise<API_Response> {
+  static async getAllFromTeacher(idTeacher: number): Promise<ApiResponse> {
     try {
       const lessons = await Lesson.findAll({
         where: {
           idTeacher,
           startDate: {
-            [Op.gte]: new Date(),
+            [Op.gte]: Date.now(),
           },
         },
       });
@@ -28,20 +28,33 @@ export class LessonServices {
   }
   /**
    * Get all lessons (future only)
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async getAll() {
     try {
       const lessons = await Lesson.findAll({
+        include: [
+          { model: User, as: "teacher" },
+          { model: Booking, as: "bookings" },
+        ],
         where: {
           startDate: {
-            [Op.gte]: new Date(),
+            [Op.gte]: Date.now(),
           },
         },
       });
       if (!lessons) return { code: STATUS_CODES.NOT_FOUND };
-      return { code: STATUS_CODES.OK, data: lessons };
+      const lessonsClean = lessons.map((l: Lesson) => {
+        const { url, earned, bookings, ...lesson } = l.dataValues;
+        const { password_hash, nbLessons, links, ...teacher } =
+          lesson.teacher.dataValues;
+        lesson.teacher = teacher as User;
+        lesson.nbParticipants = bookings.length;
+        return lesson;
+      });
+      return { code: STATUS_CODES.OK, data: lessonsClean };
     } catch (error) {
+      console.error(error);
       return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
     }
   }
@@ -49,12 +62,12 @@ export class LessonServices {
    * Get a lesson from a teacher (future only)
    * @param idTeacher Teacher identification number (Teacher is a User)
    * @param idLesson Lesson identification number
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async getOne(
     idTeacher: number,
     idLesson: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await LessonServices.getLessonWithTeacher(
         idTeacher,
@@ -70,12 +83,12 @@ export class LessonServices {
    * Delete a lesson
    * @param idLesson Lesson identification number
    * @param idTeacher Teacher identification number (Teacher is a User)
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async deleteLesson(
     idLesson: number,
     idTeacher: number
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await Lesson.findByPk(idLesson);
       if (!lesson) return { code: STATUS_CODES.NOT_FOUND };
@@ -92,13 +105,13 @@ export class LessonServices {
    * @param idTeacher Teacher identification number (Teacher is a User)
    * @param idLesson Lesson identification number
    * @param body Request body, fields to update
-   * @returns API_Response : { code: number, data?: any, error?: string }
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
   static async updateLesson(
     idTeacher: number,
     idLesson: number,
     body: any
-  ): Promise<API_Response> {
+  ): Promise<ApiResponse> {
     try {
       const lesson = await Lesson.findByPk(idLesson);
       if (!lesson) return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
@@ -126,7 +139,7 @@ export class LessonServices {
       where: {
         idLesson,
         idTeacher,
-        startDate: { [Op.gte]: new Date() },
+        startDate: { [Op.gte]: Date.now() },
       },
     });
     if (!lesson) {

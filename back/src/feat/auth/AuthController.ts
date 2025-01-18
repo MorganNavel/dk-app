@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { AuthService } from "./AuthServices";
-import { API_Response } from "@/types/Response";
+import { ApiResponse } from "@/types/Response";
 import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
 
@@ -23,14 +23,14 @@ export class AuthController {
         error: "You are already signed in",
       });
     }
-    const response: API_Response = await AuthService.signUp(req);
+    const response: ApiResponse = await AuthService.signUp(req);
     return res.status(response.code).json(response);
   }
   /**
    * Sign out a user - destroy user session
    */
   static async signOut(req: Request, res: Response) {
-    const response: API_Response = await AuthService.signOut(req, res);
+    const response: ApiResponse = await AuthService.signOut(req, res);
     return res.status(response.code).json(response);
   }
 }

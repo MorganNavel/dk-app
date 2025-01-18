@@ -1,14 +1,19 @@
 import { Model, DataTypes, Sequelize } from "sequelize";
+import { User } from "./UserModel";
+import { Booking } from "./BookingModel";
 class Lesson extends Model {
   public idLesson!: number;
   public title!: string;
   public description!: string;
   public url!: string;
-  public startDate!: Date;
+  public startDate!: number;
   public duration!: number;
   public earned!: number;
   public status!: string;
   public groupSize!: number;
+  public teacher!: User;
+  nbParticipants!: number;
+  public bookings!: Booking[];
 }
 function initLesson(sequelize: Sequelize) {
   Lesson.init(
@@ -31,7 +36,7 @@ function initLesson(sequelize: Sequelize) {
         allowNull: true,
       },
       startDate: {
-        type: DataTypes.DATE,
+        type: "TIMESTAMP",
         allowNull: false,
       },
       duration: {

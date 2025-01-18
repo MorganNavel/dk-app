@@ -13,7 +13,55 @@
     "fr": "Français",
     "en": "English",
     "ko": "Korean",
-    "notImplemented": "Cette fonctionnalité n'est pas encore implémentée."
+    "notImplemented": "Cette fonctionnalité n'est pas encore implémentée.",
+    "alreadyAccount": "Déjà inscrit ?",
+    "noAccount": "Pas encore inscrit ?",
+    "error": {
+      "unexpectedError": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+      "unauthorized": "Vous n'êtes pas autorisé à accéder à cette ressource.",
+      "notFound": "La ressource demandée n'a pas été trouvée.",
+      "badRequest": "La requête était invalide. Veuillez réessayer.",
+      "forbidden": "Vous n'êtes pas autorisé à accéder à cette ressource."
+    },
+    "user-profile": {
+      "label": {
+        "email": "Email",
+        "name": "Nom",
+        "firstname": "Prénom",
+        "password": "Mot de passe",
+        "confirmPassword": "Confirmer le mot de passe",
+        "lngs": "Langues"
+      },
+      "placeholder": {
+        "email": "Entrez votre email",
+        "name": "Entrez votre nom",
+        "firstname": "Entrez votre prénom",
+        "password": "Entrez votre mot de passe",
+        "confirmPassword": "Confirmez votre mot de passe",
+        "lngs": "Sélectionnez les langues parler"
+      }
+    },
+    "submit": "Valider"
+  },
+  "signup": {
+    "passwordMissmatch": "Le mot de passe doit être le même",
+    "emailFormat": "Le format de l'email est invalide",
+    "passwordLength": "Le mot de passe doit contenir au moins 6 caractères",
+    "min": {
+      "password": "Le mot de passe doit contenir au moins 6 caractères",
+      "name": "Votre nom doit contenir au moins 3 caractères",
+      "firstname": "Votre prénom doit contenir au moins 3 caractères"
+    },
+    "message": {
+      "success": "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.",
+      "error": "Une erreur s'est produite lors de la création de votre compte. Veuillez réessayer plus tard."
+    }
+  },
+  "signin": {
+    "message": {
+      "success": "Vous vous êtes connecté avec succès.",
+      "error": "Le mot de passe ou l'email est incorrect. Veuillez réessayer."
+    }
   },
   "header": {
     "levelTest": "Test de niveau",

@@ -45,7 +45,7 @@ export class LessonController {
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No field selected" });
-    const response = await LessonServices.updateLesson(idUser!, idLesson, {
+    const response = await LessonServices.updateLesson(idUser, idLesson, {
       startDate,
       duration,
       title,
@@ -59,9 +59,10 @@ export class LessonController {
    * Get all lessons depending on the user's role
    */
   static async getAll(req: Request, res: Response) {
-    const { idUser, role } = (req.session as AppSession).user;
-    if (idUser && role !== "teacher") {
-      const response = await LessonServices.getAllFromTeacher(idUser);
+    const user = (req.session as AppSession).user;
+
+    if (req.session && user?.role == "teacher") {
+      const response = await LessonServices.getAllFromTeacher(user.idUser);
       return res.status(response.code).json(response);
     }
     const response = await LessonServices.getAll();
@@ -73,7 +74,7 @@ export class LessonController {
   static async getOne(req: Request, res: Response) {
     const { idUser } = (req.session as AppSession).user;
     const idLesson = parseInt(req.params.idLesson);
-    const response = await LessonServices.getOne(idUser!, idLesson);
+    const response = await LessonServices.getOne(idUser, idLesson);
     return res.status(response.code).json(response);
   }
   /**
@@ -87,7 +88,7 @@ export class LessonController {
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No status selected" });
-    const response = await LessonServices.updateLesson(idUser!, idLesson, {
+    const response = await LessonServices.updateLesson(idUser, idLesson, {
       status,
     });
     return res.status(response.code).json(response);
@@ -99,7 +100,7 @@ export class LessonController {
   static async delete(req: Request, res: Response) {
     const { idUser } = (req.session as AppSession).user;
     const idLesson = parseInt(req.params.idLesson);
-    const response = await LessonServices.deleteLesson(idLesson, idUser!);
+    const response = await LessonServices.deleteLesson(idLesson, idUser);
     return res.status(response.code).json(response);
   }
 }

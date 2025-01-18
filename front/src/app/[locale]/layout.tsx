@@ -1,6 +1,5 @@
 import "@/globals.css";
 
-import { ProfileProvider } from "@/components/context/useProfile";
 import { Header } from "@/components/header/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
@@ -10,6 +9,8 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 import favicon from "@public/favicon.ico";
+import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
+import { Toaster } from "sonner";
 
 export async function generateMetadata({
   params: { locale },
@@ -40,15 +41,13 @@ export async function generateMetadata({
       };
   }
 }
-
-export default async function LocaleLayout({
-  children,
-  params: { locale },
-}: {
+interface LocaleLayoutProps {
   children: React.ReactNode;
   params: { locale: string };
-}) {
+}
+export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   let messages;
+  const locale = props.params.locale;
   try {
     messages = await getMessages({ locale });
   } catch (error) {
@@ -57,19 +56,16 @@ export default async function LocaleLayout({
   }
 
   return (
-    <html lang={locale}>
-      <body>
-        <ProfileProvider>
-          <NextIntlClientProvider messages={messages}>
-            <ResizablePanelGroup direction='vertical'>
-              <Header />
-              <ResizableHandle />
-              {children}
-              <Footer />
-            </ResizablePanelGroup>
-          </NextIntlClientProvider>
-        </ProfileProvider>
-      </body>
-    </html>
+    <ReactQueryProvider>
+      <NextIntlClientProvider messages={messages}>
+        <ResizablePanelGroup direction='vertical'>
+          <Header />
+          <ResizableHandle />
+          {props.children}
+          <Footer />
+          <Toaster richColors />
+        </ResizablePanelGroup>
+      </NextIntlClientProvider>
+    </ReactQueryProvider>
   );
 }

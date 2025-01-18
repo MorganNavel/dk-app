@@ -1,35 +1,23 @@
 "use client";
 import { PiSignOutBold } from "react-icons/pi";
 import { MdOutlineManageAccounts } from "react-icons/md";
-import { useProfile } from "../context/useProfile";
-import { LuShoppingCart } from "react-icons/lu";
-import { LuCalendarClock } from "react-icons/lu";
+import { LuShoppingCart, LuCalendarClock } from "react-icons/lu";
 import logo from "@public/assets/img/logo.png";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { apiCall } from "@/utils/apiCall";
 import { UserProfile } from "@/types/User";
 import { DropdownMenuItem, DropdownMenuSeparator } from "@ui/dropdown-menu";
 import { CustomDropdown } from "@/components/reusable/Dropdown";
 import { Button } from "@ui/button";
 import { LanguageSelect } from "../reusable/LanguageSelect";
+import { useProfile } from "../hooks/useProfile";
 
 export const Navbar = () => {
   const { profile } = useProfile();
   const [teachers, setTeachers] = useState<UserProfile[] | null>(null);
-
-  async function getTeachers() {
-    const teachers = await apiCall<ApiResponse<UserProfile[]>>(
-      "/api/v1/user/teachers"
-    );
-    setTeachers(teachers.data);
-  }
-
-  useEffect(() => {
-    // getTeachers();
-  }, []);
 
   const t = useTranslations();
   return (
@@ -119,20 +107,19 @@ export const Navbar = () => {
           title={t("header.teachers.title")}
           className='text-white'
         >
-          {teachers &&
-            teachers.map((teacher, index) => (
-              <DropdownMenuItem key={index}>
-                <Link
-                  href={{
-                    pathname: "teacher/" + teacher.idUser + "/profile",
-                  }}
-                >
-                  <p className='text-lg'>
-                    {teacher.firstname + " " + teacher.name}
-                  </p>
-                </Link>
-              </DropdownMenuItem>
-            ))}
+          {teachers?.map((teacher, index) => (
+            <DropdownMenuItem key={index}>
+              <Link
+                href={{
+                  pathname: "teacher/" + teacher.idUser + "/profile",
+                }}
+              >
+                <p className='text-lg'>
+                  {teacher.firstname + " " + teacher.name}
+                </p>
+              </Link>
+            </DropdownMenuItem>
+          ))}
           <DropdownMenuItem>
             <Link href='/teachers'>
               <p className='text-lg'>{t("generals.others")}</p>
@@ -141,42 +128,40 @@ export const Navbar = () => {
         </CustomDropdown>
       </div>
       <div className='hidden text-lg lg:flex mr-9'>
-        {profile.idUser != -1 ? (
-          <>
-            <CustomDropdown
-              title={profile.firstname.charAt(0) + " ." + profile.name}
-              className='text-white'
-            >
-              <DropdownMenuItem>
-                <Link href='/myaccount' className='flex items-center'>
-                  <MdOutlineManageAccounts className='mr-3 text-textColor w-5 h-5 ' />
+        {profile ? (
+          <CustomDropdown
+            title={profile.firstname.charAt(0) + " ." + profile.name}
+            className='text-white'
+          >
+            <DropdownMenuItem>
+              <Link href='/myaccount' className='flex items-center'>
+                <MdOutlineManageAccounts className='mr-3 text-textColor w-5 h-5 ' />
 
-                  <p className='text-lg'>{t("header.profile.myaccount")}</p>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href='/orders' className='flex items-center'>
-                  <LuShoppingCart className='mr-3 text-textColor w-5 h-5' />
+                <p className='text-lg'>{t("header.profile.myaccount")}</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href='/orders' className='flex items-center'>
+                <LuShoppingCart className='mr-3 text-textColor w-5 h-5' />
 
-                  <p className='text-lg'>{t("header.profile.orders")}</p>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href='/subscriptions' className='flex items-center'>
-                  <LuCalendarClock className='mr-3 text-textColor w-5 h-5' />
+                <p className='text-lg'>{t("header.profile.orders")}</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              <Link href='/subscriptions' className='flex items-center'>
+                <LuCalendarClock className='mr-3 text-textColor w-5 h-5' />
 
-                  <p className='text-lg'>{t("header.profile.subscriptions")}</p>
-                </Link>
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem>
-                <Link href='/' className='flex items-center'>
-                  <PiSignOutBold className='mr-3 text-textColor w-5 h-5' />
-                  <p className='text-lg'>{t("generals.signout")}</p>
-                </Link>
-              </DropdownMenuItem>
-            </CustomDropdown>
-          </>
+                <p className='text-lg'>{t("header.profile.subscriptions")}</p>
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <Link href='/' className='flex items-center'>
+                <PiSignOutBold className='mr-3 text-textColor w-5 h-5' />
+                <p className='text-lg'>{t("generals.signout")}</p>
+              </Link>
+            </DropdownMenuItem>
+          </CustomDropdown>
         ) : (
           <Button variant={"square-outline"} className='px-8 py-7'>
             <Link className='text-white' href='/auth'>

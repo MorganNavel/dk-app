@@ -1,5 +1,3 @@
-import { toast } from "sonner";
-
 export async function apiCall<T>(
   url: string,
   method: string = "GET",
@@ -9,23 +7,26 @@ export async function apiCall<T>(
   const config: RequestInit = {
     method,
     ...options,
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
+
       ...options?.headers,
     },
   };
   if (method !== "GET" && body) {
     config.body = JSON.stringify(body);
   }
-  const urlBase = process.env.API_BASE_URL || "http://192.168.1.27:3001";
-  const response = await fetch(urlBase + url, config);
 
+  const urlBase =
+    process.env.NODE_ENV == "development"
+      ? "http://localhost:3001/api/v1"
+      : "https://192.168.1.21:3001/api/v1";
+  const response = await fetch(urlBase + url, config);
   if (!response.ok) {
-    const error = await response.json();
-    if (method !== "GET") toast.error(error.error);
-    throw new Error(error.error);
+    const error: T = await response.json();
+    throw new Error(JSON.stringify(error));
   }
   const data = await response.json();
-  console.log(data);
-  return data;
+  return data.data;
 }

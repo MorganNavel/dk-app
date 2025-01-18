@@ -26,5 +26,18 @@ interface SignInInput {
   email: string;
   password: string;
 }
+interface ProfileMe {
+  idUser: number;
+  name: string;
+  firstname: string;
+  email: string;
+  languages?: Array<string>;
+  description?: string;
+  avatar?: string;
+  nationality?: Array<string>;
+  views?: number;
+  role: UserRole;
+  rating?: number;
+}
 
-export type { UserProfile, SignUpInput, SignInInput };
+export type { UserProfile, SignUpInput, SignInInput, UserRole, ProfileMe };
