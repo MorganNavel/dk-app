@@ -1,14 +1,14 @@
 "use client";
 import { apiCall } from "@/utils/apiCall";
 import { useQuery } from "@tanstack/react-query";
-import { LessonDetails } from "@/types/types";
-import { Calendar, momentLocalizer, Event } from "react-big-calendar";
+import { LessonDetails, LessonEventDetails } from "@/types/types";
+import { Calendar, momentLocalizer, Event, View } from "react-big-calendar";
 import moment from "moment";
 import { toast } from "sonner";
 import { Skeleton } from "./ui/skeleton";
-import { SetStateAction, useCallback, useMemo, useState } from "react";
+import { SetStateAction, useCallback, useState } from "react";
 import "@/styles/CalendarStyles.css";
-import { set } from "zod";
+import EventSheet from "./CalendarEventSheet";
 
 const localizer = momentLocalizer(moment);
 
@@ -43,10 +43,14 @@ export default function LessonCalendar() {
     queryKey: ["lessons"],
     queryFn: fetchLessons,
   });
-  const [view, setView] = useState("week");
+  const [view, setView] = useState<View>("week");
   const [date, setDate] = useState(new Date());
+  const [selectedEvent, setSelectedEvent] = useState<LessonEventDetails | null>(
+    null
+  );
+
   const onView = useCallback(
-    (newView: SetStateAction<string>) => setView(newView),
+    (newView: SetStateAction<View>) => setView(newView),
     [setView]
   );
 
@@ -62,19 +66,23 @@ export default function LessonCalendar() {
     <div>
       <Calendar
         className='my-5 mx-5'
+        dayLayoutAlgorithm={"no-overlap"}
         localizer={localizer}
-        events={formatLesson(lessons!!)}
+        events={formatLesson(lessons)}
         startAccessor='start'
         endAccessor='end'
         views={["month", "week", "day"]}
+        view={view}
         date={date}
         defaultView='week'
-        view={view}
         onView={onView}
         onNavigate={(date) => setDate(date)}
-        popup
-        showAllEvents={false}
-        onShowMore={(events) => console.log(events)}
+        popup={true}
+        onSelectEvent={(event) => setSelectedEvent(event)}
+      />
+      <EventSheet
+        selectedEvent={selectedEvent}
+        setSelectedEvent={setSelectedEvent}
       />
     </div>
   );
