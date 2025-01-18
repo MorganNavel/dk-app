@@ -18,7 +18,7 @@ export async function apiCall<T>(
   if (method !== "GET" && body) {
     config.body = JSON.stringify(body);
   }
-  const urlBase = process.env.API_BASE_URL || "http://localhost:3001/api/v1";
+  const urlBase = process.env.API_BASE_URL ?? "http://192.168.1.27:3001/api/v1";
   const response = await fetch(urlBase + url, config);
   if (!response.ok) {
     const error = await response.json();

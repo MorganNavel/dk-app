@@ -10,17 +10,15 @@ const imageSizeDesktop = 210;
 export const StartKoreanJourneyComponent = ({ onClick }: NewHereProps) => {
   const t = useTranslations("home.intro.slider.startKoreanJourney");
   return (
-    <>
-      <ItemLayout
-        title={t("title")}
-        description={t("description")}
-        buttonText={t("buttonText")}
-        image={rocket}
-        imageSizeDesktop={imageSizeDesktop}
-        imageSizeMobile={imageSizeMobile}
-        imageAlt={"rocket"}
-        onClick={onClick}
-      />
-    </>
+    <ItemLayout
+      title={t("title")}
+      description={t("description")}
+      buttonText={t("buttonText")}
+      image={rocket}
+      imageSizeDesktop={imageSizeDesktop}
+      imageSizeMobile={imageSizeMobile}
+      imageAlt={"rocket"}
+      onClick={onClick}
+    />
   );
 };
