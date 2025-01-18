@@ -1,8 +1,8 @@
-import { SheetContent, SheetHeader, SheetTitle, Sheet } from "./ui/sheet";
+import { SheetContent, SheetHeader, SheetTitle, Sheet } from "@ui/sheet";
 import { LessonEventDetails } from "@/types/types";
 import moment from "moment";
 import LNGS from "@/types/languages";
-import { Button } from "./ui/button";
+import { Button } from "@ui/button";
 
 interface EventSheetProps {
   selectedEvent: LessonEventDetails | null;

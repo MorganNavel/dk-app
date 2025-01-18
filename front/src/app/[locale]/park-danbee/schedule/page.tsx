@@ -1,4 +1,4 @@
-import LessonCalendar from "@/components/LessonCalendar";
+import LessonCalendar from "@/components/calendar/LessonCalendar";
 
 export default function SchedulePage() {
   return <LessonCalendar />;
