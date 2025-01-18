@@ -61,7 +61,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className='flex items-center justify-center min-h-screen p-4 bg-[#F4F4F4]'>
+    <div className='flex items-center justify-center min-h-screen p-4 '>
       <Card className='lg:max-w-md max-w-sm w-full'>
         <CardHeader className='text-center text-2xl font-bold text-primary'>
           {t("generals.signin")}
@@ -70,7 +70,7 @@ export default function SignIn() {
           <Form {...methods}>
             <form
               onSubmit={methods.handleSubmit(onSubmit)}
-              className='bg-[#F9F9F9] px-4 py-6 rounded-lg'
+              className=' px-4 py-6 rounded-lg'
             >
               <ControlledInput
                 label={t("generals.user-profile.label.email")}
@@ -78,6 +78,7 @@ export default function SignIn() {
                 placeholder={t("generals.user-profile.placeholder.email")}
                 control={methods.control}
                 required
+                className='bg-background'
               />
               <ControlledInput
                 label={t("generals.user-profile.label.password")}
@@ -86,6 +87,7 @@ export default function SignIn() {
                 control={methods.control}
                 type='password'
                 required
+                className='bg-background'
               />
 
               <Button

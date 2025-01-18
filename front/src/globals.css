@@ -8,9 +8,9 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%; /* Blanc pur pour un fond clair */
+    --background: 140 100% 98%;
     --foreground: 240 10% 3.9%; /* Gris foncé pour le texte principal */
-    --card: 0 0% 98%; /* Gris très clair pour les cartes */
+    --card: 140 100% 96%;
     --card-foreground: 240 10% 3.9%; /* Gris foncé pour le texte des cartes */
     --popover: 0 0% 98%; /* Gris très clair pour les popovers */
     --popover-foreground: 240 10% 3.9%; /* Gris foncé pour le texte des popovers */
