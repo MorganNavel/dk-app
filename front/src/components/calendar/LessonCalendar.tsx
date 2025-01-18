@@ -2,13 +2,13 @@
 import { apiCall } from "@/utils/apiCall";
 import { useQuery } from "@tanstack/react-query";
 import { LessonDetails, LessonEventDetails } from "@/types/types";
-import { Calendar, momentLocalizer, Event, View } from "react-big-calendar";
+import { Calendar, momentLocalizer, View } from "react-big-calendar";
 import moment from "moment";
 import { toast } from "sonner";
-import { Skeleton } from "./ui/skeleton";
 import { SetStateAction, useCallback, useState } from "react";
 import "@/styles/CalendarStyles.css";
 import EventSheet from "./CalendarEventSheet";
+import { Skeleton } from "@ui/skeleton";
 
 const localizer = momentLocalizer(moment);
 
@@ -18,19 +18,15 @@ const fetchLessons = async () => {
 
 const formatLesson = (lessons: LessonDetails[]) => {
   return lessons.map((lesson, index) => {
-    const startDate = new Date(lesson.startDate);
-    const endDate = new Date(lesson.startDate);
-    endDate.setMinutes(startDate.getMinutes() + lesson.duration);
+    const { startDate, ...lessonInfo } = lesson;
+    const startDateObj = new Date(startDate);
+    const endDate = new Date(startDate);
+    endDate.setMinutes(startDateObj.getMinutes() + lesson.duration);
     return {
       title: lesson.title,
-      start: startDate,
+      start: startDateObj,
       end: endDate,
-      resource: {
-        description: lesson.description,
-        nbParticipants: lesson.nbParticipants,
-        groupSize: lesson.groupSize,
-        teacher: lesson.teacher,
-      },
+      resource: lessonInfo,
     };
   });
 };

@@ -8,6 +8,8 @@ import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { errorToasts } from "@/utils/toast";
+import { Spinner } from "@nextui-org/react";
+import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
 
 interface EventSheetProps {
   selectedEvent: LessonEventDetails | null;
@@ -33,9 +35,9 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
     const langs = Array.isArray(languages) ? languages : languages.split(",");
 
     return (
-      <ul>
+      <ul className='ml-4 mt-1'>
         {langs.map((lang, index) => (
-          <li key={index} className=' list-disc list-inside '>
+          <li key={index} className='list-disc text-sm text-gray-700'>
             {LNGS.find((lng) => lng.value === lang)?.label ?? lang}
           </li>
         ))}
@@ -50,9 +52,6 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
     mutationFn: bookLesson,
     onError: (error) => {
       const err: ApiResponse<any> = JSON.parse(error.message);
-      if (err.code === 401) {
-        return;
-      }
 
       errorToasts(t, err);
     },
@@ -69,42 +68,65 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
 
   return (
     <Sheet open={!!selectedEvent} onOpenChange={() => setSelectedEvent(null)}>
-      <SheetContent className='max-w-md mx-auto bg-background p-6 rounded-xl shadow-xl '>
+      <SheetContent className='max-w-lg mx-auto  p-6 rounded-xl shadow-xl border border-gray-200'>
         <SheetHeader>
-          <SheetTitle className='font-bold text-3xl text-primary mb-4'>
+          <SheetTitle className='font-bold text-2xl text-primary mb-2 text-center'>
             {selectedEvent?.title}
           </SheetTitle>
         </SheetHeader>
 
-        <div className='space-y-3'>
-          <p className='text-md text-gray-600'>
-            {description ?? "Pas de description disponible"}
-          </p>
+        <div className='space-y-4 divide-y divide-gray-200'>
+          <div>
+            <p className='text-md text-gray-600 italic'>
+              {description ?? "Pas de description disponible"}
+            </p>
+          </div>
 
-          <p>
-            <span className='font-bold text-md'>Participants</span> :{" "}
-            {nbParticipants} / {groupSize}
-          </p>
-          <p>
-            <span className='font-bold text-md'>Enseignant</span> : {firstname}{" "}
-            {name}
-          </p>
-          <p>
-            <span className='font-bold text-md'>Langues</span> :{" "}
-            {renderLanguages(languages)}
-          </p>
+          <div className='pt-4'>
+            <p className='flex items-center space-x-2 text-md'>
+              <FaUser className='text-primary text-xl' />
+              <span>
+                <span className='font-bold'>Participants</span>:{" "}
+                {nbParticipants} / {groupSize}
+              </span>
+            </p>
+            <p className='flex items-center space-x-2 text-md mt-2'>
+              <FaBook className='text-primary text-xl' />
+              <span>
+                <span className='font-bold'>Enseignant</span>: {firstname}{" "}
+                {name}
+              </span>
+            </p>
+          </div>
 
-          <p className='text-xl font-semibold text-gray-800'>
-            Horaire : {formatTime(start)} - {formatTime(end)}
-          </p>
+          <div className='pt-4'>
+            <div className='flex items-center space-x-2 text-md'>
+              <FaLanguage className='text-primary text-4xl' />
+              <span className='font-bold'>Langues</span>:
+            </div>
+
+            <p className='flex  space-x-2 text-md'>
+              <span>{renderLanguages(languages)}</span>
+            </p>
+          </div>
+
+          <div className='pt-4'>
+            <p className='flex items-center space-x-2 text-lg font-semibold text-gray-800'>
+              <FaClock className='text-primary' />
+              <span>
+                Horaire: {formatTime(start)} - {formatTime(end)}
+              </span>
+            </p>
+          </div>
         </div>
 
         <Button
-          variant={"round-outline"}
           type={"submit"}
-          className='w-full mt-4'
+          className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
+          disabled={isLoading}
+          onClick={onSubmit}
         >
-          Rejoindre
+          {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
         </Button>
       </SheetContent>
     </Sheet>
