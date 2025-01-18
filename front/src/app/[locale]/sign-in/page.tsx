@@ -17,6 +17,7 @@ import { useMutation } from "@tanstack/react-query";
 import { SignInScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorToasts } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 interface SignInFields {
   email: string;
@@ -43,6 +44,7 @@ export default function SignIn() {
       languages: "",
     },
   });
+  const router = useRouter();
   const mutation = useMutation({
     mutationFn: signIn,
     onError: (error) => {
@@ -54,6 +56,7 @@ export default function SignIn() {
     },
     onSuccess: (data) => {
       toast.success(t("signin.message.success"));
+      router.push("/");
     },
   });
   const onSubmit: SubmitHandler<SignInFields> = async (data) => {

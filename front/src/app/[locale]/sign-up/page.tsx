@@ -15,9 +15,10 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { apiCall } from "@/utils/apiCall";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { SignUpScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 
 interface SignUpFields {
   email: string;
@@ -48,6 +49,7 @@ export default function SignUp() {
       languages: [],
     },
   });
+  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: signUp,
@@ -56,6 +58,7 @@ export default function SignUp() {
     },
     onSuccess: (data) => {
       toast.success(t("signup.message.success"));
+      router.push("/sign-in");
     },
   });
 
