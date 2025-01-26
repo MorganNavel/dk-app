@@ -61,11 +61,9 @@ export class LessonController {
   static async getAll(req: Request, res: Response) {
     const user = (req.session as AppSession).user;
 
-    if (req.session && user?.role == "teacher") {
-      const response = await LessonServices.getAllFromTeacher(user.idUser);
-      return res.status(response.code).json(response);
-    }
-    const response = await LessonServices.getAll();
+    const idTeacher = user && user.role === "teacher" ? user.idUser : undefined;
+
+    const response = await LessonServices.getAll(idTeacher);
     return res.status(response.code).json(response);
   }
   /**

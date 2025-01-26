@@ -6,43 +6,26 @@ import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
 export class LessonServices {
   /**
-   * Get all lessons from a teacher (future only)
+   * Get all lessons (future only)
    * @param idTeacher Teacher identification number (Teacher is a User)
    * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async getAllFromTeacher(idTeacher: number): Promise<ApiResponse> {
-    try {
-      const lessons = await Lesson.findAll({
-        where: {
-          idTeacher,
-          startDate: {
-            [Op.gte]: Date.now(),
-          },
+  static async getAll(idTeacher?: number): Promise<ApiResponse> {
+    let query: any = {
+      include: [
+        { model: User, as: "teacher" },
+        { model: Booking, as: "bookings" },
+      ],
+      where: {
+        startDate: {
+          [Op.gte]: Date.now(),
         },
-      });
-      if (!lessons) return { code: STATUS_CODES.NOT_FOUND };
-      return { code: STATUS_CODES.OK, data: lessons };
-    } catch (error) {
-      return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
-    }
-  }
-  /**
-   * Get all lessons (future only)
-   * @returns ApiResponse : { code: number, data?: any, error?: string }
-   */
-  static async getAll() {
+      },
+    };
+    if (idTeacher) query.where["idTeacher"] = idTeacher;
+
     try {
-      const lessons = await Lesson.findAll({
-        include: [
-          { model: User, as: "teacher" },
-          { model: Booking, as: "bookings" },
-        ],
-        where: {
-          startDate: {
-            [Op.gte]: Date.now(),
-          },
-        },
-      });
+      const lessons = await Lesson.findAll(query);
       if (!lessons) return { code: STATUS_CODES.NOT_FOUND };
       const lessonsClean = lessons.map((l: Lesson) => {
         const { url, earned, bookings, ...lesson } = l.dataValues;
