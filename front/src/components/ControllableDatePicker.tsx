@@ -30,7 +30,7 @@ export const ControllableDatePicker = ({
           minDate={today}
           onChange={(newValue) => {
             fieldOnChange(newValue);
-            onChange && onChange(newValue);
+            if (onChange) props.onChange(newValue);
           }}
           {...props}
         />

@@ -1,19 +1,14 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import { IoIosClose, IoIosMenu } from "react-icons/io";
-import { TbCertificate } from "react-icons/tb";
-import { FaEuroSign } from "react-icons/fa";
-import { IoIosSchool } from "react-icons/io";
-import { FaUserGraduate } from "react-icons/fa";
+import React, { useState } from "react";
+import { IoIosMenu } from "react-icons/io";
+import { FaEuroSign, FaUserGraduate, FaRegEnvelope } from "react-icons/fa";
 import { UserProfile } from "@/types/User";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { FiYoutube } from "react-icons/fi";
 import { FaPeopleGroup } from "react-icons/fa6";
-import { apiCall } from "@/utils/apiCall";
 import { Button } from "@ui/button";
 import { IoInformationCircleOutline } from "react-icons/io5";
-import { FaRegEnvelope } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 
 import {

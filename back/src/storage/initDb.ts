@@ -1,13 +1,12 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
-import { readFileSync } from "fs";
 import { initUser, User } from "@/models/UserModel";
 import { initLesson, Lesson } from "@/models/LessonModel";
 import { initPricing, Pricing } from "@/models/PricingModel";
 import { Booking, initBooking } from "@/models/BookingModel";
 import bcrypt from "bcrypt";
 dotenv.config();
-const ENV = process.env.NODE_ENV || "development";
+const ENV = process.env.NODE_ENV ?? "development";
 
 interface Config {
   DB_HOST: string;
@@ -20,11 +19,11 @@ interface Config {
 function getConfig(): Config | undefined {
   if (ENV === "development") {
     return {
-      DB_HOST: process.env.DB_HOST || "",
-      DB_PORT: parseInt(process.env.DB_PORT || "0"),
-      DB_USERNAME: process.env.DB_USERNAME || "",
-      DB_PASSWORD: process.env.DB_PASSWORD || "",
-      DB_NAME: process.env.DB_NAME || "",
+      DB_HOST: process.env.DB_HOST ?? "",
+      DB_PORT: parseInt(process.env.DB_PORT ?? "0"),
+      DB_USERNAME: process.env.DB_USERNAME ?? "",
+      DB_PASSWORD: process.env.DB_PASSWORD ?? "",
+      DB_NAME: process.env.DB_NAME ?? "",
     };
   }
 
@@ -43,7 +42,7 @@ const sequelize = new Sequelize({
   host: config.DB_HOST,
   port: config.DB_PORT,
   logging(sql, timing) {
-    // console.log(`SQL: ${sql} (${timing}ms)`);
+    console.log(`SQL: ${sql} (${timing}ms)`);
   },
 });
 initPricing(sequelize);
@@ -71,7 +70,7 @@ async function connectToDb() {
       password_hash: password,
       role: "teacher",
     });
-    const s = await User.create({
+    await User.create({
       firstname: "Morgan",
       name: "Navel",
       email: "navelmorgan34@gmail.com",
@@ -79,19 +78,32 @@ async function connectToDb() {
       password_hash: password,
       role: "student",
     });
-    const l = await Lesson.create({
-      title: "Korean lesson",
+    await Lesson.create({
+      title: "Korean lesson1",
       description: "Learn Korean with me",
       startDate: new Date(),
       idTeacher: t.idUser,
     });
-    // await Lesson.create({
-    //   title: "Korean lesson",
-    //   description: "Learn Korean with me",
-    //   startDate: new Date(),
-    //   idTeacher: t.idUser,
-    // });
-    const pricing = await Pricing.create({
+    await Lesson.create({
+      title: "Korean lesson2",
+      description: "Learn Korean with me",
+      startDate: new Date(),
+      idTeacher: t.idUser,
+    });
+    await Lesson.create({
+      title: "Korean lesson3",
+      description: "Learn Korean with me",
+      startDate: new Date(),
+      idTeacher: t.idUser,
+    });
+    await Lesson.create({
+      title: "Korean lesson4",
+      description: "Learn Korean with me",
+      startDate: new Date(),
+      idTeacher: t.idUser,
+    });
+
+    await Pricing.create({
       price: 10,
       currency: "USD",
       nbLessons: 4,

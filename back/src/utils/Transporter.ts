@@ -9,7 +9,6 @@ export class Transporter {
     if (!Transporter.instance) {
       Transporter.instance = this;
     }
-    return Transporter.instance;
   }
 
   private createTransporter() {

@@ -47,41 +47,37 @@ export const ControlledSelect = <T extends FieldValues>({
       rules={rules}
       render={({ field, fieldState }) => (
         <FormItem>
-          <>
-            <FormControl>
-              <>
-                <Select
-                  {...field}
-                  {...props}
-                  placeholder={placeholder}
-                  selectionMode="multiple"
-                  onChange={(e) => {
-                    field.onChange(e);
-                    const value = e.target.value;
-                    onChange && onChange(value);
-                  }}
-                  aria-invalid={!!fieldState.error}
-                  aria-describedby={`${name}-error`}
-                  aria-label={name}
+          <FormControl>
+            <Select
+              {...field}
+              {...props}
+              placeholder={placeholder}
+              selectionMode='multiple'
+              onChange={(e) => {
+                field.onChange(e);
+                const value = e.target.value;
+                onChange && onChange(value);
+              }}
+              aria-invalid={!!fieldState.error}
+              aria-describedby={`${name}-error`}
+              aria-label={name}
+            >
+              {options.map((option) => (
+                <SelectItem
+                  key={option.value}
+                  value={option.value}
+                  className={itemClassName}
                 >
-                  {options.map((option) => (
-                    <SelectItem
-                      key={option.value}
-                      value={option.value}
-                      className={itemClassName}
-                    >
-                      {option.label}
-                    </SelectItem>
-                  ))}
-                </Select>
-                {fieldState.error && (
-                  <span id={`${name}-error`} className="text-red-500">
-                    {fieldState.error.message}
-                  </span>
-                )}
-              </>
-            </FormControl>
-          </>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </Select>
+            {fieldState.error && (
+              <span id={`${name}-error`} className='text-red-500'>
+                {fieldState.error.message}
+              </span>
+            )}
+          </FormControl>
         </FormItem>
       )}
     />

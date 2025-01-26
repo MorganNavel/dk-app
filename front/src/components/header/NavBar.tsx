@@ -7,7 +7,6 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useState } from "react";
-import { apiCall } from "@/utils/apiCall";
 import { UserProfile } from "@/types/User";
 import { DropdownMenuItem, DropdownMenuSeparator } from "@ui/dropdown-menu";
 import { CustomDropdown } from "@/components/reusable/Dropdown";
@@ -17,7 +16,7 @@ import { useProfile } from "../hooks/useProfile";
 
 export const Navbar = () => {
   const { profile } = useProfile();
-  const [teachers, setTeachers] = useState<UserProfile[] | null>(null);
+  const [teachers] = useState<UserProfile[] | null>(null);
 
   const t = useTranslations();
   return (

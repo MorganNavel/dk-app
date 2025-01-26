@@ -16,7 +16,7 @@ export function CustomDropdown({
   children,
   title,
   className,
-}: CustomDropdownProps) {
+}: Readonly<CustomDropdownProps>) {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <DropdownMenu onOpenChange={(open) => setIsOpen(open)}>
