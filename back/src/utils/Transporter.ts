@@ -14,6 +14,8 @@ export class Transporter {
   private createTransporter() {
     Transporter.transporter = nodemailer.createTransport({
       service: "gmail",
+      secure: true,
+      requireTLS: true,
       auth: {
         user: process.env.GMAIL_EMAIL,
         pass: process.env.GMAIL_PASSWORD,

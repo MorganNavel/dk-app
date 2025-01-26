@@ -1,4 +1,3 @@
-// Imports and initial configurations
 import { Lesson } from "@/models/LessonModel";
 import { User } from "@/models/UserModel";
 import { v4 as uuidv4 } from "uuid";

@@ -16,8 +16,8 @@ export function getNetworkAddresses() {
 }
 
 export function displayApiAddresses(addresses: string[]) {
-  const environment = process.env.NODE_ENV || "development";
-  const port = process.env.PORT || 3001;
+  const environment = process.env.NODE_ENV ?? "development";
+  const port = process.env.PORT ?? 3001;
 
   console.log(`API is running in ${environment} mode.\n`);
   console.log("Accessible addresses:");
