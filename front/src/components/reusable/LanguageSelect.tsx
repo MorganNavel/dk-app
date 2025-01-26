@@ -6,7 +6,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@ui/select";
-import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import frFlag from "@public/assets/img/fr.svg";
@@ -41,7 +40,6 @@ const getLngDisplay = (lng: string) => {
   }
 };
 export const LanguageSelect = () => {
-  const t = useTranslations();
   const router = useRouter();
   const pathname = usePathname();
   const currentLang = pathname.split("/")[1];
@@ -52,36 +50,36 @@ export const LanguageSelect = () => {
         router.replace(`/${lng}${pathname.substring(3)}`);
       }}
     >
-      <SelectTrigger className="bg-white border border-gray-300 rounded-md">
+      <SelectTrigger className='bg-white border border-gray-300 rounded-md'>
         <SelectValue
           placeholder={
-            <div className="flex items-center space-x-2">
+            <div className='flex items-center space-x-2'>
               {getLngDisplay(currentLang)}
             </div>
           }
         />
       </SelectTrigger>
 
-      <SelectContent className="bg-white border border-gray-300 rounded-md">
+      <SelectContent className='bg-white border border-gray-300 rounded-md'>
         <SelectGroup>
-          <SelectItem value="fr" className="hover:bg-primary">
-            <div className="flex items-center space-x-2">
+          <SelectItem value='fr' className='hover:bg-primary'>
+            <div className='flex items-center space-x-2'>
               <span>Français</span>
-              <Image src={frFlag} alt="French" width={20} height={20} />
+              <Image src={frFlag} alt='French' width={20} height={20} />
             </div>
           </SelectItem>
 
-          <SelectItem value="en">
-            <div className="flex items-center space-x-2">
+          <SelectItem value='en'>
+            <div className='flex items-center space-x-2'>
               <span>English</span>
-              <Image src={enFlag} alt="English" width={20} height={20} />
+              <Image src={enFlag} alt='English' width={20} height={20} />
             </div>
           </SelectItem>
 
-          <SelectItem value="ko">
-            <div className="flex items-center space-x-2">
+          <SelectItem value='ko'>
+            <div className='flex items-center space-x-2'>
               <span>한국어</span>
-              <Image src={koFlag} alt="Korean" width={20} height={20} />
+              <Image src={koFlag} alt='Korean' width={20} height={20} />
             </div>
           </SelectItem>
         </SelectGroup>
