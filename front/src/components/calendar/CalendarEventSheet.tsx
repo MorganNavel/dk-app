@@ -10,6 +10,8 @@ import { useTranslations } from "next-intl";
 import { errorToasts } from "@/utils/toast";
 import { Spinner } from "@nextui-org/react";
 import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
+import { useProfile } from "@providers/Profile";
+import { useRouter } from "next/navigation";
 
 interface EventSheetProps {
   selectedEvent: LessonEventDetails | null;
@@ -21,6 +23,8 @@ function formatTime(date: Date | undefined): string {
 }
 
 const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
+  const { profile } = useProfile();
+  const router = useRouter();
   const bookLesson = async () => {
     return await apiCall<ApiResponse<any>>(
       `/lesson/${selectedEvent?.resource.idLesson}/booking/`,
@@ -120,14 +124,26 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
           </div>
         </div>
 
-        <Button
-          type={"submit"}
-          className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
-          disabled={isLoading}
-          onClick={onSubmit}
-        >
-          {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
-        </Button>
+        {profile && profile.role == "student" ? (
+          <Button
+            type={"submit"}
+            className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
+            disabled={isLoading}
+            onClick={onSubmit}
+          >
+            {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
+          </Button>
+        ) : (
+          <Button
+            type={"submit"}
+            className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
+            onClick={() =>
+              router.push(`/lesson/${selectedEvent?.resource.idLesson}`)
+            }
+          >
+            Voir le cours
+          </Button>
+        )}
       </SheetContent>
     </Sheet>
   );
