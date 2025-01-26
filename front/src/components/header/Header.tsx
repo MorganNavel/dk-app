@@ -1,5 +1,5 @@
 "use client";
-import { useProfile } from "../hooks/useProfile";
+import { useProfile } from "@providers/Profile";
 import { NavbarV1 } from "./NavBar";
 import { SidebarV1 } from "./Sidebar";
 

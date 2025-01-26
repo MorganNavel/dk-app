@@ -25,11 +25,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { useProfile } from "../hooks/useProfile";
-
+import { useProfile } from "@providers/Profile";
 export const Sidebar = () => {
   const t = useTranslations();
-  const [teachers, setTeachers] = useState<UserProfile[] | null>(null);
+  const [teachers] = useState<UserProfile[] | null>(null);
   const { profile } = useProfile();
 
   return (

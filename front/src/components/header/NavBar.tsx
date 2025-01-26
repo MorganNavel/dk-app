@@ -12,7 +12,7 @@ import { DropdownMenuItem, DropdownMenuSeparator } from "@ui/dropdown-menu";
 import { CustomDropdown } from "@/components/reusable/Dropdown";
 import { Button } from "@ui/button";
 import { LanguageSelect } from "../reusable/LanguageSelect";
-import { useProfile } from "../hooks/useProfile";
+import { useProfile } from "@providers/Profile";
 
 export const Navbar = () => {
   const { profile } = useProfile();
