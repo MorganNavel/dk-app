@@ -4,20 +4,21 @@ import { useQuery } from "@tanstack/react-query";
 import { LessonDetails, LessonEventDetails } from "@/types/types";
 import { Calendar, momentLocalizer, View } from "react-big-calendar";
 import moment from "moment";
+import "moment/locale/fr"; // Importez la locale française
+import "moment/locale/ko"; // Importez la locale coréenne
 import { toast } from "sonner";
-import { SetStateAction, useCallback, useState } from "react";
+import { SetStateAction, useCallback, useState, useEffect } from "react";
 import "@/styles/CalendarStyles.css";
 import EventSheet from "./CalendarEventSheet";
 import { Skeleton } from "@ui/skeleton";
-
-const localizer = momentLocalizer(moment);
+import { usePathname } from "next/dist/client/components/navigation";
 
 const fetchLessons = async () => {
   return await apiCall<LessonDetails[]>(`/lesson/all`);
 };
 
 const formatLesson = (lessons: LessonDetails[]) => {
-  return lessons.map((lesson, index) => {
+  return lessons.map((lesson) => {
     const { startDate, ...lessonInfo } = lesson;
     const startDateObj = new Date(startDate);
     const endDate = new Date(startDate);
@@ -30,7 +31,29 @@ const formatLesson = (lessons: LessonDetails[]) => {
     };
   });
 };
+
 export default function LessonCalendar() {
+  const path = usePathname();
+  const currentLang = path.split("/")[1];
+  const [localizer, setLocalizer] = useState(momentLocalizer(moment));
+
+  const getBrowserLocale = () => {
+    if (currentLang === "fr") {
+      return "fr";
+    } else if (currentLang === "en") {
+      return "en";
+    } else {
+      return "ko";
+    }
+  };
+
+  useEffect(() => {
+    const locale = getBrowserLocale();
+    moment.locale(locale);
+    setLocalizer(momentLocalizer(moment));
+    console.log("currentLang", currentLang);
+  }, [currentLang]);
+
   const {
     data: lessons,
     error,
@@ -39,6 +62,7 @@ export default function LessonCalendar() {
     queryKey: ["lessons"],
     queryFn: fetchLessons,
   });
+
   const [view, setView] = useState<View>("week");
   const [date, setDate] = useState(new Date());
   const [selectedEvent, setSelectedEvent] = useState<LessonEventDetails | null>(
@@ -52,7 +76,7 @@ export default function LessonCalendar() {
 
   if (error) return toast.error("Erreur lors du chargement des données");
   if (isLoading) {
-    return <Skeleton className='w-full h-[500px] rounded-lg' />;
+    return <CalendarSkeleton />;
   }
   if (!lessons || lessons.length === 0) {
     return <div className='text-center py-4'>Aucune leçon disponible.</div>;
@@ -61,8 +85,9 @@ export default function LessonCalendar() {
   return (
     <div>
       <Calendar
-        className='my-5 mx-5'
-        dayLayoutAlgorithm={"no-overlap"}
+        culture={currentLang}
+        className='my-5 mx-5 bg-white rounded-lg shadow-md'
+        dayLayoutAlgorithm='no-overlap'
         localizer={localizer}
         events={formatLesson(lessons)}
         startAccessor='start'
@@ -75,6 +100,9 @@ export default function LessonCalendar() {
         onNavigate={(date) => setDate(date)}
         popup={true}
         onSelectEvent={(event) => setSelectedEvent(event)}
+        style={{
+          height: "80vh",
+        }}
       />
       <EventSheet
         selectedEvent={selectedEvent}
@@ -83,3 +111,17 @@ export default function LessonCalendar() {
     </div>
   );
 }
+
+const CalendarSkeleton = () => {
+  return (
+    <div className='my-5 mx-5 overflow-auto h-[80vh]'>
+      {Array.from({ length: 24 }).map((_, hour) => (
+        <div key={hour} className='flex mb-2'>
+          {Array.from({ length: 7 }).map((_, day) => (
+            <Skeleton key={day} className='w-full h-10 mx-1' />
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
