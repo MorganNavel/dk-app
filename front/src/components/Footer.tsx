@@ -32,8 +32,8 @@ export const Footer = () => {
     },
   ];
   return (
-    <div className='bg-primary text-white'>
-      <div className='flex flex-col items-center mt-13'>
+    <div className='bg-primary text-white mt-13'>
+      <div className='flex flex-col items-center py-13'>
         <div className='flex space-x-9 lg:space-x-64 '>
           <div className='flex flex-col space-y-1'>
             <p className='font-semibold text-lg '>{t("services")}</p>

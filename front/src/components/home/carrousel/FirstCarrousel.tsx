@@ -24,10 +24,7 @@ export const FirstCaroussel = () => {
     },
   };
   return (
-    <Caroussel
-      config={config}
-      className='h-[88vh] flex flex-col justify-center items-center'
-    >
+    <Caroussel config={config}>
       <DoubleCircles />
     </Caroussel>
   );

@@ -40,7 +40,7 @@ export const Caroussel = ({ config, children, className }: CarousselProps) => {
             return '<span class="' + className + '">' + "</span>";
           },
         }}
-        className="w-full h-full font-Poppins"
+        className='font-Poppins'
       >
         {Object.keys(config).map((key, index) => (
           <SwiperSlide key={index} className={config[key].className}>

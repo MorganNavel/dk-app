@@ -6,8 +6,7 @@ interface ItemLayoutProps {
   description: string;
   buttonText: string;
   image: StaticImport;
-  imageSizeDesktop?: number;
-  imageSizeMobile?: number;
+
   imageAlt: string;
   onClick: () => void;
 }
@@ -17,51 +16,44 @@ export const ItemLayout = ({
   description,
   buttonText,
   image,
-  imageSizeDesktop,
-  imageSizeMobile,
+
   imageAlt,
   onClick,
 }: ItemLayoutProps) => {
   return (
-    <>
-      <div className="w-full h-full flex justify-center items-center">
-        <div className="flex flex-col lg:flex-row items-center">
-          <div className="flex flex-col items-center text-primary lg:space-y-12">
-            <div className="text-center">
-              <h2 className="text-2xl font-bold drop-shadow-md my-4 lg:text-4xl  lg:my-16">
-                {title}
-              </h2>
-              <p className="text-md text-green-950 max-w-xs text-center lg:max-w-md mx-auto lg:text-xl  lg:my-16">
-                {description}
-              </p>
-            </div>
-            <Image
-              src={image}
-              alt={imageAlt}
-              height={imageSizeMobile}
-              width={imageSizeMobile}
-              className="lg:hidden mb-6 mt-6"
-            />
+    <div className='flex items-center justify-center min-h-screen px-4'>
+      <div className='flex flex-col lg:flex-row items-center gap-12'>
+        <div className='flex-1' />
 
-            <Button
-              onClick={onClick}
-              variant={"round-outline"}
-              className="text-sm px-5 py-4 lg:text-lg lg:px-7 lg:py-6 font-semibold"
-            >
-              {buttonText}
-            </Button>
-          </div>
+        <div className='flex flex-col items-center text-primary max-w-2xl mx-auto text-center'>
+          <h2 className='font-bold text-6xl lg:text-3xl drop-shadow-md'>
+            {title}
+          </h2>
+          <p className='text-green-950 max-w-xl mx-auto my-8 text-4xl lg:text-xl'>
+            {description}
+          </p>
+          <Button
+            onClick={onClick}
+            variant='round-outline'
+            className='hidden lg:flex  text-lg px-7 py-5 font-semibold'
+          >
+            {buttonText}
+          </Button>
+        </div>
+
+        <div className='flex-1'>
+          <Image src={image} alt={imageAlt} className='w-full h-auto' />
+        </div>
+        <div className='flex-1'>
+          <Button
+            onClick={onClick}
+            variant='round-outline'
+            className='lg:hidden text-4xl px-12 py-9 font-semibold'
+          >
+            {buttonText}
+          </Button>
         </div>
       </div>
-      {imageSizeDesktop ? (
-        <Image
-          src={image}
-          alt="rocket"
-          height={imageSizeDesktop}
-          width={imageSizeDesktop}
-          className="absolute hidden lg:flex transform -translate-x-1/2 -translate-y-1/2 top-1/2 right-24"
-        />
-      ) : null}
-    </>
+    </div>
   );
 };

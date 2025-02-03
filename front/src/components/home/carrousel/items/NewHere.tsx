@@ -4,7 +4,6 @@ import { useTranslations } from "next-intl";
 interface NewHereProps {
   onClick: () => void;
 }
-const imageSizeMobile = 150;
 
 export const NewHereComponent = ({ onClick }: NewHereProps) => {
   const t = useTranslations("home.intro.slider.newHere");
@@ -14,7 +13,6 @@ export const NewHereComponent = ({ onClick }: NewHereProps) => {
       description={t("description")}
       buttonText={t("buttonText")}
       image={questionMark}
-      imageSizeMobile={imageSizeMobile}
       imageAlt={"question-mark"}
       onClick={onClick}
     />
