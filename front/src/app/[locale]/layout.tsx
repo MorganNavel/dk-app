@@ -4,10 +4,7 @@ import { Header } from "@/components/header/Header";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { Footer } from "@/components/Footer";
-import {
-  ResizableHandle,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+
 import favicon from "@public/favicon.ico";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
@@ -58,13 +55,14 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   return (
     <ReactQueryProvider>
       <NextIntlClientProvider messages={messages}>
-        <ResizablePanelGroup direction='vertical'>
+        <div className='flex flex-col min-h-screen'>
           <Header />
-          <ResizableHandle />
+          <div className='mt-24' />
           {props.children}
           <Footer />
-          <Toaster richColors />
-        </ResizablePanelGroup>
+        </div>
+
+        <Toaster richColors />
       </NextIntlClientProvider>
     </ReactQueryProvider>
   );
