@@ -18,6 +18,7 @@ import { SignInScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorToasts } from "@/utils/toast";
 import { useRouter } from "next/navigation";
+import { ApiResponse } from "@/types/ApiResponse";
 
 interface SignInFields {
   email: string;
