@@ -22,20 +22,20 @@ export const Sidebar = () => {
     <Sheet>
       <SheetTrigger className='lg:hidden'>
         <div className='bg-emerald-700 rounded-lg'>
-          <IoIosMenu className='text-background w-15 h-15' />
+          <IoIosMenu className='text-background w-10 h-10' />
         </div>
       </SheetTrigger>
       <SheetContent side='bottom' className='bg-primary text-white '>
         <SheetHeader className='mb-14'>
-          <SheetTitle className='font-semibold text-5xl text-white'>
+          <SheetTitle className='font-semibold text-3xl text-white'>
             <h2>{t("generals.menu")}</h2>
           </SheetTitle>
         </SheetHeader>
         <div className='flex flex-col items-center w-full'>
           <div className='flex justify-between items-center w-full'>
-            <ImProfile className='h-15 w-15' />
+            <ImProfile className='h-8 w-8' />
             <Link href='/park-danbee/profile'>
-              <p className='text-4xl text-center font-semibold'>
+              <p className='text-2xl text-center font-semibold'>
                 {t("header.myprofile")}
               </p>
             </Link>
@@ -43,9 +43,9 @@ export const Sidebar = () => {
           </div>
           <hr className='w-full my-4' />
           <div className='flex justify-between items-center w-full'>
-            <IoInformationCircleOutline className='h-15 w-15' />
+            <IoInformationCircleOutline className='h-8 w-8' />
             <Link href='/about-us'>
-              <p className='text-center text-4xl font-semibold'>
+              <p className='text-center text-2xl font-semibold'>
                 {t("header.aboutUs")}
               </p>
             </Link>
@@ -53,9 +53,9 @@ export const Sidebar = () => {
           </div>
           <hr className='w-full my-4' />
           <div className='flex justify-between items-center w-full'>
-            <FaRegEnvelope className='h-15 w-15' />
+            <FaRegEnvelope className='h-8 w-8' />
             <Link href='/contact'>
-              <p className='text-center text-4xl font-semibold'>
+              <p className='text-center text-2xl font-semibold'>
                 {t("header.contact")}
               </p>
             </Link>

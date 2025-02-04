@@ -19,7 +19,7 @@ export const NavBar = () => {
           <Image
             src={logo}
             alt='logo'
-            className='w-auto h-[125px]  lg:h-[96px]'
+            className='w-auto h-24 cursor-pointer'
           />
         </Link>
       </div>

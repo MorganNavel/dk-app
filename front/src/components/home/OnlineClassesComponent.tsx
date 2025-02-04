@@ -3,6 +3,7 @@ import onlineClassImg from "@public/assets/img/online-class.png";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Button } from "@ui/button";
+import { Card, CardContent } from "../ui/card";
 
 interface OnlineClassesComponentProps {
   onClick: () => void;
@@ -13,15 +14,17 @@ export const OnlineClassesComponent = () => {
 
   return (
     <div className='text-green-950 flex flex-col lg:grid lg:grid-flow-col lg:grid-cols-2 items-center'>
-      <div className='rounded-xl bg-primary '>
-        <div className=''>
-          <Image
+      <Card className="bg-primary rounded-xl">
+        <CardContent className="bg-primary rounded-xl">
+
+        <Image
             src={onlineClassImg}
             alt='Elearning icons'
             title='elearning icons'
           />
-        </div>
-      </div>
+        </CardContent>
+      </Card>
+
 
       <div className='flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh] lg:mt-0'>
         <h1

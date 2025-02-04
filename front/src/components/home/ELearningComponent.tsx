@@ -8,7 +8,7 @@ export const ELearningComponent = () => {
   const t = useTranslations();
 
   return (
-    <div className='mt-12 flex flex-col  lg:grid lg:h-screen text-green-950  grid-flow-row  grid-cols-1 lg:grid-flow-col lg:grid-cols-2 gap-12 items-center'>
+    <div className='  flex flex-col  lg:grid lg:h-screen text-green-950  grid-flow-row  grid-cols-1 lg:grid-flow-col lg:grid-cols-2 gap-12 items-center'>
       <Image
         src={eLearningImg}
         alt='Elearning icons'
@@ -16,13 +16,13 @@ export const ELearningComponent = () => {
         className=' lg:col-span-1 w-4/5 lg:w-full px-12'
       />
       <div className='flex flex-col items-center lg:block lg:col-span-2 '>
-        <h1 className='text-4xl lg:text-2xl font-semibold font-Poppins text-center lg:text-left max-w-3xl'>
+        <h1 className='text-xl lg:text-2xl font-semibold font-Poppins text-center lg:text-left max-w-3xl'>
           {t("home.eLearning.title")}
         </h1>
-        <p className='text-2xl lg:text-lg text-justify mt-6 max-w-2xl'>
+        <p className='text-lg text-justify mt-6 max-w-lg lg:max-w-2xl'>
           {t("home.eLearning.p2")}
         </p>
-        <p className='text-2xl lg:text-lg text-justify mt-6 max-w-2xl'>
+        <p className='text-lg text-justify mt-6 max-w-lg lg:max-w-2xl'>
           {t("home.eLearning.p2")}
         </p>
         <Button

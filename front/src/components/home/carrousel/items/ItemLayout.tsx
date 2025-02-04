@@ -21,15 +21,14 @@ export const ItemLayout = ({
   onClick,
 }: ItemLayoutProps) => {
   return (
-    <div className='flex items-center justify-center min-h-screen px-4'>
-      <div className='flex flex-col lg:flex-row items-center gap-12'>
+      <div className='flex flex-col lg:flex-row items-center grap-8 lg:gap-12 h-screen'>
         <div className='flex-1' />
 
-        <div className='flex flex-col items-center text-primary max-w-2xl mx-auto text-center'>
-          <h2 className='font-bold text-6xl lg:text-3xl drop-shadow-md'>
+        <div className='flex flex-col items-center text-primary max-w-xl mx-auto text-center'>
+          <h2 className='font-bold text-3xl lg:text-3xl drop-shadow-md'>
             {title}
           </h2>
-          <p className='text-green-950 max-w-xl mx-auto my-8 text-4xl lg:text-xl'>
+          <p className='text-green-950 max-w-xs  lg:max-w-xl mx-auto my-8 text-lg lg:text-xl'>
             {description}
           </p>
           <Button
@@ -42,18 +41,18 @@ export const ItemLayout = ({
         </div>
 
         <div className='flex-1'>
-          <Image src={image} alt={imageAlt} className='w-full h-auto' />
+          <Image src={image} alt={imageAlt} className='h-[100px] w-auto lg:w-[500px] lg:h-auto' />
         </div>
-        <div className='flex-1'>
+
+        <div className='flex-1 lg:hidden mt-5'>
           <Button
             onClick={onClick}
             variant='round-outline'
-            className='lg:hidden text-4xl px-12 py-9 font-semibold'
+            className='text-lg px-8 py-5 font-semibold '
           >
             {buttonText}
           </Button>
         </div>
       </div>
-    </div>
   );
 };

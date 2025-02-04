@@ -7,13 +7,17 @@ import { StudentsReviews } from "@/components/home/StudentsReviews";
 export default async function Home() {
   return (
     <>
+
       <FirstCaroussel />
-      <hr className='hidden lg:flex' />
       <ELearningComponent />
-      <hr className='hidden lg:flex' />
+      <div className="my-13"/>
+
       <OnlineClassesComponent />
-      <hr className='hidden lg:flex' />
+      <div className="my-13"/>
+
       <StudentsReviews />
+      <div className="my-13"/>
+
     </>
   );
 }

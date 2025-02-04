@@ -55,9 +55,9 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   return (
     <ReactQueryProvider>
       <NextIntlClientProvider messages={messages}>
-        <div className='flex flex-col min-h-screen'>
+        <div className="relative">
+
           <Header />
-          <div className='mt-24' />
           {props.children}
           <Footer />
         </div>
