@@ -1,71 +1,61 @@
 "use client";
-import { renderStars } from "@/utils/renderStars";
 import { useTranslations } from "next-intl";
 import { Comment } from "@/components/reusable/Comment";
-import { Caroussel } from "./carrousel/Caroussel";
+import { ContinuousCaroussel } from "../carrousel/ContinuousCaroussel";
+
+
+const comments = [
+  <Comment
+          fullname="Iris"
+          comment="Danbee est une très bonne professeure. Elle est gentille et le fait qu'elle parle français aide beaucoup pour progresser et comprendre le cours. Elle explique les choses très clairement et prend le temps de répondre aux questions. Je vous la recommande fortement !"
+          rating={5}
+        />,
+  <Comment
+          fullname="Théo"
+          comment="Tres bon professeur, explique de maniere simple et clair les mots / phrases qui sont nouveau pour moi, et me permet de m'entrainer a discuter dans des contexte interessant !! Merci !!"
+          rating={5}/>,
+  <Comment
+          fullname="Benjamin"
+          comment="I'm at the beginning of my learning and I needed someone to give me a good base! Very good teacher who takes the time to correct pronunciation and explain, I always have a good time."
+          rating={5}
+        />,
+        <Comment
+          fullname="Abdul"
+          comment="The teacher is highly accurate and creative in teaching the Korean language so amazing tutor"
+          rating={5}
+        />,
+  <Comment
+          fullname="Vivien"
+          comment="Danbee is the best korean tutor I had ! She is very skillfull and pacient. I like to study korean with her :)"
+          rating={5}/>,
+  <Comment
+          fullname="Éloi"
+          comment="She is really helpfull and really fun. She is really pushing you to try your best. At every start of our meeting, we do some flascards to see if I studied well, and after that, we start some new lecon. It's really well pace!"
+          rating={5}
+        />,
+        <Comment
+        fullname="Paulina"
+        comment="Amazing teacher, well prepared, kind and patient. The lesson was fun and engaging."
+        rating={5}
+      />,
+  <Comment
+        fullname="Léa"
+        comment="Danbee est vraiment très gentille, et les cours avec elle sont très intéressants. Elle s'adapte parfaitement aux besoins de ses élèves et j'ai beaucoup appris depuis que je prends des cours avec elle ☺️"
+        rating={5}
+      />,
+        
+]
 
 export const StudentsReviews = () => {
   const t = useTranslations();
-  const config: {
-    [key: string]: { className: string; component: JSX.Element };
-  } = {
-    c1: {
-      className: "mb-12 mt-12",
-      component: (
-        <Comment
-          fullname={t("home.reviews.comments.1.fullname")}
-          comment={t("home.reviews.comments.1.comment")}
-          rating={5}
-        />
-      ),
-    },
-    c2: {
-      className: "mb-12 mt-12",
-      component: (
-        <Comment
-          fullname={t("home.reviews.comments.2.fullname")}
-          comment={t("home.reviews.comments.2.comment")}
-          rating={5}
-        />
-      ),
-    },
-    c3: {
-      className: "mb-12 mt-12",
-      component: (
-        <Comment
-          fullname={t("home.reviews.comments.3.fullname")}
-          comment={t("home.reviews.comments.3.comment")}
-          rating={5}
-        />
-      ),
-    },
-  };
+ const config  = comments.map((comment) => ({
+  component: comment,
+  className: "mb-12 m-12"
+}));
   return (
     <>
-      <div className="h-screen hidden lg:flex">
-        <div className="w-full fex flex-col">
-          <h1 className="text-4xl font-bold text-center text-primary drop-shadow mt-13">
-            {t("home.reviews.title")}
-          </h1>
-          <div className="flex justify-center mt-8">
-            <h2 className="text-2xl font-bold text-center drop-shadow flex items-center text-primary">
-              <p className="mr-5">{t("generals.average")} : </p>
-              <span className="flex text-yellow-500">{renderStars(5)}</span>
-            </h2>
-          </div>
 
-          <div className="flex justify-center transform translate-y-1/4">
-            {Object.keys(config).map((key, index) => (
-              <div key={key} className="flex">
-                <span className="bg-primary w-[5px]" />
-                {config[key].component}
-              </div>
-            ))}
-            <div className="bg-primary w-[5px]" />
-          </div>
-        </div>
-      </div>
-      <Caroussel config={config} className="lg:hidden h-full " />
+      <ContinuousCaroussel config={config} className=" h-full" />
     </>
   );
 };
