@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "border-2 border-textColor rounded-md enabled:hover:scale-105 enabled:hover:drop-shadow-md transition-transform duration-300 ease-in-out",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
+        ghost: "hover:bg-gray-500/10 hover:text-gray-800",
         link: "text-primary underline-offset-4 hover:underline",
         none: "",
       },
