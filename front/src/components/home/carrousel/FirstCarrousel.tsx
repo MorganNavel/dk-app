@@ -6,7 +6,7 @@ import { StartKoreanJourneyComponent } from "./items/StartKoreanJourney";
 
 export const FirstCaroussel = () => {
   const config = [
-     {
+    {
       component: (
         <NewHereComponent onClick={() => console.log("start questionnaire")} />
       ),
@@ -18,12 +18,10 @@ export const FirstCaroussel = () => {
         />
       ),
     },
-     {
+    {
       component: <ReadReviewsComponent onClick={() => console.log("read")} />,
     },
   ];
-  return (
-    <Caroussel config={config} type="progressbar" className="lg:h-[70vh]" />
-    
-  );
+
+  return <Caroussel config={config} type="bullets" className=" w-full" />;
 };

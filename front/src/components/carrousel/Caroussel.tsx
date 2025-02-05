@@ -16,28 +16,29 @@ interface ConfigItem {
   component: ReactNode;
 }
 
-
 interface CarousselProps {
-  config: ConfigItem [];
-  className?: string; 
+  config: ConfigItem[];
+  className?: string;
   type?: "progressbar" | "fraction" | "custom" | "bullets";
 }
 
 export const Caroussel = ({ config, className, type }: CarousselProps) => {
-  
   return (
     <div className={className}>
       <Swiper
-        modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay, EffectFade]}
+        modules={[
+          Navigation,
+          Pagination,
+          Scrollbar,
+          A11y,
+          Autoplay,
+          EffectFade,
+        ]}
         slidesPerView={1}
         loop={true}
-        
         autoplay={{
           delay: 7000,
           disableOnInteraction: false,
-        }}
-        onSwiper={(swiper) => {
-          swiper.wrapperEl.style.transitionTimingFunction = "ease-in-out";
         }}
         pagination={{
           type,
@@ -47,23 +48,25 @@ export const Caroussel = ({ config, className, type }: CarousselProps) => {
           },
           renderFraction: (currentClass, totalClass) => {
             return (
-              '<span class="' + currentClass + '"></span>' +
+              '<span class="' +
+              currentClass +
+              '"></span>' +
               " of " +
-              '<span class="' + totalClass + '"></span>'
+              '<span class="' +
+              totalClass +
+              '"></span>'
             );
           },
           renderBullet: (index, className) => {
             return '<span class="' + className + '"/>';
           },
-          
         }}
         navigation
-        className='font-Poppins bg-background'
+        className="font-Poppins bg-background"
       >
         {config.map((item, index) => (
           <SwiperSlide key={index} className={`mt-12 ${item.className}`}>
             {item.component}
-            
           </SwiperSlide>
         ))}
       </Swiper>

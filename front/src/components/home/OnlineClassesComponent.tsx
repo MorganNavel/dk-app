@@ -14,16 +14,6 @@ export const OnlineClassesComponent = () => {
 
   return (
     <div className='text-green-950 flex flex-col lg:grid lg:grid-flow-col lg:grid-cols-2 items-center'>
-      <Card className="bg-primary rounded-xl">
-        <CardContent className="bg-primary rounded-xl">
-
-        <Image
-            src={onlineClassImg}
-            alt='Elearning icons'
-            title='elearning icons'
-          />
-        </CardContent>
-      </Card>
 
 
       <div className='flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh] lg:mt-0'>
@@ -48,6 +38,18 @@ export const OnlineClassesComponent = () => {
           {t("generals.learnMore")}
         </Button>
       </div>
+      <Card className="bg-primary rounded-xl">
+        <CardContent className="bg-primary rounded-xl">
+
+        <Image
+            src={onlineClassImg}
+            alt='Elearning icons'
+            title='elearning icons'
+            width={636}
+            height={636}
+          />
+        </CardContent>
+      </Card>
     </div>
   );
 };

@@ -32,9 +32,7 @@ export const ContinuousCaroussel = ({ config, className }: CarousselProps) => {
             delay: 0, 
             disableOnInteraction: false,
         }}
-        onSwiper={(swiper) => {
-            swiper.wrapperEl.style.transitionTimingFunction = "linear";
-        }}
+
         className="font-Poppins"
         breakpoints={{
             0: {
