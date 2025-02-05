@@ -1,5 +1,5 @@
 import { SheetContent, SheetHeader, SheetTitle, Sheet } from "@ui/sheet";
-import { LessonEventDetails } from "@/types/types";
+import { LessonEventDetails } from "@/types/lesson";
 import moment from "moment";
 import LNGS from "@/types/languages";
 import { Button } from "@ui/button";
@@ -12,6 +12,7 @@ import { Spinner } from "@nextui-org/react";
 import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
 import { useProfile } from "@providers/Profile";
 import { useRouter } from "next/navigation";
+import { ApiResponse } from "@/types/ApiResponse";
 
 interface EventSheetProps {
   selectedEvent: LessonEventDetails | null;

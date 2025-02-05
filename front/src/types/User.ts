@@ -39,5 +39,14 @@ interface ProfileMe {
   role: UserRole;
   rating?: number;
 }
+export interface Teacher {
+  idUser: number;
+  name: string;
+  firstname: string;
+  email: string;
+  languages?: string;
+  role: UserRole;
+  rating?: number | null;
+}
 
 export type { UserProfile, SignUpInput, SignInInput, UserRole, ProfileMe };
