@@ -62,7 +62,12 @@ export const Caroussel = ({ config, className, type }: CarousselProps) => {
           },
         }}
         navigation
-        className="font-Poppins bg-background"
+        style={
+          {
+            "--swiper-navigation-size": "25px",
+          } as React.CSSProperties
+        }
+        className='font-Poppins bg-background'
       >
         {config.map((item, index) => (
           <SwiperSlide key={index} className={`mt-12 ${item.className}`}>
