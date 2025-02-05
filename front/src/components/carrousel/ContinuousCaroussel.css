@@ -8,12 +8,10 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  
 }
 .swiper-container {
   width: 100%;
   height: 100%;
-  
 }
 .swiper-slide {
   text-align: center;
@@ -37,7 +35,6 @@
   position: relative;
   overflow: hidden;
 }
-
 
 .swiper-wrapper {
   display: flex;

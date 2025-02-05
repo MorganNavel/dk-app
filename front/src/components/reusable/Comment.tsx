@@ -9,25 +9,24 @@ interface CommentProps {
 
 export const Comment = ({ fullname, comment, rating }: CommentProps) => {
   return (
-    <Card className="p-6 shadow-lg rounded-2xl bg-background ">
-      <CardHeader className="text-center text-lg font-semibold">
+    <Card className='p-6 shadow-lg rounded-2xl bg-background '>
+      <CardHeader className='text-center text-lg font-semibold'>
         - {fullname} -
       </CardHeader>
       <CardContent>
-        <p className="text-justify text-md lg:text-xl min-h-[250px]">
+        <p className='text-justify text-md lg:text-xl min-h-[250px]'>
           {comment}
         </p>
       </CardContent>
       <CardFooter>
-        <div className="flex justify-center gap-1 mt-3 lg:mt-4">
+        <div className='flex justify-center gap-1 mt-3 lg:mt-4'>
           {renderStars(rating).map((star, index) => (
-            <span key={index} className="text-yellow-500 text-lg">
+            <span key={index} className='text-yellow-500 text-lg'>
               {star}
             </span>
           ))}
         </div>
       </CardFooter>
     </Card>
-
   );
 };

@@ -8,13 +8,13 @@ import { StudentsReviews } from "@/components/home/StudentsReviews";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center gap-12">
+    <div className='flex flex-col items-center justify-center gap-12'>
       <FirstCaroussel />
       <ELearningComponent />
 
       <OnlineClassesComponent />
 
-      {/* <StudentsReviews /> */}
+      <StudentsReviews />
     </div>
   );
 }
