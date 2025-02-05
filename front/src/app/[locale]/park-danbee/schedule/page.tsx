@@ -74,7 +74,14 @@ export default function SchedulePage() {
     [setView]
   );
 
-  if (error) return toast.error("Erreur lors du chargement des données");
+  if (error) {
+    toast.error("Erreur lors du chargement des données");
+    return (
+      <div className='text-center py-4'>
+        Erreur lors du chargement des données
+      </div>
+    );
+  }
   if (isLoading) {
     return <CalendarSkeleton />;
   }
@@ -99,7 +106,9 @@ export default function SchedulePage() {
         onView={onView}
         onNavigate={(date) => setDate(date)}
         popup={true}
-        onSelectEvent={(event: any) => setSelectedEvent(event.resource)}
+        onSelectEvent={(event: any) => {
+          setSelectedEvent(event);
+        }}
         style={{
           height: "80vh",
         }}
