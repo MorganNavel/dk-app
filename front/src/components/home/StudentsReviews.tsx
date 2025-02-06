@@ -57,13 +57,13 @@ export const StudentsReviews = () => {
   const config = comments.map((comment, index) => ({
     key: `comment-${index}`,
     component: <Comment {...comment} />,
-    className: "m-12",
+    className: "mx-12",
   }));
 
   return (
     <ContinuousCaroussel
       config={config}
-      className='w-full max-w-screen mx-auto overflow-hidden'
+      className="w-full max-w-screen mx-auto overflow-hidden"
     />
   );
 };

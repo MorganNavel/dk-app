@@ -18,13 +18,13 @@ export const ELearningComponent = () => {
         className=" lg:col-span-1 w-4/5 lg:w-full px-12"
       />
       <div className="flex flex-col items-center lg:block lg:col-span-2 ">
-        <h1 className="text-xl lg:text-2xl font-semibold font-Poppins text-center lg:text-left max-w-3xl">
+        <h1 className="text-2xl  font-semibold font-Poppins text-center lg:text-left max-w-3xl">
           {t("home.eLearning.title")}
         </h1>
-        <p className="text-lg text-justify mt-6 max-w-lg ">
+        <p className="text-md lg:text-lg text-justify mt-6 max-w-md lg:max-w-lg ">
           {t("home.eLearning.p1")}
         </p>
-        <p className="text-lg text-justify mt-6 max-w-lg ">
+        <p className="text-md lg:text-lg text-justify mt-6 max-w-md lg:max-w-lg">
           {t("home.eLearning.p2")}
         </p>
         <Button
