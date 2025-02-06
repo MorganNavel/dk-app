@@ -109,7 +109,7 @@ export default function AboutUs() {
         <SlidesIn side='left' duration={0.6} once>
           <Title> {t("proposed.title")}</Title>
         </SlidesIn>
-        <div className='mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-center'>
+        <div className='mt-6 grid grid-cols-1 md:grid-cols-2 gap-6 items-center text-left'>
           <SlidesIn side='right' duration={0.6}>
             <div className='flex items-center gap-2'>
               <CheckCircle className='text-green-500 flex-shrink-0' />
