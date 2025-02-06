@@ -17,6 +17,7 @@ import { NavUser } from "./nav-user";
 import logo from "@public/assets/img/logo.png";
 import { FaChalkboardTeacher, FaRegEnvelope } from "react-icons/fa";
 import { IconType } from "react-icons";
+import Link from "next/link";
 
 const data: {
   navMain: {
@@ -119,15 +120,17 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           size="lg"
           className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground "
         >
-          <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-            <Image
-              src={logo}
-              alt={"logo"}
-              width={775}
-              height={518}
-              className="size-4"
-            />
-          </div>
+          <Link href="/">
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground">
+              <Image
+                src={logo}
+                alt={"logo"}
+                width={775}
+                height={518}
+                className="size-4"
+              />
+            </div>
+          </Link>
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">Danbee Korean</span>
           </div>
