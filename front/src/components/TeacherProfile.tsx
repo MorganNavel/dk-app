@@ -64,6 +64,8 @@ export const TeacherProfile = () => {
             src={ParkDanbeeAvatar}
             alt={`${teacher.firstname} ${teacher.name}'s photo`}
             className='rounded-full h-32 w-32 lg:h-48 lg:w-48'
+            width={320}
+            height={320}
           />
           <div className='flex flex-col items-center lg:items-start'>
             <div className='flex items-center space-x-5'>

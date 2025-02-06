@@ -1,5 +1,5 @@
 import { SheetContent, SheetHeader, SheetTitle, Sheet } from "@ui/sheet";
-import { LessonEventDetails } from "@/types/types";
+import { LessonEventDetails } from "@/types/lesson";
 import moment from "moment";
 import LNGS from "@/types/languages";
 import { Button } from "@ui/button";
@@ -11,7 +11,7 @@ import { errorToasts } from "@/utils/toast";
 import { Spinner } from "@nextui-org/react";
 import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
 import { useProfile } from "@providers/Profile";
-import { useRouter } from "next/navigation";
+import { ApiResponse } from "@/types/ApiResponse";
 
 interface EventSheetProps {
   selectedEvent: LessonEventDetails | null;
@@ -24,7 +24,6 @@ function formatTime(date: Date | undefined): string {
 
 const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const { profile } = useProfile();
-  const router = useRouter();
   const bookLesson = async () => {
     return await apiCall<ApiResponse<any>>(
       `/lesson/${selectedEvent?.resource.idLesson}/booking/`,
@@ -124,7 +123,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
           </div>
         </div>
 
-        {profile && profile.role == "student" ? (
+        {profile && profile.role == "student" && (
           <Button
             type={"submit"}
             className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
@@ -132,16 +131,6 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             onClick={onSubmit}
           >
             {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
-          </Button>
-        ) : (
-          <Button
-            type={"submit"}
-            className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
-            onClick={() =>
-              router.push(`/lesson/${selectedEvent?.resource.idLesson}`)
-            }
-          >
-            Voir le cours
           </Button>
         )}
       </SheetContent>

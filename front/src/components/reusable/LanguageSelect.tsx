@@ -50,7 +50,7 @@ export const LanguageSelect = () => {
         router.replace(`/${lng}${pathname.substring(3)}`);
       }}
     >
-      <SelectTrigger className='bg-white border border-gray-300 rounded-md'>
+      <SelectTrigger className='bg-white border border-gray-300 rounded-md hidden lg:flex'>
         <SelectValue
           placeholder={
             <div className='flex items-center space-x-2'>

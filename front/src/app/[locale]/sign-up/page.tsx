@@ -20,6 +20,7 @@ import { SignUpScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { errorToasts } from "@/utils/toast";
+import { ApiResponse } from "@/types/ApiResponse";
 
 interface SignUpFields {
   email: string;

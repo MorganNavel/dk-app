@@ -1,31 +1,27 @@
 "use client";
-import { DoubleCircles } from "@/components/shapes/DoubleCircles";
-import { Caroussel } from "./Caroussel";
+import { Caroussel } from "@/components/carrousel/Caroussel";
 import { NewHereComponent } from "./items/NewHere";
 import { ReadReviewsComponent } from "./items/ReadReviews";
 import { StartKoreanJourneyComponent } from "./items/StartKoreanJourney";
 
 export const FirstCaroussel = () => {
-  const config = {
-    newHere: {
+  const config = [
+    {
       component: (
         <NewHereComponent onClick={() => console.log("start questionnaire")} />
       ),
     },
-    startKoreanJourney: {
+    {
       component: (
         <StartKoreanJourneyComponent
           onClick={() => console.log("learn more")}
         />
       ),
     },
-    readReviews: {
+    {
       component: <ReadReviewsComponent onClick={() => console.log("read")} />,
     },
-  };
-  return (
-    <Caroussel config={config}>
-      <DoubleCircles />
-    </Caroussel>
-  );
+  ];
+
+  return <Caroussel config={config} type="bullets" className=" w-full" />;
 };
