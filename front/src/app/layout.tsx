@@ -1,3 +1,4 @@
+
 import "@/globals.css";
 
 import favicon from "@public/favicon.ico";
@@ -16,7 +17,13 @@ export default async function LocaleLayout(
 ) {
   return (
     <html lang='en'>
-      <body>{props.children}</body>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+      </head>
+
+      <body >
+        {props.children}
+      </body>
     </html>
   );
 }

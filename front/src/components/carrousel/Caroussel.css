@@ -1,0 +1,61 @@
+/* Import Swiper styles */
+@import "swiper/css";
+@import "swiper/css/navigation";
+@import "swiper/css/pagination";
+@import "swiper/css/scrollbar";
+@import "swiper/css/effect-fade";
+.swiper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  
+}
+.swiper-container {
+  width: 100%;
+  height: 100%;
+}
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-container {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+}
+
+
+.swiper-pagination-progressbar{
+  height: 25px;
+
+}
+.swiper-pagination-progressbar-fill {
+  background-color: #99D68F !important;
+ 
+  
+}
+
+/* Navigation Buttons */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #57a773;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  opacity: 0.8;
+}

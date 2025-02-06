@@ -6,39 +6,35 @@ import { Button } from "@ui/button";
 
 export const ELearningComponent = () => {
   const t = useTranslations();
+
   return (
-    <div className='text-green-950 h-screen flex flex-col lg:flex-row items-center lg:items-center'>
+    <div className="  flex flex-col  lg:grid text-green-950  grid-flow-row  grid-cols-1 lg:grid-flow-col lg:grid-cols-2 gap-12 items-center">
       <Image
         src={eLearningImg}
-        alt='Elearning icons'
-        title='elearning icons'
-        className='lg:hidden mt-6 mr-2 h-[175px] w-[300px]'
+        alt="Elearning icons"
+        title="elearning icons"
+        width={1278}
+        height={744}
+        className=" lg:col-span-1 w-4/5 lg:w-full px-12"
       />
-      <div className='flex flex-col items-center lg:items-start mx-[5vw] mt-[13vh] lg:mx-[15vw]'>
-        <h1 className='text-2xl font-semibold font-Poppins max-w-sm text-center lg:text-left'>
+      <div className="flex flex-col items-center lg:block lg:col-span-2 ">
+        <h1 className="text-xl lg:text-2xl font-semibold font-Poppins text-center lg:text-left max-w-3xl">
           {t("home.eLearning.title")}
         </h1>
-        <p className='lg:max-w-md max-w-md mt-6 lg:text-lg text-md text-justify lg:text-left'>
+        <p className="text-lg text-justify mt-6 max-w-lg ">
           {t("home.eLearning.p1")}
         </p>
-        <p className='lg:max-w-md max-w-md mt-6 lg:text-lg text-md text-justify'>
+        <p className="text-lg text-justify mt-6 max-w-lg ">
           {t("home.eLearning.p2")}
         </p>
-
         <Button
           variant={"round-outline"}
           onClick={() => console.log("learn more")}
-          className='mt-6 text-md px-6 py-5 lg:px-7 lg:py-6 lg:text-lg font-semibold'
+          className=" mt-8  font-semibold  lg:w-auto px-7 py-6 text-xl"
         >
           {t("generals.learnMore")}
         </Button>
       </div>
-      <Image
-        src={eLearningImg}
-        alt='Elearning icons'
-        title='elearning icons'
-        className='hidden lg:block h-[291px] w-[500px]'
-      />
     </div>
   );
 };
