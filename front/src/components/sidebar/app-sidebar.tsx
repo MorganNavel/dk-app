@@ -30,109 +30,64 @@ const data: {
 } = {
   navMain: [
     {
-      title: "Park Danbee",
-      url: "/park-danbee/profile",
+      title: "danbee-park",
+      url: "/danbee-park/profile",
       icon: FaChalkboardTeacher,
       isActive: true,
       items: [
         {
-          title: "Profile",
-          url: "/park-danbee/profile",
-        },
-        {
-          title: "Lessons",
-          url: "/park-danbee/schedule",
+          title: "header.profile",
+          url: "/danbee-park/profile",
         },
       ],
     },
     {
-      title: "About Us",
+      title: "header.aboutUs",
       url: "/about-us",
       icon: Info,
       isActive: true,
     },
     {
-      title: "Pricing",
+      title: "header.pricing",
       url: "/pricing",
       icon: HandCoins,
       isActive: true,
     },
     {
-      title: "Classes",
+      title: "header.classes",
       url: "#",
       icon: GraduationCap,
       isActive: true,
-      items: [
-        {
-          title: "Beginner",
-          url: "#",
-        },
-        {
-          title: "Intermediate",
-          url: "#",
-        },
-        {
-          title: "Topik",
-          url: "#",
-        },
-        {
-          title: "Advanced",
-          url: "#",
-        },
-      ],
     },
     {
-      title: "Contact",
+      title: "header.contact",
       url: "/contact",
       icon: FaRegEnvelope,
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
         <SidebarMenuButton
-          size="lg"
-          className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground "
+          size='lg'
+          className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground '
         >
-          <Link href="/">
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground">
+          <Link href='/'>
+            <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground'>
               <Image
                 src={logo}
                 alt={"logo"}
                 width={775}
                 height={518}
-                className="size-4"
+                className='size-4'
               />
             </div>
           </Link>
-          <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Danbee Korean</span>
+          <div className='grid flex-1 text-left text-sm leading-tight'>
+            <span className='truncate font-semibold'>Danbee Korean</span>
           </div>
         </SidebarMenuButton>
       </SidebarHeader>

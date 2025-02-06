@@ -22,6 +22,7 @@ import { ChevronRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { ComponentType } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export function NavMain({
   items,
@@ -39,6 +40,7 @@ export function NavMain({
 }) {
   const router = useRouter();
   const { open } = useSidebar();
+  const t = useTranslations();
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Danbee Korean</SidebarGroupLabel>
@@ -50,7 +52,7 @@ export function NavMain({
                 <Link href={item.url}>
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <item.icon />}
-                    <span>{item.title}</span>
+                    <span>{t(item.title)}</span>
                   </SidebarMenuButton>
                 </Link>
               </SidebarMenuItem>
@@ -62,7 +64,7 @@ export function NavMain({
               key={item.title}
               asChild
               defaultOpen={item.isActive}
-              className="group/collapsible"
+              className='group/collapsible'
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
@@ -75,8 +77,8 @@ export function NavMain({
                     tooltip={item.title}
                   >
                     {item.icon && <item.icon />}
-                    <span>{item.title}</span>
-                    <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    <span>{t(item.title)}</span>
+                    <ChevronRightIcon className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
@@ -85,7 +87,7 @@ export function NavMain({
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
                           <a href={subItem.url}>
-                            <span>{subItem.title}</span>
+                            <span>{t(subItem.title)}</span>
                           </a>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>

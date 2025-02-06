@@ -1,9 +1,11 @@
 import { motion } from "framer-motion";
 import Animation from "./props";
+import { cn } from "@/lib/utils";
 
 interface SlideSideWhenVisibleProps extends Animation {
   side: "left" | "right";
 }
+
 export function SlidesIn({
   children,
   side,
@@ -14,15 +16,15 @@ export function SlidesIn({
 }: SlideSideWhenVisibleProps) {
   return (
     <motion.div
-      initial="hidden"
-      whileInView="visible"
+      initial='hidden'
+      whileInView='visible'
       viewport={{ once: once }}
       transition={{ duration: duration }}
       variants={{
         visible: { opacity: 1, x: 0 },
         hidden: { opacity: 0, x: side === "left" ? -100 : 100 },
       }}
-      className={className}
+      className={cn(className)}
       {...props}
     >
       {children}

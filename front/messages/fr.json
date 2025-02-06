@@ -1,4 +1,5 @@
 {
+  "danbee-park": "Danbee Park",
   "generals": {
     "signin": "Se connecter",
     "signup": "S'inscrire",
@@ -66,6 +67,7 @@
   "header": {
     "levelTest": "Test de niveau",
     "pricing": "Tarifs",
+    "profile": "Profil",
     "videos": {
       "title": "Vidéo",
       "grammar": "Grammaire",
@@ -81,19 +83,16 @@
       "topik": "TOPIK",
       "advanced": "Avancé"
     },
+    "classes": "Cours",
     "teachers": {
       "title": "Enseignants",
       "danbeepark": "Danbee Park"
     },
-    "profile": {
-      "myaccount": "Mon compte",
-      "subscriptions": "Abonnements",
-      "orders": "Commandes"
-    },
     "home": "Accueil",
     "myprofile": "Mon profil",
     "aboutUs": "À propos de nous",
-    "contact": "Contact"
+    "contact": "Contact",
+    "profil": "Profil"
   },
   "footer": {
     "services": "Services",
@@ -187,6 +186,45 @@
         "description": "Rejoignez-moi sur Preply pour des cours de coréen personnalisés et adaptés à vos besoins.",
         "buttonText": "Rejoignez-moi sur Preply dès maintenant🚀 !"
       }
+    }
+  },
+  "about-us": {
+    "title": "Apprenez le coréen avec passion et méthode !",
+    "subtitle": "Une approche unique, flexible et efficace pour vous aider à maîtriser le coréen à votre rythme.",
+    "who": {
+      "title": "Qui sommes-nous ?",
+      "description": "Danbee Korean est une plateforme d'apprentissage en ligne qui propose des cours de coréen personnalisés et adaptés à tous les niveaux. Depuis 1 an et demi sur Preply, j'ai accompagné des étudiants de tous niveaux grâce à une approche pédagogique personnalisée. Mon objectif est de rendre l'apprentissage du coréen interactif, amusant, et accessible à tous."
+    },
+    "why": {
+      "title": "Pourquoi nous choisir ?",
+      "efficient": {
+        "title": "Méthode efficace",
+        "description": "Des cours adaptés à votre rythme et à vos besoins."
+      },
+      "flexible": {
+        "title": "Flexibilité totale",
+        "description": "Apprenez où et quand vous voulez, sans contraintes."
+      },
+      "personalized": {
+        "title": "Suivi personnalisé",
+        "description": "Un accompagnement dédié pour vous aider à progresser."
+      },
+      "experience": {
+        "title": "Expérience",
+        "description": "Plus de 1000h de cours et des centaines d'étudiants satisfaits."
+      }
+    },
+    "proposed": {
+      "title": "Ce que nous proposons",
+      "interactive": "Cours interactifs pour tous les niveaux",
+      "personalized": "Accompagnement personnalisé",
+      "ressources": "Ressources pédagogiques exclusives",
+      "flexible": "Flexibilité et autonomie dans l'apprentissage"
+    },
+    "cta": {
+      "title": "Rejoignez-nous dès maintenant !",
+      "description": "Inscrivez-vous aujourd'hui et transformez votre apprentissage du coréen en une aventure passionnante.",
+      "buttonText": "Commencer maintenant"
     }
   }
 }

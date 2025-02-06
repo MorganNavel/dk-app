@@ -1,4 +1,5 @@
 {
+  "danbee-park": "Danbee Park",
   "generals": {
     "signin": "Sign In",
     "signup": "Sign Up",
@@ -76,15 +77,12 @@
       "topik": "TOPIK",
       "advanced": "Advanced"
     },
+    "classes": "Classes",
     "teachers": {
       "title": "Teachers",
       "danbeepark": "Danbee Park"
     },
-    "profile": {
-      "myaccount": "My Account",
-      "subscriptions": "Subscriptions",
-      "orders": "Orders"
-    },
+    "profile": "Profile",
     "home": "Home",
     "myprofile": "My Profile",
     "aboutUs": "About Us",
@@ -183,6 +181,45 @@
         "description": "Join me on Preply for personalized Korean lessons tailored to your needs.",
         "buttonText": "Join me on Preply now 🚀!"
       }
+    }
+  },
+  "about-us": {
+    "title": "Learn Korean with passion and method!",
+    "subtitle": "A unique, flexible and effective approach to help you master Korean at your own pace.",
+    "who": {
+      "title": "Who are we?",
+      "description": "Danbee Korean is an online learning platform that offers personalized Korean lessons adapted to all levels. For the past year and a half on Preply, I have supported students of all levels through a personalized teaching approach. My goal is to make learning Korean interactive, fun, and accessible to everyone."
+    },
+    "why": {
+      "title": "Why choose Danbee Korean?",
+      "efficient": {
+        "title": "Effective method",
+        "description": "Courses adapted to your pace and your needs."
+      },
+      "flexible": {
+        "title": "Total flexibility",
+        "description": "Learn anytime, anywhere—on your terms, with no limits!"
+      },
+      "personalized": {
+        "title": "Personalized support",
+        "description": "Dedicated support to help you progress."
+      },
+      "experience": {
+        "title": "Experience",
+        "description": "1000+ hours of courses and hundreds of satisfied students!"
+      }
+    },
+    "proposed": {
+      "title": "What we offer",
+      "interactive": "Interactive and engaging courses from beginner to advanced",
+      "personalized": "Personalized courses adapted to your needs",
+      "ressources": "Exclusive learning materials, designed by me and refined through student experience!",
+      "flexible": "Flexibility and independence in your learning journey"
+    },
+    "cta": {
+      "title": "Join us today and start your journey!",
+      "description": "Sign up today and turn your Korean learning into an exciting adventure!",
+      "buttonText": "Join Now"
     }
   }
 }

@@ -27,12 +27,11 @@ import { VscAccount } from "react-icons/vsc";
 export function NavUser() {
   const user: UserProfile = {
     idUser: 1,
-    firstname: "Danbee",
-    name: "Park",
-    email: "danbee.korean@gmail.com",
+    firstname: "John",
+    name: "Doe",
+    email: "john.doe@gmail.com",
     languages: ["ko", "en"],
-    description:
-      "Danbee Korean is a language learning platform for Korean language.",
+    description: "",
     role: "teacher",
   };
   const { isMobile } = useSidebar();
