@@ -1,3 +1,4 @@
+import { ApiResponse } from "@/types/ApiResponse";
 import { toast } from "sonner";
 
 export const errorToasts = (t: Function, error: ApiResponse<any>) => {
