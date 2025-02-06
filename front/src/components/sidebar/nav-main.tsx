@@ -16,10 +16,12 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { ComponentType } from "react";
+import { useRouter } from "next/navigation";
 
 export function NavMain({
   items,
@@ -35,6 +37,8 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const router = useRouter();
+  const { open } = useSidebar();
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Danbee Korean</SidebarGroupLabel>
@@ -62,7 +66,14 @@ export function NavMain({
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip={item.title}>
+                  <SidebarMenuButton
+                    onClick={() => {
+                      if (!open && item.url) {
+                        router.push(item.url);
+                      }
+                    }}
+                    tooltip={item.title}
+                  >
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                     <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
