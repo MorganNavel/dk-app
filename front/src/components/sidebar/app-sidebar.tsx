@@ -29,9 +29,20 @@ const data: {
 } = {
   navMain: [
     {
-      title: "My Profile",
+      title: "Park Danbee",
       url: "/park-danbee/profile",
       icon: FaChalkboardTeacher,
+      isActive: true,
+      items: [
+        {
+          title: "Profile",
+          url: "/park-danbee/profile",
+        },
+        {
+          title: "Lessons",
+          url: "/park-danbee/schedule",
+        },
+      ],
     },
     {
       title: "About Us",
