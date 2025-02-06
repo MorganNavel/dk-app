@@ -2,7 +2,6 @@ import { Button } from "@ui/button";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { BadgeCheck, Leaf, Star } from "lucide-react"; // Icônes modernes
 import { ReactNode } from "react";
 
 interface ItemLayoutProps {
