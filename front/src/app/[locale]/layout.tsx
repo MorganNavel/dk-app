@@ -54,11 +54,11 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   }
 
   return (
-    <html lang="en">
+    <html lang='en'>
       <head>
         <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0"
+          name='viewport'
+          content='width=device-width, initial-scale=1.0'
         ></meta>
       </head>
 

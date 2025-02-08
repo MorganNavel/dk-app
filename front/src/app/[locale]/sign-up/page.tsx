@@ -21,6 +21,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { errorToasts } from "@/utils/toast";
 import { ApiResponse } from "@/types/ApiResponse";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Captcha } from "@/components/captcha/Captcha";
 
 interface SignUpFields {
   email: string;
@@ -39,6 +42,9 @@ const signUp = async (data: SignUpFields): Promise<any> => {
 };
 
 export default function SignUp() {
+  const [isMounted, setIsMounted] = useState(false);
+  const [token, setToken] = useState<string | null>(null);
+
   const t = useTranslations();
   const methods = useForm<SignUpFields>({
     resolver: zodResolver(SignUpScheme(t)),
@@ -64,8 +70,19 @@ export default function SignUp() {
       router.push("/sign-in");
     },
   });
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return <SkeletonSignUp />;
+  }
 
   const onSubmit: SubmitHandler<SignUpFields> = async (data: SignUpFields) => {
+    if (!token) {
+      toast.error(t("generals.recaptcha"));
+      return;
+    }
     mutation.mutate(data);
   };
   return (
@@ -85,7 +102,6 @@ export default function SignUp() {
                 name={"email"}
                 placeholder={t("generals.user-profile.placeholder.email")}
                 control={methods.control}
-                className='bg-background'
                 required
               />
               <ControlledInput
@@ -93,7 +109,6 @@ export default function SignUp() {
                 name={"firstname"}
                 placeholder={t("generals.user-profile.placeholder.firstname")}
                 control={methods.control}
-                className='bg-background'
                 required
               />
               <ControlledInput
@@ -101,7 +116,6 @@ export default function SignUp() {
                 name={"name"}
                 placeholder={t("generals.user-profile.placeholder.name")}
                 control={methods.control}
-                className='bg-background'
                 required
               />
               <ControlledInput
@@ -110,7 +124,6 @@ export default function SignUp() {
                 placeholder={t("generals.user-profile.placeholder.password")}
                 control={methods.control}
                 type='password'
-                className='bg-background'
                 required
               />
               <ControlledInput
@@ -121,7 +134,6 @@ export default function SignUp() {
                 )}
                 control={methods.control}
                 type='password'
-                className='bg-background'
                 required
               />
 
@@ -132,13 +144,15 @@ export default function SignUp() {
                 label={t("generals.user-profile.label.lngs")}
                 placeholder={t("generals.user-profile.placeholder.lngs")}
                 required
-                className='bg-background'
               />
+              <div className='flex justify-center my-5'>
+                <Captcha onChange={(token) => setToken(token)} />
+              </div>
 
               <Button
                 variant={"round-outline"}
                 type={"submit"}
-                className='w-full mt-4'
+                className='w-full'
               >
                 {t("generals.submit")}
               </Button>
@@ -160,3 +174,27 @@ export default function SignUp() {
     </div>
   );
 }
+
+const SkeletonSignUp = () => {
+  return (
+    <div className='flex items-center justify-center min-h-screen p-6 '>
+      <Card className='lg:max-w-md max-w-sm w-full p-4'>
+        <CardHeader className='lg:max-w-md max-w-sm w-full items-center '>
+          <Skeleton className='h-7 w-1/2'></Skeleton>
+        </CardHeader>
+        <CardContent className='space-y-3'>
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className='mb-6'>
+              <Skeleton className='h-3 w-48 mb-2' />
+              <Skeleton className='h-8 w-full ' />
+            </div>
+          ))}
+          <Skeleton className='h-9 rounded-3xl w-full mt-9 ' />
+        </CardContent>
+        <div className=' flex justify-center'>
+          <Skeleton className='h-3 w-1/2 ' />
+        </div>
+      </Card>
+    </div>
+  );
+};

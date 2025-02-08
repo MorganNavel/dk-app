@@ -226,5 +226,33 @@
       "description": "Inscrivez-vous aujourd'hui et transformez votre apprentissage du coréen en une aventure passionnante.",
       "buttonText": "Commencer maintenant"
     }
+  },
+  "contact": {
+    "contact_us": "Contactez-nous",
+    "email": "Email",
+    "enter_email": "Entrez votre email",
+    "subject": "Sujet",
+    "question": "Question",
+    "description": "Description",
+    "describe_issue": "Décrivez votre problème ou votre retour",
+    "we_will_respond": "Nous vous répondrons dans les plus brefs délais.",
+    "technical_support": "Support technique",
+    "billing_payments": "Facturation et paiements",
+    "subscription_offers": "Abonnement et offres",
+    "access_issue": "Problème d'accès au service",
+    "other": "Autre",
+    "resolve_technical_error": "Comment résoudre une erreur technique ?",
+    "contact_support": "Comment contacter le support ?",
+    "remote_assistance": "Puis-je obtenir une assistance à distance ?",
+    "check_payments": "Comment vérifier mes paiements ?",
+    "payment_methods": "Quels modes de paiement acceptez-vous ?",
+    "detailed_invoice": "Puis-je obtenir une facture détaillée ?",
+    "available_subscriptions": "Quels sont vos abonnements disponibles ?",
+    "modify_subscription": "Comment modifier mon abonnement ?",
+    "cancel_subscription": "Puis-je annuler mon abonnement ?",
+    "cannot_login": "Pourquoi je n'arrive pas à me connecter ?",
+    "account_suspended": "Mon compte a été suspendu, que faire ?",
+    "reset_password": "Comment réinitialiser mon mot de passe ?",
+    "captcha_required": "Veuillez remplir le captcha pour soumettre le formulaire."
   }
 }

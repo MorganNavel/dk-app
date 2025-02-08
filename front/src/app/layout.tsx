@@ -1,5 +1,5 @@
-
 import "@/globals.css";
+import { loadEnvConfig } from "@next/env";
 
 import favicon from "@public/favicon.ico";
 
@@ -18,12 +18,13 @@ export default async function LocaleLayout(
   return (
     <html lang='en'>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+        <meta
+          name='viewport'
+          content='width=device-width, initial-scale=1.0'
+        ></meta>
       </head>
 
-      <body >
-        {props.children}
-      </body>
+      <body>{props.children}</body>
     </html>
   );
 }

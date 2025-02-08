@@ -1,11 +1,20 @@
-import { Select, SelectItem } from "@nextui-org/react";
-import { FormControl, FormField, FormItem } from "../ui/form";
+"use client";
+
+import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import {
   Control,
   FieldPath,
   FieldValues,
   RegisterOptions,
 } from "react-hook-form";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
+import { useTranslations } from "next-intl";
 
 interface Option {
   label: string;
@@ -26,6 +35,7 @@ interface ControlledSelectProps<T extends FieldValues> {
   className?: string;
   itemClassName?: string;
   size?: string;
+  required?: boolean;
 }
 
 export const ControlledSelect = <T extends FieldValues>({
@@ -37,46 +47,64 @@ export const ControlledSelect = <T extends FieldValues>({
   label,
   placeholder,
   itemClassName,
+  required = false,
   size = "md",
+  className,
   ...props
 }: ControlledSelectProps<T>) => {
+  const t = useTranslations("generals");
   return (
     <FormField
       name={name}
       control={control}
-      rules={rules}
+      rules={{
+        required: { value: required, message: t("requiredField") },
+        ...rules,
+      }}
       render={({ field, fieldState }) => (
-        <FormItem>
+        <FormItem className={className}>
+          <FormLabel>
+            {label}
+            {required && <span className='text-red-500'> *</span>}
+          </FormLabel>
           <FormControl>
-            <Select
-              {...field}
-              {...props}
-              placeholder={placeholder}
-              selectionMode='multiple'
-              onChange={(e) => {
-                field.onChange(e);
-                const value = e.target.value;
-                onChange && onChange(value);
-              }}
-              aria-invalid={!!fieldState.error}
-              aria-describedby={`${name}-error`}
-              aria-label={name}
-            >
-              {options.map((option) => (
-                <SelectItem
-                  key={option.value}
-                  value={option.value}
-                  className={itemClassName}
+            <>
+              <Select
+                {...props}
+                value={field.value}
+                onValueChange={(value) => {
+                  console.log(value);
+                  field.onChange(value);
+                  onChange && onChange(value);
+                }}
+                aria-invalid={!!fieldState.error}
+                aria-describedby={`${name}-error`}
+                aria-label={name}
+              >
+                <SelectTrigger className='w-full'>
+                  <SelectValue placeholder={placeholder} />
+                </SelectTrigger>
+                <SelectContent>
+                  {options.map((option) => (
+                    <SelectItem
+                      key={option.value}
+                      value={option.value}
+                      className={itemClassName}
+                    >
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              {fieldState.error && (
+                <span
+                  id={`${name}-error`}
+                  className='text-red-500 text-xs mt-1'
                 >
-                  {option.label}
-                </SelectItem>
-              ))}
-            </Select>
-            {fieldState.error && (
-              <span id={`${name}-error`} className='text-red-500'>
-                {fieldState.error.message}
-              </span>
-            )}
+                  {fieldState.error.message}
+                </span>
+              )}
+            </>
           </FormControl>
         </FormItem>
       )}

@@ -3,8 +3,14 @@ import { z } from "zod";
 export const SignUpScheme = (t: Function) => {
   return z
     .object({
-      firstname: z.string().min(3, { message: t("signup.min.firstname") }),
-      name: z.string().min(3, { message: t("signup.min.name") }),
+      firstname: z
+        .string()
+        .trim()
+        .min(3, { message: t("signup.min.firstname") }),
+      name: z
+        .string()
+        .trim()
+        .min(3, { message: t("signup.min.name") }),
       email: z.string().email({ message: t("signup.emailFormat") }),
       password: z.string().min(6, { message: t("signup.min.password") }),
       confirmPassword: z.string(),

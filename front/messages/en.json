@@ -227,5 +227,33 @@
       "description": "Sign up today and turn your Korean learning into an exciting adventure!",
       "buttonText": "Join Now"
     }
+  },
+  "contact": {
+    "contact_us": "Contact Us",
+    "email": "Email",
+    "enter_email": "Enter your email",
+    "subject": "Subject",
+    "question": "Question",
+    "description": "Description",
+    "describe_issue": "Describe your issue or feedback",
+    "we_will_respond": "We will respond as soon as possible.",
+    "technical_support": "Technical Support",
+    "billing_payments": "Billing and Payments",
+    "subscription_offers": "Subscription and Offers",
+    "access_issue": "Access Issue",
+    "other": "Other",
+    "resolve_technical_error": "How to resolve a technical error?",
+    "contact_support": "How to contact support?",
+    "remote_assistance": "Can I get remote assistance?",
+    "check_payments": "How to check my payments?",
+    "payment_methods": "What payment methods do you accept?",
+    "detailed_invoice": "Can I get a detailed invoice?",
+    "available_subscriptions": "What subscriptions are available?",
+    "modify_subscription": "How to modify my subscription?",
+    "cancel_subscription": "Can I cancel my subscription?",
+    "cannot_login": "Why can't I log in?",
+    "account_suspended": "My account is suspended, what should I do?",
+    "reset_password": "How to reset my password?",
+    "captcha_required": "Captcha is required"
   }
 }

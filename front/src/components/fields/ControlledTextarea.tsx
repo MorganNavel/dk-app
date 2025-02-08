@@ -1,5 +1,4 @@
 "use client";
-import { Input } from "../ui/input";
 import { FormControl, FormField, FormItem, FormLabel } from "../ui/form";
 import {
   Control,
@@ -11,8 +10,8 @@ import { useTranslations } from "next-intl";
 import React from "react";
 import { Textarea } from "../ui/textarea";
 
-interface ControlledInputProps<T extends FieldValues>
-  extends React.ComponentProps<typeof Input> {
+interface ControlledTextareaProps<T extends FieldValues>
+  extends React.ComponentProps<typeof Textarea> {
   name: FieldPath<T>;
   control: Control<T>;
   rules?: Omit<
@@ -24,7 +23,7 @@ interface ControlledInputProps<T extends FieldValues>
   required?: boolean;
 }
 
-export const ControlledInput = <T extends FieldValues>({
+export const ControlledTextarea = <T extends FieldValues>({
   name,
   control,
   rules = {},
@@ -33,7 +32,7 @@ export const ControlledInput = <T extends FieldValues>({
   onChange,
   className,
   ...props
-}: ControlledInputProps<T>) => {
+}: ControlledTextareaProps<T>) => {
   const t = useTranslations("generals");
 
   return (
@@ -58,12 +57,12 @@ export const ControlledInput = <T extends FieldValues>({
           </FormLabel>
           <FormControl>
             <>
-              <Input
+              <Textarea
                 {...field}
                 {...props}
-                aria-invalid={!!fieldState.error}
-                aria-describedby={`${name}-error`}
                 onBlur={field.onBlur}
+                aria-describedby={`${name}-error`}
+                aria-invalid={!!fieldState.error}
                 onChange={(e) => {
                   field.onChange(e.target.value);
                   onChange && onChange(e.target.value);
