@@ -26,7 +26,7 @@ import { useTranslations } from "next-intl";
 
 export function NavMain({
   items,
-}: {
+}: Readonly<{
   items: {
     title: string;
     url: string;
@@ -37,7 +37,7 @@ export function NavMain({
       url: string;
     }[];
   }[];
-}) {
+}>) {
   const router = useRouter();
   const { open } = useSidebar();
   const t = useTranslations();
