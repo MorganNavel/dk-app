@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const ContactScheme = (t: Function) => {
   return z.object({
-    email: z.string().email({ message: t("signup.emailFormat") }),
+    email: z.string().email({ message: t("generals.emailFormat") }),
     subject: z.string().refine((val) => val.trim().length > 0, {
       message: t("generals.requiredField"),
     }),

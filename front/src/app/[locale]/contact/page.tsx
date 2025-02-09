@@ -57,10 +57,9 @@ export default function Contact() {
   }
 
   const onSubmit: SubmitHandler<ContactFields> = (data: ContactFields) => {
-    console.log(methods.getFieldState("description"));
     const { token, ...contactData } = data;
     if (!token) {
-      toast.error(t("contact.captcha_required"));
+      toast.error(t("captcha_required"));
       return;
     }
     console.log("Contact data:", contactData);

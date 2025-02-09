@@ -1,6 +1,9 @@
 {
   "danbee-park": "Danbee Park",
   "generals": {
+    "emailFormat": "Email format is invalid",
+    "passwordLength": "Password must be at least 6 characters long",
+    "captcha_required": "Captcha is required",
     "signin": "Sign In",
     "signup": "Sign Up",
     "signout": "Sign Out",
@@ -253,7 +256,6 @@
     "cancel_subscription": "Can I cancel my subscription?",
     "cannot_login": "Why can't I log in?",
     "account_suspended": "My account is suspended, what should I do?",
-    "reset_password": "How to reset my password?",
-    "captcha_required": "Captcha is required"
+    "reset_password": "How to reset my password?"
   }
 }

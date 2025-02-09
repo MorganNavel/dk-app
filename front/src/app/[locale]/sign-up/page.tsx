@@ -20,7 +20,7 @@ import { SignUpScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorToasts } from "@/utils/toast";
 import { ApiResponse } from "@/types/ApiResponse";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Captcha } from "@/components/captcha/Captcha";
 import { useRouter } from "@/i18n/routing";
@@ -34,24 +34,30 @@ interface SignUpFields {
   links: string;
   languages: Array<string>;
 }
+interface FormProps {
+  credentials: SignUpFields;
+  token: string;
+}
 const signUp = async (data: SignUpFields): Promise<any> =>
   await apiCall("/auth/signup", "POST", data);
 
 export default function SignUp() {
   const [isMounted, setIsMounted] = useState(false);
-  const [token, setToken] = useState<string | null>(null);
   const t = useTranslations();
   const router = useRouter();
   const locale = useLocale();
-  const methods = useForm<SignUpFields>({
+  const methods = useForm<FormProps>({
     resolver: zodResolver(SignUpScheme(t)),
     defaultValues: {
-      email: "",
-      name: "",
-      firstname: "",
-      password: "",
-      confirmPassword: "",
-      languages: [],
+      credentials: {
+        email: "",
+        name: "",
+        firstname: "",
+        password: "",
+        confirmPassword: "",
+        languages: [],
+      },
+      token: "",
     },
   });
 
@@ -69,18 +75,24 @@ export default function SignUp() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
+  useEffect(() => {
+    console.log(methods.formState.errors);
+  }, [methods.formState.errors]);
   if (!isMounted) {
     return <SkeletonSignUp />;
   }
 
-  const onSubmit: SubmitHandler<SignUpFields> = async (data: SignUpFields) => {
+  const onSubmit: SubmitHandler<FormProps> = async (data: FormProps) => {
+    console.log(data);
+    const token = data.token;
     if (!token) {
       toast.error(t("generals.recaptcha"));
       return;
     }
-    mutation.mutate(data);
+    const credentials = data.credentials;
+    mutation.mutate(credentials);
   };
+
   return (
     <div className='flex items-center justify-center min-h-screen p-4 '>
       <Card className='lg:max-w-md max-w-sm w-full'>
@@ -95,28 +107,28 @@ export default function SignUp() {
             >
               <ControlledInput
                 label={t("generals.user-profile.label.email")}
-                name={"email"}
+                name={"credentials.email"}
                 placeholder={t("generals.user-profile.placeholder.email")}
                 control={methods.control}
                 required
               />
               <ControlledInput
                 label={t("generals.user-profile.label.firstname")}
-                name={"firstname"}
+                name={"credentials.firstname"}
                 placeholder={t("generals.user-profile.placeholder.firstname")}
                 control={methods.control}
                 required
               />
               <ControlledInput
                 label={t("generals.user-profile.label.name")}
-                name={"name"}
+                name={"credentials.name"}
                 placeholder={t("generals.user-profile.placeholder.name")}
                 control={methods.control}
                 required
               />
               <ControlledInput
                 label={t("generals.user-profile.label.password")}
-                name={"password"}
+                name={"credentials.password"}
                 placeholder={t("generals.user-profile.placeholder.password")}
                 control={methods.control}
                 type='password'
@@ -124,7 +136,7 @@ export default function SignUp() {
               />
               <ControlledInput
                 label={t("generals.user-profile.label.confirmPassword")}
-                name={"confirmPassword"}
+                name={"credentials.confirmPassword"}
                 placeholder={t(
                   "generals.user-profile.placeholder.confirmPassword"
                 )}
@@ -135,14 +147,16 @@ export default function SignUp() {
 
               <ControlledMultiSelect
                 control={methods.control}
-                name='languages'
+                name='credentials.languages'
                 options={LNGS}
                 label={t("generals.user-profile.label.lngs")}
                 placeholder={t("generals.user-profile.placeholder.lngs")}
                 required
               />
               <div className='flex justify-center my-5'>
-                <Captcha onChange={(token) => setToken(token)} />
+                <Captcha
+                  onChange={(token) => methods.setValue("token", token ?? "")}
+                />
               </div>
 
               <Button
@@ -176,7 +190,7 @@ const SkeletonSignUp = () => {
     <div className='flex items-center justify-center min-h-screen p-6 '>
       <Card className='lg:max-w-md max-w-sm w-full p-4'>
         <CardHeader className='lg:max-w-md max-w-sm w-full items-center '>
-          <Skeleton className='h-7 w-1/2'></Skeleton>
+          <Skeleton className='h-7 w-1/2' />
         </CardHeader>
         <CardContent className='space-y-3'>
           {[...Array(6)].map((_, i) => (
@@ -185,6 +199,9 @@ const SkeletonSignUp = () => {
               <Skeleton className='h-8 w-full ' />
             </div>
           ))}
+          <div className=' flex justify-center'>
+            <Skeleton className='h-16  w-4/5 my-5 ' />
+          </div>
           <Skeleton className='h-9 rounded-3xl w-full mt-9 ' />
         </CardContent>
         <div className=' flex justify-center'>

@@ -16,20 +16,20 @@ import { SignInScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorToasts } from "@/utils/toast";
 import { useRouter, Link } from "@/i18n/routing";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 
 import { ApiResponse } from "@/types/ApiResponse";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Captcha } from "@/components/captcha/Captcha";
 
 interface SignInFields {
   email: string;
-  name: string;
-  firstname: string;
   password: string;
-  confirmPassword: string;
-  links: string;
-  languages: string;
+}
+interface FormProps {
+  credentials: SignInFields;
+  token: string;
 }
 const signIn = async (data: SignInFields): Promise<any> => {
   return await apiCall<ApiResponse<any>>("/auth/signin", "POST", data);
@@ -38,19 +38,17 @@ export default function SignIn() {
   const [isMounted, setIsMounted] = useState(false);
 
   const t = useTranslations();
-  const methods = useForm<SignInFields>({
+  const methods = useForm<FormProps>({
     resolver: zodResolver(SignInScheme(t)),
     defaultValues: {
-      email: "",
-      name: "",
-      firstname: "",
-      password: "",
-      confirmPassword: "",
-      languages: "",
+      credentials: {
+        email: "",
+        password: "",
+      },
+      token: "",
     },
   });
   const router = useRouter();
-  const locale = useLocale();
   const mutation = useMutation({
     mutationFn: signIn,
     onError: (error) => {
@@ -73,8 +71,15 @@ export default function SignIn() {
   if (!isMounted) {
     return <SkeletonSignIn />;
   }
-  const onSubmit: SubmitHandler<SignInFields> = async (data) => {
-    await mutation.mutateAsync(data);
+  const onSubmit: SubmitHandler<FormProps> = async (data) => {
+    const token = data.token;
+
+    if (!token) {
+      toast.error(t("captcha_required"));
+      return;
+    }
+
+    await mutation.mutateAsync(data.credentials);
   };
 
   return (
@@ -91,24 +96,29 @@ export default function SignIn() {
             >
               <ControlledInput
                 label={t("generals.user-profile.label.email")}
-                name={"email"}
+                name={"credentials.email"}
                 placeholder={t("generals.user-profile.placeholder.email")}
                 control={methods.control}
                 required
               />
               <ControlledInput
                 label={t("generals.user-profile.label.password")}
-                name={"password"}
+                name={"credentials.password"}
                 placeholder={t("generals.user-profile.placeholder.password")}
                 control={methods.control}
                 type='password'
                 required
               />
+              <div className='flex justify-center my-5'>
+                <Captcha
+                  onChange={(token) => methods.setValue("token", token ?? "")}
+                />
+              </div>
 
               <Button
                 variant={"round-outline"}
                 type={"submit"}
-                className='w-full mt-4'
+                className='w-full'
               >
                 {t("generals.submit")}
               </Button>
@@ -136,7 +146,7 @@ const SkeletonSignIn = () => {
     <div className='flex items-center justify-center min-h-screen p-6 '>
       <Card className='lg:max-w-md max-w-sm w-full p-4'>
         <CardHeader className='lg:max-w-md max-w-sm w-full items-center '>
-          <Skeleton className='h-7 w-1/2'></Skeleton>
+          <Skeleton className='h-7 w-1/2' />
         </CardHeader>
         <CardContent className='space-y-3'>
           {[...Array(2)].map((_, i) => (
@@ -145,6 +155,9 @@ const SkeletonSignIn = () => {
               <Skeleton className='h-8 w-full ' />
             </div>
           ))}
+          <div className=' flex justify-center'>
+            <Skeleton className='h-16  w-4/5 my-5 ' />
+          </div>
           <Skeleton className='h-9 rounded-3xl w-full mt-9 ' />
         </CardContent>
         <div className=' flex justify-center'>

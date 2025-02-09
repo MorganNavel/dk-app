@@ -1,6 +1,10 @@
 {
   "danbee-park": "Danbee Park",
   "generals": {
+    "passwordLength": "Password must be at least 6 characters long",
+    "passwordMissmatch": "Password must be the same",
+    "emailFormat": "Email format is invalid",
+    "captcha_required": "Captcha is required",
     "signin": "Sign In",
     "signup": "Sign Up",
     "signout": "Sign Out",
@@ -45,14 +49,6 @@
     "submit": "Submit"
   },
   "signup": {
-    "passwordMissmatch": "Password must be the same",
-    "emailFormat": "Email format is invalid",
-    "passwordLength": "Password must be at least 6 characters long",
-    "min": {
-      "password": "Password must be at least 6 characters long",
-      "name": "Name must be at least 3 characters long",
-      "firstname": "Firstname must be at least 3 characters long"
-    },
     "message": {
       "success": "Your account has been successfully created. You can now sign in.",
       "error": "An error occurred while creating your account. Please try again later."
@@ -253,7 +249,6 @@
     "cancel_subscription": "Can I cancel my subscription?",
     "cannot_login": "Why can't I log in?",
     "account_suspended": "My account is suspended, what should I do?",
-    "reset_password": "How to reset my password?",
-    "captcha_required": "Captcha is required"
+    "reset_password": "How to reset my password?"
   }
 }
