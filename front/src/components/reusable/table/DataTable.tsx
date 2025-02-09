@@ -148,7 +148,14 @@ function DataTable<TData, TValue>({
                 ))}
               </>
             )}
-            {table.getRowModel().rows?.length ? (
+            {!isLoading && !table.getRowModel().rows?.length && (
+              <TableRow key='no-data'>
+                <TableCell colSpan={columns.length} className='text-center'>
+                  No data
+                </TableCell>
+              </TableRow>
+            )}
+            {!!table.getRowModel().rows?.length &&
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
@@ -164,14 +171,7 @@ function DataTable<TData, TValue>({
                     </TableCell>
                   ))}
                 </TableRow>
-              ))
-            ) : (
-              <TableRow key='no-data'>
-                <TableCell colSpan={columns.length} className='text-center'>
-                  No data
-                </TableCell>
-              </TableRow>
-            )}
+              ))}
           </TableBody>
         </Table>
       </div>
