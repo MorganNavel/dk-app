@@ -52,7 +52,7 @@ function DataTable<TData, TValue>({
   columns,
   filtersConfig,
   isLoading,
-}: DataTableProps<TData, TValue>) {
+}: Readonly<DataTableProps<TData, TValue>>) {
   const t = useTranslations();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
