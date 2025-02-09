@@ -19,10 +19,10 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { ChevronRightIcon } from "@radix-ui/react-icons";
-import Link from "next/link";
 import { ComponentType } from "react";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 
 export function NavMain({
   items,
@@ -39,8 +39,10 @@ export function NavMain({
   }[];
 }>) {
   const router = useRouter();
+
   const { open } = useSidebar();
   const t = useTranslations();
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Danbee Korean</SidebarGroupLabel>
@@ -49,7 +51,7 @@ export function NavMain({
           if (!item.items) {
             return (
               <SidebarMenuItem key={item.title}>
-                <Link href={item.url}>
+                <Link href={`/${item.url}`}>
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <item.icon />}
                     <span>{t(item.title)}</span>
@@ -71,7 +73,7 @@ export function NavMain({
                   <SidebarMenuButton
                     onClick={() => {
                       if (!open && item.url) {
-                        router.push(item.url);
+                        router.push(`/${item.url}`);
                       }
                     }}
                     tooltip={item.title}
@@ -86,9 +88,9 @@ export function NavMain({
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <a href={subItem.url}>
+                          <Link href={`/${subItem.url}`} passHref>
                             <span>{t(subItem.title)}</span>
-                          </a>
+                          </Link>
                         </SidebarMenuSubButton>
                       </SidebarMenuSubItem>
                     ))}

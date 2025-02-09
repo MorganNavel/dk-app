@@ -12,18 +12,18 @@ import {
 } from "@/components/ui/card";
 import { ControlledMultiSelect } from "@/components/fields/ControlledMultiSelect";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { apiCall } from "@/utils/apiCall";
 import { toast } from "sonner";
 import { SignUpScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/navigation";
 import { errorToasts } from "@/utils/toast";
 import { ApiResponse } from "@/types/ApiResponse";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Captcha } from "@/components/captcha/Captcha";
+import { useRouter } from "@/i18n/routing";
 
 interface SignUpFields {
   email: string;
@@ -34,18 +34,15 @@ interface SignUpFields {
   links: string;
   languages: Array<string>;
 }
-const signUp = async (data: SignUpFields): Promise<any> => {
-  console.log(data);
-  const response = await apiCall("/auth/signup", "POST", data);
-  console.log(response);
-  return response;
-};
+const signUp = async (data: SignUpFields): Promise<any> =>
+  await apiCall("/auth/signup", "POST", data);
 
 export default function SignUp() {
   const [isMounted, setIsMounted] = useState(false);
   const [token, setToken] = useState<string | null>(null);
-
   const t = useTranslations();
+  const router = useRouter();
+  const locale = useLocale();
   const methods = useForm<SignUpFields>({
     resolver: zodResolver(SignUpScheme(t)),
     defaultValues: {
@@ -57,7 +54,6 @@ export default function SignUp() {
       languages: [],
     },
   });
-  const router = useRouter();
 
   const mutation = useMutation({
     mutationFn: signUp,
@@ -67,7 +63,7 @@ export default function SignUp() {
     },
     onSuccess: (data) => {
       toast.success(t("signup.message.success"));
-      router.push("/sign-in");
+      router.push(`/${locale}/sign-in`);
     },
   });
   useEffect(() => {
@@ -163,7 +159,7 @@ export default function SignUp() {
           <p className='text-sm'>
             {t("generals.alreadyAccount")}{" "}
             <Link
-              href='/sign-in'
+              href={`sign-in`}
               className='hover:underline text-primary font-semibold'
             >
               {t("generals.signin")}

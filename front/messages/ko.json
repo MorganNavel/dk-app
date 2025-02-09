@@ -11,14 +11,19 @@
     "readReviews": "Read Reviews",
     "average": "Average",
     "requiredField": "Required field",
-    "unauthorized": "You are not authorized to access this ressource.",
     "fr": "French",
     "en": "English",
     "ko": "Korean",
     "notImplemented": "This feature is not implemented yet.",
     "alreadyAccount": "Already have an account ?",
     "noAccount": "Doesn't have an account yet ?",
-    "unexpectedError": "An unexpected error occurred. Please try again later.",
+    "error": {
+      "unexpectedError": "An unexpected error occurred. Please try again later.",
+      "unauthorized": "You are not authorized to access this ressource.",
+      "notFound": "The requested ressource was not found.",
+      "badRequest": "The request was invalid. Please try again.",
+      "forbidden": "You are not allowed to access this ressource."
+    },
     "user-profile": {
       "label": {
         "email": "Email",
@@ -69,6 +74,7 @@
       "conjugation": "Conjugation",
       "conversation": "Conversation"
     },
+    "profile": "Profile",
     "takeLessons": {
       "title": "Take Lessons",
       "beginner": "Beginner",
@@ -82,7 +88,6 @@
       "title": "Teachers",
       "danbeepark": "Danbee Park"
     },
-    "profile": "Profile",
     "home": "Home",
     "myprofile": "My Profile",
     "aboutUs": "About Us",
@@ -183,6 +188,7 @@
       }
     }
   },
+
   "about-us": {
     "title": "Learn Korean with passion and method!",
     "subtitle": "A unique, flexible and effective approach to help you master Korean at your own pace.",
@@ -221,5 +227,33 @@
       "description": "Sign up today and turn your Korean learning into an exciting adventure!",
       "buttonText": "Join Now"
     }
+  },
+  "contact": {
+    "contact_us": "Contact Us",
+    "email": "Email",
+    "enter_email": "Enter your email",
+    "subject": "Subject",
+    "question": "Question",
+    "description": "Description",
+    "describe_issue": "Describe your issue or feedback",
+    "we_will_respond": "We will respond as soon as possible.",
+    "technical_support": "Technical Support",
+    "billing_payments": "Billing and Payments",
+    "subscription_offers": "Subscription and Offers",
+    "access_issue": "Access Issue",
+    "other": "Other",
+    "resolve_technical_error": "How to resolve a technical error?",
+    "contact_support": "How to contact support?",
+    "remote_assistance": "Can I get remote assistance?",
+    "check_payments": "How to check my payments?",
+    "payment_methods": "What payment methods do you accept?",
+    "detailed_invoice": "Can I get a detailed invoice?",
+    "available_subscriptions": "What subscriptions are available?",
+    "modify_subscription": "How to modify my subscription?",
+    "cancel_subscription": "Can I cancel my subscription?",
+    "cannot_login": "Why can't I log in?",
+    "account_suspended": "My account is suspended, what should I do?",
+    "reset_password": "How to reset my password?",
+    "captcha_required": "Captcha is required"
   }
 }

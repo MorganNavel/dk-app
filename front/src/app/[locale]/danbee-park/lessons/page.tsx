@@ -15,6 +15,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 const fetchLessons = async () => {
   return await apiCall<Lesson[]>(`/lesson/all`);
@@ -31,7 +32,9 @@ export default function LessonsPage() {
     queryKey: ["lessons"],
     queryFn: fetchLessons,
   });
-  if (error) return toast.error("Erreur lors du chargement des données");
+  if (error) {
+    toast.error("Erreur lors du chargement des données");
+  }
 
   return (
     <div className='p-15 h-full'>
@@ -65,8 +68,8 @@ export default function LessonsPage() {
             ),
           },
 
-          { columnId: "teacher", render: () => <input type='text' /> },
-          { columnId: "title", render: () => <input type='text' /> },
+          { columnId: "teacher", render: () => <Input type='text' /> },
+          { columnId: "title", render: () => <Input type='text' /> },
         ]}
       />
     </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Settings2, HandCoins, Info, GraduationCap } from "lucide-react";
+import { HandCoins, Info, GraduationCap } from "lucide-react";
 
 import {
   Sidebar,
@@ -17,7 +17,8 @@ import { NavUser } from "./nav-user";
 import logo from "@public/assets/img/logo.png";
 import { FaChalkboardTeacher, FaRegEnvelope } from "react-icons/fa";
 import { IconType } from "react-icons";
-import Link from "next/link";
+import { useLocale } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 const data: {
   navMain: {
@@ -31,25 +32,25 @@ const data: {
   navMain: [
     {
       title: "danbee-park",
-      url: "/danbee-park/profile",
+      url: "danbee-park/profile",
       icon: FaChalkboardTeacher,
       isActive: true,
       items: [
         {
           title: "header.profile",
-          url: "/danbee-park/profile",
+          url: "danbee-park/profile",
         },
       ],
     },
     {
       title: "header.aboutUs",
-      url: "/about-us",
+      url: "about-us",
       icon: Info,
       isActive: true,
     },
     {
       title: "header.pricing",
-      url: "/pricing",
+      url: "pricing",
       icon: HandCoins,
       isActive: true,
     },
@@ -61,13 +62,14 @@ const data: {
     },
     {
       title: "header.contact",
-      url: "/contact",
+      url: "contact",
       icon: FaRegEnvelope,
     },
   ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const locale = useLocale();
   return (
     <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
@@ -75,7 +77,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           size='lg'
           className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground '
         >
-          <Link href='/'>
+          <Link href={`/`} locale={locale}>
             <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground'>
               <Image
                 src={logo}

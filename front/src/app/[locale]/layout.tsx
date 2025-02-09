@@ -2,6 +2,9 @@ import "@/globals.css";
 
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { notFound } from "next/navigation";
+import { routing } from "@/i18n/routing";
+
 import { Footer } from "@/components/Footer";
 
 import favicon from "@public/favicon.ico";
@@ -44,39 +47,27 @@ interface LocaleLayoutProps {
   params: { locale: string };
 }
 export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
-  let messages;
-  const locale = props.params.locale;
-  try {
-    messages = await getMessages({ locale });
-  } catch (error) {
-    console.error(`Failed to load messages for locale ${locale}`, error);
-    messages = {};
+  if (!routing.locales.includes(props.params.locale as any)) {
+    notFound();
   }
 
-  return (
-    <html lang='en'>
-      <head>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1.0'
-        ></meta>
-      </head>
+  // Providing all messages to the client
+  // side is the easiest way to get started
+  const messages = await getMessages();
 
-      <body>
-        <ReactQueryProvider>
-          <NextIntlClientProvider messages={messages}>
-            <SidebarProvider>
-              <SidebarLayout>
-                <main>
-                  {props.children}
-                  <Footer />
-                </main>
-              </SidebarLayout>
-              <Toaster richColors />
-            </SidebarProvider>
-          </NextIntlClientProvider>
-        </ReactQueryProvider>
-      </body>
-    </html>
+  return (
+    <ReactQueryProvider>
+      <NextIntlClientProvider messages={messages}>
+        <SidebarProvider>
+          <SidebarLayout>
+            <main>
+              {props.children}
+              <Footer />
+            </main>
+          </SidebarLayout>
+          <Toaster richColors />
+        </SidebarProvider>
+      </NextIntlClientProvider>
+    </ReactQueryProvider>
   );
 }

@@ -9,15 +9,15 @@ import {
   CardHeader,
   CardContent,
 } from "@/components/ui/card";
-import Link from "next/link";
-import { useTranslations } from "next-intl";
 import { apiCall } from "@/utils/apiCall";
 import { toast } from "sonner";
 import { useMutation } from "@tanstack/react-query";
 import { SignInScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorToasts } from "@/utils/toast";
-import { useRouter } from "next/navigation";
+import { useRouter, Link } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
+
 import { ApiResponse } from "@/types/ApiResponse";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -50,6 +50,7 @@ export default function SignIn() {
     },
   });
   const router = useRouter();
+  const locale = useLocale();
   const mutation = useMutation({
     mutationFn: signIn,
     onError: (error) => {
@@ -62,7 +63,7 @@ export default function SignIn() {
     },
     onSuccess: (data) => {
       toast.success(t("signin.message.success"));
-      router.push("/");
+      router.push(`/`);
     },
   });
   useEffect(() => {
@@ -118,7 +119,7 @@ export default function SignIn() {
           <p className='text-sm'>
             {t("generals.noAccount")}{" "}
             <Link
-              href='/sign-up'
+              href={`/sign-up`}
               className='hover:underline text-primary font-semibold'
             >
               {t("generals.signup")}

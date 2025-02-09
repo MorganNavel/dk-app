@@ -1,5 +1,4 @@
 import "@/globals.css";
-import { loadEnvConfig } from "@next/env";
 
 import favicon from "@public/favicon.ico";
 
@@ -11,12 +10,13 @@ export async function generateMetadata() {
     },
   };
 }
-
-export default async function LocaleLayout(
-  props: Readonly<{ children: React.ReactNode }>
-) {
+interface LocaleLayoutProps {
+  children: React.ReactNode;
+  params: { locale: string };
+}
+export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   return (
-    <html lang='en'>
+    <html lang={props.params.locale}>
       <head>
         <meta
           name='viewport'
