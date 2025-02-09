@@ -31,6 +31,7 @@ import {
   SortingState,
   useReactTable,
 } from "@tanstack/react-table";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 interface FilterConfig {
   columnId: string;
@@ -52,6 +53,7 @@ function DataTable<TData, TValue>({
   filtersConfig,
   isLoading,
 }: DataTableProps<TData, TValue>) {
+  const t = useTranslations();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filterableColumns, setFilterableColumns] = useState<
@@ -79,29 +81,44 @@ function DataTable<TData, TValue>({
       }
     });
   }, []);
+  useEffect(() => {
+    console.log(filter?.columnId);
+  }, [filter]);
   return (
     <div>
       {!!filterableColumns.length && (
         <div className='flex items-center justify-between space-x-4 p-4'>
           <Select
-            onValueChange={(value) =>
-              setFilter(filtersConfig?.[parseInt(value)] ?? null)
-            }
+            onValueChange={(value) => {
+              setColumnFilters([]);
+              if (value === "-1") {
+                setFilter(null);
+                return;
+              }
+              setFilter(filtersConfig?.[parseInt(value)] ?? null);
+            }}
           >
             <SelectTrigger className='w-[180px]'>
-              <SelectValue placeholder='Select a filter' />
+              <SelectValue
+                placeholder={t("lessons.data-table.filters.title")}
+              />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                <SelectLabel>Filters</SelectLabel>
-                <SelectItem value='None'>None</SelectItem>
+                <SelectLabel>
+                  {t("lessons.data-table.filters.label")}
+                </SelectLabel>
+                <SelectItem value='-1'>
+                  {" "}
+                  {t("lessons.data-table.filters.none")}
+                </SelectItem>
                 {filtersConfig?.map((filter, index) => {
                   const column = table.getColumn(filter.columnId);
                   if (!column) return null;
 
                   return (
                     <SelectItem key={column.id} value={index.toString()}>
-                      {column.id}
+                      {t(`lessons.data-table.columns.${column.id}`)}
                     </SelectItem>
                   );
                 })}

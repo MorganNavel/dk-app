@@ -26,29 +26,31 @@ const LessonActions = ({ lesson }: LessonActions) => {
         align='end'
         className='w-full bg-white shadow-lg border rounded-md p-1'
       >
-        <DropdownMenuLabel className='font-semibold'>Actions</DropdownMenuLabel>
+        <DropdownMenuLabel className='font-semibold'>
+          {t("lessons.data-table.actions.title")}
+        </DropdownMenuLabel>
         <DropdownMenuItem className='flex items-center gap-2 focus:bg-primary-light focus:text-primary cursor-pointer'>
           <RiSendPlaneFill className='h-4 w-4' />
-          Envoyer un rappel
+          {t("lessons.data-table.actions.notif")}
         </DropdownMenuItem>
 
         {lesson.status === "planned" && (
           <DropdownMenuItem className='flex items-center gap-2 font-semibold text-bg-amber-500 focus:bg-amber-500 focus:text-white cursor-pointer'>
             <MdSchedule className='h-4 w-4' />
-            Reprogrammer
+            {t("lessons.data-table.actions.reschedule")}
           </DropdownMenuItem>
         )}
         {lesson.status === "planned" && (
           <DropdownMenuItem className='flex items-center gap-2 text-destructive font-semibold focus:bg-destructive focus:text-destructive-foreground cursor-pointer'>
             <MdCancel className='h-4 w-4' />
-            Annuler le cours
+            {t("lessons.data-table.actions.cancel")}
           </DropdownMenuItem>
         )}
 
         {lesson.status === "cancelled" && (
           <DropdownMenuItem className='flex items-center gap-2 text-destructive font-semibold focus:bg-destructive focus:text-destructive-foreground cursor-pointer'>
             <MdDelete className='h-4 w-4' />
-            Supprimer définitivement
+            {t("lessons.data-table.actions.delete")}
           </DropdownMenuItem>
         )}
       </DropdownMenuContent>

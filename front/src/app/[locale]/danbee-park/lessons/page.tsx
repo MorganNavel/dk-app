@@ -53,23 +53,61 @@ export default function LessonsPage() {
                 value={value}
               >
                 <SelectTrigger>
-                  <SelectValue>Status</SelectValue>
+                  <SelectValue
+                    placeholder={t("lessons.data-table.columns.status")}
+                  />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Status</SelectLabel>
-                    <SelectItem value='cancelled'>Cancelled</SelectItem>
-                    <SelectItem value='planned'>Planned</SelectItem>
-                    <SelectItem value='in progress'>In Progress</SelectItem>
-                    <SelectItem value='done'>Done</SelectItem>
+                    <SelectLabel>
+                      {t("lessons.data-table.columns.status")}
+                    </SelectLabel>
+                    <SelectItem value='cancelled'>
+                      {t("lesson.cancelled")}
+                    </SelectItem>
+                    <SelectItem value='planned'>
+                      {t("lesson.planned")}
+                    </SelectItem>
+                    <SelectItem value='in progress'>
+                      {t("lesson.in-progress")}
+                    </SelectItem>
+                    <SelectItem value='done'>{t("lesson.done")}</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             ),
           },
 
-          { columnId: "teacher", render: () => <Input type='text' /> },
-          { columnId: "title", render: () => <Input type='text' /> },
+          {
+            columnId: "teacher",
+            render: (value, setFilterValue) => (
+              <Input
+                type='text'
+                placeholder={t("lessons.data-table.columns.teacher")}
+                value={value}
+                onChange={(e) =>
+                  setFilterValue == undefined
+                    ? null
+                    : setFilterValue(e.target.value)
+                }
+              />
+            ),
+          },
+          {
+            columnId: "title",
+            render: (value, setFilterValue) => (
+              <Input
+                type='text'
+                placeholder={t("lessons.data-table.columns.title")}
+                value={value}
+                onChange={(e) =>
+                  setFilterValue == undefined
+                    ? null
+                    : setFilterValue(e.target.value)
+                }
+              />
+            ),
+          },
         ]}
       />
     </div>

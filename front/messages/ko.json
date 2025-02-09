@@ -257,5 +257,35 @@
     "cannot_login": "Why can't I log in?",
     "account_suspended": "My account is suspended, what should I do?",
     "reset_password": "How to reset my password?"
+  },
+  "lesson": {
+    "planned": "Planned",
+    "done": "Done",
+    "cancelled": "Cancelled",
+    "in-progress": "In Progress"
+  },
+  "lessons": {
+    "data-table": {
+      "filters": {
+        "title": "Select a filter",
+        "label": "Filter",
+        "none": "None"
+      },
+      "columns": {
+        "title": "Title",
+        "duration": "Duration",
+        "schedule": "Schedule",
+        "teacher": "Teacher",
+        "participants": "Participants",
+        "status": "Status"
+      },
+      "actions": {
+        "title": "Actions",
+        "notif": "Send a reminder",
+        "cancel": "Cancel",
+        "reschedule": "Reschedule",
+        "delete": "Delete"
+      }
+    }
   }
 }

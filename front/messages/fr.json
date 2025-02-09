@@ -249,5 +249,35 @@
     "cannot_login": "Pourquoi je n'arrive pas à me connecter ?",
     "account_suspended": "Mon compte a été suspendu, que faire ?",
     "reset_password": "Comment réinitialiser mon mot de passe ?"
+  },
+  "lesson": {
+    "planned": "Programmé",
+    "done": "Terminé",
+    "cancelled": "Annulé",
+    "in-progress": "En cours"
+  },
+  "lessons": {
+    "data-table": {
+      "filters": {
+        "title": "Selectionner un filtre",
+        "label": "Filtre",
+        "none": "Aucun"
+      },
+      "columns": {
+        "title": "Titre",
+        "duration": "Durée",
+        "schedule": "Horaire",
+        "teacher": "Professeur",
+        "participants": "Participants",
+        "status": "Statut"
+      },
+      "actions": {
+        "title": "Actions",
+        "notif": "Envoyer un rappel",
+        "cancel": "Annuler",
+        "reschedule": "Reprogrammer",
+        "delete": "Supprimer définitivement"
+      }
+    }
   }
 }

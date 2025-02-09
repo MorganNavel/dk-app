@@ -27,7 +27,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
     },
     {
       accessorKey: "status",
-      header: () => "Status",
+      header: () => t("lessons.data-table.columns.status"),
       cell: ({ row }) => {
         let status = row.getValue("status") as string;
 
@@ -41,10 +41,10 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
         const statusText =
           {
-            planned: "Planned",
-            done: "Done",
-            cancelled: "Cancelled",
-            "in progress": "In Progress",
+            planned: t("lesson.planned"),
+            done: t("lesson.done"),
+            cancelled: t("lesson.cancelled"),
+            "in progress": t("lesson.in-progress"),
           }[status] ?? "N/A";
 
         return (
@@ -64,7 +64,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
     {
       accessorKey: "title",
-      header: () => "Title",
+      header: () => t("lessons.data-table.columns.title"),
       cell: ({ row }) => {
         const title = row.getValue("title") as string;
 
@@ -77,10 +77,11 @@ export function columns(t: any): ColumnDef<Lesson>[] {
           />
         );
       },
+      filterFn: "includesString",
     },
     {
       accessorKey: "nbParticipants",
-      header: () => "Participants",
+      header: () => t("lessons.data-table.columns.participants"),
       cell: ({ row }) => {
         const nbParticipants = row.getValue("nbParticipants") as string;
 
@@ -89,19 +90,32 @@ export function columns(t: any): ColumnDef<Lesson>[] {
     },
     {
       accessorKey: "teacher",
-      header: () => "Teacher",
+      header: () => t("lessons.data-table.columns.teacher"),
       cell: ({ row }) => {
         const teacher = row.getValue("teacher") as Teacher;
         if (!teacher) return null;
 
         return `${teacher.firstname} ${teacher.name}`;
       },
-      filterFn: "equalsString",
+      filterFn: (row, columnId, filterValue) => {
+        const teacher = row.getValue(columnId) as Teacher;
+        if (!teacher) return false;
+
+        return (
+          teacher.firstname.toLowerCase().includes(filterValue.toLowerCase()) ||
+          teacher.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+          `${teacher.firstname} ${teacher.name}`
+            .toLowerCase()
+            .includes(filterValue.toLowerCase())
+        );
+      },
     },
     {
       accessorKey: "startDate",
       header: ({ column }) => (
-        <SortableColumn column={column}>Start Date</SortableColumn>
+        <SortableColumn column={column}>
+          {t("lessons.data-table.columns.schedule")}
+        </SortableColumn>
       ),
 
       cell: ({ row }) => {
@@ -113,7 +127,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
     },
     {
       accessorKey: "duration",
-      header: () => "Duration",
+      header: () => t("lessons.data-table.columns.duration"),
       cell: ({ row }) => {
         const duration = row.getValue("duration") as string;
 
