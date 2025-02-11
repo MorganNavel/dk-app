@@ -51,7 +51,6 @@ export default function SchedulePage() {
     const locale = getBrowserLocale();
     moment.locale(locale);
     setLocalizer(momentLocalizer(moment));
-    console.log("currentLang", currentLang);
   }, [currentLang]);
 
   const {
@@ -77,7 +76,7 @@ export default function SchedulePage() {
   if (error) {
     toast.error("Erreur lors du chargement des données");
     return (
-      <div className='text-center py-4'>
+      <div className="text-center py-4">
         Erreur lors du chargement des données
       </div>
     );
@@ -86,23 +85,23 @@ export default function SchedulePage() {
     return <CalendarSkeleton />;
   }
   if (!lessons || lessons.length === 0) {
-    return <div className='text-center py-4'>Aucune leçon disponible.</div>;
+    return <div className="text-center py-4">Aucune leçon disponible.</div>;
   }
 
   return (
     <div>
       <Calendar
         culture={currentLang}
-        className='my-5 mx-5 bg-white rounded-lg shadow-md'
-        dayLayoutAlgorithm='no-overlap'
+        className="my-5 mx-5 bg-white rounded-lg shadow-md"
+        dayLayoutAlgorithm="no-overlap"
         localizer={localizer}
         events={formatLesson(lessons)}
-        startAccessor='start'
-        endAccessor='end'
+        startAccessor="start"
+        endAccessor="end"
         views={["week", "day"]}
         view={view}
         date={date}
-        defaultView='week'
+        defaultView="week"
         onView={onView}
         onNavigate={(date) => setDate(date)}
         popup={true}
@@ -123,11 +122,11 @@ export default function SchedulePage() {
 
 const CalendarSkeleton = () => {
   return (
-    <div className='my-5 mx-5 overflow-auto h-[80vh]'>
+    <div className="my-5 mx-5 overflow-auto h-[80vh]">
       {Array.from({ length: 24 }).map((_, hour) => (
-        <div key={hour} className='flex mb-2'>
+        <div key={hour} className="flex mb-2">
           {Array.from({ length: 7 }).map((_, day) => (
-            <Skeleton key={day} className='w-full h-10 mx-1' />
+            <Skeleton key={day} className="w-full h-10 mx-1" />
           ))}
         </div>
       ))}
