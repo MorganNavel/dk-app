@@ -4,7 +4,7 @@
     "passwordLength": "Password must be at least 6 characters long",
     "passwordMissmatch": "Password must be the same",
     "emailFormat": "Email format is invalid",
-    "captcha_required": "Captcha is required",
+    "captcha_required": "Confirm you're not a robot.",
     "signin": "Sign In",
     "signup": "Sign Up",
     "signout": "Sign Out",

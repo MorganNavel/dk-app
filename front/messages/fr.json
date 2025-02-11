@@ -4,7 +4,7 @@
     "passwordMissmatch": "Le mot de passe doit être le même",
     "emailFormat": "Le format de l'email est invalide",
     "passwordLength": "Le mot de passe doit contenir au moins 6 caractères",
-    "captcha_required": "Veuillez remplir le captcha pour soumettre le formulaire.",
+    "captcha_required": "Confirmez que vous n'êtes pas un robot.",
     "signin": "Se connecter",
     "signup": "S'inscrire",
     "signout": "Se déconnecter",

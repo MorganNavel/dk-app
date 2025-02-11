@@ -17,9 +17,9 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { Captcha } from "@/components/captcha/Captcha";
 import { ControlledTextarea } from "@/components/fields/ControlledTextarea";
 import { Skeleton } from "@/components/ui/skeleton";
+import { ControlledCaptchat } from "@/components/captcha/ControlledCaptcha";
 
 interface ContactFields {
   email: string;
@@ -112,15 +112,15 @@ export default function Contact() {
   }
 
   return (
-    <div className='flex items-center justify-center min-h-screen p-4'>
-      <Card className='w-full max-w-lg shadow-lg rounded-2xl'>
-        <CardHeader className='text-center py-6'>
-          <h1 className='text-2xl font-bold text-primary'>
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <Card className="w-full max-w-lg shadow-lg rounded-2xl">
+        <CardHeader className="text-center py-6">
+          <h1 className="text-2xl font-bold text-primary">
             {t("contact.contact_us")}
           </h1>
         </CardHeader>
         <Separator />
-        <CardContent className='p-6'>
+        <CardContent className="p-6">
           <Form {...methods}>
             <form onSubmit={methods.handleSubmit(onSubmit)}>
               <ControlledInput
@@ -132,11 +132,11 @@ export default function Contact() {
               />
               <ControlledSelect
                 control={methods.control}
-                name='subject'
+                name="subject"
                 placeholder={t("contact.subject")}
                 label={t("contact.subject")}
                 options={getSubject()}
-                className='mb-4'
+                className="mb-4"
                 required
               />
               {methods.watch("subject") !== "-1" &&
@@ -144,33 +144,31 @@ export default function Contact() {
                   <ControlledSelect
                     control={methods.control}
                     label={t("contact.question")}
-                    name='question'
+                    name="question"
                     placeholder={t("contact.question")}
                     options={getQuestion(methods.watch("subject"))}
-                    className='mb-4'
+                    className="mb-4"
                     required
                   />
                 )}
               <ControlledTextarea
                 control={methods.control}
-                name='description'
+                name="description"
                 label={t("contact.description")}
                 placeholder={t("contact.describe_issue")}
-                className='mb-4'
+                className="mb-4"
                 required
               />
-              <div className='flex justify-center my-5'>
-                <Captcha
-                  onChange={(token) => methods.setValue("token", token ?? "")}
-                />
+              <div className="flex justify-center my-5">
+                <ControlledCaptchat name="token" control={methods.control} />
               </div>
-              <Button variant={"default"} type='submit' className='w-full'>
+              <Button variant={"default"} type="submit" className="w-full">
                 {t("generals.submit")}
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className='text-center text-sm text-gray-500 py-4 border-t border-gray-200'>
+        <CardFooter className="text-center text-sm text-gray-500 py-4 border-t border-gray-200">
           {t("contact.we_will_respond")}
         </CardFooter>
       </Card>
@@ -179,31 +177,31 @@ export default function Contact() {
 }
 const SkeletonContact = () => {
   return (
-    <div className='flex items-center justify-center min-h-screen p-6 '>
-      <Card className='lg:max-w-md max-w-sm w-full p-4'>
-        <CardHeader className='lg:max-w-md max-w-sm w-full items-center '>
-          <Skeleton className='h-7 w-1/2'></Skeleton>
+    <div className="flex items-center justify-center min-h-screen p-6 ">
+      <Card className="lg:max-w-md max-w-sm w-full p-4">
+        <CardHeader className="lg:max-w-md max-w-sm w-full items-center ">
+          <Skeleton className="h-7 w-1/2"></Skeleton>
         </CardHeader>
         <Separator />
 
-        <CardContent className='space-y-3'>
+        <CardContent className="space-y-3">
           {[...Array(2)].map((_, i) => (
-            <div key={i} className='mb-4'>
-              <Skeleton className='h-3 w-48 mb-2' />
-              <Skeleton className='h-8 w-full ' />
+            <div key={i} className="mb-4">
+              <Skeleton className="h-3 w-48 mb-2" />
+              <Skeleton className="h-8 w-full " />
             </div>
           ))}
-          <div className='mb-6'>
-            <Skeleton className='h-3 w-48 mb-2' />
-            <Skeleton className='h-15 w-full ' />
+          <div className="mb-6">
+            <Skeleton className="h-3 w-48 mb-2" />
+            <Skeleton className="h-15 w-full " />
           </div>
-          <div className=' flex justify-center'>
-            <Skeleton className='h-16  w-4/5 my-5 ' />
+          <div className=" flex justify-center">
+            <Skeleton className="h-16  w-4/5 my-5 " />
           </div>
 
-          <Skeleton className='h-9  w-full mt-9 ' />
+          <Skeleton className="h-9  w-full mt-9 " />
         </CardContent>
-        <Skeleton className='h-3 w-2/3 ' />
+        <Skeleton className="h-3 w-2/3 " />
       </Card>
     </div>
   );
