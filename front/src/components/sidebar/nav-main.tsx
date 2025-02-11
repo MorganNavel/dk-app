@@ -40,7 +40,7 @@ export function NavMain({
 }>) {
   const router = useRouter();
 
-  const { open } = useSidebar();
+  const { open, isMobile, setOpenMobile } = useSidebar();
   const t = useTranslations();
 
   return (
@@ -51,7 +51,10 @@ export function NavMain({
           if (!item.items) {
             return (
               <SidebarMenuItem key={item.title}>
-                <Link href={`/${item.url}`}>
+                <Link
+                  href={`/${item.url}`}
+                  onClick={() => isMobile && setOpenMobile(false)}
+                >
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <item.icon />}
                     <span>{t(item.title)}</span>
@@ -66,7 +69,7 @@ export function NavMain({
               key={item.title}
               asChild
               defaultOpen={item.isActive}
-              className='group/collapsible'
+              className="group/collapsible"
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
@@ -80,7 +83,7 @@ export function NavMain({
                   >
                     {item.icon && <item.icon />}
                     <span>{t(item.title)}</span>
-                    <ChevronRightIcon className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
+                    <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
@@ -88,7 +91,11 @@ export function NavMain({
                     {item.items?.map((subItem) => (
                       <SidebarMenuSubItem key={subItem.title}>
                         <SidebarMenuSubButton asChild>
-                          <Link href={`/${subItem.url}`} passHref>
+                          <Link
+                            href={`/${subItem.url}`}
+                            passHref
+                            onClick={() => isMobile && setOpenMobile(false)}
+                          >
                             <span>{t(subItem.title)}</span>
                           </Link>
                         </SidebarMenuSubButton>

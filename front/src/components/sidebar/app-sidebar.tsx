@@ -10,6 +10,7 @@ import {
   SidebarHeader,
   SidebarMenuButton,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { NavMain } from "./nav-main";
@@ -70,10 +71,16 @@ const data: {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const locale = useLocale();
+  const { isMobile, setOpenMobile } = useSidebar();
+
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <Link href={`/`} locale={locale}>
+        <Link
+          href={`/`}
+          locale={locale}
+          onClick={() => isMobile && setOpenMobile(false)}
+        >
           <SidebarMenuButton
             size="lg"
             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground "
