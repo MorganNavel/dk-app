@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 
-import "./ContinuousCaroussel.css";
+import "./Caroussel.css";
 import { ReactNode } from "react";
 
 interface ConfigItem {
@@ -23,7 +23,7 @@ export const ContinuousCaroussel = ({ config, className }: CarousselProps) => {
         slidesPerView={3}
         loop
         spaceBetween={0}
-        direction='horizontal'
+        direction="horizontal"
         allowTouchMove={false}
         freeMode
         speed={9000}
@@ -31,7 +31,7 @@ export const ContinuousCaroussel = ({ config, className }: CarousselProps) => {
           delay: 0,
           disableOnInteraction: false,
         }}
-        className='font-Poppins'
+        className="font-Poppins"
         breakpoints={{
           0: {
             slidesPerView: 1,
