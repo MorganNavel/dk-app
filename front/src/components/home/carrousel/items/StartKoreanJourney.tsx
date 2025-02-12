@@ -2,12 +2,11 @@ import { useTranslations } from "next-intl";
 import { ItemLayout } from "./ItemLayout";
 import rocket from "@public/assets/img/rocket.png";
 import { BadgeCheck, Leaf, Star } from "lucide-react";
-interface NewHereProps {
-  onClick: () => void;
-}
+import { useRouter } from "@/i18n/routing";
 
-export const StartKoreanJourneyComponent = ({ onClick }: NewHereProps) => {
+export const StartKoreanJourneyComponent = () => {
   const t = useTranslations("home.intro.slider.startKoreanJourney");
+  const router = useRouter();
   return (
     <ItemLayout
       title={t("title")}
@@ -15,9 +14,9 @@ export const StartKoreanJourneyComponent = ({ onClick }: NewHereProps) => {
       buttonText={t("buttonText")}
       image={rocket}
       imageAlt={"rocket"}
-      onClick={onClick}
       width={448}
       height={448}
+      onClick={() => router.push("/sign-up")}
       tags={
         <>
           <div className="flex items-center gap-2 text-green-600 font-medium">

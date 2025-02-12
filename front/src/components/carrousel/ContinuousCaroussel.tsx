@@ -17,7 +17,7 @@ interface CarousselProps {
 
 export const ContinuousCaroussel = ({ config, className }: CarousselProps) => {
   return (
-    <div className={className}>
+    <div className={className} id="reviews-caroussel">
       <Swiper
         modules={[Autoplay]}
         slidesPerView={3}
