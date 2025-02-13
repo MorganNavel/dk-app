@@ -39,6 +39,7 @@ export default function LessonsPage() {
   return (
     <div className='p-15 h-full'>
       <DataTable<Lesson, any>
+        name='lessons'
         isLoading={isLoading}
         data={isLoading ? [] : lessons ?? []}
         columns={cols}

@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import LessonActions from "./LessonsActions";
 import EditableCell from "@/components/reusable/table/EditableCell";
 import { SortableColumn } from "@/components/reusable/table/SortableColumn";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const statusColors = {
   planned: "bg-blue-100 text-blue-600",
@@ -16,7 +17,29 @@ const statusColors = {
 export function columns(t: any): ColumnDef<Lesson>[] {
   return [
     {
-      accessorKey: "idLesson",
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label='Select all'
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label='Select row'
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "id",
       header: ({ column }) => (
         <SortableColumn column={column}>#ID</SortableColumn>
       ),
@@ -81,7 +104,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
     },
     {
       accessorKey: "nbParticipants",
-      header: () => t("lessons.data-table.columns.participants"),
+      header: () => t("lessons.data-table.columns.nbParticipants"),
       cell: ({ row }) => {
         const nbParticipants = row.getValue("nbParticipants") as string;
 
@@ -114,7 +137,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
       accessorKey: "startDate",
       header: ({ column }) => (
         <SortableColumn column={column}>
-          {t("lessons.data-table.columns.schedule")}
+          {t("lessons.data-table.columns.startDate")}
         </SortableColumn>
       ),
 
