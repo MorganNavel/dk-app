@@ -1,6 +1,9 @@
 {
   "danbee-park": "Danbee Park",
   "generals": {
+    "view": "View",
+    "toggle-cols": "Toggle columns",
+    "no-data": "No data",
     "passwordLength": "Password must be at least 6 characters long",
     "passwordMissmatch": "Password must be the same",
     "emailFormat": "Email format is invalid",
@@ -267,9 +270,9 @@
       "columns": {
         "title": "Title",
         "duration": "Duration",
-        "schedule": "Schedule",
+        "startDate": "Schedule",
         "teacher": "Teacher",
-        "participants": "Participants",
+        "nbParticipants": "Participants",
         "status": "Status"
       },
       "actions": {
