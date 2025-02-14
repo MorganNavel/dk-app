@@ -65,7 +65,7 @@ export const ControlledSelect = <T extends FieldValues>({
         <FormItem className={className}>
           <FormLabel>
             {label}
-            {required && <span className='text-red-500'> *</span>}
+            {required && <span className="text-red-500"> *</span>}
           </FormLabel>
           <FormControl>
             <>
@@ -73,7 +73,6 @@ export const ControlledSelect = <T extends FieldValues>({
                 {...props}
                 value={field.value}
                 onValueChange={(value) => {
-                  console.log(value);
                   field.onChange(value);
                   onChange && onChange(value);
                 }}
@@ -81,7 +80,7 @@ export const ControlledSelect = <T extends FieldValues>({
                 aria-describedby={`${name}-error`}
                 aria-label={name}
               >
-                <SelectTrigger className='w-full'>
+                <SelectTrigger className="w-full">
                   <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
                 <SelectContent>
@@ -99,7 +98,7 @@ export const ControlledSelect = <T extends FieldValues>({
               {fieldState.error && (
                 <span
                   id={`${name}-error`}
-                  className='text-red-500 text-xs mt-1'
+                  className="text-red-500 text-xs mt-1"
                 >
                   {fieldState.error.message}
                 </span>

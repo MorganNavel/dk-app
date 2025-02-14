@@ -6,7 +6,7 @@
     "no-data": "No data",
     "emailFormat": "Email format is invalid",
     "passwordLength": "Password must be at least 6 characters long",
-    "captcha_required": "Captcha is required",
+    "captcha_required": "Confirm you're not a robot.",
     "signin": "Sign In",
     "signup": "Sign Up",
     "signout": "Sign Out",

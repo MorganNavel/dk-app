@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Form } from "@/components/ui/form";
+import { Form, FormField, FormItem, FormControl } from "@/components/ui/form";
 import LNGS from "@/types/languages";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { ControlledInput } from "@/components/fields/ControlledInput";
@@ -20,10 +20,10 @@ import { SignUpScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorToasts } from "@/utils/toast";
 import { ApiResponse } from "@/types/ApiResponse";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Captcha } from "@/components/captcha/Captcha";
 import { useRouter } from "@/i18n/routing";
+import { ControlledCaptchat } from "@/components/captcha/ControlledCaptcha";
 
 interface SignUpFields {
   email: string;
@@ -75,15 +75,12 @@ export default function SignUp() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  useEffect(() => {
-    console.log(methods.formState.errors);
-  }, [methods.formState.errors]);
+
   if (!isMounted) {
     return <SkeletonSignUp />;
   }
 
   const onSubmit: SubmitHandler<FormProps> = async (data: FormProps) => {
-    console.log(data);
     const token = data.token;
     if (!token) {
       toast.error(t("generals.recaptcha"));
@@ -94,16 +91,16 @@ export default function SignUp() {
   };
 
   return (
-    <div className='flex items-center justify-center min-h-screen p-4 '>
-      <Card className='lg:max-w-md max-w-sm w-full'>
-        <CardHeader className='text-center text-2xl font-bold text-primary'>
+    <div className="flex items-center justify-center min-h-screen p-4 ">
+      <Card className="lg:max-w-md max-w-sm w-full">
+        <CardHeader className="text-center text-2xl font-bold text-primary">
           {t("generals.signup")}
         </CardHeader>
         <CardContent>
           <Form {...methods}>
             <form
               onSubmit={methods.handleSubmit(onSubmit)}
-              className=' px-4 py-6 rounded-lg '
+              className=" px-4 py-6 rounded-lg "
             >
               <ControlledInput
                 label={t("generals.user-profile.label.email")}
@@ -131,7 +128,7 @@ export default function SignUp() {
                 name={"credentials.password"}
                 placeholder={t("generals.user-profile.placeholder.password")}
                 control={methods.control}
-                type='password'
+                type="password"
                 required
               />
               <ControlledInput
@@ -141,40 +138,38 @@ export default function SignUp() {
                   "generals.user-profile.placeholder.confirmPassword"
                 )}
                 control={methods.control}
-                type='password'
+                type="password"
                 required
               />
 
               <ControlledMultiSelect
                 control={methods.control}
-                name='credentials.languages'
+                name="credentials.languages"
                 options={LNGS}
                 label={t("generals.user-profile.label.lngs")}
                 placeholder={t("generals.user-profile.placeholder.lngs")}
                 required
               />
-              <div className='flex justify-center my-5'>
-                <Captcha
-                  onChange={(token) => methods.setValue("token", token ?? "")}
-                />
+              <div className="flex justify-center my-5">
+                <ControlledCaptchat name="token" control={methods.control} />
               </div>
 
               <Button
                 variant={"round-outline"}
                 type={"submit"}
-                className='w-full'
+                className="w-full"
               >
                 {t("generals.submit")}
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className='justify-center'>
-          <p className='text-sm'>
+        <CardFooter className="justify-center">
+          <p className="text-sm">
             {t("generals.alreadyAccount")}{" "}
             <Link
               href={`sign-in`}
-              className='hover:underline text-primary font-semibold'
+              className="hover:underline text-primary font-semibold"
             >
               {t("generals.signin")}
             </Link>
@@ -187,25 +182,25 @@ export default function SignUp() {
 
 const SkeletonSignUp = () => {
   return (
-    <div className='flex items-center justify-center min-h-screen p-6 '>
-      <Card className='lg:max-w-md max-w-sm w-full p-4'>
-        <CardHeader className='lg:max-w-md max-w-sm w-full items-center '>
-          <Skeleton className='h-7 w-1/2' />
+    <div className="flex items-center justify-center min-h-screen p-6 ">
+      <Card className="lg:max-w-md max-w-sm w-full p-4">
+        <CardHeader className="lg:max-w-md max-w-sm w-full items-center ">
+          <Skeleton className="h-7 w-1/2" />
         </CardHeader>
-        <CardContent className='space-y-3'>
+        <CardContent className="space-y-3">
           {[...Array(6)].map((_, i) => (
-            <div key={i} className='mb-6'>
-              <Skeleton className='h-3 w-48 mb-2' />
-              <Skeleton className='h-8 w-full ' />
+            <div key={i} className="mb-6">
+              <Skeleton className="h-3 w-48 mb-2" />
+              <Skeleton className="h-8 w-full " />
             </div>
           ))}
-          <div className=' flex justify-center'>
-            <Skeleton className='h-16  w-4/5 my-5 ' />
+          <div className=" flex justify-center">
+            <Skeleton className="h-16  w-4/5 my-5 " />
           </div>
-          <Skeleton className='h-9 rounded-3xl w-full mt-9 ' />
+          <Skeleton className="h-9 rounded-3xl w-full mt-9 " />
         </CardContent>
-        <div className=' flex justify-center'>
-          <Skeleton className='h-3 w-1/2 ' />
+        <div className=" flex justify-center">
+          <Skeleton className="h-3 w-1/2 " />
         </div>
       </Card>
     </div>

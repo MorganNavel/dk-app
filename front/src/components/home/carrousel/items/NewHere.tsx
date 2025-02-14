@@ -2,12 +2,10 @@ import questionMark from "@public/assets/img/question-mark.png";
 import { ItemLayout } from "./ItemLayout";
 import { useTranslations } from "next-intl";
 import { BadgeCheck, Leaf, Star } from "lucide-react";
-interface NewHereProps {
-  onClick: () => void;
-}
 
-export const NewHereComponent = ({ onClick }: NewHereProps) => {
+export const NewHereComponent = () => {
   const t = useTranslations("home.intro.slider.newHere");
+
   return (
     <ItemLayout
       title={t("title")}
@@ -15,9 +13,9 @@ export const NewHereComponent = ({ onClick }: NewHereProps) => {
       buttonText={t("buttonText")}
       image={questionMark}
       imageAlt={"question-mark"}
-      onClick={onClick}
       width={320}
       height={320}
+      onClick={() => console.log("new here")}
       tags={
         <>
           <div className="flex items-center gap-2 text-green-600 font-medium">

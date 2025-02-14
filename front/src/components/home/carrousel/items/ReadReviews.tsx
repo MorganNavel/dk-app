@@ -2,12 +2,15 @@ import graph from "@public/assets/img/graph.png";
 import { ItemLayout } from "./ItemLayout";
 import { useTranslations } from "next-intl";
 import { BadgeCheck, Leaf, Star } from "lucide-react";
-interface ReadReviewsProps {
-  onClick: () => void;
-}
 
-export const ReadReviewsComponent = ({ onClick }: ReadReviewsProps) => {
+export const ReadReviewsComponent = () => {
   const t = useTranslations();
+  const scrollToReviews = () => {
+    const element = document.getElementById("reviews-caroussel");
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   return (
     <ItemLayout
       title={t("home.intro.slider.readRewiews.title")}
@@ -15,9 +18,9 @@ export const ReadReviewsComponent = ({ onClick }: ReadReviewsProps) => {
       buttonText={t("generals.readReviews")}
       image={graph}
       imageAlt={"graph"}
-      onClick={onClick}
       width={346}
       height={346}
+      onClick={scrollToReviews}
       tags={
         <>
           <div className="flex items-center gap-2 text-green-600 font-medium">

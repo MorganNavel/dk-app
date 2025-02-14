@@ -43,7 +43,6 @@ export const Caroussel = ({ config, className, type }: CarousselProps) => {
         pagination={{
           type,
           renderProgressbar: (progressbarFillClass) => {
-            console.log(progressbarFillClass);
             return '<span class="' + progressbarFillClass + '"></span>';
           },
           renderFraction: (currentClass, totalClass) => {
@@ -67,7 +66,7 @@ export const Caroussel = ({ config, className, type }: CarousselProps) => {
             "--swiper-navigation-size": "25px",
           } as React.CSSProperties
         }
-        className='font-Poppins bg-background'
+        className="font-Poppins bg-background"
       >
         {config.map((item, index) => (
           <SwiperSlide key={index} className={`mt-12 ${item.className}`}>

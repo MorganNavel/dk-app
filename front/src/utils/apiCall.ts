@@ -17,6 +17,7 @@ export async function apiCall<T>(
   if (method !== "GET" && body) {
     config.body = JSON.stringify(body);
   }
+  if(process.env.NODE_ENV == "production") throw new Error("Not implemented"); 
 
   const urlBase =
     process.env.NODE_ENV == "development"

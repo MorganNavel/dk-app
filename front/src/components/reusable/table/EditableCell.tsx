@@ -19,7 +19,6 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
     setText(initialText);
   };
   const handleSaveClick = () => {
-    console.log("handleSaveClick");
     setIsEditing(false);
     onSave(text);
   };
@@ -32,7 +31,7 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
 
   return (
     <td>
-      <div className='flex items-center gap-2'>
+      <div className="flex items-center gap-2">
         {isEditing ? (
           <>
             <Input
@@ -43,7 +42,7 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
 
             <FaCheck
               onClick={() => handleSaveClick()}
-              className='cursor-pointer text-success'
+              className="cursor-pointer text-success"
             />
           </>
         ) : (
@@ -51,7 +50,7 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
             <span>{text}</span>
             <FaEdit
               onClick={handleEditClick}
-              className="className='cursor-pointer text-orange-400"
+              className="cursor-pointer text-orange-400"
             />
           </>
         )}

@@ -7,19 +7,13 @@ import { StartKoreanJourneyComponent } from "./items/StartKoreanJourney";
 export const FirstCaroussel = () => {
   const config = [
     {
-      component: (
-        <NewHereComponent onClick={() => console.log("start questionnaire")} />
-      ),
+      component: <StartKoreanJourneyComponent />,
     },
     {
-      component: (
-        <StartKoreanJourneyComponent
-          onClick={() => console.log("learn more")}
-        />
-      ),
+      component: <NewHereComponent />,
     },
     {
-      component: <ReadReviewsComponent onClick={() => console.log("read")} />,
+      component: <ReadReviewsComponent />,
     },
   ];
 

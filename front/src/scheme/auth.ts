@@ -38,9 +38,9 @@ export const SignUpScheme = (t: Function) => {
     token: z
       .string()
       .trim()
-      .min(1, { message: t("generals.requiredField") })
+      .min(1, { message: t("generals.captcha_required") })
       .refine((val) => val.trim().length > 0, {
-        message: t("generals.requiredField"),
+        message: t("generals.captcha_required"),
       }),
   });
 };
@@ -54,9 +54,9 @@ export const SignInScheme = (t: Function) => {
     token: z
       .string()
       .trim()
-      .min(1, { message: t("generals.requiredField") })
+      .min(1, { message: t("generals.captcha_required") })
       .refine((val) => val.trim().length > 0, {
-        message: t("generals.requiredField"),
+        message: t("generals.captcha_required"),
       }),
   });
 };

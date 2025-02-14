@@ -16,7 +16,7 @@ WORKDIR /app
 
 COPY --from=builder /app ./
 
-RUN pnpm install --prod
+RUN npm install -g pnpm && pnpm install --prod
 
 EXPOSE 3000
 
