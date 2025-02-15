@@ -1,14 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { Skeleton } from "@/components/ui/skeleton";
 import {
@@ -30,9 +20,14 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
-import { useEffect, useState } from "react";
-interface FilterConfig {
+import { useTranslations } from "next-intl";
+import { useState } from "react";
+import { DataTablePagination } from "./Pagination";
+import { DataTableViewOptions } from "./ColumnView";
+import { RowFiltering } from "./RowFiltering";
+export interface FilterConfig {
   columnId: string;
   render: (
     value: string,
@@ -45,19 +40,22 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   filtersConfig?: FilterConfig[];
   isLoading: boolean;
+  name: String;
 }
 function DataTable<TData, TValue>({
   data,
   columns,
   filtersConfig,
   isLoading,
-}: DataTableProps<TData, TValue>) {
+  name,
+}: Readonly<DataTableProps<TData, TValue>>) {
+  const t = useTranslations();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [filterableColumns, setFilterableColumns] = useState<
-    ColumnDef<TData, TValue>[]
-  >([]);
-  const [filter, setFilter] = useState<FilterConfig | null>(null);
+
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [rowSelection, setRowSelection] = useState({});
+
   const table = useReactTable({
     columns,
     data,
@@ -66,55 +64,30 @@ function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
     onSortingChange: setSorting,
+    onRowSelectionChange: setRowSelection,
+
     state: {
       sorting,
       columnFilters,
+      columnVisibility,
+      rowSelection,
     },
   });
-  useEffect(() => {
-    columns.forEach((column) => {
-      if (column.filterFn) {
-        setFilterableColumns((prev) => [...prev, column]);
-      }
-    });
-  }, []);
+
   return (
     <div>
-      {!!filterableColumns.length && (
-        <div className='flex items-center justify-between space-x-4 p-4'>
-          <Select
-            onValueChange={(value) =>
-              setFilter(filtersConfig?.[parseInt(value)] ?? null)
-            }
-          >
-            <SelectTrigger className='w-[180px]'>
-              <SelectValue placeholder='Select a filter' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Filters</SelectLabel>
-                <SelectItem value='None'>None</SelectItem>
-                {filtersConfig?.map((filter, index) => {
-                  const column = table.getColumn(filter.columnId);
-                  if (!column) return null;
-
-                  return (
-                    <SelectItem key={column.id} value={index.toString()}>
-                      {column.id}
-                    </SelectItem>
-                  );
-                })}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          {filter?.render(
-            (table.getColumn(filter.columnId)?.getFilterValue() as string) ??
-              "",
-            table.getColumn(filter.columnId)?.setFilterValue
-          )}
-        </div>
-      )}
+      <div className='flex items-center  space-x-4 p-4'>
+        <DataTableViewOptions table={table} name={name} />
+        <RowFiltering
+          table={table}
+          name={name}
+          columns={columns}
+          filtersConfig={filtersConfig}
+          setColumnFilters={setColumnFilters}
+        />
+      </div>
 
       <div className='rounded-md border'>
         <Table>
@@ -151,7 +124,7 @@ function DataTable<TData, TValue>({
             {!isLoading && !table.getRowModel().rows?.length && (
               <TableRow key='no-data'>
                 <TableCell colSpan={columns.length} className='text-center'>
-                  No data
+                  {t(`generals.no-data`)}
                 </TableCell>
               </TableRow>
             )}
@@ -160,7 +133,6 @@ function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className='hover:bg-primary-light'
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
@@ -175,24 +147,7 @@ function DataTable<TData, TValue>({
           </TableBody>
         </Table>
       </div>
-      <div className='flex items-center justify-center space-x-2 py-4'>
-        <Button
-          variant='outline'
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          className='hover:bg-primary hover:text-white'
-        >
-          Previous
-        </Button>
-        <Button
-          variant='outline'
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          className='hover:bg-primary hover:text-white'
-        >
-          Next
-        </Button>
-      </div>
+      <DataTablePagination table={table} />
     </div>
   );
 }

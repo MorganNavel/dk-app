@@ -6,6 +6,7 @@ import { ColumnDef } from "@tanstack/react-table";
 import LessonActions from "./LessonsActions";
 import EditableCell from "@/components/reusable/table/EditableCell";
 import { SortableColumn } from "@/components/reusable/table/SortableColumn";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const statusColors = {
   planned: "bg-blue-100 text-blue-600",
@@ -16,7 +17,29 @@ const statusColors = {
 export function columns(t: any): ColumnDef<Lesson>[] {
   return [
     {
-      accessorKey: "idLesson",
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label='Select all'
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => row.toggleSelected(!!value)}
+          aria-label='Select row'
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
+    {
+      accessorKey: "id",
       header: ({ column }) => (
         <SortableColumn column={column}>#ID</SortableColumn>
       ),
@@ -24,10 +47,11 @@ export function columns(t: any): ColumnDef<Lesson>[] {
         return row.id;
       },
       sortingFn: "alphanumeric",
+      enableHiding: false,
     },
     {
       accessorKey: "status",
-      header: () => "Status",
+      header: () => t("lessons.data-table.columns.status"),
       cell: ({ row }) => {
         let status = row.getValue("status") as string;
 
@@ -41,10 +65,10 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
         const statusText =
           {
-            planned: "Planned",
-            done: "Done",
-            cancelled: "Cancelled",
-            "in progress": "In Progress",
+            planned: t("lesson.planned"),
+            done: t("lesson.done"),
+            cancelled: t("lesson.cancelled"),
+            "in progress": t("lesson.in-progress"),
           }[status] ?? "N/A";
 
         return (
@@ -60,11 +84,12 @@ export function columns(t: any): ColumnDef<Lesson>[] {
         );
       },
       filterFn: "equalsString",
+      enableSorting: false,
     },
 
     {
       accessorKey: "title",
-      header: () => "Title",
+      header: () => t("lessons.data-table.columns.title"),
       cell: ({ row }) => {
         const title = row.getValue("title") as string;
 
@@ -77,31 +102,49 @@ export function columns(t: any): ColumnDef<Lesson>[] {
           />
         );
       },
+      filterFn: "includesString",
+      enableSorting: false,
     },
     {
       accessorKey: "nbParticipants",
-      header: () => "Participants",
+      header: () => t("lessons.data-table.columns.nbParticipants"),
       cell: ({ row }) => {
         const nbParticipants = row.getValue("nbParticipants") as string;
 
         return `${nbParticipants}/2`;
       },
+      enableSorting: false,
+      enableColumnFilter: false,
     },
     {
       accessorKey: "teacher",
-      header: () => "Teacher",
+      header: () => t("lessons.data-table.columns.teacher"),
       cell: ({ row }) => {
         const teacher = row.getValue("teacher") as Teacher;
         if (!teacher) return null;
 
         return `${teacher.firstname} ${teacher.name}`;
       },
-      filterFn: "equalsString",
+      enableSorting: false,
+      filterFn: (row, columnId, filterValue) => {
+        const teacher = row.getValue(columnId) as Teacher;
+        if (!teacher) return false;
+
+        return (
+          teacher.firstname.toLowerCase().includes(filterValue.toLowerCase()) ||
+          teacher.name.toLowerCase().includes(filterValue.toLowerCase()) ||
+          `${teacher.firstname} ${teacher.name}`
+            .toLowerCase()
+            .includes(filterValue.toLowerCase())
+        );
+      },
     },
     {
       accessorKey: "startDate",
       header: ({ column }) => (
-        <SortableColumn column={column}>Start Date</SortableColumn>
+        <SortableColumn column={column}>
+          {t("lessons.data-table.columns.startDate")}
+        </SortableColumn>
       ),
 
       cell: ({ row }) => {
@@ -110,15 +153,17 @@ export function columns(t: any): ColumnDef<Lesson>[] {
         return tsToLocaleDate(startDate, true);
       },
       sortingFn: "datetime",
+      enableColumnFilter: false,
     },
     {
       accessorKey: "duration",
-      header: () => "Duration",
+      header: () => t("lessons.data-table.columns.duration"),
       cell: ({ row }) => {
         const duration = row.getValue("duration") as string;
 
         return `${duration} min`;
       },
+      enableColumnFilter: false,
     },
     {
       id: "actions",
@@ -127,6 +172,8 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
         return <LessonActions lesson={lesson} />;
       },
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 }

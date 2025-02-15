@@ -1,6 +1,9 @@
 {
   "danbee-park": "Danbee Park",
   "generals": {
+    "view": "Voir",
+    "toggle-cols": "Afficher les colonnes",
+    "no-data": "Aucune donnée",
     "passwordMissmatch": "Le mot de passe doit être le même",
     "emailFormat": "Le format de l'email est invalide",
     "passwordLength": "Le mot de passe doit contenir au moins 6 caractères",
@@ -249,5 +252,46 @@
     "cannot_login": "Pourquoi je n'arrive pas à me connecter ?",
     "account_suspended": "Mon compte a été suspendu, que faire ?",
     "reset_password": "Comment réinitialiser mon mot de passe ?"
+  },
+  "lesson": {
+    "planned": "Programmé",
+    "done": "Terminé",
+    "cancelled": "Annulé",
+    "in-progress": "En cours"
+  },
+  "data-table": {
+    "pagination": {
+      "page-of": "Page {current} sur {total}",
+      "rows-per-page": "Lignes par page",
+      "rows-selected": "{selected} sur {total} ligne{total, plural, one {} other {s}} sélectionnée{selected, plural, one {} other {s}}.",
+      "next": "Aller à la page suivante",
+      "prev": "Aller à la page précédente",
+      "first": "Aller à la première page",
+      "last": "Aller à la dernière page"
+    }
+  },
+  "lessons": {
+    "data-table": {
+      "filters": {
+        "title": "Selectionner un filtre",
+        "label": "Filtre",
+        "none": "Aucun"
+      },
+      "columns": {
+        "title": "Titre",
+        "duration": "Durée",
+        "startDate": "Horaire",
+        "teacher": "Professeur",
+        "nbParticipants": "Participants",
+        "status": "Statut"
+      },
+      "actions": {
+        "title": "Actions",
+        "notif": "Envoyer un rappel",
+        "cancel": "Annuler",
+        "reschedule": "Reprogrammer",
+        "delete": "Supprimer définitivement"
+      }
+    }
   }
 }
