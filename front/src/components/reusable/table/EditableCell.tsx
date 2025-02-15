@@ -32,37 +32,39 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
   };
 
   return (
-    <td>
-      <div className='flex items-center gap-2'>
-        {isEditing ? (
-          <>
-            <Input
-              onChange={(e) => setText(e.target.value)}
-              onBlur={handleBlur}
-              onKeyDown={handleKeyDown}
-              value={text}
-              autoFocus
-            />
+    <div className='flex items-center gap-2'>
+      {isEditing ? (
+        <>
+          <Input
+            onChange={(e) => setText(e.target.value)}
+            onBlur={handleBlur}
+            onKeyDown={handleKeyDown}
+            value={text}
+            autoFocus
+          />
 
-            <FaCheck
-              onClick={handleSave}
-              className='cursor-pointer text-success'
-            />
-          </>
-        ) : (
-          <span
-            className='flex gap-2 items-center group'
+          <FaCheck
+            onClick={handleSave}
+            className='cursor-pointer text-success'
+          />
+        </>
+      ) : (
+        <button
+          className='flex gap-2 items-center group'
+          onClick={handleEditClick}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") handleEditClick();
+          }}
+          tabIndex={0}
+        >
+          {text}
+          <FaEdit
             onClick={handleEditClick}
-          >
-            {text}
-            <FaEdit
-              onClick={handleEditClick}
-              className='opacity-0 cursor-pointer text-orange-400 hover:text-orange-500 group-hover:opacity-100 transition-opacity duration-200 '
-            />
-          </span>
-        )}
-      </div>
-    </td>
+            className='opacity-0 cursor-pointer text-orange-400 hover:text-orange-500 group-hover:opacity-100 transition-opacity duration-200 '
+          />
+        </button>
+      )}
+    </div>
   );
 };
 
