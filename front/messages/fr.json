@@ -263,7 +263,7 @@
     "pagination": {
       "page-of": "Page {current} sur {total}",
       "rows-per-page": "Lignes par page",
-      "rows-selected": "{selected} sur {total} ligne{total, plural, one {} other {s}} selectionnée{total, plural, one {} other {s}}.",
+      "rows-selected": "{selected} sur {total} ligne{total, plural, one {} other {s}} sélectionnée{selected, plural, one {} other {s}}.",
       "next": "Aller à la page suivante",
       "prev": "Aller à la page précédente",
       "first": "Aller à la première page",
