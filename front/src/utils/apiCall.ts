@@ -17,12 +17,12 @@ export async function apiCall<T>(
   if (method !== "GET" && body) {
     config.body = JSON.stringify(body);
   }
-  if(process.env.NODE_ENV == "production") throw new Error("Not implemented"); 
+  if (process.env.NODE_ENV == "production") throw new Error("Not implemented");
 
   const urlBase =
     process.env.NODE_ENV == "development"
-      ? "http://localhost:3001/api/v1"
-      : "https://192.168.1.21:3001/api/v1";
+      ? "http://192.168.1.27:3001/api/v1"
+      : "http://192.168.1.21:3001/api/v1";
   const response = await fetch(urlBase + url, config);
   if (!response.ok) {
     const error: T = await response.json();
