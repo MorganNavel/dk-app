@@ -259,6 +259,17 @@
     "cancelled": "Annulé",
     "in-progress": "En cours"
   },
+  "data-table": {
+    "pagination": {
+      "page-of": "Page {current} sur {total}",
+      "rows-per-page": "Lignes par page",
+      "rows-selected": "{selected} sur {total} ligne{total, plural, one {} other {s}} selectionnée{total, plural, one {} other {s}}.",
+      "next": "Aller à la page suivante",
+      "prev": "Aller à la page précédente",
+      "first": "Aller à la première page",
+      "last": "Aller à la dernière page"
+    }
+  },
   "lessons": {
     "data-table": {
       "filters": {

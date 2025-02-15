@@ -23,7 +23,7 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DataTablePagination } from "./Pagination";
 import { DataTableViewOptions } from "./ColumnView";
 import { RowFiltering } from "./RowFiltering";
@@ -78,7 +78,7 @@ function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex items-center justify-between space-x-4 p-4'>
+      <div className='flex items-center  space-x-4 p-4'>
         <DataTableViewOptions table={table} name={name} />
         <RowFiltering
           table={table}
@@ -133,7 +133,6 @@ function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
-                  className='hover:bg-primary-light'
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

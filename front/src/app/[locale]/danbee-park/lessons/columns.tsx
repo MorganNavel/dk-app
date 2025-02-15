@@ -47,6 +47,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
         return row.id;
       },
       sortingFn: "alphanumeric",
+      enableHiding: false,
     },
     {
       accessorKey: "status",
@@ -83,6 +84,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
         );
       },
       filterFn: "equalsString",
+      enableSorting: false,
     },
 
     {
@@ -101,6 +103,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
         );
       },
       filterFn: "includesString",
+      enableSorting: false,
     },
     {
       accessorKey: "nbParticipants",
@@ -110,6 +113,8 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
         return `${nbParticipants}/2`;
       },
+      enableSorting: false,
+      enableColumnFilter: false,
     },
     {
       accessorKey: "teacher",
@@ -120,6 +125,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
         return `${teacher.firstname} ${teacher.name}`;
       },
+      enableSorting: false,
       filterFn: (row, columnId, filterValue) => {
         const teacher = row.getValue(columnId) as Teacher;
         if (!teacher) return false;
@@ -147,6 +153,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
         return tsToLocaleDate(startDate, true);
       },
       sortingFn: "datetime",
+      enableColumnFilter: false,
     },
     {
       accessorKey: "duration",
@@ -156,6 +163,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
         return `${duration} min`;
       },
+      enableColumnFilter: false,
     },
     {
       id: "actions",
@@ -164,6 +172,8 @@ export function columns(t: any): ColumnDef<Lesson>[] {
 
         return <LessonActions lesson={lesson} />;
       },
+      enableSorting: false,
+      enableHiding: false,
     },
   ];
 }

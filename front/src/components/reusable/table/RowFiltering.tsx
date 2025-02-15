@@ -26,11 +26,11 @@ export function RowFiltering<TData, TValue>({
   filtersConfig,
   table,
   name,
+  setColumnFilters,
 }: Readonly<RowFilteringProps<TData, TValue>>) {
   const [filterableColumns, setFilterableColumns] = useState<
     ColumnDef<TData, TValue>[]
   >([]);
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [filter, setFilter] = useState<FilterConfig | null>(null);
   const t = useTranslations();
 

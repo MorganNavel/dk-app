@@ -44,7 +44,6 @@ export function DataTableViewOptions<TData>({
           .getAllColumns()
           .filter((column) => column.getCanHide())
           .map((column) => {
-            if (column.id === "actions") return null;
             return (
               <DropdownMenuCheckboxItem
                 key={column.id}
