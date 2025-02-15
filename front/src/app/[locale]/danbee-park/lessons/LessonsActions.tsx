@@ -35,7 +35,7 @@ const LessonActions = ({ lesson }: LessonActions) => {
         </DropdownMenuItem>
 
         {lesson.status === "planned" && (
-          <DropdownMenuItem className='flex items-center gap-2 font-semibold text-bg-amber-500 focus:bg-amber-500 focus:text-white cursor-pointer'>
+          <DropdownMenuItem className='flex items-center gap-2 font-semibold text-amber-500 focus:bg-amber-500 focus:text-white cursor-pointer'>
             <MdSchedule className='h-4 w-4' />
             {t("lessons.data-table.actions.reschedule")}
           </DropdownMenuItem>
