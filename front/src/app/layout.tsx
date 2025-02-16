@@ -14,7 +14,7 @@ interface LocaleLayoutProps {
   children: React.ReactNode;
   params: { locale: string };
 }
-export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
+export default function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   return (
     <html lang={props.params.locale}>
       <head>

@@ -61,22 +61,24 @@ export const UpdateScheme = joi.object({
   startDate: joi.date().greater("now"),
   earned: joi.number(),
 });
+
 /**
  * @openapi
  * components:
- *   parameters:
- *     UpdateStatusInput:
- *       name: status
- *       in: query
- *       required: true
- *       schema:
- *         type: string
- *         enum:
+ *   schemas:
+ *     UpdateStatusLesson:
+ *       type: object
+ *       example:
+ *        status: "cancelled"
+ *       properties:
+ *         status:
+ *          type: string
+ *          enum:
  *           - "planned"
  *           - "done"
  *           - "cancelled"
- *         description: "The status of the lesson"
- *         example: "planned"
+ *          description: "The status of the lesson"
+ *          example: "planned"
  */
 export const UpdateStatusScheme = joi.object({
   status: joi.string().valid("planned", "done", "cancelled").required(),

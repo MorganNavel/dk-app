@@ -87,7 +87,12 @@ lessonRouter.patch(
  *       - Lesson
  *     parameters:
  *      - $ref: '#/components/parameters/idLessonType'
- *      - $ref: '#/components/parameters/UpdateStatusInput'
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateStatusLesson'
  *     responses:
  *       '200':
  *         $ref: '#/components/responses/200'

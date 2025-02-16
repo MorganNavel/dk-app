@@ -1,6 +1,9 @@
 {
   "danbee-park": "Danbee Park",
   "generals": {
+    "date-picker": {
+      "placeholder": "Select a date"
+    },
     "view": "View",
     "toggle-cols": "Toggle columns",
     "no-data": "No data",
@@ -48,6 +51,8 @@
         "lngs": "Select your speaking languages"
       }
     },
+    "confirm": "Confirm",
+    "cancel": "Cancel",
     "submit": "Submit"
   },
   "signup": {
@@ -298,7 +303,21 @@
         "notif": "Send a reminder",
         "cancel": "Cancel",
         "reschedule": "Reschedule",
-        "delete": "Delete"
+        "delete": "Delete",
+        "dialog": {
+          "cancel": {
+            "title": "Cancel lesson",
+            "content": "Are you sure you want to cancel this lesson?"
+          },
+          "delete": {
+            "title": "Delete lesson",
+            "content": "Are you sure you want to delete this lesson?"
+          },
+          "reschedule": {
+            "title": "Reschedule lesson",
+            "content": "Please select a new date and time for the lesson."
+          }
+        }
       }
     }
   }

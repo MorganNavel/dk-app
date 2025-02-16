@@ -8,6 +8,7 @@ export async function apiCall<T>(
     method,
     ...options,
     credentials: "include",
+
     headers: {
       "Content-Type": "application/json",
 
@@ -18,11 +19,12 @@ export async function apiCall<T>(
     config.body = JSON.stringify(body);
   }
   if (process.env.NODE_ENV == "production") throw new Error("Not implemented");
+  const PORT_API = process.env.PORT_API ?? 3001;
 
   const urlBase =
     process.env.NODE_ENV == "development"
-      ? "http://192.168.1.27:3001/api/v1"
-      : "http://192.168.1.21:3001/api/v1";
+      ? "http://localhost:3001/api/v1"
+      : `http://192.168.1.21:${PORT_API}/api/v1`;
   const response = await fetch(urlBase + url, config);
   if (!response.ok) {
     const error: T = await response.json();

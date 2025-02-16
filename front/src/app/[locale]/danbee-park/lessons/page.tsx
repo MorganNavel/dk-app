@@ -2,7 +2,7 @@
 import DataTable from "@/components/reusable/table/DataTable";
 import { Lesson } from "@/types/lesson";
 import { apiCall } from "@/utils/apiCall";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
 import { columns } from "./columns";
@@ -16,25 +16,64 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { useProfile } from "@/providers/Profile";
+import { notFound } from "next/navigation";
+import { useEffect } from "react";
 
 const fetchLessons = async () => {
   return await apiCall<Lesson[]>(`/lesson/all`);
 };
+
+const fetchLessonById = async (lessonId: number) => {
+  return await apiCall<Lesson>(`/lesson/${lessonId}`);
+};
+
 export default function LessonsPage() {
   const t = useTranslations();
+  const queryClient = useQueryClient();
   const cols = columns(t);
-
+  const {
+    profile,
+    isLoading: isLoadingProfile,
+    isError: isErrorProfile,
+  } = useProfile();
   const {
     data: lessons,
-    error,
-    isLoading,
+    isError,
+    isLoading: isLoadingLessons,
   } = useQuery({
     queryKey: ["lessons"],
     queryFn: fetchLessons,
   });
-  if (error) {
+
+  if (isError) {
     toast.error("Erreur lors du chargement des données");
   }
+
+  useEffect(() => {
+    if (isErrorProfile) {
+      toast.error("Erreur lors du chargement du profil");
+    }
+  }, [isErrorProfile]);
+
+  if (!isLoadingProfile && (profile?.role == "student" || !profile)) notFound();
+  const isLoading = isLoadingProfile || isLoadingLessons;
+
+  // Refetch toutes les données
+  const refetchAllLessons = () => {
+    queryClient.invalidateQueries({ queryKey: ["lessons"] });
+  };
+
+  // Refetch une seule ligne
+  const refetchLesson = async (lessonId: number) => {
+    const updatedLesson = await fetchLessonById(lessonId);
+    queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
+      if (!oldData) return [updatedLesson];
+      return oldData.map((lesson) =>
+        lesson.idLesson === Number(lessonId) ? updatedLesson : lesson
+      );
+    });
+  };
 
   return (
     <div className='p-15 h-full'>
@@ -78,7 +117,6 @@ export default function LessonsPage() {
               </Select>
             ),
           },
-
           {
             columnId: "teacher",
             render: (value, setFilterValue) => (

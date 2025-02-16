@@ -1,6 +1,9 @@
 {
   "danbee-park": "Danbee Park",
   "generals": {
+    "date-picker": {
+      "placeholder": "Select a date"
+    },
     "view": "View",
     "toggle-cols": "Toggle columns",
     "no-data": "No data",
@@ -49,6 +52,8 @@
         "lngs": "Select your speaking languages"
       }
     },
+    "confirm": "Confirm",
+    "cancel": "Cancel",
     "submit": "Submit"
   },
   "signup": {
@@ -90,7 +95,9 @@
     "home": "Home",
     "myprofile": "My Profile",
     "aboutUs": "About Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "billing": "Billing",
+    "notifications": "Notifications"
   },
   "footer": {
     "services": "Services",
@@ -258,7 +265,14 @@
     "planned": "Planned",
     "done": "Done",
     "cancelled": "Cancelled",
-    "in-progress": "In Progress"
+    "in-progress": "In Progress",
+    "reschedule": {
+      "title": "Reschedule Lesson",
+      "description": "You are about to reschedule the lesson. Please select a new date and time for the lesson.",
+      "date": "Date",
+      "time": "Time",
+      "submit": "Reschedule"
+    }
   },
   "data-table": {
     "pagination": {
@@ -291,7 +305,24 @@
         "notif": "Send a reminder",
         "cancel": "Cancel",
         "reschedule": "Reschedule",
-        "delete": "Delete"
+        "delete": "Delete",
+        "dialog": {
+          "cancel": {
+            "title": "Cancel lesson",
+            "content": "Are you sure you want to cancel this lesson?",
+            "success": "Lesson has been successfully cancelled."
+          },
+          "delete": {
+            "title": "Delete lesson",
+            "content": "Are you sure you want to delete this lesson?",
+            "success": "Lesson has been successfully deleted."
+          },
+          "reschedule": {
+            "title": "Reschedule lesson",
+            "content": "Please select a new date and time for the lesson.",
+            "success": "Lesson has been successfully rescheduled."
+          }
+        }
       }
     }
   }

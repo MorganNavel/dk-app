@@ -1,4 +1,4 @@
-import { validateBody, validateQuery } from "@/utils/validation";
+import { validateBody } from "@/utils/validation";
 import { CreateScheme, UpdateScheme, UpdateStatusScheme } from "./schemes";
 import { Request, Response, NextFunction } from "express";
 
@@ -22,5 +22,5 @@ export function validateUpdateStatusInput(
   res: Response,
   next: NextFunction
 ) {
-  validateQuery(UpdateStatusScheme)(req, res, next);
+  validateBody(UpdateStatusScheme)(req, res, next);
 }

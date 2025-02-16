@@ -56,6 +56,7 @@ export class LessonServices {
         idTeacher,
         idLesson
       );
+      console.log("lesson", lesson);
       if (!lesson) return { code: STATUS_CODES.NOT_FOUND };
       return { code: STATUS_CODES.OK, data: lesson };
     } catch (error) {
@@ -102,10 +103,24 @@ export class LessonServices {
       if (lesson.dataValues.idTeacher !== idTeacher) {
         return { code: STATUS_CODES.UNAUTHORIZED };
       }
-      await lesson.update(body);
+      const filteredBody = Object.fromEntries(
+        Object.entries(body).filter(([_, value]) => value !== undefined)
+      );
+
+      if (Object.keys(filteredBody).length > 0) {
+        if (filteredBody.startDate) {
+          filteredBody.startDate = new Date(filteredBody.startDate as string);
+        }
+
+        await lesson.update(filteredBody);
+      }
       return { code: STATUS_CODES.OK };
     } catch (error) {
-      return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
+      console.error(error);
+      return {
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: error as string,
+      };
     }
   }
   /**
@@ -117,17 +132,22 @@ export class LessonServices {
   private static async getLessonWithTeacher(
     idTeacher: number,
     idLesson: number
-  ): Promise<Lesson | undefined> {
-    const lesson = await Lesson.findOne({
-      where: {
-        idLesson,
-        idTeacher,
-        startDate: { [Op.gte]: Date.now() },
-      },
+  ): Promise<any> {
+    const lesson = await Lesson.findByPk(idLesson, {
+      include: [
+        { model: User, as: "teacher" },
+        { model: Booking, as: "bookings" },
+      ],
     });
-    if (!lesson) {
-      return;
-    }
-    return lesson.dataValues;
+
+    if (!lesson) return;
+    if (lesson.dataValues.idTeacher !== idTeacher) return;
+    const { url, earned, bookings, ...cleanLesson } = lesson.dataValues;
+    const { password_hash, nbLessons, links, ...teacher } =
+      cleanLesson.teacher.dataValues;
+    cleanLesson.teacher = teacher as User;
+    cleanLesson.nbParticipants = bookings.length;
+
+    return cleanLesson;
   }
 }

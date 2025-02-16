@@ -2,6 +2,9 @@
   "danbee-park": "Danbee Park",
   "generals": {
     "view": "Voir",
+    "date-picker": {
+      "placeholder": "Sélectionner une date"
+    },
     "toggle-cols": "Afficher les colonnes",
     "no-data": "Aucune donnée",
     "passwordMissmatch": "Le mot de passe doit être le même",
@@ -49,6 +52,8 @@
         "lngs": "Sélectionnez les langues parler"
       }
     },
+    "confirm": "Confirmer",
+    "cancel": "Annuler",
     "submit": "Valider"
   },
   "signup": {
@@ -91,7 +96,9 @@
     "myprofile": "Mon profil",
     "aboutUs": "À propos de nous",
     "contact": "Contact",
-    "profil": "Profil"
+    "profil": "Profil",
+    "billing": "Facturation",
+    "notifications": "Notifications"
   },
   "footer": {
     "services": "Services",
@@ -290,7 +297,24 @@
         "notif": "Envoyer un rappel",
         "cancel": "Annuler",
         "reschedule": "Reprogrammer",
-        "delete": "Supprimer définitivement"
+        "delete": "Supprimer définitivement",
+        "dialog": {
+          "cancel": {
+            "title": "Annuler le cours",
+            "content": "Êtes-vous sûr de vouloir annuler ce cours ?",
+            "success": "Le cours a été annulé avec succès."
+          },
+          "delete": {
+            "title": "Supprimer le cours",
+            "content": "Êtes-vous sûr de vouloir supprimer définitivement ce cours ?",
+            "success": "Le cours a été supprimé avec succès."
+          },
+          "reschedule": {
+            "title": "Reprogrammer le cours",
+            "content": "Veuillez sélectionner une nouvelle date et heure pour ce cours.",
+            "success": "Le cours a été reprogrammé avec succès."
+          }
+        }
       }
     }
   }

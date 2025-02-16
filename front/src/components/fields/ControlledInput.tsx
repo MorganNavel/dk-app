@@ -9,7 +9,6 @@ import {
 } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import React from "react";
-import { Textarea } from "../ui/textarea";
 
 interface ControlledInputProps<T extends FieldValues>
   extends React.ComponentProps<typeof Input> {

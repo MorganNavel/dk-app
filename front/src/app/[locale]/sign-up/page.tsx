@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/card";
 import { ControlledMultiSelect } from "@/components/fields/ControlledMultiSelect";
 import Link from "next/link";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { useMutation } from "@tanstack/react-query";
 import { apiCall } from "@/utils/apiCall";
 import { toast } from "sonner";
@@ -45,7 +45,6 @@ export default function SignUp() {
   const [isMounted, setIsMounted] = useState(false);
   const t = useTranslations();
   const router = useRouter();
-  const locale = useLocale();
   const methods = useForm<FormProps>({
     resolver: zodResolver(SignUpScheme(t)),
     defaultValues: {
@@ -69,7 +68,7 @@ export default function SignUp() {
     },
     onSuccess: (data) => {
       toast.success(t("signup.message.success"));
-      router.push(`/${locale}/sign-in`);
+      router.push(`/sign-in`);
     },
   });
   useEffect(() => {
@@ -91,16 +90,16 @@ export default function SignUp() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 ">
-      <Card className="lg:max-w-md max-w-sm w-full">
-        <CardHeader className="text-center text-2xl font-bold text-primary">
+    <div className='flex items-center justify-center min-h-screen p-4 '>
+      <Card className='lg:max-w-md max-w-sm w-full'>
+        <CardHeader className='text-center text-2xl font-bold text-primary'>
           {t("generals.signup")}
         </CardHeader>
         <CardContent>
           <Form {...methods}>
             <form
               onSubmit={methods.handleSubmit(onSubmit)}
-              className=" px-4 py-6 rounded-lg "
+              className=' px-4 py-6 rounded-lg '
             >
               <ControlledInput
                 label={t("generals.user-profile.label.email")}
@@ -128,7 +127,7 @@ export default function SignUp() {
                 name={"credentials.password"}
                 placeholder={t("generals.user-profile.placeholder.password")}
                 control={methods.control}
-                type="password"
+                type='password'
                 required
               />
               <ControlledInput
@@ -138,38 +137,38 @@ export default function SignUp() {
                   "generals.user-profile.placeholder.confirmPassword"
                 )}
                 control={methods.control}
-                type="password"
+                type='password'
                 required
               />
 
               <ControlledMultiSelect
                 control={methods.control}
-                name="credentials.languages"
+                name='credentials.languages'
                 options={LNGS}
                 label={t("generals.user-profile.label.lngs")}
                 placeholder={t("generals.user-profile.placeholder.lngs")}
                 required
               />
-              <div className="flex justify-center my-5">
-                <ControlledCaptchat name="token" control={methods.control} />
+              <div className='flex justify-center my-5'>
+                <ControlledCaptchat name='token' control={methods.control} />
               </div>
 
               <Button
                 variant={"round-outline"}
                 type={"submit"}
-                className="w-full"
+                className='w-full'
               >
                 {t("generals.submit")}
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className="justify-center">
-          <p className="text-sm">
+        <CardFooter className='justify-center'>
+          <p className='text-sm'>
             {t("generals.alreadyAccount")}{" "}
             <Link
               href={`sign-in`}
-              className="hover:underline text-primary font-semibold"
+              className='hover:underline text-primary font-semibold'
             >
               {t("generals.signin")}
             </Link>
@@ -182,25 +181,25 @@ export default function SignUp() {
 
 const SkeletonSignUp = () => {
   return (
-    <div className="flex items-center justify-center min-h-screen p-6 ">
-      <Card className="lg:max-w-md max-w-sm w-full p-4">
-        <CardHeader className="lg:max-w-md max-w-sm w-full items-center ">
-          <Skeleton className="h-7 w-1/2" />
+    <div className='flex items-center justify-center min-h-screen p-6 '>
+      <Card className='lg:max-w-md max-w-sm w-full p-4'>
+        <CardHeader className='lg:max-w-md max-w-sm w-full items-center '>
+          <Skeleton className='h-7 w-1/2' />
         </CardHeader>
-        <CardContent className="space-y-3">
+        <CardContent className='space-y-3'>
           {[...Array(6)].map((_, i) => (
-            <div key={i} className="mb-6">
-              <Skeleton className="h-3 w-48 mb-2" />
-              <Skeleton className="h-8 w-full " />
+            <div key={i} className='mb-6'>
+              <Skeleton className='h-3 w-48 mb-2' />
+              <Skeleton className='h-8 w-full ' />
             </div>
           ))}
-          <div className=" flex justify-center">
-            <Skeleton className="h-16  w-4/5 my-5 " />
+          <div className=' flex justify-center'>
+            <Skeleton className='h-16  w-4/5 my-5 ' />
           </div>
-          <Skeleton className="h-9 rounded-3xl w-full mt-9 " />
+          <Skeleton className='h-9 rounded-3xl w-full mt-9 ' />
         </CardContent>
-        <div className=" flex justify-center">
-          <Skeleton className="h-3 w-1/2 " />
+        <div className=' flex justify-center'>
+          <Skeleton className='h-3 w-1/2 ' />
         </div>
       </Card>
     </div>

@@ -18,8 +18,10 @@ import { NavUser } from "./nav-user";
 import logo from "@public/assets/img/logo.png";
 import { FaChalkboardTeacher, FaRegEnvelope } from "react-icons/fa";
 import { IconType } from "react-icons";
-import { useLocale } from "next-intl";
-import { Link } from "@/i18n/routing";
+import { useLocale, useTranslations } from "next-intl";
+import { Link, useRouter } from "@/i18n/routing";
+import { useProfile } from "@/providers/Profile";
+import { Button } from "../ui/button";
 
 const data: {
   navMain: {
@@ -72,39 +74,51 @@ const data: {
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const locale = useLocale();
   const { isMobile, setOpenMobile } = useSidebar();
+  const { profile } = useProfile();
+  const t = useTranslations();
+  const router = useRouter();
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible='icon' {...props}>
       <SidebarHeader>
-        <Link
-          href={`/`}
-          locale={locale}
-          onClick={() => isMobile && setOpenMobile(false)}
+        <SidebarMenuButton
+          size='lg'
+          className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground '
+          onClick={() => {
+            isMobile && setOpenMobile(false);
+            router.push("/");
+          }}
         >
-          <SidebarMenuButton
-            size="lg"
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground "
-          >
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground">
-              <Image
-                src={logo}
-                alt={"logo"}
-                width={775}
-                height={518}
-                className="size-4"
-              />
-            </div>
-            <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold">Danbee Korean</span>
-            </div>
-          </SidebarMenuButton>
-        </Link>
+          <div className='flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground'>
+            <Image
+              src={logo}
+              alt={"logo"}
+              width={775}
+              height={518}
+              className='size-4'
+            />
+          </div>
+          <div className='grid flex-1 text-left text-sm leading-tight'>
+            <span className='truncate font-semibold'>Danbee Korean</span>
+          </div>
+        </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        {process.env.NODE_ENV == "development" && <NavUser />}
+        {process.env.NODE_ENV == "development" && profile && (
+          <NavUser profile={profile} />
+        )}
+        {process.env.NODE_ENV == "development" && !profile && (
+          <Button
+            variant={"round-outline"}
+            className='w-full h-full'
+            onClick={() => router.push("/sign-in")}
+          >
+            {t("generals.signin")}
+          </Button>
+        )}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

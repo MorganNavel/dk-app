@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import "../globals.css";
 import Link from "next/link";
 
@@ -10,11 +11,8 @@ export default function NotFound() {
         <p className='mt-4 text-lg text-muted-foreground'>
           Oops! The page you are looking for does not exist.
         </p>
-        <Link
-          href='/'
-          className='mt-6 inline-block px-6 py-3 bg-primary text-primary-foreground rounded-lg shadow-lg hover:bg-primary-dark transition-colors duration-300'
-        >
-          Go Back Home
+        <Link href='/'>
+          <Button className='mt-6 px-12 py-6 text-lg'>Go Back Home</Button>
         </Link>
       </div>
     </div>

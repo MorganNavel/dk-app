@@ -81,7 +81,7 @@ export class LessonController {
   static async updateStatus(req: Request, res: Response) {
     const { idUser } = (req.session as AppSession).user;
     const idLesson = parseInt(req.params.idLesson);
-    const { status } = req.query;
+    const { status } = req.body;
     if (!status)
       return res
         .status(STATUS_CODES.BAD_REQUEST)
