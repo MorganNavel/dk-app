@@ -20,21 +20,22 @@ import {
 } from "@/components/ui/sidebar";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { FaChalkboardTeacher, FaMoneyBillWave } from "react-icons/fa";
-import { UserProfile } from "@/types/User";
+import { ProfileMe } from "@/types/User";
 import { PiStudentBold } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";
+import { useTranslations } from "next-intl";
+import { apiCall } from "@/utils/apiCall";
+interface NavUserProps {
+  profile: ProfileMe;
+}
 
-export function NavUser() {
-  const user: UserProfile = {
-    idUser: 1,
-    firstname: "John",
-    name: "Doe",
-    email: "john.doe@gmail.com",
-    languages: ["ko", "en"],
-    description: "",
-    role: "teacher",
-  };
+export function NavUser({ profile }: Readonly<NavUserProps>) {
   const { isMobile } = useSidebar();
+  const t = useTranslations();
+  const signout = async () => {
+    await apiCall("/auth/signout", "POST");
+    window.location.href = "/";
+  };
 
   return (
     <SidebarMenu>
@@ -46,15 +47,15 @@ export function NavUser() {
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
               <Avatar className='h-8 w-8 rounded-lg'>
-                {user.role === "teacher" ? (
+                {profile.role === "teacher" ? (
                   <FaChalkboardTeacher size={32} />
                 ) : (
                   <PiStudentBold size={32} />
                 )}
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>{user.name}</span>
-                <span className='truncate text-xs'>{user.email}</span>
+                <span className='truncate font-semibold'>{profile.name}</span>
+                <span className='truncate text-xs'>{profile.email}</span>
               </div>
               <CaretSortIcon className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -68,15 +69,15 @@ export function NavUser() {
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                 <div className='h-14 w-14 rounded-lg flex items-center justify-center'>
-                  {user.role === "teacher" ? (
+                  {profile.role === "teacher" ? (
                     <FaChalkboardTeacher size={32} />
                   ) : (
                     <PiStudentBold size={32} />
                   )}
                 </div>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-semibold'>{user.name}</span>
-                  <span className='truncate text-xs'>{user.email}</span>
+                  <span className='truncate font-semibold'>{profile.name}</span>
+                  <span className='truncate text-xs'>{profile.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>
@@ -87,21 +88,24 @@ export function NavUser() {
             <DropdownMenuGroup>
               <DropdownMenuItem className='gap-2 p-2 hover:bg-primary-light'>
                 <VscAccount size={20} />
-                Account
+                {t("header.myprofile")}
               </DropdownMenuItem>
               <DropdownMenuItem className='gap-2 p-2 hover:bg-primary-light'>
                 <FaMoneyBillWave size={20} />
-                Billing
+                {t("header.billing")}
               </DropdownMenuItem>
               <DropdownMenuItem className='gap-2 p-2 hover:bg-primary-light'>
                 <Bell size={20} />
-                Notifications
+                {t("header.notifications")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className='gap-2 p-2 hover:bg-primary-light'>
+            <DropdownMenuItem
+              className='gap-2 p-2 hover:bg-primary-light '
+              onClick={signout}
+            >
               <LogOut size={20} />
-              Log out
+              {t("generals.signout")}
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

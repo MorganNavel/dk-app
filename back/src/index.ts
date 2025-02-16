@@ -23,8 +23,12 @@ const app = express();
 const PORT = parseInt(process.env.API_PORT ?? "3001");
 
 const corsOptions = {
-  origin: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: [
+    "http://localhost:3000",
+    "http://localhost:3001",
+    "http://192.168.1.27:3000",
+  ],
+  methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization", "x-requested-with"],
   credentials: true,
 };
@@ -47,7 +51,10 @@ app.use(
     cookie: {
       secure: process.env.NODE_ENV === "production",
       httpOnly: true,
-      maxAge: 1000 * 60 * 10,
+      maxAge:
+        process.env.NODE_ENV === "production"
+          ? 1000 * 60 * 20
+          : 1000 * 60 * 60 * 24,
       sameSite: "lax",
     },
   })
