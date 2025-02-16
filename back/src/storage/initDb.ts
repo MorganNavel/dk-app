@@ -61,53 +61,55 @@ async function connectToDb() {
   try {
     await sequelize.authenticate();
     await sequelize.sync({ force: true });
-    const password = await bcrypt.hash("password", 10);
-    const t = await User.create({
-      firstname: "Danbee",
-      name: "Park",
-      email: "danbee.korean@gmail.com",
-      languages: "fr,en,ko,jp",
-      password_hash: password,
-      role: "teacher",
-    });
-    await User.create({
-      firstname: "Morgan",
-      name: "Navel",
-      email: "navelmorgan34@gmail.com",
-      languages: "fr,en",
-      password_hash: password,
-      role: "student",
-    });
-    await Lesson.create({
-      title: "Korean lesson1",
-      description: "Learn Korean with me",
-      startDate: new Date(),
-      idTeacher: t.idUser,
-    });
-    await Lesson.create({
-      title: "Korean lesson2",
-      description: "Learn Korean with me",
-      startDate: new Date(),
-      idTeacher: t.idUser,
-    });
-    await Lesson.create({
-      title: "Korean lesson3",
-      description: "Learn Korean with me",
-      startDate: new Date(),
-      idTeacher: t.idUser,
-    });
-    await Lesson.create({
-      title: "Korean lesson4",
-      description: "Learn Korean with me",
-      startDate: new Date(),
-      idTeacher: t.idUser,
-    });
+    if (process.env.NODE_ENV === "development") {
+      const password = await bcrypt.hash("password", 10);
+      const t = await User.create({
+        firstname: "Danbee",
+        name: "Park",
+        email: "danbee.korean@gmail.com",
+        languages: "fr,en,ko,jp",
+        password_hash: password,
+        role: "teacher",
+      });
+      await User.create({
+        firstname: "Morgan",
+        name: "Navel",
+        email: "navelmorgan34@gmail.com",
+        languages: "fr,en",
+        password_hash: password,
+        role: "student",
+      });
+      await Lesson.create({
+        title: "Korean lesson1",
+        description: "Learn Korean with me",
+        startDate: new Date(),
+        idTeacher: t.idUser,
+      });
+      await Lesson.create({
+        title: "Korean lesson2",
+        description: "Learn Korean with me",
+        startDate: new Date(),
+        idTeacher: t.idUser,
+      });
+      await Lesson.create({
+        title: "Korean lesson3",
+        description: "Learn Korean with me",
+        startDate: new Date(),
+        idTeacher: t.idUser,
+      });
+      await Lesson.create({
+        title: "Korean lesson4",
+        description: "Learn Korean with me",
+        startDate: new Date(),
+        idTeacher: t.idUser,
+      });
 
-    await Pricing.create({
-      price: 10,
-      currency: "USD",
-      nbLessons: 4,
-    });
+      await Pricing.create({
+        price: 10,
+        currency: "USD",
+        nbLessons: 4,
+      });
+    }
 
     console.log("Connected to database");
   } catch (error) {

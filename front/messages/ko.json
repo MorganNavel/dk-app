@@ -102,7 +102,9 @@
     "home": "Home",
     "myprofile": "My Profile",
     "aboutUs": "About Us",
-    "contact": "Contact"
+    "contact": "Contact",
+    "billing": "Facture",
+    "notifications": "Notifications"
   },
   "footer": {
     "services": "Services",
