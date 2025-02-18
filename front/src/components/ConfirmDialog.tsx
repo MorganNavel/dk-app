@@ -1,6 +1,16 @@
-import { AlertDialog, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogCancel, AlertDialogAction } from "@/components/ui/alert-dialog";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogCancel,
+  AlertDialogAction,
+} from "@/components/ui/alert-dialog";
 import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
+import { Skeleton } from "./ui/skeleton";
 
 interface ConfirmDialogProps {
   open: boolean;
@@ -11,19 +21,36 @@ interface ConfirmDialogProps {
   children?: ReactNode;
 }
 
-export function ConfirmDialog({ open, onClose, onConfirm, title, description, children }: ConfirmDialogProps) {
-    const t = useTranslations("generals")
+export function ConfirmDialog({
+  open,
+  onClose,
+  onConfirm,
+  title,
+  description,
+  children,
+}: Readonly<ConfirmDialogProps>) {
+  const t = useTranslations("generals");
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{description}</AlertDialogDescription>
+          <AlertDialogTitle>
+            {title == "" ? <Skeleton className='h-6 w-1/2' /> : title}
+          </AlertDialogTitle>
+          <AlertDialogDescription>
+            {description == "" ? (
+              <Skeleton className='h-6 w-2/3' />
+            ) : (
+              description
+            )}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         {children}
         <AlertDialogFooter>
           <AlertDialogCancel onClick={onClose}>{t("cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>{t("confirm")}</AlertDialogAction>
+          <AlertDialogAction onClick={onConfirm}>
+            {t("confirm")}
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

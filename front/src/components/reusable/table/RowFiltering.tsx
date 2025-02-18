@@ -1,4 +1,4 @@
-import { columns } from "@/app/[locale]/danbee-park/lessons/columns";
+import { columns } from "@/components/lesson-table/columns";
 import {
   Select,
   SelectContent,

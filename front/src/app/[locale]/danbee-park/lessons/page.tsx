@@ -5,7 +5,7 @@ import { apiCall } from "@/utils/apiCall";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { columns } from "./columns";
+import { columns } from "../../../../components/lesson-table/columns";
 import {
   Select,
   SelectContent,
@@ -22,6 +22,7 @@ import { useEffect, useState } from "react";
 import { Plus, Trash, XCircle } from "lucide-react";
 import { RowSelectionState } from "@tanstack/react-table";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { useLessonTableActions } from "@/hooks/useActions";
 
 type Action = "delete" | "cancel" | "add";
 
@@ -36,6 +37,7 @@ export default function LessonsPage() {
   const [action, setAction] = useState<Action | null>(null);
   const [selected, setSelected] = useState<RowSelectionState>({});
   const selectedCount = Object.keys(selected).length;
+  const configActions = useLessonTableActions();
 
   const handleAddLesson = () => {
     toast.info("Ajouter un nouveau cours");
@@ -58,13 +60,14 @@ export default function LessonsPage() {
     if (!lessons) return;
     try {
       const idLessons = Object.keys(selected).map((value) => Number(value));
-      switch (action) {
-        case "cancel":
-          await handleCancelLessons(idLessons);
-          break;
-        case "delete":
-          await handleDeleteLessons(idLessons);
-          break;
+      if (action && configActions[action].type === "dialog") {
+        if (
+          "onConfirm" in configActions[action] &&
+          typeof configActions[action].onConfirm === "function"
+        ) {
+          await configActions[action].onConfirm(idLessons);
+          setSelected({});
+        }
       }
       queryClient.invalidateQueries({ queryKey: ["lessons"] });
     } catch {
@@ -117,6 +120,7 @@ export default function LessonsPage() {
       name: t("generals.delete"),
       actionFn: async (selected: RowSelectionState) => {
         setAction("delete");
+        console.log(selected);
         setSelected(selected);
       },
       render: () => <Trash className='w-5 h-5 text-destructive' />,
@@ -223,16 +227,24 @@ export default function LessonsPage() {
           },
         ]}
       />
-      {action && (
+
+      {action && configActions[action].type == "dialog" && (
         <ConfirmDialog
-          open={!!action}
-          title={t(`lessons.data-table.actions.dialog.${action}.title`, {
-            selected: selectedCount,
-          })}
-          description={t(
-            `lessons.data-table.actions.dialog.${action}.content`,
-            { selected: selectedCount }
-          )}
+          open={action && configActions[action].type === "dialog"}
+          title={
+            !action
+              ? ""
+              : t(`lessons.data-table.actions.dialog.${action}.title`, {
+                  selected: selectedCount,
+                })
+          }
+          description={
+            !action
+              ? ""
+              : t(`lessons.data-table.actions.dialog.${action}.content`, {
+                  selected: selectedCount,
+                })
+          }
           onConfirm={handleConfirm}
           onClose={() => setAction(null)}
         />

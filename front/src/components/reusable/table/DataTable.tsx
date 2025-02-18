@@ -25,12 +25,16 @@ import {
   VisibilityState,
 } from "@tanstack/react-table";
 import { useTranslations } from "next-intl";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { DataTablePagination } from "./Pagination";
 import { DataTableViewOptions } from "./ColumnView";
 import { RowFiltering } from "./RowFiltering";
 import { Button } from "@/components/ui/button";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { MoreVertical } from "lucide-react";
 export interface FilterConfig {
   columnId: string;
@@ -42,19 +46,22 @@ export interface FilterConfig {
 export interface ActionConfig {
   name: string;
   render: () => ReactNode;
-  actionFn: (selected: RowSelectionState) => void,
+  actionFn: (selected: RowSelectionState) => void;
   isDisable: (selected: RowSelectionState) => boolean;
-
 }
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  actions?: ActionConfig[]; 
+  actions?: ActionConfig[];
   filtersConfig?: FilterConfig[];
   isLoading: boolean;
-  name: String;
-  getRowId?: (originalRow: TData, index: number, parent?: Row<TData> | undefined) => string;
+  name: string;
+  getRowId?: (
+    originalRow: TData,
+    index: number,
+    parent?: Row<TData> | undefined
+  ) => string;
 }
 function DataTable<TData, TValue>({
   data,
@@ -63,7 +70,7 @@ function DataTable<TData, TValue>({
   filtersConfig,
   isLoading,
   name,
-  getRowId
+  getRowId,
 }: Readonly<DataTableProps<TData, TValue>>) {
   const t = useTranslations();
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -92,6 +99,7 @@ function DataTable<TData, TValue>({
       rowSelection,
     },
   });
+  useEffect(() => setRowSelection({}), [data]);
 
   return (
     <div>
@@ -106,9 +114,9 @@ function DataTable<TData, TValue>({
             setColumnFilters={setColumnFilters}
           />
         </div>
-        
+
         <div className='flex space-x-1'>
-          <Actions actions={actions ?? []} rowSelection={rowSelection}/>
+          <Actions actions={actions ?? []} rowSelection={rowSelection} />
         </div>
       </div>
 
@@ -179,41 +187,50 @@ interface ActionProps {
   rowSelection: RowSelectionState;
 }
 
-function Actions({actions, rowSelection} : Readonly<ActionProps>){
+function Actions({ actions, rowSelection }: Readonly<ActionProps>) {
   const [open, setOpen] = useState(false);
-  return <>
-    <Popover open={open} onOpenChange={(open) => setOpen(open)}>
-      <PopoverTrigger asChild className="lg:hidden">
-        <Button variant="ghost">
-          <MoreVertical />
+  return (
+    <>
+      <Popover open={open} onOpenChange={(open) => setOpen(open)}>
+        <PopoverTrigger asChild className='lg:hidden'>
+          <Button variant='ghost'>
+            <MoreVertical />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className='w-40 lg:hidden'>
+          <div className='flex flex-col space-y-2'>
+            {actions?.map((action) => (
+              <Button
+                key={action.name}
+                variant='ghost'
+                onClick={() => {
+                  action.actionFn(rowSelection);
+                  setOpen(false);
+                }}
+                disabled={action.isDisable(rowSelection)}
+                className='w-full flex justify-start'
+              >
+                <div className='flex items-center gap-2'>
+                  {action.render()} {action.name}
+                </div>
+              </Button>
+            ))}
+          </div>
+        </PopoverContent>
+      </Popover>
+
+      {actions?.map((action) => (
+        <Button
+          key={action.name}
+          variant='ghost'
+          onClick={() => action.actionFn(rowSelection)}
+          className='hidden lg:flex disabled:opacity-25 transition-opacity duration-250'
+          disabled={action.isDisable(rowSelection)}
+        >
+          {action.render()}
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-40 lg:hidden">
-        <div className="flex flex-col space-y-2">
-          {actions?.map((action) => (
-            <Button
-              key={action.name}
-              variant="ghost"
-              onClick={() => {
-                action.actionFn(rowSelection);
-                setOpen(false);
-              }}
-              disabled={action.isDisable(rowSelection)}
-              className="w-full flex justify-start"
-            >
-              <div className="flex items-center gap-2">{action.render()} {action.name}</div>
-            </Button>
-          ))}
-        </div>
-      </PopoverContent>
-    </Popover>
-    
-    {actions?.map((action) => (
-      <Button key={action.name} variant="ghost" onClick={() => action.actionFn(rowSelection)} className="hidden lg:flex disabled:opacity-25 transition-opacity duration-250" disabled={action.isDisable(rowSelection)}
->
-        {action.render()}
-      </Button>
-    ))}
-</>
+      ))}
+    </>
+  );
 }
 export default DataTable;
