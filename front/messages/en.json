@@ -54,7 +54,9 @@
     },
     "confirm": "Confirm",
     "cancel": "Cancel",
-    "submit": "Submit"
+    "submit": "Submit",
+    "delete": "Delete",
+    "add": "Add"
   },
   "signup": {
     "message": {
@@ -194,7 +196,6 @@
       }
     }
   },
-
   "about-us": {
     "title": "Learn Korean with passion and method!",
     "subtitle": "A unique, flexible and effective approach to help you master Korean at your own pace.",

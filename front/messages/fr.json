@@ -54,7 +54,9 @@
     },
     "confirm": "Confirmer",
     "cancel": "Annuler",
-    "submit": "Valider"
+    "submit": "Valider",
+    "delete": "Supprimer",
+    "add": "Ajouter"
   },
   "signup": {
     "message": {

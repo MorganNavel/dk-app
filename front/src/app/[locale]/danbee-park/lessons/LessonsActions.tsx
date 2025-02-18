@@ -12,18 +12,13 @@ import {
 import { Lesson } from "@/types/lesson";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "@/components/DatePicker";
 import { apiCall } from "@/utils/apiCall";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { errorToasts } from "@/utils/toast";
+import { ApiResponse } from "@/types/ApiResponse";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 interface LessonActions {
   lesson: Lesson;
 }
@@ -98,6 +93,15 @@ function DialogAction({
   const [reschedule, setReschedule] = useState<Date | null>(null);
   const queryClient = useQueryClient();
   const refetchLesson = async (lessonId: number) => {
+    if(action === "delete") {
+      queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
+        if (!oldData) return [updatedLesson];
+        return oldData.filter((lesson) =>
+          lesson.idLesson !== lessonId
+        );
+      });
+      return;
+    }
     const updatedLesson = await apiCall<Lesson>(`/lesson/${lessonId}`);
     queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
       if (!oldData) return [updatedLesson];
@@ -107,16 +111,17 @@ function DialogAction({
     });
   };
   const handleConfirm = async () => {
-    if (action === "reschedule") await handleReschedule();
+    try {
+      if (action === "reschedule") await handleReschedule();
+      if (action === "cancel") await handleCancel();
+      if (action === "delete") await handleDelete();
 
-    if (action === "cancel") await handleCancel();
-
-    if (action === "delete") await handleDelete();
-
-    toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
-
-    await refetchLesson(lesson.idLesson);
-    onClose();
+      toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
+      await refetchLesson(lesson.idLesson);
+    } catch (error: any){
+      const err: ApiResponse<any> = JSON.parse(error.message);
+      errorToasts(t, err);
+    }
   };
   const onClose = () => {
     setAction(null);
@@ -138,39 +143,22 @@ function DialogAction({
   };
 
   return (
-    <Dialog open={!!action} modal={false} onOpenChange={() => setAction(null)}>
-      <DialogContent
-        className='max-w-lg p-6 gap-5'
-        aria-describedby='dialog-description'
-      >
-        <DialogHeader className='text-lg font-semibold'>
-          <DialogTitle>
-            {action && t(`lessons.data-table.actions.dialog.${action}.title`)}
-          </DialogTitle>
-        </DialogHeader>
-        <p
-          className='text-gray-600 text-center lg:text-left'
-          id='dialog-description'
-        >
-          {action && t(`lessons.data-table.actions.dialog.${action}.content`)}
-        </p>
-        {action === "reschedule" && (
+    <ConfirmDialog 
+    open={!!action}
+    title={t(`lessons.data-table.actions.dialog.${action}.title`)}
+    description={t(`lessons.data-table.actions.dialog.${action}.content`)} 
+    onConfirm={handleConfirm} 
+    onClose={onClose} 
+    >
+      {action === "reschedule" && (
           <DateTimePicker
             disabled={{ before: new Date() }}
             onChange={(date) => setReschedule(date ?? null)}
-            initialDate={new Date(lesson.startDate)}
-          />
-        )}
-        <DialogFooter className='flex justify-end gap-2'>
-          <Button variant='ghost' onClick={onClose}>
-            {t("generals.cancel")}
-          </Button>
-          <Button variant='destructive' onClick={handleConfirm}>
-            {t("generals.confirm")}
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+            initialDate={new Date(lesson.startDate)}/>
+      )}
+  </ConfirmDialog>
+    
+    
   );
 }
 
