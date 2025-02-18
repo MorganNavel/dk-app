@@ -6,19 +6,19 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ControlledInput } from "../fields/ControlledInput";
 import { ControlledTextarea } from "../fields/ControlledTextarea";
 import { ControlledDatePicker } from "../fields/ControlledDatePicker";
-import { Button } from "react-day-picker";
 import { apiCall } from "@/utils/apiCall";
 import { useQueryClient } from "@tanstack/react-query";
+import { Button } from "../ui/button";
+import { useEffect } from "react";
 interface FormProps {
   title: string;
   description: string;
-  startDate: string;
-  duration: string;
+  startDate: Date;
+  duration: number;
 }
 interface LessonFormProps {
   onSubmit: () => void;
 }
-
 export function LessonForm({ onSubmit }: Readonly<LessonFormProps>) {
   const t = useTranslations();
   const queryClient = useQueryClient();
@@ -27,30 +27,32 @@ export function LessonForm({ onSubmit }: Readonly<LessonFormProps>) {
     defaultValues: {
       title: "",
       description: "",
-      startDate: "",
-      duration: "",
+      startDate: new Date(),
+      duration: 50,
     },
   });
   async function handleSubmit(data: FormProps) {
     try {
       await apiCall("/lesson", "POST", data);
       queryClient.invalidateQueries({ queryKey: ["lessons"] });
-      onSubmit();
-    } catch {
-      onSubmit();
-    }
+    } catch {}
+    onSubmit();
   }
+  useEffect(() => {
+    console.log(methods.formState.errors);
+  }, [methods.formState.errors]);
   return (
     <Form {...methods}>
-      <form onSubmit={methods.handleSubmit(handleSubmit)}>
+      <form onSubmit={methods.handleSubmit(handleSubmit)} className='p-10'>
         <ControlledInput
           label={t("lessons.data-table.columns.title")}
           name='title'
           type='text'
+          required
           control={methods.control}
         />
         <ControlledTextarea
-          label={t("lessons.data-table.columns.description")}
+          label={t("description")}
           name='description'
           control={methods.control}
         />
@@ -58,9 +60,30 @@ export function LessonForm({ onSubmit }: Readonly<LessonFormProps>) {
           name='startDate'
           control={methods.control}
           format='24h'
+          required
           label={t("lessons.data-table.columns.startDate")}
         />
-        <Button type='submit'>{t("save")}</Button>
+        <ControlledInput
+          label={t("lessons.data-table.columns.duration")}
+          name='duration'
+          type='number'
+          required
+          control={methods.control}
+          disabled
+        />
+
+        <div className='flex flex-col gap-4 mt-5 mx-5'>
+          <Button className='w-full' variant='ghost' onClick={onSubmit}>
+            {t("generals.cancel")}
+          </Button>
+          <Button
+            type='submit'
+            className='w-full'
+            disabled={methods.formState.isSubmitting}
+          >
+            {t("generals.submit")}
+          </Button>
+        </div>
       </form>
     </Form>
   );

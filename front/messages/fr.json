@@ -5,6 +5,7 @@
     "date-picker": {
       "placeholder": "Sélectionner une date"
     },
+    "description": "Description",
     "toggle-cols": "Afficher les colonnes",
     "no-data": "Aucune donnée",
     "passwordMissmatch": "Le mot de passe doit être le même",

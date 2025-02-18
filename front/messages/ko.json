@@ -4,6 +4,7 @@
     "date-picker": {
       "placeholder": "Select a date"
     },
+    "description": "Description",
     "view": "View",
     "toggle-cols": "Toggle columns",
     "no-data": "No data",

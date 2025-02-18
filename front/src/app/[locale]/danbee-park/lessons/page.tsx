@@ -18,11 +18,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { useProfile } from "@/providers/Profile";
 import { notFound } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, createElement } from "react";
 import { Plus, Trash, XCircle } from "lucide-react";
 import { RowSelectionState } from "@tanstack/react-table";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { useLessonTableActions } from "@/hooks/useActions";
+import { Drawer, DrawerContent } from "@/components/ui/drawer";
 
 type Action = "delete" | "cancel" | "add";
 
@@ -39,23 +40,6 @@ export default function LessonsPage() {
   const selectedCount = Object.keys(selected).length;
   const configActions = useLessonTableActions();
 
-  const handleAddLesson = () => {
-    toast.info("Ajouter un nouveau cours");
-  };
-
-  // Fonction pour supprimer un cours
-  const handleDeleteLessons = async (idLessons: number[]) => {
-    await apiCall<Lesson>("/lesson/bulk", "DELETE", { idLessons });
-    queryClient.invalidateQueries({ queryKey: ["lessons"] });
-  };
-
-  // Fonction pour annuler un cours
-  const handleCancelLessons = async (idLessons: number[]) => {
-    await apiCall<Lesson>("/lesson/status/bulk", "PATCH", {
-      idLessons,
-      status: "cancelled",
-    });
-  };
   const handleConfirm = async () => {
     if (!lessons) return;
     try {
@@ -120,7 +104,6 @@ export default function LessonsPage() {
       name: t("generals.delete"),
       actionFn: async (selected: RowSelectionState) => {
         setAction("delete");
-        console.log(selected);
         setSelected(selected);
       },
       render: () => <Trash className='w-5 h-5 text-destructive' />,
@@ -249,6 +232,22 @@ export default function LessonsPage() {
           onClose={() => setAction(null)}
         />
       )}
+      <Drawer
+        direction='right'
+        open={(action && configActions[action].type === "modal") ?? false}
+        onOpenChange={(open) => !open && setAction(null)}
+      >
+        <DrawerContent className='left-auto mt-0 w-2/3 lg:w-1/4 overflow-hidden rounded-md min-h-screen'>
+          {action &&
+            configActions[action].type === "modal" &&
+            createElement(configActions[action].component, {
+              onSubmit: () => {
+                setAction(null);
+                console.log("submit");
+              },
+            })}
+        </DrawerContent>
+      </Drawer>
     </div>
   );
 }

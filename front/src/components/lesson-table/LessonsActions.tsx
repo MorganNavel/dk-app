@@ -92,22 +92,22 @@ function DialogAction({
   const t = useTranslations();
   const [reschedule, setReschedule] = useState<Date | null>(null);
   const queryClient = useQueryClient();
+
   const refetchLesson = async (lessonId: number) => {
     if (action === "delete") {
       queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
-        if (!oldData) return [updatedLesson];
-        return oldData.filter((lesson) => lesson.idLesson !== lessonId);
+        return oldData ? oldData.filter((l) => l.idLesson !== lessonId) : [];
       });
       return;
     }
+
     const updatedLesson = await apiCall<Lesson>(`/lesson/${lessonId}`);
     queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
       if (!oldData) return [updatedLesson];
-      return oldData.map((lesson) =>
-        lesson.idLesson === lessonId ? updatedLesson : lesson
-      );
+      return oldData.map((l) => (l.idLesson === lessonId ? updatedLesson : l));
     });
   };
+
   const handleConfirm = async () => {
     try {
       if (action === "reschedule") await handleReschedule();
@@ -117,46 +117,48 @@ function DialogAction({
       toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
       await refetchLesson(lesson.idLesson);
     } catch (error: any) {
-      const err: ApiResponse<any> = JSON.parse(error.message);
-      errorToasts(t, err);
+      try {
+        const err: ApiResponse<any> = JSON.parse(error.message);
+        errorToasts(t, err);
+      } catch {
+        toast.error(t("errors.unexpected"));
+      }
     }
   };
+
   const onClose = () => {
     setAction(null);
     setReschedule(null);
   };
+
   const handleReschedule = async () => {
     if (!reschedule) return;
     await apiCall(`/lesson/${lesson.idLesson}`, "PATCH", {
       startDate: reschedule,
     });
   };
+
   const handleCancel = async () => {
     await apiCall(`/lesson/${lesson.idLesson}/status`, "PATCH", {
       status: "cancelled",
     });
   };
+
   const handleDelete = async () => {
     await apiCall(`/lesson/${lesson.idLesson}`, "DELETE");
   };
 
+  if (!action) return null;
+
   return (
     <ConfirmDialog
       open={!!action}
-      title={
-        action
-          ? t(`lessons.data-table.actions.dialog.${action}.title`, {
-              selected: 1,
-            })
-          : ""
-      }
-      description={
-        action
-          ? t(`lessons.data-table.actions.dialog.${action}.content`, {
-              selected: 1,
-            })
-          : ""
-      }
+      title={t(`lessons.data-table.actions.dialog.${action}.title`, {
+        selected: 1,
+      })}
+      description={t(`lessons.data-table.actions.dialog.${action}.content`, {
+        selected: 1,
+      })}
       onConfirm={handleConfirm}
       onClose={onClose}
     >
