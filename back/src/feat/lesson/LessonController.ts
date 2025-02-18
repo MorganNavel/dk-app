@@ -98,7 +98,9 @@ export class LessonController {
     const { idUser } = (req.session as AppSession).user;
     const { idLessons, status } = req.body;
     if (!Array.isArray(idLessons) || idLessons.length == 0) {
-      return res.status(STATUS_CODES.BAD_REQUEST).json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson IDs" });
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson IDs" });
     }
     if (!status)
       return res
@@ -119,13 +121,18 @@ export class LessonController {
       const idLesson = parseInt(req.params.idLesson, 10);
 
       if (Number.isNaN(idLesson)) {
-        return res.status(STATUS_CODES.BAD_REQUEST).json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson ID" });
+        return res
+          .status(STATUS_CODES.BAD_REQUEST)
+          .json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson ID" });
       }
 
       const response = await LessonServices.deleteLessons([idLesson], idUser);
       return res.status(response.code).json(response);
     } catch (error) {
-      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR, error: "An error occurred" });
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: "An error occurred",
+      });
     }
   }
 
@@ -138,14 +145,19 @@ export class LessonController {
       const { idLessons } = req.body;
 
       if (!Array.isArray(idLessons) || idLessons.length === 0) {
-        return res.status(STATUS_CODES.BAD_REQUEST).json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson IDs" });
+        return res.status(STATUS_CODES.BAD_REQUEST).json({
+          code: STATUS_CODES.BAD_REQUEST,
+          error: "Invalid lesson IDs",
+        });
       }
 
       const response = await LessonServices.deleteLessons(idLessons, idUser);
       return res.status(response.code).json(response);
     } catch (error) {
-      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR, error: "An error occurred" });
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
+        error: "An error occurred",
+      });
     }
   }
-
 }

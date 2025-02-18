@@ -253,5 +253,4 @@ lessonRouter.delete(
   LessonController.deleteOne
 );
 
-
 export default lessonRouter;
