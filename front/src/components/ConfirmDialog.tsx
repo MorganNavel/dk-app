@@ -1,15 +1,14 @@
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@/components/ui/alert-dialog";
-import { useTranslations } from "next-intl";
 import { ReactNode } from "react";
+import { useTranslations } from "next-intl";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "./ui/dialog";
+import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 
 interface ConfirmDialogProps {
@@ -30,29 +29,39 @@ export function ConfirmDialog({
   children,
 }: Readonly<ConfirmDialogProps>) {
   const t = useTranslations("generals");
+
   return (
-    <AlertDialog open={open} onOpenChange={onClose}>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            {title == "" ? <Skeleton className='h-6 w-1/2' /> : title}
-          </AlertDialogTitle>
-          <AlertDialogDescription>
-            {description == "" ? (
-              <Skeleton className='h-6 w-2/3' />
-            ) : (
-              description
-            )}
-          </AlertDialogDescription>
-        </AlertDialogHeader>
+    <Dialog
+      open={open}
+      modal={false}
+      onOpenChange={(open) => !open && onClose()}
+    >
+      <DialogContent className='max-w-md'>
+        <DialogHeader>
+          <DialogTitle className='text-lg font-semibold'>
+            {title || <Skeleton className='h-6 w-1/2' />}
+          </DialogTitle>
+        </DialogHeader>
+        <DialogDescription className='text-gray-600'>
+          {description || <Skeleton className='h-6 w-2/3' />}
+        </DialogDescription>
+
         {children}
-        <AlertDialogFooter>
-          <AlertDialogCancel onClick={onClose}>{t("cancel")}</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>
+
+        <DialogFooter className='flex justify-end gap-2'>
+          <Button variant='outline' onClick={onClose}>
+            {t("cancel")}
+          </Button>
+          <Button
+            onClick={() => {
+              onConfirm();
+              onClose();
+            }}
+          >
             {t("confirm")}
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
