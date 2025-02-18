@@ -309,12 +309,14 @@
         "delete": "Delete",
         "dialog": {
           "cancel": {
-            "title": "Cancel lesson",
-            "content": "Are you sure you want to cancel this lesson?"
+            "title": "Cancel lesson{selected, plural, one {} other {s}}",
+            "content": "Are you sure you want to cancel {selected, plural, one {this} other {these}} lesson{selected, plural, one {} other {s}} ?",
+            "success": "The lesson{selected, plural, one {} other {s}} {selected, plural, one {has} other {have}} been successfully cancelled."
           },
           "delete": {
-            "title": "Delete lesson",
-            "content": "Are you sure you want to delete this lesson?"
+            "title": "Delete lesson{selected, plural, one {} other {s}}",
+            "content": "Are you sure you want to delete {selected, plural, one {this} other {these}} lesson{selected, plural, one {} other {s}} ?",
+            "success": "The lesson{selected, plural, one {} other {s}} {selected, plural, one {has} other {have}} been successfully deleted."
           },
           "reschedule": {
             "title": "Reschedule lesson",

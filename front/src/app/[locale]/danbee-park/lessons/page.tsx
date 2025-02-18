@@ -20,7 +20,7 @@ import { useProfile } from "@/providers/Profile";
 import { notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Plus, Trash, XCircle } from "lucide-react";
-import { RowSelection, RowSelectionState } from "@tanstack/react-table";
+import { RowSelectionState } from "@tanstack/react-table";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 type Action = "delete" | "cancel" | "add";
@@ -34,40 +34,44 @@ export default function LessonsPage() {
   const cols = columns(t);
   const queryClient = useQueryClient();
   const [action, setAction] = useState<Action | null>(null);
-  const [selected, setSelected] = useState<RowSelectionState>({})
+  const [selected, setSelected] = useState<RowSelectionState>({});
+  const selectedCount = Object.keys(selected).length;
 
   const handleAddLesson = () => {
     toast.info("Ajouter un nouveau cours");
   };
 
   // Fonction pour supprimer un cours
-  const handleDeleteLessons = async(idLessons: number []) => {
-    await apiCall<Lesson>("/lesson/bulk","DELETE",{ idLessons });
-    queryClient.invalidateQueries({queryKey: ["lessons"]});
+  const handleDeleteLessons = async (idLessons: number[]) => {
+    await apiCall<Lesson>("/lesson/bulk", "DELETE", { idLessons });
+    queryClient.invalidateQueries({ queryKey: ["lessons"] });
   };
 
   // Fonction pour annuler un cours
-  const handleCancelLessons = async(idLessons: number []) => {
-    await apiCall<Lesson>("/lesson/status/bulk","PATCH",{ idLessons, status: "cancelled" });
+  const handleCancelLessons = async (idLessons: number[]) => {
+    await apiCall<Lesson>("/lesson/status/bulk", "PATCH", {
+      idLessons,
+      status: "cancelled",
+    });
   };
-  const handleConfirm = async() => {
-    if(!lessons) return
+  const handleConfirm = async () => {
+    if (!lessons) return;
     try {
       const idLessons = Object.keys(selected).map((value) => Number(value));
-      switch(action){
+      switch (action) {
         case "cancel":
           await handleCancelLessons(idLessons);
+          break;
         case "delete":
           await handleDeleteLessons(idLessons);
+          break;
       }
-      queryClient.invalidateQueries({queryKey: ["lessons"]});
-      setSelected({});
+      queryClient.invalidateQueries({ queryKey: ["lessons"] });
     } catch {
       return;
     }
-  }
+  };
 
-  
   const {
     profile,
     isLoading: isLoadingProfile,
@@ -81,30 +85,32 @@ export default function LessonsPage() {
     queryKey: ["lessons"],
     queryFn: fetchLessons,
   });
-  
+
   if (isError) {
     toast.error("Erreur lors du chargement des données");
   }
-  
+
   useEffect(() => {
     if (isErrorProfile) {
       toast.error("Erreur lors du chargement du profil");
     }
   }, [isErrorProfile]);
-  
+
   if (!isLoadingProfile && (profile?.role == "student" || !profile)) notFound();
   const isLoading = isLoadingProfile || isLoadingLessons;
   function getSelectedLessons(selected: RowSelectionState | undefined) {
-    if(!selected || !lessons) return [];
-    const selectedIndex = Object.keys(selected)
-    const selectedLessons = lessons?.filter((lesson) => selectedIndex.includes(lesson.idLesson.toString()));    
-    return selectedLessons
+    if (!selected || !lessons) return [];
+    const selectedIndex = Object.keys(selected);
+    const selectedLessons = lessons?.filter((lesson) =>
+      selectedIndex.includes(lesson.idLesson.toString())
+    );
+    return selectedLessons;
   }
   const actions: ActionConfig[] = [
     {
       name: t("generals.add"),
       actionFn: () => setAction("add"),
-      render: () => <Plus className="w-4 h-4 text-primary" />,
+      render: () => <Plus className='w-4 h-4 text-primary' />,
       isDisable: (_) => false,
     },
     {
@@ -113,11 +119,14 @@ export default function LessonsPage() {
         setAction("delete");
         setSelected(selected);
       },
-      render: () => <Trash className="w-5 h-5 text-destructive" />,
+      render: () => <Trash className='w-5 h-5 text-destructive' />,
       isDisable: (selected: RowSelectionState) => {
         if (!lessons) return true;
-        const selectedLessons = getSelectedLessons(selected);    
-        return selectedLessons.length === 0 || selectedLessons.some((lesson) => lesson.status !== "cancelled");
+        const selectedLessons = getSelectedLessons(selected);
+        return (
+          selectedLessons.length === 0 ||
+          selectedLessons.some((lesson) => lesson.status !== "cancelled")
+        );
       },
     },
     {
@@ -126,20 +135,22 @@ export default function LessonsPage() {
         setAction("cancel");
         setSelected(selected);
       },
-      render: () => <XCircle className="w-5 h-5 text-destructive" />,
+      render: () => <XCircle className='w-5 h-5 text-destructive' />,
       isDisable: (selected: RowSelectionState) => {
         if (!lessons) return true;
-        const selectedLessons = getSelectedLessons(selected);    
-        return selectedLessons.length === 0 || selectedLessons.some((lesson) => lesson.status !== "planned");
+        const selectedLessons = getSelectedLessons(selected);
+        return (
+          selectedLessons.length === 0 ||
+          selectedLessons.some((lesson) => lesson.status !== "planned")
+        );
       },
     },
   ];
-  
-  
+
   return (
-    <div className="p-15 h-full">
+    <div className='p-15 h-full'>
       <DataTable<Lesson, any>
-        name="lessons"
+        name='lessons'
         isLoading={isLoading}
         data={isLoading ? [] : lessons ?? []}
         columns={cols}
@@ -165,16 +176,16 @@ export default function LessonsPage() {
                     <SelectLabel>
                       {t("lessons.data-table.columns.status")}
                     </SelectLabel>
-                    <SelectItem value="cancelled">
+                    <SelectItem value='cancelled'>
                       {t("lesson.cancelled")}
                     </SelectItem>
-                    <SelectItem value="planned">
+                    <SelectItem value='planned'>
                       {t("lesson.planned")}
                     </SelectItem>
-                    <SelectItem value="in progress">
+                    <SelectItem value='in progress'>
                       {t("lesson.in-progress")}
                     </SelectItem>
-                    <SelectItem value="done">{t("lesson.done")}</SelectItem>
+                    <SelectItem value='done'>{t("lesson.done")}</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -184,7 +195,7 @@ export default function LessonsPage() {
             columnId: "teacher",
             render: (value, setFilterValue) => (
               <Input
-                type="text"
+                type='text'
                 placeholder={t("lessons.data-table.columns.teacher")}
                 value={value}
                 onChange={(e) =>
@@ -199,7 +210,7 @@ export default function LessonsPage() {
             columnId: "title",
             render: (value, setFilterValue) => (
               <Input
-                type="text"
+                type='text'
                 placeholder={t("lessons.data-table.columns.title")}
                 value={value}
                 onChange={(e) =>
@@ -212,17 +223,20 @@ export default function LessonsPage() {
           },
         ]}
       />
-      {action && <ConfirmDialog 
+      {action && (
+        <ConfirmDialog
           open={!!action}
-          title={t(`lessons.data-table.actions.dialog.${action}.title`)}
-          description={t(`lessons.data-table.actions.dialog.${action}.content`)} 
-          onConfirm={handleConfirm} 
-          onClose={() => setAction(null)} 
-          />
-      }
-            
-        
+          title={t(`lessons.data-table.actions.dialog.${action}.title`, {
+            selected: selectedCount,
+          })}
+          description={t(
+            `lessons.data-table.actions.dialog.${action}.content`,
+            { selected: selectedCount }
+          )}
+          onConfirm={handleConfirm}
+          onClose={() => setAction(null)}
+        />
+      )}
     </div>
   );
 }
-

@@ -93,12 +93,10 @@ function DialogAction({
   const [reschedule, setReschedule] = useState<Date | null>(null);
   const queryClient = useQueryClient();
   const refetchLesson = async (lessonId: number) => {
-    if(action === "delete") {
+    if (action === "delete") {
       queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
         if (!oldData) return [updatedLesson];
-        return oldData.filter((lesson) =>
-          lesson.idLesson !== lessonId
-        );
+        return oldData.filter((lesson) => lesson.idLesson !== lessonId);
       });
       return;
     }
@@ -118,7 +116,7 @@ function DialogAction({
 
       toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
       await refetchLesson(lesson.idLesson);
-    } catch (error: any){
+    } catch (error: any) {
       const err: ApiResponse<any> = JSON.parse(error.message);
       errorToasts(t, err);
     }
@@ -143,22 +141,33 @@ function DialogAction({
   };
 
   return (
-    <ConfirmDialog 
-    open={!!action}
-    title={t(`lessons.data-table.actions.dialog.${action}.title`)}
-    description={t(`lessons.data-table.actions.dialog.${action}.content`)} 
-    onConfirm={handleConfirm} 
-    onClose={onClose} 
+    <ConfirmDialog
+      open={!!action}
+      title={
+        action
+          ? t(`lessons.data-table.actions.dialog.${action}.title`, {
+              selected: 1,
+            })
+          : ""
+      }
+      description={
+        action
+          ? t(`lessons.data-table.actions.dialog.${action}.content`, {
+              selected: 1,
+            })
+          : ""
+      }
+      onConfirm={handleConfirm}
+      onClose={onClose}
     >
       {action === "reschedule" && (
-          <DateTimePicker
-            disabled={{ before: new Date() }}
-            onChange={(date) => setReschedule(date ?? null)}
-            initialDate={new Date(lesson.startDate)}/>
+        <DateTimePicker
+          disabled={{ before: new Date() }}
+          onChange={(date) => setReschedule(date ?? null)}
+          initialDate={new Date(lesson.startDate)}
+        />
       )}
-  </ConfirmDialog>
-    
-    
+    </ConfirmDialog>
   );
 }
 

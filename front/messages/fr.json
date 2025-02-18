@@ -302,14 +302,14 @@
         "delete": "Supprimer définitivement",
         "dialog": {
           "cancel": {
-            "title": "Annuler le cours",
-            "content": "Êtes-vous sûr de vouloir annuler ce cours ?",
-            "success": "Le cours a été annulé avec succès."
+            "title": "Annuler le{selected, plural, one {} other {s}} cours",
+            "content": "Êtes-vous sûr de vouloir annuler ce{selected, plural, one {} other {s}} cours ?",
+            "success": "Le{selected, plural, one {} other {s}} cours {selected, plural, one {a} other {ont}} été annulé{selected, plural, one {} other {s}} avec succès."
           },
           "delete": {
-            "title": "Supprimer le cours",
-            "content": "Êtes-vous sûr de vouloir supprimer définitivement ce cours ?",
-            "success": "Le cours a été supprimé avec succès."
+            "title": "Supprimer le{selected, plural, one {} other {s}} cours",
+            "content": "Êtes-vous sûr de vouloir supprimer définitivement ce{selected, plural, one {} other {s}} cours ?",
+            "success": "Le{selected, plural, one {} other {s}} cours {selected, plural, one {a} other {ont}} été supprimé{selected, plural, one {} other {s}} avec succès."
           },
           "reschedule": {
             "title": "Reprogrammer le cours",
