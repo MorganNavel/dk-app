@@ -45,7 +45,7 @@ export class LessonController {
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No field selected" });
-    const response = await LessonServices.updateLesson(idUser, idLesson, {
+    const response = await LessonServices.updateLessons(idUser, [idLesson], {
       startDate,
       duration,
       title,
@@ -86,19 +86,66 @@ export class LessonController {
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No status selected" });
-    const response = await LessonServices.updateLesson(idUser, idLesson, {
+    const response = await LessonServices.updateLessons(idUser, [idLesson], {
+      status,
+    });
+    return res.status(response.code).json(response);
+  }
+  /**
+   * Update the status of the lesson (planned, done, cancelled)
+   */
+  static async updateStatusBulk(req: Request, res: Response) {
+    const { idUser } = (req.session as AppSession).user;
+    const { idLessons, status } = req.body;
+    if (!Array.isArray(idLessons) || idLessons.length == 0) {
+      return res.status(STATUS_CODES.BAD_REQUEST).json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson IDs" });
+    }
+    if (!status)
+      return res
+        .status(STATUS_CODES.BAD_REQUEST)
+        .json({ code: STATUS_CODES.BAD_REQUEST, error: "No status selected" });
+    const response = await LessonServices.updateLessons(idUser, idLessons, {
       status,
     });
     return res.status(response.code).json(response);
   }
 
   /**
-   * Delete a lesson
+   * Delete a single lesson
    */
-  static async delete(req: Request, res: Response) {
-    const { idUser } = (req.session as AppSession).user;
-    const idLesson = parseInt(req.params.idLesson);
-    const response = await LessonServices.deleteLesson(idLesson, idUser);
-    return res.status(response.code).json(response);
+  static async deleteOne(req: Request, res: Response) {
+    try {
+      const { idUser } = (req.session as AppSession).user;
+      const idLesson = parseInt(req.params.idLesson, 10);
+
+      if (Number.isNaN(idLesson)) {
+        return res.status(STATUS_CODES.BAD_REQUEST).json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson ID" });
+      }
+
+      const response = await LessonServices.deleteLessons([idLesson], idUser);
+      return res.status(response.code).json(response);
+    } catch (error) {
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR, error: "An error occurred" });
+    }
   }
+
+  /**
+   * Delete multiple lessons
+   */
+  static async deleteBulk(req: Request, res: Response) {
+    try {
+      const { idUser } = (req.session as AppSession).user;
+      const { idLessons } = req.body;
+
+      if (!Array.isArray(idLessons) || idLessons.length === 0) {
+        return res.status(STATUS_CODES.BAD_REQUEST).json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson IDs" });
+      }
+
+      const response = await LessonServices.deleteLessons(idLessons, idUser);
+      return res.status(response.code).json(response);
+    } catch (error) {
+      return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({ code: STATUS_CODES.INTERNAL_SERVER_ERROR, error: "An error occurred" });
+    }
+  }
+
 }

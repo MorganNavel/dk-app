@@ -4,7 +4,9 @@ import { isSignedIn } from "@/utils/middlewares/auth";
 import { isTeacher } from "@/utils/middlewares/role";
 import {
   validateCreateInput,
+  validateDeleteBulk,
   validateUpdateInput,
+  validateUpdateStatusBulkInput,
   validateUpdateStatusInput,
 } from "./middlewares";
 
@@ -76,6 +78,39 @@ lessonRouter.patch(
   isTeacher,
   validateUpdateInput,
   LessonController.update
+);
+/**
+ * @openapi
+ * /lesson/status/bulk:
+ *   patch:
+ *     summary: Update lessons
+ *     description: Update lessons
+ *     tags:
+ *       - Lesson
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateStatusBulkLesson'
+ *     responses:
+ *       '200':
+ *         $ref: '#/components/responses/200'
+ *       '400':
+ *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
+ *       '404':
+ *         $ref: '#/components/responses/404'
+ *       '500':
+ *         $ref: '#/components/responses/500'
+ */
+lessonRouter.patch(
+  "/status/bulk",
+  isSignedIn,
+  isTeacher,
+  validateUpdateStatusBulkInput,
+  LessonController.updateStatusBulk
 );
 /**
  * @openapi
@@ -158,6 +193,39 @@ lessonRouter.get("/all", LessonController.getAll);
 lessonRouter.get("/:idLesson", isSignedIn, isTeacher, LessonController.getOne);
 /**
  * @openapi
+ * /lesson/bulk:
+ *   delete:
+ *     summary: Delete several lessons
+ *     description: Delete several lessons
+ *     tags:
+ *       - Lesson
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/DeleteBulkLessons'
+ *     responses:
+ *       '200':
+ *         $ref: '#/components/responses/200'
+ *       '400':
+ *         $ref: '#/components/responses/400'
+ *       '401':
+ *         $ref: '#/components/responses/401'
+ *       '404':
+ *         $ref: '#/components/responses/404'
+ *       '500':
+ *         $ref: '#/components/responses/500'
+ */
+lessonRouter.delete(
+  "/bulk",
+  isSignedIn,
+  isTeacher,
+  validateDeleteBulk,
+  LessonController.deleteBulk
+);
+/**
+ * @openapi
  * /lesson/{idLesson}:
  *   delete:
  *     summary: Delete a lesson
@@ -182,7 +250,8 @@ lessonRouter.delete(
   "/:idLesson",
   isSignedIn,
   isTeacher,
-  LessonController.delete
+  LessonController.deleteOne
 );
+
 
 export default lessonRouter;

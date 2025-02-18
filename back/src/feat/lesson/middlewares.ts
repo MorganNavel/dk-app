@@ -1,5 +1,5 @@
 import { validateBody } from "@/utils/validation";
-import { CreateScheme, UpdateScheme, UpdateStatusScheme } from "./schemes";
+import { CreateScheme, DeleteBulkScheme, UpdateScheme, UpdateStatusBulkScheme, UpdateStatusScheme } from "./schemes";
 import { Request, Response, NextFunction } from "express";
 
 export function validateCreateInput(
@@ -23,4 +23,20 @@ export function validateUpdateStatusInput(
   next: NextFunction
 ) {
   validateBody(UpdateStatusScheme)(req, res, next);
+}
+export function validateUpdateStatusBulkInput(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  validateBody(UpdateStatusBulkScheme)(req, res, next);
+}
+
+export function validateDeleteBulk(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  console.log(req.body);
+  validateBody(DeleteBulkScheme)(req, res, next);
 }

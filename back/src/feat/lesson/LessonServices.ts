@@ -56,73 +56,99 @@ export class LessonServices {
         idTeacher,
         idLesson
       );
-      console.log("lesson", lesson);
       if (!lesson) return { code: STATUS_CODES.NOT_FOUND };
       return { code: STATUS_CODES.OK, data: lesson };
     } catch (error) {
       return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
     }
   }
+
   /**
-   * Delete a lesson
-   * @param idLesson Lesson identification number
+   * Delete multiple lessons
+   * @param idLessons Array of lesson identification number
    * @param idTeacher Teacher identification number (Teacher is a User)
    * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async deleteLesson(
-    idLesson: number,
-    idTeacher: number
-  ): Promise<ApiResponse> {
+  static async deleteLessons(idLessons: number[], idTeacher: number): Promise<ApiResponse> {
     try {
-      const lesson = await Lesson.findByPk(idLesson);
-      if (!lesson) return { code: STATUS_CODES.NOT_FOUND };
-      if (lesson.dataValues.idTeacher !== idTeacher)
-        return { code: STATUS_CODES.UNAUTHORIZED };
-      lesson.destroy();
+      // Récupérer les leçons appartenant au professeur
+      const lessons = await Lesson.findAll({
+        where: {
+          idLesson: idLessons,
+          idTeacher: idTeacher, // Vérification directe dans la requête
+        },
+      });
+
+      // Vérifier si toutes les leçons existent et appartiennent au professeur
+      if (lessons.length !== idLessons.length) {
+        return { code: STATUS_CODES.NOT_FOUND };
+      }
+
+      // Suppression des leçons
+      await Lesson.destroy({ where: { idLesson: idLessons } });
+
       return { code: STATUS_CODES.OK };
     } catch (error) {
       return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
     }
   }
+
   /**
-   * Update fields of the given lesson
-   * @param idTeacher Teacher identification number (Teacher is a User)
-   * @param idLesson Lesson identification number
-   * @param body Request body, fields to update
-   * @returns ApiResponse : { code: number, data?: any, error?: string }
-   */
-  static async updateLesson(
+ * Bulk update lessons
+ * @param idTeacher Teacher identification number (Teacher is a User)
+ * @param idLessons Array of Lesson identification numbers
+ * @param body Request body, fields to update
+ * @returns ApiResponse : { code: number, data?: any, error?: string }
+ */
+  static async updateLessons(
     idTeacher: number,
-    idLesson: number,
+    idLessons: number[],
     body: any
   ): Promise<ApiResponse> {
     try {
-      const lesson = await Lesson.findByPk(idLesson);
-      if (!lesson) return { code: STATUS_CODES.INTERNAL_SERVER_ERROR };
+      // Validation : Vérifier que idLessons est un tableau non vide
+      if (!Array.isArray(idLessons) || idLessons.length === 0 || idLessons.some(id => typeof id !== "number")) {
+        return { code: STATUS_CODES.BAD_REQUEST };
+      }
 
-      if (lesson.dataValues.idTeacher !== idTeacher) {
+      // Récupérer les leçons à mettre à jour
+      const lessons = await Lesson.findAll({
+        where: { idLesson: idLessons },
+      });
+
+      if (lessons.length !== idLessons.length) {
+        return { code: STATUS_CODES.NOT_FOUND };
+      }
+
+      if (lessons.some(lesson => lesson.dataValues.idTeacher !== idTeacher)) {
         return { code: STATUS_CODES.UNAUTHORIZED };
       }
+
       const filteredBody = Object.fromEntries(
         Object.entries(body).filter(([_, value]) => value !== undefined)
       );
 
-      if (Object.keys(filteredBody).length > 0) {
-        if (filteredBody.startDate) {
-          filteredBody.startDate = new Date(filteredBody.startDate as string);
-        }
-
-        await lesson.update(filteredBody);
+      if (Object.keys(filteredBody).length === 0) {
+        return { code: STATUS_CODES.BAD_REQUEST, error: "No valid fields to update" };
       }
+
+      if (filteredBody.startDate) {
+        filteredBody.startDate = new Date(filteredBody.startDate as string);
+      }
+
+      await Lesson.update(filteredBody, {
+        where: { idLesson: idLessons },
+      });
+
       return { code: STATUS_CODES.OK };
     } catch (error) {
       console.error(error);
       return {
-        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
-        error: error as string,
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR
       };
     }
   }
+
   /**
    * Get a lesson from a teacher (future only)
    * @param idTeacher Teacher identification number (Teacher is a User)
