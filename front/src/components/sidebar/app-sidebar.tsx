@@ -59,7 +59,7 @@ const data: {
     },
     {
       title: "header.classes",
-      url: "#",
+      url: "danbee-park/schedule",
       icon: GraduationCap,
       isActive: true,
     },
