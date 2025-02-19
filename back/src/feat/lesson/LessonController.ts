@@ -16,7 +16,7 @@ export class LessonController {
         title,
         description,
         duration,
-        startDate,
+        startDate: new Date(startDate),
         idTeacher: idUser,
       });
       /* TODO: 
