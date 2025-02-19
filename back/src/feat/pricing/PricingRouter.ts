@@ -2,7 +2,11 @@ import { Router } from "express";
 import { PricingController } from "./PricingController";
 import { isStudent, isTeacher } from "@/utils/middlewares/role";
 import { isSignedIn } from "@/utils/middlewares/auth";
-import { validateCreateInput, validateUpdateInput } from "./middlewares";
+import {
+  validateCreateInput,
+  validatePaymentInput,
+  validateUpdateInput,
+} from "./middlewares";
 
 const pricingRouter = Router();
 /**
@@ -105,10 +109,11 @@ pricingRouter.post(
  *         $ref: '#/components/responses/500'
  */
 pricingRouter.post(
-  "/:idPricing/buy",
+  "/:idPricing/payment",
   isSignedIn,
   isStudent,
-  PricingController.buy
+  validatePaymentInput,
+  PricingController.payment
 );
 /**
  * @openapi

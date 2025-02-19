@@ -16,10 +16,14 @@ export class PricingController {
     const response = await PricingServices.createPricing(req.body);
     return res.status(response.code).json(response);
   }
-  static async buy(req: Request, res: Response) {
+  static async payment(req: Request, res: Response) {
     const { idUser } = (req.session as AppSession).user;
     const idPricing = parseInt(req.params.idPricing);
-    const response = await PricingServices.buyPricing(idUser, idPricing);
+    const response = await PricingServices.processPayment(
+      idUser,
+      idPricing,
+      req.body
+    );
     return res.status(response.code).json(response);
   }
   static async update(req: Request, res: Response) {

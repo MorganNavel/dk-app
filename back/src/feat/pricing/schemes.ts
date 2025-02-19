@@ -49,3 +49,20 @@ export const UpdateScheme = joi.object({
   price: joi.number(),
   nbLessons: joi.number().min(1),
 });
+
+export const PaymentScheme = joi.object({
+  successUrl: joi.string().uri().required(),
+  cancelUrl: joi.string().uri().required(),
+  failureUrl: joi.string().uri().required(),
+  currency: joi.string(),
+  price: joi.number(),
+  billing: joi
+    .object({
+      address: joi
+        .object({
+          country: joi.string().min(2).max(2).required(),
+        })
+        .required(),
+    })
+    .required(),
+});
