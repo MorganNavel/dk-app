@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { Form } from "../ui/form";
+import { Form } from "@ui/form";
 import { useForm } from "react-hook-form";
 import { LessonScheme } from "@/scheme/lesson";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,8 +8,10 @@ import { ControlledTextarea } from "../fields/ControlledTextarea";
 import { ControlledDatePicker } from "../fields/ControlledDatePicker";
 import { apiCall } from "@/utils/apiCall";
 import { useQueryClient } from "@tanstack/react-query";
-import { Button } from "../ui/button";
-import { useEffect } from "react";
+import { Button } from "@ui/button";
+import { toast } from "sonner";
+import { ApiResponse } from "@/types/ApiResponse";
+import { errorToasts } from "@/utils/toast";
 interface FormProps {
   title: string;
   description: string;
@@ -35,12 +37,17 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
     try {
       await apiCall("/lesson", "POST", data);
       queryClient.invalidateQueries({ queryKey: ["lessons"] });
-    } catch {}
+      toast.success(t("lesson.create.success"));
+    } catch (e) {
+      if (e instanceof Error) {
+        console.log(e.message);
+        const err: ApiResponse<any> = JSON.parse(e.message);
+        errorToasts(t, err);
+      }
+    }
     onFinish();
   }
-  useEffect(() => {
-    console.log(methods.formState.errors);
-  }, [methods.formState.errors]);
+
   return (
     <Form {...methods}>
       <form onSubmit={methods.handleSubmit(handleSubmit)} className='p-10'>
@@ -52,7 +59,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           control={methods.control}
         />
         <ControlledTextarea
-          label={t("description")}
+          label={t("generals.description")}
           name='description'
           control={methods.control}
         />
@@ -73,7 +80,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
         />
 
         <div className='flex flex-col gap-3 mt-5 mx-5'>
-          <Button className='w-full' variant={"outline"}  onClick={onFinish}>
+          <Button className='w-full' variant={"outline"} onClick={onFinish}>
             {t("generals.cancel")}
           </Button>
           <Button

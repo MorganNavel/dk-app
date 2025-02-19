@@ -23,7 +23,14 @@ import { Plus, Trash, XCircle } from "lucide-react";
 import { RowSelectionState } from "@tanstack/react-table";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { useLessonTableActions } from "@/hooks/useActions";
-import { Drawer, DrawerContent } from "@/components/ui/drawer";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { useSidebar } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 type Action = "delete" | "cancel" | "add";
 
@@ -39,6 +46,7 @@ export default function LessonsPage() {
   const [selected, setSelected] = useState<RowSelectionState>({});
   const selectedCount = Object.keys(selected).length;
   const configActions = useLessonTableActions();
+  const { isMobile } = useSidebar();
 
   const handleConfirm = async () => {
     if (!lessons) return;
@@ -233,11 +241,25 @@ export default function LessonsPage() {
         />
       )}
       <Drawer
-        direction='right'
+        direction={isMobile ? "bottom" : "right"}
         open={(action && configActions[action].type === "modal") ?? false}
         onOpenChange={(open) => !open && setAction(null)}
       >
-        <DrawerContent className='left-auto mt-0 w-2/3 lg:w-1/4 overflow-hidden rounded-md min-h-screen'>
+        <DrawerContent
+          className={cn(
+            "left-auto mt-0 w-full lg:w-1/4 rounded-md",
+            isMobile ? "h-3/4 overflow-hidden" : "h-full"
+          )}
+        >
+          {!isMobile && (
+            <DrawerHeader className='mt-5'>
+              <DrawerTitle className='text-center lg:text-2xl text-xl font-semibold'>
+                {action && configActions[action].type === "modal"
+                  ? t(`lessons.data-table.actions.modal.${action}.title`)
+                  : ""}
+              </DrawerTitle>
+            </DrawerHeader>
+          )}
           {action &&
             configActions[action].type === "modal" &&
             createElement(configActions[action].component, {

@@ -274,6 +274,9 @@
       "date": "Date",
       "time": "Time",
       "submit": "Reschedule"
+    },
+    "create": {
+      "success": "The lesson has been successfully created."
     }
   },
   "data-table": {
@@ -308,6 +311,11 @@
         "cancel": "Cancel",
         "reschedule": "Reschedule",
         "delete": "Delete",
+        "modal": {
+          "add": {
+            "title": "Create a new lesson"
+          }
+        },
         "dialog": {
           "cancel": {
             "title": "Cancel lesson{selected, plural, one {} other {s}}",

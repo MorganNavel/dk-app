@@ -301,6 +301,11 @@
         "cancel": "Annuler",
         "reschedule": "Reprogrammer",
         "delete": "Supprimer définitivement",
+        "modal": {
+          "add": {
+            "title": "Create a new lesson"
+          }
+        },
         "dialog": {
           "cancel": {
             "title": "Annuler le{selected, plural, one {} other {s}} cours",
