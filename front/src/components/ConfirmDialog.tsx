@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -33,7 +34,6 @@ export function ConfirmDialog({
   return (
     <Dialog
       open={open}
-      modal={false}
       onOpenChange={(open) => !open && onClose()}
     >
       <DialogContent className='max-w-md'>
@@ -45,21 +45,18 @@ export function ConfirmDialog({
         <DialogDescription className='text-gray-600'>
           {description || <Skeleton className='h-6 w-2/3' />}
         </DialogDescription>
-
         {children}
-
         <DialogFooter className='flex justify-end gap-2'>
-          <Button variant='outline' onClick={onClose}>
-            {t("cancel")}
-          </Button>
-          <Button
-            onClick={() => {
-              onConfirm();
-              onClose();
-            }}
-          >
-            {t("confirm")}
-          </Button>
+          <DialogClose asChild>
+            <Button variant='outline'>
+                {t("cancel")}
+            </Button>
+          </DialogClose>
+          <DialogClose asChild onClick={onConfirm}>
+            <Button>
+              {t("confirm")}
+            </Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

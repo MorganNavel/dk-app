@@ -85,9 +85,9 @@ function DialogAction({
   action,
   setAction,
 }: {
-  readonly lesson: Lesson;
-  readonly action: string | null;
-  readonly setAction: (action: string | null) => void;
+  lesson: Lesson;
+  action: string | null;
+  setAction: (action: string | null) => void;
 }) {
   const t = useTranslations();
   const [reschedule, setReschedule] = useState<Date | null>(null);
@@ -150,7 +150,7 @@ function DialogAction({
 
   if (!action) return null;
 
-  return (
+  return ( 
     <ConfirmDialog
       open={!!action}
       title={t(`lessons.data-table.actions.dialog.${action}.title`, {
