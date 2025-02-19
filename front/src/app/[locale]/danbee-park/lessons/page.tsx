@@ -5,7 +5,7 @@ import { apiCall } from "@/utils/apiCall";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { columns } from "../../../../components/lesson-table/columns";
+import { columns } from "@/components/lesson-table/columns";
 import {
   Select,
   SelectContent,
@@ -241,9 +241,8 @@ export default function LessonsPage() {
           {action &&
             configActions[action].type === "modal" &&
             createElement(configActions[action].component, {
-              onSubmit: () => {
+              onFinish: () => {
                 setAction(null);
-                console.log("submit");
               },
             })}
         </DrawerContent>
