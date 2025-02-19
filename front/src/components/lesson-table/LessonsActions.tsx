@@ -84,11 +84,11 @@ function DialogAction({
   lesson,
   action,
   setAction,
-}: {
+}: Readonly<{
   lesson: Lesson;
   action: string | null;
   setAction: (action: string | null) => void;
-}) {
+}>) {
   const t = useTranslations();
   const [reschedule, setReschedule] = useState<Date | null>(null);
   const queryClient = useQueryClient();

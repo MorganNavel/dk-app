@@ -17,9 +17,9 @@ interface FormProps {
   duration: number;
 }
 interface LessonFormProps {
-  onSubmit: () => void;
+  onFinish: () => void;
 }
-export function LessonForm({ onSubmit }: Readonly<LessonFormProps>) {
+export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
   const t = useTranslations();
   const queryClient = useQueryClient();
   const methods = useForm<FormProps>({
@@ -36,7 +36,7 @@ export function LessonForm({ onSubmit }: Readonly<LessonFormProps>) {
       await apiCall("/lesson", "POST", data);
       queryClient.invalidateQueries({ queryKey: ["lessons"] });
     } catch {}
-    onSubmit();
+    onFinish();
   }
   useEffect(() => {
     console.log(methods.formState.errors);
@@ -72,8 +72,8 @@ export function LessonForm({ onSubmit }: Readonly<LessonFormProps>) {
           disabled
         />
 
-        <div className='flex flex-col gap-4 mt-5 mx-5'>
-          <Button className='w-full' variant='ghost' onClick={onSubmit}>
+        <div className='flex flex-col gap-3 mt-5 mx-5'>
+          <Button className='w-full' variant={"outline"}  onClick={onFinish}>
             {t("generals.cancel")}
           </Button>
           <Button
