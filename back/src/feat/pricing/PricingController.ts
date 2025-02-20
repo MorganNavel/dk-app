@@ -17,11 +17,11 @@ export class PricingController {
     return res.status(response.code).json(response);
   }
   static async payment(req: Request, res: Response) {
-    const { idUser } = (req.session as AppSession).user;
-    const idPricing = parseInt(req.params.idPricing);
+    // const { idUser } = (req.session as AppSession).user;
+    // const idPricing = parseInt(req.params.idPricing);
     const response = await PricingServices.processPayment(
-      idUser,
-      idPricing,
+      1,
+      1,
       req.body
     );
     return res.status(response.code).json(response);

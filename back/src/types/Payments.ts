@@ -1,16 +1,16 @@
-interface Payment {
-  successUrl: string;
-  cancelUrl: string;
-  failureUrl: string;
+export interface Payment {
+  success_url: string;
+  cancel_url: string;
+  failure_url: string;
   currency: string;
-  price: number;
   billing: {
     address: {
       country: string;
     };
-  };
+  },
+  processing_channel_id?: string
 }
-interface PaymentResponse {
+export interface PaymentResponse {
   id: string;
   reference: string;
   _links: {
@@ -22,7 +22,7 @@ interface PaymentResponse {
     };
   };
 }
-interface PaymentError {
+export interface PaymentError {
   request_id: string;
   error_type: string;
   error_codes: string[];

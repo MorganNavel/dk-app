@@ -27,17 +27,15 @@ export async function apiCall<T, U>({
   if (method !== "GET" && body) {
     config.body = JSON.stringify(body);
   }
+  console.log(config);
 
   // Envoi de la requête
   const response = await fetch(url, config);
-
-  // Gestion des erreurs de réponse
   if (!response.ok) {
     const error: U = await response.json();
     throw new Error(JSON.stringify(error));
   }
-
   // Retour des données de la réponse
-  const data: U = await response.json();
+  const data = await response.json();
   return data;
 }

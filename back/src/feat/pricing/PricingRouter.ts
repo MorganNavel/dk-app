@@ -110,8 +110,8 @@ pricingRouter.post(
  */
 pricingRouter.post(
   "/:idPricing/payment",
-  isSignedIn,
-  isStudent,
+  // isSignedIn,
+  // isStudent,
   validatePaymentInput,
   PricingController.payment
 );

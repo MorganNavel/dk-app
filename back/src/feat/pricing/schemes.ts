@@ -51,9 +51,9 @@ export const UpdateScheme = joi.object({
 });
 
 export const PaymentScheme = joi.object({
-  successUrl: joi.string().uri().required(),
-  cancelUrl: joi.string().uri().required(),
-  failureUrl: joi.string().uri().required(),
+  success_url: joi.string().uri().required(),
+  cancel_url: joi.string().uri().required(),
+  failure_url: joi.string().uri().required(),
   currency: joi.string(),
   price: joi.number(),
   billing: joi

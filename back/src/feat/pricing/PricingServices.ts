@@ -1,5 +1,6 @@
 import { Pricing } from "@/models/PricingModel";
 import { User } from "@/models/UserModel";
+import { Payment, PaymentError, PaymentResponse } from "@/types/Payments";
 import { ApiResponse } from "@/types/Response";
 import { apiCall } from "@/utils/apiCall";
 import { STATUS_CODES } from "@/utils/statusCodes";
@@ -68,9 +69,21 @@ export class PricingServices {
       if (!user) {
         return { code: STATUS_CODES.NOT_FOUND, error: "User not found" };
       }
+      body = {
+        "currency": "GBP",
+        "billing": {
+          "address": {
+            "country": "GB"
+          }
+        },
+        "success_url": "https://example.com/payments/success",
+        "failure_url": "https://example.com/payments/failure",
+        "cancel_url": "https://example.com/payments/cancel",
+        "processing_channel_id": "pc_q4dbxom5jbgudnjzjpz7j2z6uq",
+      }
 
       const response = await apiCall<Payment, PaymentResponse | PaymentError>({
-        url: `${process.env.PAYMENT_API}/hosted_payments`,
+        url: `${process.env.PAYMENT_API}/hosted-payments`,
         method: "POST",
         body: body,
         options: {
