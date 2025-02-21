@@ -21,8 +21,22 @@ import {
 import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { ComponentType } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/routing";
-import { Link } from "@/i18n/routing";
+import { useRouter, Link } from "@/i18n/routing";
+import { UserRole } from "@/types/User";
+import { useProfile } from "@/providers/Profile";
+export interface NavMainProps {
+  items: {
+    title: string;
+    url: string;
+    icon?: LucideIcon | ComponentType;
+    isActive?: boolean;
+    items?: {
+      right?: UserRole;
+      title: string;
+      url: string;
+    }[];
+  }[];
+}
 
 export function NavMain({
   items,
@@ -33,6 +47,7 @@ export function NavMain({
     icon?: LucideIcon | ComponentType;
     isActive?: boolean;
     items?: {
+      right?: UserRole;
       title: string;
       url: string;
     }[];
@@ -42,6 +57,7 @@ export function NavMain({
 
   const { open, isMobile, setOpenMobile } = useSidebar();
   const t = useTranslations();
+  const { profile } = useProfile();
 
   return (
     <SidebarGroup>
@@ -69,7 +85,7 @@ export function NavMain({
               key={item.title}
               asChild
               defaultOpen={item.isActive}
-              className="group/collapsible"
+              className='group/collapsible'
             >
               <SidebarMenuItem>
                 <CollapsibleTrigger asChild>
@@ -83,24 +99,31 @@ export function NavMain({
                   >
                     {item.icon && <item.icon />}
                     <span>{t(item.title)}</span>
-                    <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    <ChevronRightIcon className='ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90' />
                   </SidebarMenuButton>
                 </CollapsibleTrigger>
                 <CollapsibleContent>
                   <SidebarMenuSub>
-                    {item.items?.map((subItem) => (
-                      <SidebarMenuSubItem key={subItem.title}>
-                        <SidebarMenuSubButton asChild>
-                          <Link
-                            href={`/${subItem.url}`}
-                            passHref
-                            onClick={() => isMobile && setOpenMobile(false)}
-                          >
-                            <span>{t(subItem.title)}</span>
-                          </Link>
-                        </SidebarMenuSubButton>
-                      </SidebarMenuSubItem>
-                    ))}
+                    {item.items?.map((subItem) => {
+                      if (subItem.right && !profile) return null;
+                      if (subItem.right && profile?.role !== subItem.right)
+                        return null;
+                      return 
+                         
+                          <SidebarMenuSubItem key={subItem.title}>
+                            <SidebarMenuSubButton asChild>
+                              <Link
+                                href={`/${subItem.url}`}
+                                passHref
+                                onClick={() => isMobile && setOpenMobile(false)}
+                              >
+                                <span>{t(subItem.title)}</span>
+                              </Link>
+                            </SidebarMenuSubButton>
+                          </SidebarMenuSubItem>
+                        
+                      
+                    })}
                   </SidebarMenuSub>
                 </CollapsibleContent>
               </SidebarMenuItem>

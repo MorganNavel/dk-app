@@ -13,24 +13,17 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import Image from "next/image";
-import { NavMain } from "./nav-main";
+import { NavMain, NavMainProps } from "./nav-main";
 import { NavUser } from "./nav-user";
 import logo from "@public/assets/img/logo.png";
 import { FaChalkboardTeacher, FaRegEnvelope } from "react-icons/fa";
-import { IconType } from "react-icons";
-import { useLocale, useTranslations } from "next-intl";
-import { Link, useRouter } from "@/i18n/routing";
+import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/routing";
 import { useProfile } from "@/providers/Profile";
 import { Button } from "../ui/button";
 
 const data: {
-  navMain: {
-    title: string;
-    url: string;
-    icon: IconType | React.ComponentType<any>;
-    isActive?: boolean;
-    items?: { title: string; url: string }[];
-  }[];
+  navMain: NavMainProps["items"];
 } = {
   navMain: [
     {
@@ -39,6 +32,11 @@ const data: {
       icon: FaChalkboardTeacher,
       isActive: true,
       items: [
+        {
+          title: "header.dashboard",
+          url: "danbee-park/dashboard",
+          right: "teacher",
+        },
         {
           title: "header.profile",
           url: "danbee-park/profile",
@@ -72,7 +70,6 @@ const data: {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const locale = useLocale();
   const { isMobile, setOpenMobile } = useSidebar();
   const { profile } = useProfile();
   const t = useTranslations();
