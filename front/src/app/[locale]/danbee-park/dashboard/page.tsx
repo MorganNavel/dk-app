@@ -110,7 +110,7 @@ export default function LessonsPage() {
     },
     {
       name: t("generals.delete"),
-      actionFn: async (selected: RowSelectionState) => {
+      actionFn: (selected: RowSelectionState) => {
         setAction("delete");
         setSelected(selected);
       },
