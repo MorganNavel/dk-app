@@ -108,21 +108,20 @@ export function NavMain({
                       if (subItem.right && !profile) return null;
                       if (subItem.right && profile?.role !== subItem.right)
                         return null;
-                      return 
-                         
-                          <SidebarMenuSubItem key={subItem.title}>
-                            <SidebarMenuSubButton asChild>
-                              <Link
-                                href={`/${subItem.url}`}
-                                passHref
-                                onClick={() => isMobile && setOpenMobile(false)}
-                              >
-                                <span>{t(subItem.title)}</span>
-                              </Link>
-                            </SidebarMenuSubButton>
-                          </SidebarMenuSubItem>
-                        
-                      
+
+                      return (
+                        <SidebarMenuSubItem key={subItem.title}>
+                          <SidebarMenuSubButton asChild>
+                            <Link
+                              href={`/${subItem.url}`}
+                              passHref
+                              onClick={() => isMobile && setOpenMobile(false)}
+                            >
+                              <span>{t(subItem.title)}</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      );
                     })}
                   </SidebarMenuSub>
                 </CollapsibleContent>

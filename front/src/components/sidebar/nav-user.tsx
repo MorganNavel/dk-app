@@ -25,7 +25,7 @@ import { PiStudentBold } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";
 import { useTranslations } from "next-intl";
 import { apiCall } from "@/utils/apiCall";
-import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "@/i18n/routing";
 interface NavUserProps {
   profile: ProfileMe;
 }
@@ -33,12 +33,11 @@ interface NavUserProps {
 export function NavUser({ profile }: Readonly<NavUserProps>) {
   const { isMobile } = useSidebar();
   const t = useTranslations();
-  const queryClient = useQueryClient();
+  const router = useRouter();
   const signout = async () => {
     try {
       await apiCall("/auth/signout", "POST");
-      queryClient.invalidateQueries({ queryKey: ["profile"] });
-      window.location.href = "/";
+      router.replace("/");
     } catch {}
   };
 
