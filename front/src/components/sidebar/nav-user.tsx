@@ -26,6 +26,7 @@ import { VscAccount } from "react-icons/vsc";
 import { useTranslations } from "next-intl";
 import { apiCall } from "@/utils/apiCall";
 import { useRouter } from "@/i18n/routing";
+import { useQueryClient } from "@tanstack/react-query";
 interface NavUserProps {
   profile: ProfileMe;
 }
@@ -33,11 +34,13 @@ interface NavUserProps {
 export function NavUser({ profile }: Readonly<NavUserProps>) {
   const { isMobile } = useSidebar();
   const t = useTranslations();
+  const queryClient = useQueryClient();
   const router = useRouter();
   const signout = async () => {
     try {
       await apiCall("/auth/signout", "POST");
-      router.replace("/");
+      queryClient.clear();
+      router.refresh();
     } catch {}
   };
 
