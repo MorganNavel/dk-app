@@ -28,7 +28,7 @@ import { useTranslations } from "next-intl";
 import { ReactNode, useEffect, useState } from "react";
 import { DataTablePagination } from "./Pagination";
 import { DataTableViewOptions } from "./ColumnView";
-import { RowFiltering } from "./RowFiltering";
+import { RowFiltering, RowFilteringPopover } from "./RowFiltering";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -103,9 +103,16 @@ function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex items-center justify-between space-x-4 p-4'>
+      <div className='flex items-center justify-between space-x-4 py-4'>
         <div className='flex space-x-4'>
           <DataTableViewOptions table={table} name={name} />
+          {/* <RowFilteringPopover
+            table={table}
+            name={name}
+            columns={columns}
+            filtersConfig={filtersConfig}
+            setColumnFilters={setColumnFilters}
+          /> */}
           <RowFiltering
             table={table}
             name={name}
