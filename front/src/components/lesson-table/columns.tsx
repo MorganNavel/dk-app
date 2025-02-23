@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { Lesson } from "@/types/lesson";
+import { Lesson } from "@/types/Lesson";
 import { Teacher } from "@/types/User";
 import { tsToLocaleDate } from "@/utils/dateUtils";
 import { ColumnDef } from "@tanstack/react-table";

@@ -9,7 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { Lesson } from "@/types/lesson";
+import { Lesson } from "@/types/Lesson";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { DateTimePicker } from "@/components/DatePicker";
@@ -150,7 +150,7 @@ function DialogAction({
 
   if (!action) return null;
 
-  return ( 
+  return (
     <ConfirmDialog
       open={!!action}
       title={t(`lessons.data-table.actions.dialog.${action}.title`, {

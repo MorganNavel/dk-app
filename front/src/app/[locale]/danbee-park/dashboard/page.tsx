@@ -1,6 +1,6 @@
 "use client";
 import DataTable, { ActionConfig } from "@/components/reusable/table/DataTable";
-import { Lesson } from "@/types/lesson";
+import { Lesson } from "@/types/Lesson";
 import { apiCall } from "@/utils/apiCall";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
