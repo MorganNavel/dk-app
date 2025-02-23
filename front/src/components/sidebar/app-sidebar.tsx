@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { HandCoins, Info, GraduationCap } from "lucide-react";
+import { HandCoins, Info, GraduationCap, LogIn } from "lucide-react";
 
 import {
   Sidebar,
@@ -70,7 +70,7 @@ const data: {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { isMobile, setOpenMobile } = useSidebar();
+  const { isMobile, setOpenMobile, open } = useSidebar();
   const { profile } = useProfile();
   const t = useTranslations();
   const router = useRouter();
@@ -107,15 +107,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {process.env.NODE_ENV == "development" && profile && (
           <NavUser profile={profile} />
         )}
-        {process.env.NODE_ENV == "development" && !profile && (
-          <Button
-            variant={"round-outline"}
-            className='w-full h-full'
-            onClick={() => router.push("/sign-in")}
-          >
-            {t("generals.signin")}
-          </Button>
-        )}
+        {process.env.NODE_ENV == "development" &&
+          !profile &&
+          (open ? (
+            <Button
+              variant={"round-outline"}
+              className='w-full h-full'
+              onClick={() => router.push("/sign-in")}
+            >
+              {t("generals.signin")}
+            </Button>
+          ) : (
+            <LogIn
+              onClick={() => router.push("/sign-in")}
+              className='cursor-pointer'
+            />
+          ))}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
