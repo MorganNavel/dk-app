@@ -35,7 +35,6 @@ export class BookingServices {
       const booking = await Booking.create({
         startDate: lesson.startDate,
         duration: lesson.duration,
-        tarif: 0,
         idUser,
         idLesson,
       });
