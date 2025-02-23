@@ -3,9 +3,7 @@ import { Lesson } from "./LessonModel";
 import { User } from "./UserModel";
 
 class Booking extends Model {
-  public idGroup!: number;
-  public title!: string;
-  public description!: string;
+  public idBooking!: number;
   public lesson!: Lesson;
   public user!: User;
 }
@@ -16,18 +14,6 @@ function initBooking(sequelize: Sequelize) {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-      },
-      startDate: {
-        type: "TIMESTAMP",
-        allowNull: false,
-      },
-      duration: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
-      },
-      tarif: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
       },
     },
     {

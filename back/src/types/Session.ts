@@ -1,10 +1,11 @@
+import { UserRole } from "@/models/UserModel";
 import { Session } from "express-session";
 
 export interface AppSession extends Session {
   user: UserSession;
 }
 
-interface UserSession {
+export interface UserSession {
   idUser: number;
   name: string;
   firstname: string;
@@ -14,6 +15,6 @@ interface UserSession {
   avatar?: string;
   nationality?: string;
   views?: number;
-  role: string;
+  role: UserRole;
   rating?: number;
 }

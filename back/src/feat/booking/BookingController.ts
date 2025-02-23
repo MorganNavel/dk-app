@@ -3,6 +3,7 @@ import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Response, Request } from "express";
 import { BookingServices } from "./BookingServices";
+import { hasPermission } from "@/utils/middlewares/permissions";
 
 export class BookingController {
   /**
@@ -11,6 +12,11 @@ export class BookingController {
   static async createBooking(req: Request, res: Response) {
     const idLesson = parseInt(req.params.idLesson);
     const session = req.session as AppSession;
+    const { user } = session;
+    if (!hasPermission(user, "bookings", "create"))
+      return res
+        .status(STATUS_CODES.UNAUTHORIZED)
+        .json({ code: STATUS_CODES.UNAUTHORIZED });
     const { idUser } = session.user;
     const response = await BookingServices.createBooking(idUser, idLesson);
     return res.status(response.code).json(response);
@@ -21,7 +27,13 @@ export class BookingController {
    */
   static async getAllBookings(req: Request, res: Response) {
     const idLesson = parseInt(req.params.idLesson);
-    const { idUser, role } = (req.session as AppSession).user;
+    const session = req.session as AppSession;
+    const { idUser, role } = session.user;
+    if (!hasPermission(session.user, "bookings", "read"))
+      return res
+        .status(STATUS_CODES.UNAUTHORIZED)
+        .json({ code: STATUS_CODES.UNAUTHORIZED });
+
     if (!idLesson)
       return res
         .status(STATUS_CODES.BAD_REQUEST)
@@ -37,7 +49,12 @@ export class BookingController {
    * A student can see all his current bookings (future only and for any lessons)
    */
   static async getAllBookingsByStudent(req: Request, res: Response) {
-    const { idUser } = (req.session as AppSession).user;
+    const session = req.session as AppSession;
+    if (!hasPermission(session.user, "bookings", "read"))
+      return res
+        .status(STATUS_CODES.UNAUTHORIZED)
+        .json({ code: STATUS_CODES.UNAUTHORIZED });
+    const { idUser } = session.user;
     const response = await BookingServices.getAllBookingsByStudent(idUser);
     return res.status(response.code).json(response);
   }
@@ -46,7 +63,9 @@ export class BookingController {
    */
   static async deleteBooking(req: Request, res: Response) {
     const { idBooking, idLesson } = req.params;
-    const { idUser } = (req.session as AppSession).user;
+    const session = req.session as AppSession;
+    const { user } = session;
+
     try {
       const booking = await Booking.findByPk(parseInt(idBooking));
       if (!booking) {
@@ -55,7 +74,7 @@ export class BookingController {
           .json({ code: STATUS_CODES.BAD_REQUEST });
       }
       const isUnauthorized =
-        booking.dataValues.idUser !== idUser ||
+        hasPermission(user, "bookings", "delete", [booking]) ||
         booking.dataValues.idLesson !== parseInt(idLesson);
       if (isUnauthorized) {
         return res

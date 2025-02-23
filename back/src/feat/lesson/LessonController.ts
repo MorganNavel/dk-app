@@ -3,13 +3,20 @@ import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Request, Response } from "express";
 import { LessonServices } from "./LessonServices";
+import { hasPermission } from "@/utils/middlewares/permissions";
 export class LessonController {
   /**
    * Create a new lesson
    */
   static async create(req: Request, res: Response) {
     const { title, description, duration, startDate } = req.body;
-    const { idUser } = (req.session as AppSession).user;
+    const { user } = req.session as AppSession;
+    const { idUser } = user;
+    if (!hasPermission(user, "lessons", "create")) {
+      return res
+        .status(STATUS_CODES.UNAUTHORIZED)
+        .json({ code: STATUS_CODES.UNAUTHORIZED });
+    }
 
     try {
       const lesson = await Lesson.create({
@@ -37,7 +44,7 @@ export class LessonController {
   static async update(req: Request, res: Response) {
     const session = req.session as AppSession;
     const idLesson = parseInt(req.params.idLesson);
-    const { idUser } = session.user;
+    const { user } = session;
     const { startDate, duration, title, description, url, earned } = req.body;
     const anySelected =
       title || description || url || earned || startDate || duration;
@@ -45,7 +52,7 @@ export class LessonController {
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No field selected" });
-    const response = await LessonServices.updateLessons(idUser, [idLesson], {
+    const response = await LessonServices.updateLessons(user, [idLesson], {
       startDate,
       duration,
       title,
@@ -70,23 +77,29 @@ export class LessonController {
    * Get the lesson with the given id
    */
   static async getOne(req: Request, res: Response) {
-    const { idUser } = (req.session as AppSession).user;
+    const { user } = req.session as AppSession;
+    if (!hasPermission(user, "lessons", "read")) {
+      return res
+        .status(STATUS_CODES.UNAUTHORIZED)
+        .json({ code: STATUS_CODES.UNAUTHORIZED });
+    }
+
     const idLesson = parseInt(req.params.idLesson);
-    const response = await LessonServices.getOne(idUser, idLesson);
+    const response = await LessonServices.getOne(user.idUser, idLesson);
     return res.status(response.code).json(response);
   }
   /**
    * Update the status of the lesson (planned, done, cancelled)
    */
   static async updateStatus(req: Request, res: Response) {
-    const { idUser } = (req.session as AppSession).user;
+    const { user } = req.session as AppSession;
     const idLesson = parseInt(req.params.idLesson);
     const { status } = req.body;
     if (!status)
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No status selected" });
-    const response = await LessonServices.updateLessons(idUser, [idLesson], {
+    const response = await LessonServices.updateLessons(user, [idLesson], {
       status,
     });
     return res.status(response.code).json(response);
@@ -95,7 +108,7 @@ export class LessonController {
    * Update the status of the lesson (planned, done, cancelled)
    */
   static async updateStatusBulk(req: Request, res: Response) {
-    const { idUser } = (req.session as AppSession).user;
+    const { user } = req.session as AppSession;
     const { idLessons, status } = req.body;
     if (!Array.isArray(idLessons) || idLessons.length == 0) {
       return res
@@ -106,7 +119,7 @@ export class LessonController {
       return res
         .status(STATUS_CODES.BAD_REQUEST)
         .json({ code: STATUS_CODES.BAD_REQUEST, error: "No status selected" });
-    const response = await LessonServices.updateLessons(idUser, idLessons, {
+    const response = await LessonServices.updateLessons(user, idLessons, {
       status,
     });
     return res.status(response.code).json(response);
@@ -117,7 +130,7 @@ export class LessonController {
    */
   static async deleteOne(req: Request, res: Response) {
     try {
-      const { idUser } = (req.session as AppSession).user;
+      const { user } = req.session as AppSession;
       const idLesson = parseInt(req.params.idLesson, 10);
 
       if (Number.isNaN(idLesson)) {
@@ -126,7 +139,7 @@ export class LessonController {
           .json({ code: STATUS_CODES.BAD_REQUEST, error: "Invalid lesson ID" });
       }
 
-      const response = await LessonServices.deleteLessons([idLesson], idUser);
+      const response = await LessonServices.deleteLessons([idLesson], user);
       return res.status(response.code).json(response);
     } catch (error) {
       return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({
@@ -141,7 +154,7 @@ export class LessonController {
    */
   static async deleteBulk(req: Request, res: Response) {
     try {
-      const { idUser } = (req.session as AppSession).user;
+      const { user } = req.session as AppSession;
       const { idLessons } = req.body;
 
       if (!Array.isArray(idLessons) || idLessons.length === 0) {
@@ -151,7 +164,7 @@ export class LessonController {
         });
       }
 
-      const response = await LessonServices.deleteLessons(idLessons, idUser);
+      const response = await LessonServices.deleteLessons(idLessons, user);
       return res.status(response.code).json(response);
     } catch (error) {
       return res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({

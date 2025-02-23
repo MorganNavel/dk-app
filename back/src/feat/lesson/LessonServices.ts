@@ -2,6 +2,8 @@ import { Booking } from "@/models/BookingModel";
 import { Lesson } from "@/models/LessonModel";
 import { User } from "@/models/UserModel";
 import { ApiResponse } from "@/types/Response";
+import { UserSession } from "@/types/Session";
+import { hasPermission } from "@/utils/middlewares/permissions";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
 export class LessonServices {
@@ -69,19 +71,25 @@ export class LessonServices {
    * @param idTeacher Teacher identification number (Teacher is a User)
    * @returns ApiResponse : { code: number, data?: any, error?: string }
    */
-  static async deleteLessons(idLessons: number[], idTeacher: number): Promise<ApiResponse> {
+  static async deleteLessons(
+    idLessons: number[],
+    teacher: UserSession
+  ): Promise<ApiResponse> {
     try {
       // Récupérer les leçons appartenant au professeur
       const lessons = await Lesson.findAll({
         where: {
           idLesson: idLessons,
-          idTeacher: idTeacher, // Vérification directe dans la requête
+          idTeacher: teacher.idUser,
         },
       });
 
       // Vérifier si toutes les leçons existent et appartiennent au professeur
       if (lessons.length !== idLessons.length) {
         return { code: STATUS_CODES.NOT_FOUND };
+      }
+      if (!hasPermission(teacher, "lessons", "delete", lessons)) {
+        return { code: STATUS_CODES.UNAUTHORIZED };
       }
 
       // Suppression des leçons
@@ -94,20 +102,24 @@ export class LessonServices {
   }
 
   /**
- * Bulk update lessons
- * @param idTeacher Teacher identification number (Teacher is a User)
- * @param idLessons Array of Lesson identification numbers
- * @param body Request body, fields to update
- * @returns ApiResponse : { code: number, data?: any, error?: string }
- */
+   * Bulk update lessons
+   * @param idTeacher Teacher identification number (Teacher is a User)
+   * @param idLessons Array of Lesson identification numbers
+   * @param body Request body, fields to update
+   * @returns ApiResponse : { code: number, data?: any, error?: string }
+   */
   static async updateLessons(
-    idTeacher: number,
+    teacher: UserSession,
     idLessons: number[],
     body: any
   ): Promise<ApiResponse> {
     try {
       // Validation : Vérifier que idLessons est un tableau non vide
-      if (!Array.isArray(idLessons) || idLessons.length === 0 || idLessons.some(id => typeof id !== "number")) {
+      if (
+        !Array.isArray(idLessons) ||
+        idLessons.length === 0 ||
+        idLessons.some((id) => typeof id !== "number")
+      ) {
         return { code: STATUS_CODES.BAD_REQUEST };
       }
 
@@ -120,16 +132,18 @@ export class LessonServices {
         return { code: STATUS_CODES.NOT_FOUND };
       }
 
-      if (lessons.some(lesson => lesson.dataValues.idTeacher !== idTeacher)) {
+      if (!hasPermission(teacher, "lessons", "update", lessons)) {
         return { code: STATUS_CODES.UNAUTHORIZED };
       }
-
       const filteredBody = Object.fromEntries(
         Object.entries(body).filter(([_, value]) => value !== undefined)
       );
 
       if (Object.keys(filteredBody).length === 0) {
-        return { code: STATUS_CODES.BAD_REQUEST, error: "No valid fields to update" };
+        return {
+          code: STATUS_CODES.BAD_REQUEST,
+          error: "No valid fields to update",
+        };
       }
 
       if (filteredBody.startDate) {
@@ -144,7 +158,7 @@ export class LessonServices {
     } catch (error) {
       console.error(error);
       return {
-        code: STATUS_CODES.INTERNAL_SERVER_ERROR
+        code: STATUS_CODES.INTERNAL_SERVER_ERROR,
       };
     }
   }
