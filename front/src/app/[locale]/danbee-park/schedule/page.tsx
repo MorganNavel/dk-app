@@ -1,58 +1,35 @@
 "use client";
 import { apiCall } from "@/utils/apiCall";
 import { useQuery } from "@tanstack/react-query";
-import { Lesson, LessonEventDetails } from "@/types/lesson";
-import { Calendar, momentLocalizer, View } from "react-big-calendar";
-import moment from "moment";
+import { Lesson } from "@/types/Lesson";
 import "moment/locale/fr";
 import "moment/locale/ko";
 import { toast } from "sonner";
-import { SetStateAction, useCallback, useState, useEffect } from "react";
+import { useState } from "react";
 import "@/styles/CalendarStyles.css";
 import { Skeleton } from "@ui/skeleton";
-import { usePathname } from "next/dist/client/components/navigation";
-import EventSheet from "@/components/calendar/CalendarEventSheet";
+import EventSheet from "@/app/[locale]/danbee-park/schedule/CalendarEventSheet";
+import { Calendar, CalendarEvent } from "@/components/calendar/Calendar";
+import { addMinutes } from "date-fns";
 
 const fetchLessons = async () => {
   return await apiCall<Lesson[]>(`/lesson/all`);
 };
 
-const formatLesson = (lessons: Lesson[]) => {
+const formatLesson = (lessons: Lesson[]): CalendarEvent<Lesson>[] => {
   return lessons.map((lesson) => {
-    const { startDate, ...lessonInfo } = lesson;
-    const startDateObj = new Date(startDate);
-    const endDate = new Date(startDate);
-    endDate.setMinutes(startDateObj.getMinutes() + lesson.duration);
+    const startDate = new Date(lesson.startDate);
+    const endDate = addMinutes(startDate, lesson.duration);
     return {
       title: lesson.title,
-      start: startDateObj,
+      start: startDate,
       end: endDate,
-      resource: lessonInfo,
+      resource: lesson,
     };
   });
 };
 
 export default function SchedulePage() {
-  const path = usePathname();
-  const currentLang = path.split("/")[1];
-  const [localizer, setLocalizer] = useState(momentLocalizer(moment));
-
-  const getBrowserLocale = () => {
-    if (currentLang === "fr") {
-      return "fr";
-    } else if (currentLang === "en") {
-      return "en";
-    } else {
-      return "ko";
-    }
-  };
-
-  useEffect(() => {
-    const locale = getBrowserLocale();
-    moment.locale(locale);
-    setLocalizer(momentLocalizer(moment));
-  }, [currentLang]);
-
   const {
     data: lessons,
     error,
@@ -62,21 +39,13 @@ export default function SchedulePage() {
     queryFn: fetchLessons,
   });
 
-  const [view, setView] = useState<View>("week");
-  const [date, setDate] = useState(new Date());
-  const [selectedEvent, setSelectedEvent] = useState<LessonEventDetails | null>(
-    null
-  );
-
-  const onView = useCallback(
-    (newView: SetStateAction<View>) => setView(newView),
-    [setView]
-  );
+  const [selectedEvent, setSelectedEvent] =
+    useState<CalendarEvent<Lesson> | null>(null);
 
   if (error) {
     toast.error("Erreur lors du chargement des données");
     return (
-      <div className="text-center py-4">
+      <div className='text-center py-4'>
         Erreur lors du chargement des données
       </div>
     );
@@ -85,48 +54,33 @@ export default function SchedulePage() {
     return <CalendarSkeleton />;
   }
   if (!lessons || lessons.length === 0) {
-    return <div className="text-center py-4">Aucune leçon disponible.</div>;
+    return <div className='text-center py-4'>Aucune leçon disponible.</div>;
   }
-
   return (
-    <div>
-      <Calendar
-        culture={currentLang}
-        className="my-5 mx-5 bg-white rounded-lg shadow-md"
-        dayLayoutAlgorithm="no-overlap"
-        localizer={localizer}
+    <div className='my-5 mx-5'>
+      <Calendar<Lesson>
         events={formatLesson(lessons)}
-        startAccessor="start"
-        endAccessor="end"
-        views={["week", "day"]}
-        view={view}
-        date={date}
-        defaultView="week"
-        onView={onView}
-        onNavigate={(date) => setDate(date)}
-        popup={true}
-        onSelectEvent={(event: any) => {
-          setSelectedEvent(event);
-        }}
-        style={{
-          height: "80vh",
-        }}
+        view='week'
+        onEventClick={(event) => setSelectedEvent(event)}
+        views={["month", "day", "week"]}
       />
-      <EventSheet
-        selectedEvent={selectedEvent}
-        setSelectedEvent={setSelectedEvent}
-      />
+      {selectedEvent && (
+        <EventSheet
+          selectedEvent={selectedEvent}
+          setSelectedEvent={setSelectedEvent}
+        />
+      )}
     </div>
   );
 }
 
 const CalendarSkeleton = () => {
   return (
-    <div className="my-5 mx-5 overflow-auto h-[80vh]">
+    <div className='my-5 mx-5 overflow-auto h-[80vh]'>
       {Array.from({ length: 24 }).map((_, hour) => (
-        <div key={hour} className="flex mb-2">
+        <div key={hour} className='flex mb-2'>
           {Array.from({ length: 7 }).map((_, day) => (
-            <Skeleton key={day} className="w-full h-10 mx-1" />
+            <Skeleton key={day} className='w-full h-10 mx-1' />
           ))}
         </div>
       ))}

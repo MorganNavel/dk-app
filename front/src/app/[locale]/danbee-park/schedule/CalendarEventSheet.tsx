@@ -1,5 +1,4 @@
 import { SheetContent, SheetHeader, SheetTitle, Sheet } from "@ui/sheet";
-import { LessonEventDetails } from "@/types/lesson";
 import moment from "moment";
 import LNGS from "@/types/languages";
 import { Button } from "@ui/button";
@@ -12,10 +11,12 @@ import { Spinner } from "@nextui-org/react";
 import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
 import { useProfile } from "@providers/Profile";
 import { ApiResponse } from "@/types/ApiResponse";
+import { CalendarEvent } from "@/components/calendar/Calendar";
+import { Lesson } from "@/types/Lesson";
 
 interface EventSheetProps {
-  selectedEvent: LessonEventDetails | null;
-  setSelectedEvent: (event: LessonEventDetails | null) => void;
+  selectedEvent: CalendarEvent<Lesson> | null;
+  setSelectedEvent: (event: CalendarEvent<Lesson> | null) => void;
 }
 
 function formatTime(date: Date | undefined): string {
