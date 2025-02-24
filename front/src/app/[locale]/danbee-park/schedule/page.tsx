@@ -11,6 +11,7 @@ import { Skeleton } from "@ui/skeleton";
 import EventSheet from "@/app/[locale]/danbee-park/schedule/CalendarEventSheet";
 import { Calendar, CalendarEvent } from "@/components/calendar/Calendar";
 import { addMinutes } from "date-fns";
+import { Button } from "@/components/ui/button";
 
 const fetchLessons = async () => {
   return await apiCall<Lesson[]>(`/lesson/all`);
@@ -63,6 +64,9 @@ export default function SchedulePage() {
         view='week'
         onEventClick={(event) => setSelectedEvent(event)}
         views={["month", "day", "week"]}
+        components={{
+          actions: [],
+        }}
       />
       {selectedEvent && (
         <EventSheet

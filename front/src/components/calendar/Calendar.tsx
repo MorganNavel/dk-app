@@ -8,7 +8,7 @@ import {
   startOfMonth,
   startOfWeek,
 } from "date-fns";
-import { useState } from "react";
+import React, { ReactNode, useState } from "react";
 import { Button } from "../ui/button";
 import { MonthView } from "./views/month";
 import { WeekView } from "./views/week";
@@ -35,6 +35,7 @@ export interface CalendarProps<T> {
   isMobile?: boolean;
   components?: {
     event?: React.ComponentType<CalendarEventProps<T>>;
+    actions?: ReactNode[];
   };
 }
 export function Calendar<T>({
@@ -56,6 +57,8 @@ export function Calendar<T>({
         date={currentDate}
         onViewChange={setCurrentView}
         isMobile={isMobile}
+        setCurrentDate={setCurrentDate}
+        actions={components.actions}
       />
       <CalendarBody<T>
         view={currentView}
@@ -86,6 +89,8 @@ interface CalendarHeaderProps {
   onViewChange: (view: CalendarView) => void;
   mondayFirst?: boolean;
   isMobile: boolean;
+  setCurrentDate: (date: Date) => void;
+  actions?: ReactNode[];
 }
 function CalendarHeader({
   date,
@@ -94,6 +99,8 @@ function CalendarHeader({
   onViewChange,
   mondayFirst = true,
   isMobile,
+  setCurrentDate,
+  actions,
 }: Readonly<CalendarHeaderProps>) {
   function getFormattedDate(date: Date) {
     switch (view) {
@@ -122,22 +129,28 @@ function CalendarHeader({
       <span className='text-center font-bold text-xl text-foreground'>
         {getFormattedDate(date)}
       </span>
-      <div className='flex gap-2'>
-        {views.includes("month") && (
-          <Button variant={"outline"} onClick={() => onViewChange("month")}>
-            Month
+      <div className='flex justify-between'>
+        <div className='flex gap-2'>
+          {views.includes("month") && (
+            <Button variant={"outline"} onClick={() => onViewChange("month")}>
+              Month
+            </Button>
+          )}
+          {views.includes("week") && (
+            <Button variant={"outline"} onClick={() => onViewChange("week")}>
+              Week
+            </Button>
+          )}
+          {views.includes("day") && (
+            <Button variant={"outline"} onClick={() => onViewChange("day")}>
+              Day
+            </Button>
+          )}
+          <Button variant='outline' onClick={() => setCurrentDate(new Date())}>
+            Today
           </Button>
-        )}
-        {views.includes("week") && (
-          <Button variant={"outline"} onClick={() => onViewChange("week")}>
-            Week
-          </Button>
-        )}
-        {views.includes("day") && (
-          <Button variant={"outline"} onClick={() => onViewChange("day")}>
-            Day
-          </Button>
-        )}
+        </div>
+        <div className='flex gap-2'>{actions}</div>
       </div>
     </div>
   );
