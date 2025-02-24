@@ -23,7 +23,7 @@ export function DayView<T>({
           {/* Indicateur de l'heure actuelle */}
           <CurrentTimeIndicator hourHeight={hourHeight} hourWidth={hourWidth} />
 
-          <div className={`grid grid-cols-[${hourWidth}px_1fr]`}>
+          <div className={`grid grid-cols-[50px_1fr]`}>
             {/* Colonne des heures */}
             <div className='flex flex-col bg-gray-50 border-r border-gray-300'>
               {Array.from({ length: 24 }).map((_, hour) => (

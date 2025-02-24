@@ -38,7 +38,7 @@ export function WeekView<T>({
       <div className='relative overflow-y-auto'>
         <div className='sticky top-0 z-10 min-w-[1200px] bg-background'>
           <div
-            className={`sticky top-0 z-10 grid grid-cols-[${hourWidth}px_repeat(7,1fr)] gap-2 text-center font-bold border-b border-gray-300 z-50 bg-white shadow-md`}
+            className={`sticky top-0 grid grid-cols-[50px_repeat(7,1fr)] gap-2 text-center font-bold border-b border-gray-300 z-50 bg-white shadow-md`}
           >
             <div />
             {weekDays.map((day) => (
@@ -52,7 +52,7 @@ export function WeekView<T>({
         <div className='relative  h-[500px] min-w-[1200px]'>
           <CurrentTimeIndicator hourHeight={hourHeight} hourWidth={hourWidth} />
 
-          <div className={`grid grid-cols-[${hourWidth}px_repeat(7,1fr)]`}>
+          <div className={`grid grid-cols-[50px_repeat(7,1fr)]`}>
             <div className='flex flex-col bg-gray-50 border-r border-gray-300'>
               {Array.from({ length: 24 }).map((_, hour) => (
                 <div
