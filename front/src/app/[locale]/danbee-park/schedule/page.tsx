@@ -1,17 +1,28 @@
 "use client";
 import { apiCall } from "@/utils/apiCall";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Lesson } from "@/types/Lesson";
 import "moment/locale/fr";
 import "moment/locale/ko";
 import { toast } from "sonner";
-import { useState } from "react";
+import { createElement, useState } from "react";
 import "@/styles/CalendarStyles.css";
 import { Skeleton } from "@ui/skeleton";
 import EventSheet from "@/app/[locale]/danbee-park/schedule/CalendarEventSheet";
 import { Calendar, CalendarEvent } from "@/components/calendar/Calendar";
 import { addMinutes } from "date-fns";
 import { Button } from "@/components/ui/button";
+import { Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useLessonTableActions } from "@/hooks/useActions";
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+} from "@/components/ui/drawer";
+import { useSidebar } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 const fetchLessons = async () => {
   return await apiCall<Lesson[]>(`/lesson/all`);
@@ -29,7 +40,7 @@ const formatLesson = (lessons: Lesson[]): CalendarEvent<Lesson>[] => {
     };
   });
 };
-
+type Action = "add";
 export default function SchedulePage() {
   const {
     data: lessons,
@@ -39,6 +50,11 @@ export default function SchedulePage() {
     queryKey: ["lessons"],
     queryFn: fetchLessons,
   });
+  const { isMobile } = useSidebar();
+  const t = useTranslations();
+  const configActions = useLessonTableActions();
+  const [action, setAction] = useState<Action | null>(null);
+  const queryClient = useQueryClient();
 
   const [selectedEvent, setSelectedEvent] =
     useState<CalendarEvent<Lesson> | null>(null);
@@ -54,20 +70,55 @@ export default function SchedulePage() {
   if (isLoading) {
     return <CalendarSkeleton />;
   }
-  if (!lessons || lessons.length === 0) {
-    return <div className='text-center py-4'>Aucune leçon disponible.</div>;
-  }
+
   return (
     <div className='my-5 mx-5'>
       <Calendar<Lesson>
-        events={formatLesson(lessons)}
+        events={!lessons ? [] : formatLesson(lessons)}
         view='week'
         onEventClick={(event) => setSelectedEvent(event)}
         views={["month", "day", "week"]}
         components={{
-          actions: [],
+          actions: [
+            <Button
+              key='add'
+              variant={"ghost"}
+              onClick={() => setAction("add")}
+            >
+              <Plus className='w-4 h-4 text-primary' /> {t("generals.add")}
+            </Button>,
+          ],
         }}
       />
+      <Drawer
+        direction={isMobile ? "bottom" : "right"}
+        open={(action && configActions[action].type === "modal") ?? false}
+        onOpenChange={(open) => !open && setAction(null)}
+      >
+        <DrawerContent
+          className={cn(
+            "left-auto mt-0 w-full lg:w-1/4 rounded-md",
+            isMobile ? "h-3/4 overflow-hidden" : "h-full"
+          )}
+        >
+          {!isMobile && (
+            <DrawerHeader className='mt-5'>
+              <DrawerTitle className='text-center lg:text-2xl text-xl font-semibold'>
+                {action && configActions[action].type === "modal"
+                  ? t(`lessons.data-table.actions.modal.${action}.title`)
+                  : ""}
+              </DrawerTitle>
+            </DrawerHeader>
+          )}
+          {action &&
+            configActions[action].type === "modal" &&
+            createElement(configActions[action].component, {
+              onFinish: () => {
+                setAction(null);
+              },
+            })}
+        </DrawerContent>
+      </Drawer>
       {selectedEvent && (
         <EventSheet
           selectedEvent={selectedEvent}

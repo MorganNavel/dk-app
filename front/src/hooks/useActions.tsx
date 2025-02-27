@@ -38,5 +38,17 @@ export const useLessonTableActions = () => {
         });
       },
     } satisfies TableAction<(idLessons: number[]) => Promise<void>>,
+    reschedule: {
+      title: "lessons.data-table.actions.dialog.reschedule.title",
+      content: "lessons.data-table.actions.dialog.reschedule.content",
+      type: "dialog",
+      component: ConfirmDialog,
+      onConfirm: async (idLessons: number[]) => {
+        await apiCall("/lesson/status/bulk", "PATCH", {
+          idLessons,
+          status: "rescheduled",
+        });
+      },
+    } satisfies TableAction<(idLessons: number[]) => Promise<void>>,
   };
 };
