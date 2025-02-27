@@ -3,7 +3,6 @@ import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Response, Request } from "express";
 import { BookingServices } from "./BookingServices";
-import { hasPermission } from "@/utils/middlewares/permissions";
 
 export class BookingController {
   /**
@@ -13,10 +12,7 @@ export class BookingController {
     const idLesson = parseInt(req.params.idLesson);
     const session = req.session as AppSession;
     const { user } = session;
-    if (!hasPermission(user, "bookings", "create"))
-      return res
-        .status(STATUS_CODES.UNAUTHORIZED)
-        .json({ code: STATUS_CODES.UNAUTHORIZED });
+
     const { idUser } = session.user;
     const response = await BookingServices.createBooking(idUser, idLesson);
     return res.status(response.code).json(response);
@@ -29,10 +25,6 @@ export class BookingController {
     const idLesson = parseInt(req.params.idLesson);
     const session = req.session as AppSession;
     const { idUser, role } = session.user;
-    if (!hasPermission(session.user, "bookings", "read"))
-      return res
-        .status(STATUS_CODES.UNAUTHORIZED)
-        .json({ code: STATUS_CODES.UNAUTHORIZED });
 
     if (!idLesson)
       return res
@@ -50,10 +42,7 @@ export class BookingController {
    */
   static async getAllBookingsByStudent(req: Request, res: Response) {
     const session = req.session as AppSession;
-    if (!hasPermission(session.user, "bookings", "read"))
-      return res
-        .status(STATUS_CODES.UNAUTHORIZED)
-        .json({ code: STATUS_CODES.UNAUTHORIZED });
+
     const { idUser } = session.user;
     const response = await BookingServices.getAllBookingsByStudent(idUser);
     return res.status(response.code).json(response);
@@ -74,7 +63,7 @@ export class BookingController {
           .json({ code: STATUS_CODES.BAD_REQUEST });
       }
       const isUnauthorized =
-        hasPermission(user, "bookings", "delete", [booking]) ||
+        booking.lesson.teacher.idUser != user.idUser ||
         booking.dataValues.idLesson !== parseInt(idLesson);
       if (isUnauthorized) {
         return res

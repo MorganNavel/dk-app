@@ -3,7 +3,6 @@ import { AppSession } from "@/types/Session";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Request, Response } from "express";
 import { LessonServices } from "./LessonServices";
-import { hasPermission } from "@/utils/middlewares/permissions";
 export class LessonController {
   /**
    * Create a new lesson
@@ -12,11 +11,6 @@ export class LessonController {
     const { title, description, duration, startDate } = req.body;
     const { user } = req.session as AppSession;
     const { idUser } = user;
-    if (!hasPermission(user, "lessons", "create")) {
-      return res
-        .status(STATUS_CODES.UNAUTHORIZED)
-        .json({ code: STATUS_CODES.UNAUTHORIZED });
-    }
 
     try {
       const lesson = await Lesson.create({
@@ -78,11 +72,6 @@ export class LessonController {
    */
   static async getOne(req: Request, res: Response) {
     const { user } = req.session as AppSession;
-    if (!hasPermission(user, "lessons", "read")) {
-      return res
-        .status(STATUS_CODES.UNAUTHORIZED)
-        .json({ code: STATUS_CODES.UNAUTHORIZED });
-    }
 
     const idLesson = parseInt(req.params.idLesson);
     const response = await LessonServices.getOne(user.idUser, idLesson);

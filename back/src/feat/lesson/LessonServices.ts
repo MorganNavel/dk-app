@@ -3,7 +3,6 @@ import { Lesson } from "@/models/LessonModel";
 import { User } from "@/models/UserModel";
 import { ApiResponse } from "@/types/Response";
 import { UserSession } from "@/types/Session";
-import { hasPermission } from "@/utils/middlewares/permissions";
 import { STATUS_CODES } from "@/utils/statusCodes";
 import { Op } from "sequelize";
 export class LessonServices {
@@ -88,9 +87,6 @@ export class LessonServices {
       if (lessons.length !== idLessons.length) {
         return { code: STATUS_CODES.NOT_FOUND };
       }
-      if (!hasPermission(teacher, "lessons", "delete", lessons)) {
-        return { code: STATUS_CODES.UNAUTHORIZED };
-      }
 
       // Suppression des leçons
       await Lesson.destroy({ where: { idLesson: idLessons } });
@@ -132,9 +128,6 @@ export class LessonServices {
         return { code: STATUS_CODES.NOT_FOUND };
       }
 
-      if (!hasPermission(teacher, "lessons", "update", lessons)) {
-        return { code: STATUS_CODES.UNAUTHORIZED };
-      }
       const filteredBody = Object.fromEntries(
         Object.entries(body).filter(([_, value]) => value !== undefined)
       );
