@@ -15,13 +15,15 @@ import { useMutation } from "@tanstack/react-query";
 import { SignInScheme } from "@/scheme/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { errorToasts } from "@/utils/toast";
-import { useRouter, Link } from "@/i18n/routing";
+import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 
 import { ApiResponse } from "@/types/ApiResponse";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ControlledCaptchat } from "@/components/captcha/ControlledCaptcha";
+import { useProfile } from "@/providers/Profile";
+import { Spinner } from "@nextui-org/react";
 
 interface SignInFields {
   email: string;
@@ -36,6 +38,7 @@ const signIn = async (data: SignInFields): Promise<any> => {
 };
 export default function SignIn() {
   const [isMounted, setIsMounted] = useState(false);
+  const { profile } = useProfile();
 
   const t = useTranslations();
   const methods = useForm<FormProps>({
@@ -48,6 +51,7 @@ export default function SignIn() {
       token: "",
     },
   });
+
   const mutation = useMutation({
     mutationFn: signIn,
     onError: (error) => {
@@ -66,6 +70,11 @@ export default function SignIn() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
+  useEffect(() => {
+    if (profile && profile.role !== "anonymous") {
+      window.location.href = "/";
+    }
+  }, [profile]);
 
   if (!isMounted) {
     return <SkeletonSignIn />;
@@ -75,7 +84,7 @@ export default function SignIn() {
   };
 
   return (
-    <div className='flex items-center justify-center min-h-screen p-4 '>
+    <div className='flex items-center justify-center min-h-screen snap-start snap-always'>
       <Card className='lg:max-w-md max-w-sm w-full'>
         <CardHeader className='text-center text-2xl font-bold text-primary'>
           {t("generals.signin")}
@@ -106,21 +115,26 @@ export default function SignIn() {
               </div>
 
               <Button
-                variant={"round-outline"}
+                variant={"default"}
                 type={"submit"}
                 className='w-full'
+                disabled={mutation.isPending}
               >
-                {t("generals.submit")}
+                {mutation.isPending ? (
+                  <Spinner size='sm' color='white' />
+                ) : (
+                  t("generals.submit")
+                )}
               </Button>
             </form>
           </Form>
         </CardContent>
-        <CardFooter className='justify-center'>
-          <p className='text-sm'>
+        <CardFooter className='justify-center py-4 border-t'>
+          <p className='text-sm text-center'>
             {t("generals.noAccount")}{" "}
             <Link
-              href={`/sign-up`}
-              className='hover:underline text-primary font-semibold'
+              href='/sign-up'
+              className='text-primary font-semibold hover:underline'
             >
               {t("generals.signup")}
             </Link>
@@ -150,9 +164,9 @@ const SkeletonSignIn = () => {
           </div>
           <Skeleton className='h-9 rounded-3xl w-full mt-9 ' />
         </CardContent>
-        <div className=' flex justify-center'>
+        <CardFooter className='justify-center py-4 border-t'>
           <Skeleton className='h-3 w-1/2 ' />
-        </div>
+        </CardFooter>
       </Card>
     </div>
   );

@@ -24,6 +24,8 @@ import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "@/i18n/routing";
 import { ControlledCaptchat } from "@/components/captcha/ControlledCaptcha";
+import { Spinner } from "@nextui-org/react";
+import { useProfile } from "@/providers/Profile";
 
 interface SignUpFields {
   email: string;
@@ -45,6 +47,7 @@ export default function SignUp() {
   const [isMounted, setIsMounted] = useState(false);
   const t = useTranslations();
   const router = useRouter();
+  const { profile } = useProfile();
   const methods = useForm<FormProps>({
     resolver: zodResolver(SignUpScheme(t)),
     defaultValues: {
@@ -68,12 +71,18 @@ export default function SignUp() {
     },
     onSuccess: (data) => {
       toast.success(t("signup.message.success"));
-      router.push(`/sign-in`);
+      router.push("/sign-in");
     },
   });
+
   useEffect(() => {
     setIsMounted(true);
   }, []);
+  useEffect(() => {
+    if (profile && profile.role !== "anonymous") {
+      window.location.href = "/";
+    }
+  }, [profile]);
 
   if (!isMounted) {
     return <SkeletonSignUp />;
@@ -154,11 +163,16 @@ export default function SignUp() {
               </div>
 
               <Button
-                variant={"round-outline"}
+                variant={"default"}
                 type={"submit"}
                 className='w-full'
+                disabled={mutation.isPending}
               >
-                {t("generals.submit")}
+                {mutation.isPending ? (
+                  <Spinner size='sm' color='white' />
+                ) : (
+                  t("generals.submit")
+                )}
               </Button>
             </form>
           </Form>
