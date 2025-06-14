@@ -1,6 +1,5 @@
 "use client";
 import { Comment } from "@/components/reusable/Comment";
-import { ContinuousCaroussel } from "../carrousel/ContinuousCaroussel";
 import { Marquee } from "@ui/marquee";
 
 const comments = [

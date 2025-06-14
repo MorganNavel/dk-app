@@ -8,7 +8,6 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
-  
 }
 .swiper-container {
   width: 100%;
@@ -22,32 +21,6 @@
   align-items: center;
 }
 
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.swiper-container {
-  width: 100%;
-  height: 100%;
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-}
-
-
-.swiper-pagination-progressbar{
-  height: 25px;
-
-}
-.swiper-pagination-progressbar-fill {
-  background-color: #99D68F !important;
- 
-  
-}
-
 /* Navigation Buttons */
 .swiper-button-next,
 .swiper-button-prev {
@@ -59,12 +32,12 @@
 .swiper-button-prev:hover {
   opacity: 0.8;
 }
-.swiper-wrapper {
+/* .swiper-wrapper {
   display: flex;
   transition: transform 0.3s ease-in-out;
-}
+} */
 
-.continuous-caroussel .swiper-wrapper {
+/* .continuous-caroussel .swiper-wrapper {
   display: flex;
   transition-timing-function: linear !important;
-}
+} */
