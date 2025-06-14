@@ -15,9 +15,9 @@ export const SidebarLayout = ({ children }: { children: ReactNode }) => {
           open ? " w-[calc(100%-16rem)]" : " w-[calc(100%-4rem)]"
         }`}
       >
-        <header className='flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12'>
+        <header className=' fixed flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12'>
           <div className='flex items-center gap-2 px-4'>
-            <SidebarTrigger className='-ml-1' />
+            <SidebarTrigger className='-ml-1 z-[9999]' />
             <Separator orientation='vertical' className='mr-2 h-4' />
           </div>
         </header>
