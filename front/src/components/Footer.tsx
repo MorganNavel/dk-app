@@ -82,8 +82,8 @@ export const Footer = ({ className }: { className?: string }) => {
           <Icon icon={<FaYoutube className="text-4xl" />} name="Youtube" />
           <Icon icon={<IoLogoDiscord className="text-4xl" />} name="Discord" />
         </div>
-        <div className="flex text-sm mt-5 mb-5">
-          <p>© 2024 Danbee Korean. All rights reserved.</p>
+        <div className='flex text-sm mt-5 mb-5'>
+          <p>{t("copyRight", { year: new Date().getFullYear() })}</p>
         </div>
       </div>
     </div>

@@ -8,13 +8,19 @@ import { StudentsReviews } from "@/components/home/StudentsReviews";
 
 export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center gap-24">
-      <FirstCaroussel />
-      <ELearningComponent />
-
-      <OnlineClassesComponent />
-
-      <StudentsReviews />
-    </div>
+    <>
+      <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always'>
+        <FirstCaroussel />
+      </section>
+      <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always'>
+        <ELearningComponent />
+      </section>
+      <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always'>
+        <OnlineClassesComponent />
+      </section>
+      <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always'>
+        <StudentsReviews />
+      </section>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { Comment } from "@/components/reusable/Comment";
 import { ContinuousCaroussel } from "../carrousel/ContinuousCaroussel";
+import { Marquee } from "@ui/marquee";
 
 const comments = [
   {
@@ -52,18 +53,24 @@ const comments = [
     rating: 5,
   },
 ];
+const firstRow = comments.slice(0, comments.length / 2);
+const secondRow = comments.slice(comments.length / 2);
 
 export const StudentsReviews = () => {
-  const config = comments.map((comment, index) => ({
-    key: `comment-${index}`,
-    component: <Comment {...comment} />,
-    className: "mx-12",
-  }));
-
   return (
-    <ContinuousCaroussel
-      config={config}
-      className="w-full max-w-screen mx-auto overflow-hidden"
-    />
+    <div className='relative flex w-full flex-col items-center justify-center overflow-hidden'>
+      <Marquee pauseOnHover className='[--duration:70s]'>
+        {firstRow.map((review) => (
+          <Comment key={review.fullname} {...review} />
+        ))}
+      </Marquee>
+      <Marquee reverse pauseOnHover className='[--duration:70s]'>
+        {secondRow.map((review) => (
+          <Comment key={review.fullname} {...review} />
+        ))}
+      </Marquee>
+      <div className='pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-background'></div>
+      <div className='pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-background'></div>
+    </div>
   );
 };

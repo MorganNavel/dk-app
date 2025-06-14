@@ -116,7 +116,7 @@
     "ressources": "Resources",
     "dkTeam": "Danbee Korean Team",
     "newsletter": "Newsletter",
-    "copyRight": "© 2024 Danbee Korean. All rights reserved.",
+    "copyRight": "© {year} Danbee Korean. All rights reserved.",
     "home": "Home",
     "cookies": "Cookies Settings"
   },
@@ -126,17 +126,26 @@
         "newHere": {
           "title": "New Here?",
           "description": "Get personalized resources based on your interests, and needs. Visit our questionnaire to start your customized learning journey!",
-          "buttonText": "Start Questionnaire"
+          "buttonText": "Start Questionnaire",
+          "tags": {
+            "natural": "100% Natural"
+          }
         },
         "startKoreanJourney": {
           "title": "Start Your Korean Journey!",
           "description": "Unlock your potential and dive into the world of Korean language and culture. Join us today and take the first step towards mastering Korean!",
-          "buttonText": "Join Now"
+          "buttonText": "Join Now",
+          "tags": {
+            "accessible": "Accessible to All"
+          }
         },
         "readRewiews": {
           "title": "Join Hundreds of Successful Learners",
           "description": "We've helped hundreds of learners achieve their Korean language goals. You can be the next one!",
-          "buttonText": "Read Reviews"
+          "tags": {
+            "expertise": "Years of Experience",
+            "quality": "Quality Certified"
+          }
         }
       }
     },

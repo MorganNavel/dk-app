@@ -117,7 +117,7 @@
     "ressources": "Ressources",
     "dkTeam": "Équipe Danbee Korean",
     "newsletter": "Newsletter",
-    "copyRight": "© 2024 Danbee Korean. All rights reserved.",
+    "copyRight": "© {year} Danbee Korean. Tous droits réservés.",
     "home": "Accueil",
     "cookies": "Paramètres des cookies"
   },
@@ -127,16 +127,26 @@
         "newHere": {
           "title": "Nouveau Ici ?",
           "description": "Obtenez du contenu en fonction de vos intérêts et besoins. Visitez notre questionnaire pour commencer votre parcours d'apprentissage personnalisé!",
-          "buttonText": "Commencer le questionnaire"
+          "buttonText": "Commencer le questionnaire",
+          "tags": {
+            "natural": "100% Naturel"
+          }
         },
         "startKoreanJourney": {
           "title": "Commencez votre voyage coréen !",
           "description": "Débloquez votre potentiel et plongez dans le monde de la langue et de la culture coréennes. Rejoignez-nous aujourd'hui et faites le premier pas vers la maîtrise du coréen !",
-          "buttonText": "Rejoignez-nous"
+          "buttonText": "Rejoignez-nous",
+          "tags": {
+            "accessible": "Accessible à tous"
+          }
         },
         "readRewiews": {
           "title": "Rejoignez des centaines d'apprenants satistfait",
-          "description": "Nous avons aidé des centaines d'apprenants à atteindre leurs objectifs en langue coréenne. Vous pouvez être le prochain !"
+          "description": "Nous avons aidé des centaines d'apprenants à atteindre leurs objectifs en langue coréenne. Vous pouvez être le prochain !",
+          "tags": {
+            "expertise": "Des années d'expérience",
+            "quality": "Certifié Qualité"
+          }
         }
       }
     },
