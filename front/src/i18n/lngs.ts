@@ -1,2 +1,1 @@
-const LNGS = ["en", "fr", "ko"] as const;
-export default LNGS;
+export default ["en", "fr", "ko"];

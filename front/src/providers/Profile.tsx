@@ -52,21 +52,17 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
       }
     },
   });
+  const anonymous: ProfileMe = {
+    idUser: -1,
+    name: "",
+    firstname: "",
+    email: "",
+    role: "anonymous",
+    description: "",
+  };
 
   const value = useMemo(
-    () => ({
-      profile: profile ?? {
-        idUser: -1,
-        name: "",
-        firstname: "",
-        email: "",
-        role: "anonymous",
-        description: "",
-      },
-      isLoading,
-      isError,
-      error,
-    }),
+    () => ({ profile: profile ?? anonymous, isLoading, isError, error }),
     [profile, isLoading, isError, error]
   );
 

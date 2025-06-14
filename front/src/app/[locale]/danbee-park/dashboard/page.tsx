@@ -1,5 +1,6 @@
 "use client";
 import DataTable, { ActionConfig } from "@/components/reusable/table/DataTable";
+import { Lesson } from "@/types/Lesson";
 import { apiCall } from "@/utils/apiCall";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -31,7 +32,6 @@ import {
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 import { hasPermission } from "@/utils/permissions";
-import { Lesson } from "@/types/Lesson";
 
 type Action = "delete" | "cancel" | "add";
 
