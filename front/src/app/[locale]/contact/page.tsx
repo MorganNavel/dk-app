@@ -112,7 +112,7 @@ export default function Contact() {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4">
+    <div className='flex items-center justify-center min-h-screen p-4 snap-start snap-always'>
       <Card className="w-full max-w-lg shadow-lg rounded-2xl">
         <CardHeader className="text-center py-6">
           <h1 className="text-2xl font-bold text-primary">
