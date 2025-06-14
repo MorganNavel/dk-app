@@ -13,7 +13,10 @@ import { Button } from "../ui/button";
 import { MonthView } from "./views/month";
 import { WeekView } from "./views/week";
 import { DayView } from "./views/day";
-
+import { cn } from "@/lib/utils";
+interface LocaleProps {
+  locale: string;
+}
 export interface CalendarEventProps<T> {
   event: CalendarEvent<T>;
 }
@@ -25,7 +28,7 @@ export interface CalendarEvent<T> {
   resource: T;
 }
 export type CalendarView = "day" | "week" | "month";
-export interface CalendarProps<T> {
+export interface CalendarProps<T> extends LocaleProps {
   events: CalendarEvent<T>[];
   onEventClick?: (event: CalendarEvent<T>) => void;
   view?: CalendarView;
@@ -46,11 +49,13 @@ export function Calendar<T>({
   mondayFirst = true,
   isMobile = false,
   components = {},
+  className = "",
+  locale = "en",
 }: Readonly<CalendarProps<T>>) {
   const [currentView, setCurrentView] = useState<CalendarView>(view);
   const [currentDate, setCurrentDate] = useState(new Date());
   return (
-    <div className='flex flex-col gap-5'>
+    <div className={cn("flex flex-col justify-center  gap-5", className)}>
       <CalendarHeader
         view={currentView}
         views={views}
@@ -59,6 +64,7 @@ export function Calendar<T>({
         isMobile={isMobile}
         setCurrentDate={setCurrentDate}
         actions={components.actions}
+        locale={locale}
       />
       <CalendarBody<T>
         view={currentView}
@@ -69,6 +75,7 @@ export function Calendar<T>({
         components={components}
         onViewChange={setCurrentView}
         onDayClick={(date: Date) => setCurrentDate(date)}
+        locale={locale}
       />
       <div className='flex justify-center '>
         <CalendarPagination
@@ -76,13 +83,14 @@ export function Calendar<T>({
           view={currentView}
           onNext={(date) => setCurrentDate(date)}
           onPrevious={(date) => setCurrentDate(date)}
+          locale={locale}
         />
       </div>
     </div>
   );
 }
 
-interface CalendarHeaderProps {
+interface CalendarHeaderProps extends LocaleProps {
   view: CalendarView;
   views: CalendarView[];
   date: Date;
@@ -129,7 +137,7 @@ function CalendarHeader({
       <span className='text-center font-bold text-xl text-foreground'>
         {getFormattedDate(date)}
       </span>
-      <div className='flex justify-between'>
+      <div className='flex flex-col lg:items-start items-center'>
         <div className='flex gap-2'>
           {views.includes("month") && (
             <Button variant={"outline"} onClick={() => onViewChange("month")}>
@@ -155,7 +163,7 @@ function CalendarHeader({
     </div>
   );
 }
-interface CalendarPaginationProps {
+interface CalendarPaginationProps extends LocaleProps {
   date: Date;
   view: CalendarView;
   onNext: (date: Date) => void;
@@ -199,7 +207,7 @@ function CalendarPagination({
     </div>
   );
 }
-interface CalendarBodyProps<T> {
+interface CalendarBodyProps<T> extends LocaleProps {
   view: CalendarView;
   date: Date;
   events: CalendarEvent<T>[];
@@ -220,6 +228,7 @@ function CalendarBody<T>({
   components = {},
   onViewChange,
   onDayClick,
+  locale,
 }: Readonly<CalendarBodyProps<T>>) {
   return (
     <div>
@@ -231,6 +240,7 @@ function CalendarBody<T>({
           onMonthChange={(newDate) => console.log(newDate)}
           onViewChange={onViewChange}
           onDayClick={onDayClick}
+          locale={locale}
         />
       )}
       {view === "week" && (
@@ -240,6 +250,7 @@ function CalendarBody<T>({
           components={components}
           mondayFirst={mondayFirst}
           onEventClick={onEventClick}
+          locale={locale}
         />
       )}
       {view === "day" && (
@@ -248,12 +259,13 @@ function CalendarBody<T>({
           components={components}
           events={events}
           onEventClick={onEventClick}
+          locale={locale}
         />
       )}
     </div>
   );
 }
-export interface ViewProps<T> {
+export interface ViewProps<T> extends LocaleProps {
   date: Date;
   events: CalendarEvent<T>[];
   components?: {

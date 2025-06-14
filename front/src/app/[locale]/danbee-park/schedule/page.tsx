@@ -13,7 +13,7 @@ import { Calendar, CalendarEvent } from "@/components/calendar/Calendar";
 import { addMinutes } from "date-fns";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { useLessonTableActions } from "@/hooks/useActions";
 import {
   Drawer,
@@ -76,22 +76,25 @@ export default function SchedulePage() {
   }
 
   return (
-    <div className='my-5 mx-5'>
+    <>
       <Calendar<Lesson>
         events={!lessons ? [] : formatLesson(lessons)}
         view='week'
         onEventClick={(event) => setSelectedEvent(event)}
-        views={["month", "day", "week"]}
+        views={["day", "week"]}
+        className='m-5 h-screen'
+        locale={locale}
         components={{
           actions: [
             hasPermission(profile, "lessons", "create") && (
-            <Button
-              key='add'
-              variant={"ghost"}
-              onClick={() => setAction("add")}
-            >
-              <Plus className='w-4 h-4 text-primary' /> {t("generals.add")}
-            </Button>,
+              <Button
+                key='add'
+                variant={"ghost"}
+                onClick={() => setAction("add")}
+              >
+                <Plus className='w-4 h-4 text-primary' /> {t("generals.add")}
+              </Button>
+            ),
           ],
         }}
       />
@@ -130,13 +133,13 @@ export default function SchedulePage() {
           setSelectedEvent={setSelectedEvent}
         />
       )}
-    </div>
+    </>
   );
 }
 
 const CalendarSkeleton = () => {
   return (
-    <div className='my-5 mx-5 overflow-auto h-[80vh]'>
+    <div className='my-5 mx-5 overflow-auto h-screen'>
       {Array.from({ length: 24 }).map((_, hour) => (
         <div key={hour} className='flex mb-2'>
           {Array.from({ length: 7 }).map((_, day) => (
