@@ -112,7 +112,6 @@ export function hasPermission<Resource extends keyof Permissions>(
   const permission = (ROLES as RolesWithPermissions)[user.role][resource]?.[
     action
   ];
-  console.log(permission);
   if (permission == null) return false;
 
   if (typeof permission === "boolean") return permission;
