@@ -31,13 +31,13 @@ import {
 } from "@/components/ui/drawer";
 import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
+import { hasPermission } from "@/utils/permissions";
 
 type Action = "delete" | "cancel" | "add";
 
 const fetchLessons = async () => {
   return await apiCall<Lesson[]>(`/lesson/all`);
 };
-
 export default function LessonsPage() {
   const t = useTranslations();
   const cols = columns(t);
@@ -72,6 +72,8 @@ export default function LessonsPage() {
     isLoading: isLoadingProfile,
     isError: isErrorProfile,
   } = useProfile();
+  if (!isLoadingProfile && profile?.role != "teacher") notFound();
+
   const {
     data: lessons,
     isError,
@@ -91,8 +93,8 @@ export default function LessonsPage() {
     }
   }, [isErrorProfile]);
 
-  if (!isLoadingProfile && (profile?.role == "student" || !profile)) notFound();
   const isLoading = isLoadingProfile || isLoadingLessons;
+
   function getSelectedLessons(selected: RowSelectionState | undefined) {
     if (!selected || !lessons) return [];
     const selectedIndex = Object.keys(selected);
@@ -106,7 +108,7 @@ export default function LessonsPage() {
       name: t("generals.add"),
       actionFn: () => setAction("add"),
       render: () => <Plus className='w-4 h-4 text-primary' />,
-      isDisable: (_) => false,
+      isDisable: (_) => !hasPermission(profile, "lessons", "create"),
     },
     {
       name: t("generals.delete"),
@@ -118,6 +120,9 @@ export default function LessonsPage() {
       isDisable: (selected: RowSelectionState) => {
         if (!lessons) return true;
         const selectedLessons = getSelectedLessons(selected);
+        if (!hasPermission(profile, "lessons", "delete", selectedLessons))
+          return true;
+
         return (
           selectedLessons.length === 0 ||
           selectedLessons.some((lesson) => lesson.status !== "cancelled")
@@ -132,8 +137,12 @@ export default function LessonsPage() {
       },
       render: () => <XCircle className='w-5 h-5 text-destructive' />,
       isDisable: (selected: RowSelectionState) => {
+        if (profile?.role != "teacher") return true;
         if (!lessons) return true;
         const selectedLessons = getSelectedLessons(selected);
+        if (!hasPermission(profile, "lessons", "update", selectedLessons))
+          return true;
+
         return (
           selectedLessons.length === 0 ||
           selectedLessons.some((lesson) => lesson.status !== "planned")

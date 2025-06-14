@@ -54,11 +54,10 @@ export function NavUser({ profile }: Readonly<NavUserProps>) {
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
               <Avatar className='h-8 w-8 rounded-lg'>
-                {profile.role === "teacher" ? (
+                {profile.role === "teacher" && (
                   <FaChalkboardTeacher size={32} />
-                ) : (
-                  <PiStudentBold size={32} />
                 )}
+                {profile.role == "student" && <PiStudentBold size={32} />}
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
                 <span className='truncate font-semibold'>{profile.name}</span>
@@ -76,11 +75,10 @@ export function NavUser({ profile }: Readonly<NavUserProps>) {
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                 <div className='h-14 w-14 rounded-lg flex items-center justify-center'>
-                  {profile.role === "teacher" ? (
+                  {profile.role === "teacher" && (
                     <FaChalkboardTeacher size={32} />
-                  ) : (
-                    <PiStudentBold size={32} />
                   )}
+                  {profile.role == "student" && <PiStudentBold size={32} />}
                 </div>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
                   <span className='truncate font-semibold'>{profile.name}</span>

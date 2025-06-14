@@ -22,7 +22,9 @@ import {
   DrawerTitle,
 } from "@/components/ui/drawer";
 import { useSidebar } from "@/components/ui/sidebar";
+import { hasPermission } from "@/utils/permissions";
 import { cn } from "@/lib/utils";
+import { useProfile } from "@/providers/Profile";
 
 const fetchLessons = async () => {
   return await apiCall<Lesson[]>(`/lesson/all`);
@@ -55,6 +57,8 @@ export default function SchedulePage() {
   const configActions = useLessonTableActions();
   const [action, setAction] = useState<Action | null>(null);
   const queryClient = useQueryClient();
+  const { profile } = useProfile();
+  const locale = useLocale();
 
   const [selectedEvent, setSelectedEvent] =
     useState<CalendarEvent<Lesson> | null>(null);
@@ -80,6 +84,7 @@ export default function SchedulePage() {
         views={["month", "day", "week"]}
         components={{
           actions: [
+            hasPermission(profile, "lessons", "create") && (
             <Button
               key='add'
               variant={"ghost"}

@@ -1,15 +1,4 @@
-type UserRole = "student" | "teacher" | "admin";
-
-interface UserProfile {
-  idUser: number;
-  firstname: string;
-  name: string;
-  email: string;
-  languages?: Array<string>;
-  nationality?: Array<string>;
-  description: string;
-  role: UserRole;
-}
+type UserRole = "student" | "teacher" | "admin" | "anonymous";
 
 interface SignUpInput {
   firstname: string;
@@ -49,4 +38,4 @@ export interface Teacher {
   rating?: number | null;
 }
 
-export type { UserProfile, SignUpInput, SignInInput, UserRole, ProfileMe };
+export type { SignUpInput, SignInInput, UserRole, ProfileMe };

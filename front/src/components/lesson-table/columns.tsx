@@ -7,6 +7,8 @@ import LessonActions from "./LessonsActions";
 import EditableCell from "@/components/reusable/table/EditableCell";
 import { SortableColumn } from "@/components/reusable/table/SortableColumn";
 import { Checkbox } from "@/components/ui/checkbox";
+import { hasPermission } from "@/utils/permissions";
+import { useProfile } from "@/providers/Profile";
 
 const statusColors = {
   planned: "bg-blue-100 text-blue-600",
@@ -16,6 +18,7 @@ const statusColors = {
 };
 
 export function columns(t: any): ColumnDef<Lesson>[] {
+  const { profile } = useProfile();
   return [
     {
       id: "select",
@@ -93,6 +96,9 @@ export function columns(t: any): ColumnDef<Lesson>[] {
       header: () => t("lessons.data-table.columns.title"),
       cell: ({ row }) => {
         const title = row.getValue("title") as string;
+        if (!hasPermission(profile, "lessons", "update", row.original)) {
+          return title;
+        }
 
         return (
           <EditableCell
@@ -170,7 +176,7 @@ export function columns(t: any): ColumnDef<Lesson>[] {
       id: "actions",
       cell: ({ row }) => {
         const lesson = row.original;
-
+        if (!hasPermission(profile, "lessons", "update", lesson)) return null;
         return <LessonActions lesson={lesson} />;
       },
       enableSorting: false,

@@ -1,11 +1,10 @@
 import { Booking } from "@/types/Booking";
 import { Lesson } from "@/types/Lesson";
-import { Pricing } from "@/types/Pricing";
-import { UserProfile, UserRole } from "@/types/User";
+import { ProfileMe, UserRole } from "@/types/User";
 
 type PermissionCheck<Key extends keyof Permissions> =
   | boolean
-  | ((user: UserProfile, data: Permissions[Key]["dataType"]) => boolean);
+  | ((user: ProfileMe, data: Permissions[Key]["dataType"]) => boolean);
 
 type RolesWithPermissions = {
   [R in UserRole]: Partial<{
@@ -18,15 +17,11 @@ type Action = "create" | "read" | "update" | "delete";
 
 type Permissions = {
   lessons: {
-    dataType: Lesson[];
+    dataType: Lesson[] | Lesson;
     action: Action;
   };
   bookings: {
-    dataType: Booking[];
-    action: Action;
-  };
-  pricings: {
-    dataType: Pricing;
+    dataType: Booking[] | Booking;
     action: Action;
   };
 };
@@ -36,31 +31,20 @@ const ROLES = {
     lessons: {
       create: true,
       read: true,
-      update: (user: UserProfile, data: Lesson[]) => {
-        return !data.some((lesson) => lesson.teacher.idUser === user.idUser);
-      },
-      delete: (user: UserProfile, data: Lesson | Lesson[]) => {
+      update: (user: ProfileMe, data: Lesson[] | Lesson) => {
         if (Array.isArray(data)) {
-          return !data.some((lesson) => lesson.teacher.idUser === user.idUser);
+          return data.every((lesson) => lesson.teacher.idUser === user.idUser);
         } else {
           return data.teacher.idUser === user.idUser;
         }
       },
-    },
-    bookings: {
-      create: true,
-      read: true,
-      update: (user: UserProfile, data: Booking[]) =>
-        !data.some((booking) => booking.lesson.teacher.idUser === user.idUser),
-
-      delete: (user: UserProfile, data: Booking[]) =>
-        !data.some((booking) => booking.lesson.teacher.idUser === user.idUser),
-    },
-    pricings: {
-      create: true,
-      read: true,
-      update: true,
-      delete: true,
+      delete: (user: ProfileMe, data: Lesson | Lesson[]) => {
+        if (Array.isArray(data)) {
+          return data.every((lesson) => lesson.teacher.idUser === user.idUser);
+        } else {
+          return data.teacher.idUser === user.idUser;
+        }
+      },
     },
   },
   student: {
@@ -73,13 +57,32 @@ const ROLES = {
     bookings: {
       create: true,
       read: true,
-      update: false,
-      delete: (user: UserProfile, booking: Booking[]) =>
-        !booking.some((booking) => booking.user.idUser === user.idUser),
+      update: (user: ProfileMe, data: Booking[] | Booking) => {
+        if (Array.isArray(data)) {
+          return data.every((booking) => booking.user.idUser === user.idUser);
+        } else {
+          return data.user.idUser === user.idUser;
+        }
+      },
+      delete: (user: ProfileMe, data: Booking[] | Booking) => {
+        if (Array.isArray(data)) {
+          return data.every((booking) => booking.user.idUser === user.idUser);
+        } else {
+          return data.user.idUser === user.idUser;
+        }
+      },
     },
-    pricings: {
+  },
+  anonymous: {
+    lessons: {
       create: false,
       read: true,
+      update: false,
+      delete: false,
+    },
+    bookings: {
+      create: false,
+      read: false,
       update: false,
       delete: false,
     },
@@ -97,17 +100,11 @@ const ROLES = {
       update: true,
       delete: true,
     },
-    pricings: {
-      create: true,
-      read: true,
-      update: true,
-      delete: true,
-    },
   },
 } as const satisfies RolesWithPermissions;
 
-export function useHasPermission<Resource extends keyof Permissions>(
-  user: UserProfile,
+export function hasPermission<Resource extends keyof Permissions>(
+  user: ProfileMe,
   resource: Resource,
   action: Permissions[Resource]["action"],
   data?: Permissions[Resource]["dataType"]
@@ -115,6 +112,7 @@ export function useHasPermission<Resource extends keyof Permissions>(
   const permission = (ROLES as RolesWithPermissions)[user.role][resource]?.[
     action
   ];
+  console.log(permission);
   if (permission == null) return false;
 
   if (typeof permission === "boolean") return permission;

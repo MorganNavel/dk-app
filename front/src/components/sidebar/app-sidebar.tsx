@@ -104,11 +104,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        {process.env.NODE_ENV == "development" && profile && (
-          <NavUser profile={profile} />
-        )}
         {process.env.NODE_ENV == "development" &&
-          !profile &&
+          profile.role != "anonymous" && <NavUser profile={profile} />}
+        {process.env.NODE_ENV == "development" &&
+          profile.role == "anonymous" &&
           (open ? (
             <Button
               variant={"round-outline"}

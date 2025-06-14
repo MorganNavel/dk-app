@@ -5,7 +5,7 @@ import { ProfileMe } from "@/types/User";
 import { apiCall } from "@/utils/apiCall";
 
 interface ProfileContextType {
-  profile: ProfileMe | null;
+  profile: ProfileMe;
   isLoading: boolean;
   isError: boolean;
   error: unknown;
@@ -46,14 +46,23 @@ export const ProfileProvider: React.FC<ProfileProviderProps> = ({
           undefined,
           options
         );
-        return data ?? null;
+        return data;
       } catch (error) {
         return null;
       }
     },
   });
+  const anonymous: ProfileMe = {
+    idUser: -1,
+    name: "",
+    firstname: "",
+    email: "",
+    role: "anonymous",
+    description: "",
+  };
+
   const value = useMemo(
-    () => ({ profile: profile ?? null, isLoading, isError, error }),
+    () => ({ profile: profile ?? anonymous, isLoading, isError, error }),
     [profile, isLoading, isError, error]
   );
 
