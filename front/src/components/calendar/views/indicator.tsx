@@ -5,19 +5,19 @@ export function CurrentTimeIndicator({
   hourHeight = 0,
   hourWidth = 0,
 }: Readonly<{ hourHeight?: number; hourWidth?: number }>) {
-  const [position, setPosition] = useState(() => calculatePosition());
+  const [position, setPosition] = useState(0);
   const [time, setTime] = useState(() => format(new Date(), "HH:mm"));
   const indicatorRef = useRef<HTMLDivElement | null>(null);
-  function calculatePosition() {
-    const now = new Date();
-
-    const hours = getHours(now);
-    const minutes = getMinutes(now);
-
-    return Math.round(hours * hourHeight + (minutes / 60) * hourHeight);
-  }
 
   useEffect(() => {
+    function calculatePosition() {
+      const now = new Date();
+
+      const hours = getHours(now);
+      const minutes = getMinutes(now);
+
+      return Math.round(hours * hourHeight + (minutes / 60) * hourHeight);
+    }
     if (indicatorRef.current) {
       indicatorRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -30,7 +30,7 @@ export function CurrentTimeIndicator({
     }, 1000 * 60);
 
     return () => clearInterval(interval);
-  }, [calculatePosition]);
+  }, []);
 
   return (
     <div
