@@ -1,8 +1,11 @@
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
 COPY package.json pnpm-lock.yaml ./
+
+ARG NEXT_PUBLIC_RECAPTCHA_SITE_KEY
+ENV NEXT_PUBLIC_RECAPTCHA_SITE_KEY=$NEXT_PUBLIC_RECAPTCHA_SITE_KEY
 
 RUN npm install -g pnpm && pnpm install
 
@@ -10,7 +13,7 @@ COPY . .
 
 RUN pnpm build
 
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
