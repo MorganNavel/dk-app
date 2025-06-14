@@ -30,7 +30,7 @@ export function CurrentTimeIndicator({
     }, 1000 * 60);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [calculatePosition]);
 
   return (
     <div

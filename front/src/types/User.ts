@@ -15,6 +15,19 @@ interface SignInInput {
   email: string;
   password: string;
 }
+interface UserProfile {
+  idUser: number;
+  name: string;
+  firstname: string;
+  email: string;
+  languages?: Array<string>;
+  description?: string;
+  avatar?: string;
+  nationality?: Array<string>;
+  views?: number;
+  role: UserRole;
+  rating?: number;
+}
 interface ProfileMe {
   idUser: number;
   name: string;
@@ -38,4 +51,4 @@ export interface Teacher {
   rating?: number | null;
 }
 
-export type { SignUpInput, SignInInput, UserRole, ProfileMe };
+export type { SignUpInput, SignInInput, UserRole, ProfileMe, UserProfile };
