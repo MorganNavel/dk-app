@@ -1,0 +1,124 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Bookings {
+  idBooking Int      @id @default(autoincrement())
+  createdAt DateTime
+  idUser    String?
+  idLesson  Int?
+  user      User?    @relation("BookingUser", fields: [idUser], references: [id], onDelete: SetNull, onUpdate: Cascade)
+  lesson    Lessons? @relation(fields: [idLesson], references: [idLesson], onDelete: SetNull, onUpdate: Cascade)
+
+  User User[] @relation("UsersToBookings")
+  @@unique([idUser, idLesson])
+}
+
+model Lessons {
+  idLesson    Int          @id @default(autoincrement())
+  title       String
+  description String?
+  url         String?
+  startDate   DateTime     @db.Timestamp(0)
+  duration    Int          @default(50)
+  earned      Float        @default(0)
+  status      LessonStatus @default(planned)
+  groupSize   Int          @default(2)
+  createdAt   DateTime
+  idTeacher   String
+  teacher     User         @relation(fields: [idTeacher], references: [id], onUpdate: Cascade)
+  bookings    Bookings[]
+  User        User[]       @relation("UsersToLessons")
+}
+
+model Pricings {
+  idPricing Int    @id @default(autoincrement())
+  currency  String
+  price     Float?
+  nbLessons Int
+}
+
+enum LessonStatus {
+  planned
+  done
+  cancelled
+}
+
+enum UserRole {
+  student
+  teacher
+  admin
+}
+
+model User {
+  id            String     @id
+  name          String
+  email         String     @unique
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+  languages     String[]
+  nationality   String[]
+  description   String?
+  role          UserRole   @default(student)
+  nbLessons     Int?       @default(0)
+  lessons       Lessons[]  @relation("UsersToLessons")
+  bookings      Bookings[] @relation("BookingUser")
+  User          Bookings[] @relation("UsersToBookings")
+  Lessons       Lessons[]
+  @@map("user")
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
