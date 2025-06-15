@@ -6,12 +6,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ControlledInput } from "../fields/ControlledInput";
 import { ControlledTextarea } from "../fields/ControlledTextarea";
 import { ControlledDatePicker } from "../fields/ControlledDatePicker";
-import { apiCall } from "@/utils/apiCall";
-import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "@ui/button";
 import { toast } from "sonner";
 import { ApiResponse } from "@/types/ApiResponse";
 import { errorToasts } from "@/utils/toast";
+import { createLessonAndRevalidate } from "@/app/[locale]/danbee-park/dashboard/actions";
 interface FormProps {
   title: string;
   description: string;
@@ -23,7 +22,6 @@ interface LessonFormProps {
 }
 export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const methods = useForm<FormProps>({
     resolver: zodResolver(LessonScheme(t)),
     defaultValues: {
@@ -35,8 +33,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
   });
   async function handleSubmit(data: FormProps) {
     try {
-      await apiCall("/lesson", "POST", data);
-      queryClient.invalidateQueries({ queryKey: ["lessons"] });
+      await createLessonAndRevalidate(data);
       toast.success(t("lesson.create.success"));
     } catch (e) {
       if (e instanceof Error) {

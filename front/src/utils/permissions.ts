@@ -1,10 +1,8 @@
-import { Booking } from "@/types/Booking";
-import { Lesson } from "@/types/Lesson";
-import { ProfileMe, UserRole } from "@/types/User";
-
+import { Booking, Lesson, UserProfile } from "@/types/type";
+type UserRole = "teacher" | "student" | "anonymous" | "admin";
 type PermissionCheck<Key extends keyof Permissions> =
   | boolean
-  | ((user: ProfileMe, data: Permissions[Key]["dataType"]) => boolean);
+  | ((user: UserProfile, data: Permissions[Key]["dataType"]) => boolean);
 
 type RolesWithPermissions = {
   [R in UserRole]: Partial<{
@@ -31,18 +29,18 @@ const ROLES = {
     lessons: {
       create: true,
       read: true,
-      update: (user: ProfileMe, data: Lesson[] | Lesson) => {
+      update: (user: UserProfile, data: Lesson[] | Lesson) => {
         if (Array.isArray(data)) {
-          return data.every((lesson) => lesson.teacher.idUser === user.idUser);
+          return data.every((lesson) => lesson.teacher.id === user.id);
         } else {
-          return data.teacher.idUser === user.idUser;
+          return data.teacher.id === user.id;
         }
       },
-      delete: (user: ProfileMe, data: Lesson | Lesson[]) => {
+      delete: (user: UserProfile, data: Lesson | Lesson[]) => {
         if (Array.isArray(data)) {
-          return data.every((lesson) => lesson.teacher.idUser === user.idUser);
+          return data.every((lesson) => lesson.teacher.id === user.id);
         } else {
-          return data.teacher.idUser === user.idUser;
+          return data.teacher.id === user.id;
         }
       },
     },
@@ -57,18 +55,18 @@ const ROLES = {
     bookings: {
       create: true,
       read: true,
-      update: (user: ProfileMe, data: Booking[] | Booking) => {
+      update: (user: UserProfile, data: Booking[] | Booking) => {
         if (Array.isArray(data)) {
-          return data.every((booking) => booking.user.idUser === user.idUser);
+          return data.every((booking) => booking.user?.id === user.id);
         } else {
-          return data.user.idUser === user.idUser;
+          return data.user.id === user.id;
         }
       },
-      delete: (user: ProfileMe, data: Booking[] | Booking) => {
+      delete: (user: UserProfile, data: Booking[] | Booking) => {
         if (Array.isArray(data)) {
-          return data.every((booking) => booking.user.idUser === user.idUser);
+          return data.every((booking) => booking.user.id === user.id);
         } else {
-          return data.user.idUser === user.idUser;
+          return data.user.id === user.id;
         }
       },
     },
@@ -104,15 +102,13 @@ const ROLES = {
 } as const satisfies RolesWithPermissions;
 
 export function hasPermission<Resource extends keyof Permissions>(
-  user: ProfileMe,
+  user: UserProfile,
   resource: Resource,
   action: Permissions[Resource]["action"],
   data?: Permissions[Resource]["dataType"]
 ) {
-  const permission = (ROLES as RolesWithPermissions)[user.role][resource]?.[
-    action
-  ];
-  console.log(permission);
+  const role = user?.role ?? "anonymous";
+  const permission = (ROLES as RolesWithPermissions)[role][resource]?.[action];
   if (permission == null) return false;
 
   if (typeof permission === "boolean") return permission;

@@ -8,19 +8,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Bookings {
+model Booking {
   idBooking Int      @id @default(autoincrement())
   createdAt DateTime
-  idUser    String?
-  idLesson  Int?
-  user      User?    @relation("BookingUser", fields: [idUser], references: [id], onDelete: SetNull, onUpdate: Cascade)
-  lesson    Lessons? @relation(fields: [idLesson], references: [idLesson], onDelete: SetNull, onUpdate: Cascade)
-
-  User User[] @relation("UsersToBookings")
+  idUser    String
+  idLesson  Int
+  user      User    @relation("BookingUser", fields: [idUser], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  lesson    Lesson @relation(fields: [idLesson], references: [idLesson], onDelete: Cascade, onUpdate: Cascade)
   @@unique([idUser, idLesson])
 }
 
-model Lessons {
+model Lesson {
   idLesson    Int          @id @default(autoincrement())
   title       String
   description String?
@@ -33,8 +31,7 @@ model Lessons {
   createdAt   DateTime
   idTeacher   String
   teacher     User         @relation(fields: [idTeacher], references: [id], onUpdate: Cascade)
-  bookings    Bookings[]
-  User        User[]       @relation("UsersToLessons")
+  bookings    Booking[]
 }
 
 model Pricings {
@@ -71,10 +68,8 @@ model User {
   description   String?
   role          UserRole   @default(student)
   nbLessons     Int?       @default(0)
-  lessons       Lessons[]  @relation("UsersToLessons")
-  bookings      Bookings[] @relation("BookingUser")
-  User          Bookings[] @relation("UsersToBookings")
-  Lessons       Lessons[]
+  bookings      Booking[] @relation("BookingUser")
+  lessons       Lesson[]
   @@map("user")
 }
 

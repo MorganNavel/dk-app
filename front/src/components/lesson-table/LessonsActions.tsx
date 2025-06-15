@@ -9,16 +9,20 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { Lesson } from "@/types/Lesson";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 import { DateTimePicker } from "@/components/DatePicker";
 import { apiCall } from "@/utils/apiCall";
-import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { errorToasts } from "@/utils/toast";
 import { ApiResponse } from "@/types/ApiResponse";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { Lesson } from "@/types/type";
+import {
+  cancelLessonsAndRevalidate,
+  deleteLessonsAndRevalidate,
+  rescheduleLessonsAndRevalidate,
+} from "@/app/[locale]/danbee-park/dashboard/actions";
 interface LessonActions {
   lesson: Lesson;
 }
@@ -91,28 +95,17 @@ function DialogAction({
 }>) {
   const t = useTranslations();
   const [reschedule, setReschedule] = useState<Date | null>(null);
-  const queryClient = useQueryClient();
 
-  const refetchLesson = async (lessonId: number) => {
-    if (action === "delete") {
-      queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
-        return oldData ? oldData.filter((l) => l.idLesson !== lessonId) : [];
-      });
-      return;
-    }
-
-    const updatedLesson = await apiCall<Lesson>(`/lesson/${lessonId}`);
-    queryClient.setQueryData(["lessons"], (oldData: Lesson[] | undefined) => {
-      if (!oldData) return [updatedLesson];
-      return oldData.map((l) => (l.idLesson === lessonId ? updatedLesson : l));
-    });
-  };
+  const refetchLesson = async (lessonId: number) => {};
 
   const handleConfirm = async () => {
     try {
-      if (action === "reschedule") await handleReschedule();
-      if (action === "cancel") await handleCancel();
-      if (action === "delete") await handleDelete();
+      if (action === "reschedule" && reschedule)
+        await rescheduleLessonsAndRevalidate([lesson.idLesson], reschedule);
+      if (action === "cancel")
+        await cancelLessonsAndRevalidate([lesson.idLesson]);
+      if (action === "delete")
+        await deleteLessonsAndRevalidate([lesson.idLesson]);
 
       toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
       await refetchLesson(lesson.idLesson);
@@ -129,23 +122,6 @@ function DialogAction({
   const onClose = () => {
     setAction(null);
     setReschedule(null);
-  };
-
-  const handleReschedule = async () => {
-    if (!reschedule) return;
-    await apiCall(`/lesson/${lesson.idLesson}`, "PATCH", {
-      startDate: reschedule,
-    });
-  };
-
-  const handleCancel = async () => {
-    await apiCall(`/lesson/${lesson.idLesson}/status`, "PATCH", {
-      status: "cancelled",
-    });
-  };
-
-  const handleDelete = async () => {
-    await apiCall(`/lesson/${lesson.idLesson}`, "DELETE");
   };
 
   if (!action) return null;
