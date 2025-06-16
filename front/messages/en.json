@@ -4,6 +4,23 @@
     "date-picker": {
       "placeholder": "Select a date"
     },
+    "signin": {
+      "title": "Sign In",
+      "description": "Please sign in to your account.",
+      "message": {
+        "success": "You have successfully signed in.",
+        "error": "Password or email is incorrect. Please try again."
+      }
+    },
+    "signup": {
+      "title": "Sign Up",
+      "description": "Please sign up for an account.",
+      "message": {
+        "success": "Your account has been successfully created. You are now connected.",
+        "error": "An error occurred while creating your account. Please try again later."
+      }
+    },
+    "forgotPassword": "Forgot your password ?",
     "description": "Description",
     "view": "View",
     "toggle-cols": "Toggle columns",
@@ -12,8 +29,6 @@
     "passwordMissmatch": "Password must be the same",
     "emailFormat": "Email format is invalid",
     "captcha_required": "Confirm you're not a robot.",
-    "signin": "Sign In",
-    "signup": "Sign Up",
     "signout": "Sign Out",
     "others": "Others",
     "learnMore": "Learn More",

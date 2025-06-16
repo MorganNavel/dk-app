@@ -12,8 +12,11 @@ import { signUp } from "@/lib/auth-client";
 import { useRouter } from "@/i18n/routing";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 export function SignUpForm() {
+  const [showPassword, setShowPassword] = useState(false);
   const t = useTranslations();
   const schema = SignUpScheme(t);
   type FormSchema = z.infer<typeof schema>;
@@ -53,6 +56,9 @@ export function SignUpForm() {
       }
     );
   }
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev);
+  };
   return (
     <Form {...methods}>
       <form
@@ -79,7 +85,22 @@ export function SignUpForm() {
           name={"credentials.password"}
           placeholder={t("generals.user-profile.placeholder.password")}
           control={methods.control}
-          type='password'
+          type={showPassword ? "text" : "password"}
+          trailing={
+            showPassword ? (
+              <EyeOff
+                size={18}
+                onClick={handleTogglePasswordVisibility}
+                className='cursor-pointer'
+              />
+            ) : (
+              <Eye
+                size={18}
+                onClick={handleTogglePasswordVisibility}
+                className='cursor-pointer'
+              />
+            )
+          }
           required
         />
         <ControlledInput
@@ -87,7 +108,22 @@ export function SignUpForm() {
           name={"credentials.confirmPassword"}
           placeholder={t("generals.user-profile.placeholder.confirmPassword")}
           control={methods.control}
-          type='password'
+          type={showPassword ? "text" : "password"}
+          trailing={
+            showPassword ? (
+              <EyeOff
+                size={18}
+                onClick={handleTogglePasswordVisibility}
+                className='cursor-pointer'
+              />
+            ) : (
+              <Eye
+                size={18}
+                onClick={handleTogglePasswordVisibility}
+                className='cursor-pointer'
+              />
+            )
+          }
           required
         />
 

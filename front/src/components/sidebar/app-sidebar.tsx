@@ -115,7 +115,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               className='w-full h-full'
               onClick={() => router.push("/auth/sign-in")}
             >
-              {t("generals.signin")}
+              {t("generals.signin.title")}
             </Button>
           ) : (
             <LogIn

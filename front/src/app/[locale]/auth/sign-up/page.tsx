@@ -5,12 +5,16 @@ import {
   CardFooter,
   CardHeader,
   CardContent,
+  CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SignUpForm } from "./signup-form";
+import { Button } from "@/components/ui/button";
+import { signInGoogle } from "@/lib/auth-client";
 
 export default function SignUp() {
   const [isMounted, setIsMounted] = useState(false);
@@ -26,10 +30,20 @@ export default function SignUp() {
     <div className='flex items-center justify-center min-h-screen p-4 '>
       <Card className='lg:max-w-md max-w-sm w-full'>
         <CardHeader className='text-center text-2xl font-bold text-primary'>
-          {t("generals.signup")}
+          <CardTitle>{t("generals.signup.title")}</CardTitle>
+          <CardDescription>{t("generals.signup.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <SignUpForm />
+          <div className='flex justify-center'>
+            <Button
+              variant='outline'
+              className='w-full max-w-xs'
+              onClick={() => signInGoogle()}
+            >
+              {t("generals.signup.signInWithGoogle")}
+            </Button>
+          </div>
         </CardContent>
         <CardFooter className='justify-center'>
           <p className='text-sm'>
@@ -38,7 +52,7 @@ export default function SignUp() {
               href={`sign-in`}
               className='hover:underline text-primary font-semibold'
             >
-              {t("generals.signin")}
+              {t("generals.signin.title")}
             </Link>
           </p>
         </CardFooter>

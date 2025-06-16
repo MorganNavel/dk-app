@@ -21,6 +21,9 @@ interface ControlledInputProps<T extends FieldValues>
   onChange?: (value: any) => void;
   label: string;
   required?: boolean;
+  trailing?: React.ReactNode;
+  heading?: React.ReactNode;
+  labelInlineComponent?: React.ReactNode;
 }
 
 export const ControlledInput = <T extends FieldValues>({
@@ -31,6 +34,9 @@ export const ControlledInput = <T extends FieldValues>({
   required = false,
   onChange,
   className,
+  trailing,
+  heading,
+  labelInlineComponent,
   ...props
 }: ControlledInputProps<T>) => {
   const t = useTranslations("generals");
@@ -51,23 +57,38 @@ export const ControlledInput = <T extends FieldValues>({
       }}
       render={({ field, fieldState }) => (
         <FormItem className={className}>
-          <FormLabel>
-            {label}
-            {required && <span className='text-red-500'> *</span>}
-          </FormLabel>
+          <div className='flex items-center'>
+            <FormLabel>
+              {label}
+              {required && <span className='text-red-500'> *</span>}
+            </FormLabel>
+            {labelInlineComponent && (
+              <span className='ml-auto inline-block text-sm text-foreground'>
+                {labelInlineComponent}
+              </span>
+            )}
+          </div>
           <FormControl>
             <>
-              <Input
-                {...field}
-                {...props}
-                aria-invalid={!!fieldState.error}
-                aria-describedby={`${name}-error`}
-                onBlur={field.onBlur}
-                onChange={(e) => {
-                  field.onChange(e.target.value);
-                  onChange && onChange(e.target.value);
-                }}
-              />
+              <div className='relative'>
+                <span className='absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground'>
+                  {heading}
+                </span>
+                <Input
+                  {...field}
+                  {...props}
+                  aria-invalid={!!fieldState.error}
+                  aria-describedby={`${name}-error`}
+                  onBlur={field.onBlur}
+                  onChange={(e) => {
+                    field.onChange(e.target.value);
+                    onChange && onChange(e.target.value);
+                  }}
+                />
+                <span className='absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground'>
+                  {trailing}
+                </span>
+              </div>
 
               {fieldState.error && (
                 <span

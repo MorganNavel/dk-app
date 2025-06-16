@@ -4,6 +4,8 @@ import {
   CardFooter,
   CardHeader,
   CardContent,
+  CardTitle,
+  CardDescription,
 } from "@/components/ui/card";
 
 import { Link } from "@/i18n/routing";
@@ -30,7 +32,8 @@ export default function SignIn() {
     <div className='flex items-center justify-center min-h-screen snap-start snap-always'>
       <Card className='lg:max-w-md max-w-sm w-full'>
         <CardHeader className='text-center text-2xl font-bold text-primary'>
-          {t("generals.signin")}
+          <CardTitle>{t("generals.signin")}</CardTitle>
+          <CardDescription>{t("generals.signin.description")}</CardDescription>
         </CardHeader>
         <CardContent>
           <SignInForm />
@@ -42,7 +45,7 @@ export default function SignIn() {
               href='/auth/sign-up'
               className='text-primary font-semibold hover:underline'
             >
-              {t("generals.signup")}
+              {t("generals.signup.title")}
             </Link>
           </p>
         </CardFooter>
