@@ -3,6 +3,7 @@ import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
+import { Card } from "@/components/ui/card";
 
 interface ItemLayoutProps {
   title: string;
@@ -28,12 +29,7 @@ export const ItemLayout = ({
   onClick,
 }: ItemLayoutProps) => {
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 50 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: "easeOut" }}
-      className='mx-8 relative flex flex-col lg:flex-row items-center bg-white shadow-xl rounded-xl p-5 sm:p-8 lg:p-12 gap-6 sm:gap-8 hover:shadow-2xl transition-all'
-    >
+    <Card className='mx-8 relative flex flex-col lg:flex-row items-center p-5 sm:p-8 lg:p-12 gap-6 sm:gap-8 shadow-xl hover:shadow-2xl  transition-all'>
       <div className='flex-1 text-center lg:text-left'>
         <h2 className='text-primary font-bold text-lg sm:text-2xl lg:text-3xl mb-3 sm:mb-4 drop-shadow-md'>
           {title}
@@ -111,6 +107,6 @@ export const ItemLayout = ({
           </svg>
         </Button>
       </div>
-    </motion.div>
+    </Card>
   );
 };
