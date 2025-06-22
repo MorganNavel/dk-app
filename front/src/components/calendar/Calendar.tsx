@@ -273,3 +273,33 @@ export interface ViewProps<T> extends LocaleProps {
   };
   onEventClick?: (event: CalendarEvent<T>) => void;
 }
+
+export function CalendarSkeleton({ className = "" }: { className?: string }) {
+  return (
+    <div className={cn("animate-pulse flex flex-col gap-5", className)}>
+      {/* Header Skeleton */}
+      <div className='flex flex-col gap-2 items-center'>
+        <div className='h-6 w-1/3 bg-muted rounded' />
+        <div className='flex gap-2 flex-wrap justify-center'>
+          <div className='h-8 w-20 bg-muted rounded' />
+          <div className='h-8 w-20 bg-muted rounded' />
+          <div className='h-8 w-20 bg-muted rounded' />
+          <div className='h-8 w-20 bg-muted rounded' />
+        </div>
+      </div>
+
+      {/* Body Skeleton (Week/Grid) */}
+      <div className='grid grid-cols-7 gap-2 px-2'>
+        {Array.from({ length: 7 * 5 }).map((_, i) => (
+          <div key={i} className='h-20 bg-muted rounded' />
+        ))}
+      </div>
+
+      {/* Pagination Skeleton */}
+      <div className='flex justify-center gap-2'>
+        <div className='h-8 w-24 bg-muted rounded' />
+        <div className='h-8 w-24 bg-muted rounded' />
+      </div>
+    </div>
+  );
+}

@@ -3,7 +3,6 @@ import "moment/locale/fr";
 import "moment/locale/ko";
 import { createElement, useState } from "react";
 import "@/styles/CalendarStyles.css";
-import { Skeleton } from "@ui/skeleton";
 import EventSheet from "@/app/[locale]/danbee-park/schedule/CalendarEventSheet";
 import { Calendar, CalendarEvent } from "@/components/calendar/Calendar";
 import { addMinutes } from "date-fns";
@@ -49,13 +48,8 @@ export default function CalendarClient({
     useState<CalendarEvent<Lesson> | null>(null);
   const locale = useLocale();
   const user = useSession();
-  if (!user) {
-    return <CalendarSkeleton />;
-  }
   const profile = user.data?.user as UserProfile | undefined;
-  if (!profile) {
-    return <CalendarSkeleton />;
-  }
+
   return (
     <>
       <Calendar<Lesson>
@@ -67,7 +61,7 @@ export default function CalendarClient({
         locale={locale}
         components={{
           actions: [
-            hasPermission(profile, "lessons", "create") && (
+            profile && hasPermission(profile, "lessons", "create") && (
               <Button
                 key='add'
                 variant={"ghost"}
@@ -117,17 +111,3 @@ export default function CalendarClient({
     </>
   );
 }
-
-const CalendarSkeleton = () => {
-  return (
-    <div className='my-5 mx-5 overflow-auto h-screen'>
-      {Array.from({ length: 24 }).map((_, hour) => (
-        <div key={hour} className='flex mb-2'>
-          {Array.from({ length: 7 }).map((_, day) => (
-            <Skeleton key={day} className='w-full h-10 mx-1' />
-          ))}
-        </div>
-      ))}
-    </div>
-  );
-};
