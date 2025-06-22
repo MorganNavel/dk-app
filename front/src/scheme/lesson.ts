@@ -6,9 +6,17 @@ export const LessonScheme = (t: Function) => {
       message: t("generals.requiredField"),
     }),
     description: z.string(),
-    startDate: z.date().refine((val) => val.getTime() > new Date().getTime(), {
-      message: t("generals.requiredField"),
-    }),
+    startDate: z.date().refine(
+      (val) => {
+        if (isNaN(val.getTime())) {
+          return false; // Invalid date
+        }
+        return val.getTime() > new Date().getTime();
+      },
+      {
+        message: t("generals.requiredField"),
+      }
+    ),
     duration: z.number().refine((val) => val > 15, {
       message: t("generals.requiredField"),
     }),

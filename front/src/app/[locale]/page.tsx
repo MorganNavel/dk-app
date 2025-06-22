@@ -1,4 +1,3 @@
-"use client";
 import "@/globals.css";
 
 import { FirstCaroussel } from "@/components/home/carrousel/FirstCarrousel";

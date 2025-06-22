@@ -32,10 +32,7 @@ export function ConfirmDialog({
   const t = useTranslations("generals");
 
   return (
-    <Dialog
-      open={open}
-      onOpenChange={(open) => !open && onClose()}
-    >
+    <Dialog open={open} onOpenChange={(open) => !open && onClose()}>
       <DialogContent className='max-w-md'>
         <DialogHeader>
           <DialogTitle className='text-lg font-semibold'>
@@ -48,14 +45,10 @@ export function ConfirmDialog({
         {children}
         <DialogFooter className='flex justify-end gap-2'>
           <DialogClose asChild>
-            <Button variant='outline'>
-                {t("cancel")}
-            </Button>
+            <Button variant='outline'>{t("cancel")}</Button>
           </DialogClose>
           <DialogClose asChild onClick={onConfirm}>
-            <Button>
-              {t("confirm")}
-            </Button>
+            <Button>{t("confirm")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

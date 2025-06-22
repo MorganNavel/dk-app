@@ -1,18 +1,17 @@
+"use client";
 import { SheetContent, SheetHeader, SheetTitle, Sheet } from "@ui/sheet";
 import moment from "moment";
 import LNGS from "@/types/languages";
 import { Button } from "@ui/button";
-import { apiCall } from "@/utils/apiCall";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useTranslations } from "next-intl";
-import { errorToasts } from "@/utils/toast";
 import { Spinner } from "@nextui-org/react";
 import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
-import { useProfile } from "@providers/Profile";
-import { ApiResponse } from "@/types/ApiResponse";
 import { CalendarEvent } from "@/components/calendar/Calendar";
-import { Lesson } from "@/types/Lesson";
+import { Lesson } from "@/types/type";
+import { useSession } from "@/lib/auth-client";
+import { createBooking } from "./actions";
 
 interface EventSheetProps {
   selectedEvent: CalendarEvent<Lesson> | null;
@@ -24,13 +23,9 @@ function formatTime(date: Date | undefined): string {
 }
 
 const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
-  const { profile } = useProfile();
-  const bookLesson = async () => {
-    return await apiCall<ApiResponse<any>>(
-      `/lesson/${selectedEvent?.resource.idLesson}/booking/`,
-      "POST"
-    );
-  };
+  const user = useSession();
+  const profile = user.data?.user;
+  if (!profile) return null;
   const t = useTranslations();
 
   const renderLanguages = (languages: string | string[] | undefined) => {
@@ -50,14 +45,12 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   };
 
   const { resource, start, end } = selectedEvent ?? {};
-  const { description, nbParticipants, groupSize, teacher } = resource || {};
-  const { firstname, name, languages } = teacher || {};
+  const { description, groupSize, teacher } = resource ?? {};
+  const { name, languages } = teacher ?? {};
   const mutation = useMutation({
-    mutationFn: bookLesson,
+    mutationFn: createBooking,
     onError: (error) => {
-      const err: ApiResponse<any> = JSON.parse(error.message);
-
-      errorToasts(t, err);
+      toast.error(error.message);
     },
     onSuccess: () => {
       toast.success("Leçon réservée avec succès");
@@ -67,7 +60,9 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const isLoading = mutation.isPending;
 
   function onSubmit() {
-    mutation.mutateAsync();
+    if (!selectedEvent?.resource.idLesson || mutation.isPending) return;
+
+    mutation.mutateAsync(selectedEvent.resource.idLesson);
   }
 
   return (
@@ -91,14 +86,13 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
               <FaUser className='text-primary text-xl' />
               <span>
                 <span className='font-bold'>Participants</span>:{" "}
-                {nbParticipants} / {groupSize}
+                {resource?.bookings.length} / {groupSize}
               </span>
             </p>
             <p className='flex items-center space-x-2 text-md mt-2'>
               <FaBook className='text-primary text-xl' />
               <span>
-                <span className='font-bold'>Enseignant</span>: {firstname}{" "}
-                {name}
+                <span className='font-bold'>Enseignant</span>:{name}
               </span>
             </p>
           </div>
