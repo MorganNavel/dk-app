@@ -46,7 +46,7 @@ export function RowFiltering<TData, TValue>({
         setFilterableColumns((prev) => [...prev, column]);
       }
     });
-  }, []);
+  }, [columns]);
   if (!filterableColumns.length) return null;
   return (
     <>

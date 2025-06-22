@@ -1,6 +1,5 @@
-import { Lesson } from "./Lesson";
 import { UserProfile } from "./User";
-
+import { Lesson } from "./Lesson";
 interface Booking {
   idBooking: number;
   user: UserProfile;

@@ -40,7 +40,6 @@ const fetchLessons = async () => {
 };
 export default function LessonsPage() {
   const t = useTranslations();
-  const cols = columns(t);
   const queryClient = useQueryClient();
   const [action, setAction] = useState<Action | null>(null);
   const [selected, setSelected] = useState<RowSelectionState>({});
@@ -73,6 +72,7 @@ export default function LessonsPage() {
     isError: isErrorProfile,
   } = useProfile();
   if (!isLoadingProfile && profile?.role != "teacher") notFound();
+  const cols = columns(t, profile);
 
   const {
     data: lessons,

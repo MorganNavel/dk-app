@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 import { Lesson } from "@/types/Lesson";
-import { Teacher } from "@/types/User";
+import { ProfileMe, Teacher } from "@/types/User";
 import { tsToLocaleDate } from "@/utils/dateUtils";
 import { ColumnDef } from "@tanstack/react-table";
 import LessonActions from "./LessonsActions";
@@ -17,8 +17,7 @@ const statusColors = {
   "in progress": "bg-yellow-100 text-yellow-600",
 };
 
-export function columns(t: any): ColumnDef<Lesson>[] {
-  const { profile } = useProfile();
+export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
   return [
     {
       id: "select",

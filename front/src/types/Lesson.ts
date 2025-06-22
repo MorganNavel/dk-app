@@ -1,4 +1,3 @@
-import { Event } from "react-big-calendar";
 import { Teacher } from "./User";
 
 type LessonStatus = "planned" | "done" | "cancelled" | "in progress";

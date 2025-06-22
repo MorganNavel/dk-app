@@ -21,7 +21,10 @@
       "@/*": ["./src/*"],
       "@public/*": ["./public/*"],
       "@ui/*": ["./src/components/ui/*"],
-      "@providers/*": ["./src/providers/*"]
+      "@providers/*": ["./src/providers/*"],
+      "@components/*": ["./src/components/*"],
+      "@types/*": ["./src/types/*"],
+      "@hooks/*": ["./src/hooks/*"]
     }
   },
   "include": [
