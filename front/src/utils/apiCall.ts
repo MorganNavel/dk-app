@@ -1,9 +1,9 @@
-export async function apiCall<T>(
+export async function apiCall(
   url: string,
   method: string = "GET",
   body?: any,
   options?: RequestInit
-): Promise<T> {
+): Promise<Response> {
   const config: RequestInit = {
     method,
     ...options,
@@ -18,18 +18,7 @@ export async function apiCall<T>(
   if (method !== "GET" && body) {
     config.body = JSON.stringify(body);
   }
-  if (process.env.NODE_ENV == "production") throw new Error("Not implemented");
-  const PORT_API = process.env.PORT_API ?? 3001;
 
-  const urlBase =
-    process.env.NODE_ENV == "development"
-      ? "http://localhost:3001/api/v1"
-      : `http://192.168.1.21:${PORT_API}/api/v1`;
-  const response = await fetch(urlBase + url, config);
-  if (!response.ok) {
-    const error: T = await response.json();
-    throw new Error(JSON.stringify(error));
-  }
-  const data = await response.json();
-  return data.data;
+  const urlBase = "http://localhost:3000";
+  return await fetch(urlBase + url, config);
 }
