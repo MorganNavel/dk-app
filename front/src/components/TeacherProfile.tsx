@@ -1,10 +1,9 @@
 "use client";
 import { Card, CardContent, CardTitle } from "@ui/card";
-import { Button } from "@ui/button";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { Link } from "@/i18n/routing";
 import ParkDanbeeAvatar from "@public/assets/img/park-danbee-avatar.jpg";
+import { Cta } from "./ui/cta";
 
 const teacher = {
   name: "Park",
@@ -26,37 +25,19 @@ export const TeacherProfile = () => {
   };
 
   return (
-    <div className='justify-center max-w-4xl lg:mx-auto mr-5 ml-5 font-Poppins pt-32 pb-32 lg:pt-12 lg:pb-12 '>
-      <Card className='bg-card text-card-foreground p-6 rounded-lg text-center mb-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl'>
-        <CardContent>
-          <CardTitle className='text-xl lg:text-2xl font-semibold mb-4'>
-            {t(
-              `profile.${
-                teacher.firstname + "-" + teacher.name
-              }.instagram.title`
-            )}
-          </CardTitle>
-          <p className='text-md lg:text-lg mb-6 '>
-            {t(
-              `profile.${
-                teacher.firstname + "-" + teacher.name
-              }.instagram.description`
-            )}
-          </p>
-          <Button variant='round-outline'>
-            <Link
-              href={teacher.instagram}
-              className='flex items-center justify-center'
-            >
-              {t(
-                `profile.${
-                  teacher.firstname + "-" + teacher.name
-                }.instagram.follow`
-              )}
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
+    <div className='flex flex-col max-w-4xl lg:mx-auto mx-8 font-Poppins mt-32'>
+      <Cta
+        title={t(
+          `profile.${teacher.firstname}-${teacher.name}.instagram.title`
+        )}
+        description={t(
+          `profile.${teacher.firstname}-${teacher.name}.instagram.description`
+        )}
+        buttonText={t(
+          `profile.${teacher.firstname}-${teacher.name}.instagram.follow`
+        )}
+        href={teacher.instagram}
+      />
 
       <section className='font-Poppins'>
         <div className='flex flex-col lg:flex-row items-center lg:space-x-8'>
@@ -137,30 +118,16 @@ export const TeacherProfile = () => {
         </div>
       </div>
 
-      <Card className='bg-card text-card-foreground p-6 rounded-lg text-center mb-8 transform transition-transform duration-300 hover:scale-105 hover:shadow-xl'>
-        <CardContent>
-          <CardTitle className='text-xl lg:text-2xl font-semibold mb-4'>
-            {t(`profile.${teacher.firstname}-${teacher.name}.preply.title`)}
-          </CardTitle>
-          <p className='text-md lg:text-lg mb-6'>
-            {t(
-              `profile.${teacher.firstname}-${teacher.name}.preply.description`
-            )}
-          </p>
-          <Button variant='round-outline' className='w-full py-5'>
-            <Link
-              href={teacher.preply}
-              className='flex items-center justify-center'
-            >
-              <p className='text-wrap'>
-                {t(
-                  `profile.${teacher.firstname}-${teacher.name}.preply.buttonText`
-                )}
-              </p>
-            </Link>
-          </Button>
-        </CardContent>
-      </Card>
+      <Cta
+        title={t(`profile.${teacher.firstname}-${teacher.name}.preply.title`)}
+        description={t(
+          `profile.${teacher.firstname}-${teacher.name}.preply.description`
+        )}
+        buttonText={t(
+          `profile.${teacher.firstname}-${teacher.name}.preply.buttonText`
+        )}
+        href={teacher.preply}
+      />
     </div>
   );
 };
