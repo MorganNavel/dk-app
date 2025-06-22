@@ -17,8 +17,6 @@ const buttonVariants = cva(
           "border border-input shadow-sm hover:bg-gray-500/10 hover:text-gray-800",
         "round-outline":
           "bg-primary transition-all duration-300 enabled:hover:bg-white enabled:border-2 border-primary enabled:hover:text-primary text-white rounded-full disabled:bg-disabled-button",
-        "square-outline":
-          "border-2 border-textColor rounded-md enabled:hover:scale-105 enabled:hover:drop-shadow-md transition-transform duration-300 ease-in-out",
         secondary:
           "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
         ghost: "hover:bg-gray-500/10 hover:text-gray-800",
