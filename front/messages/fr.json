@@ -13,6 +13,7 @@
         "error": "L'email ou le mot de passe est incorrect. Veuillez réessayer."
       }
     },
+    "orContinueWith": "OU CONTINUEZ AVEC",
     "signup": {
       "title": "S'inscrire",
       "description": "Veuillez vous inscrire pour un compte.",

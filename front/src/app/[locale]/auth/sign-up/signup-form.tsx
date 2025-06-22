@@ -36,7 +36,6 @@ export function SignUpForm() {
   const router = useRouter();
 
   async function onSubmit(data: FormSchema) {
-    console.log(data.credentials.email);
     await signUp.email(
       {
         email: data.credentials?.email,
@@ -63,7 +62,7 @@ export function SignUpForm() {
     <Form {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className=' px-4 py-6 rounded-lg '
+        className=' px-4 py-6 rounded-lg gap-4 flex flex-col'
       >
         <ControlledInput
           label={t("generals.user-profile.label.email")}
@@ -135,7 +134,7 @@ export function SignUpForm() {
           placeholder={t("generals.user-profile.placeholder.lngs")}
           required
         />
-        <div className='flex justify-center my-5'>
+        <div className='flex justify-center'>
           <ControlledCaptchat name='token' control={methods.control} />
         </div>
 

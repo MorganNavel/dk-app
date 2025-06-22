@@ -12,6 +12,7 @@
         "error": "Password or email is incorrect. Please try again."
       }
     },
+    "orContinueWith": "OR CONTINUE WITH",
     "signup": {
       "title": "Sign Up",
       "description": "Please sign up for an account.",

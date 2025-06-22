@@ -1,6 +1,6 @@
 import { ControlledCaptchat } from "@/components/captcha/ControlledCaptcha";
 import { ControlledInput } from "@/components/fields/ControlledInput";
-import { Form, FormField, FormItem, FormLabel } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
@@ -10,7 +10,6 @@ import { Link, useRouter } from "@/i18n/routing";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { SignInScheme } from "./signin-schema";
-import { Input } from "@/components/ui/input";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 

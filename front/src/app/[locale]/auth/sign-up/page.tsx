@@ -15,6 +15,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { SignUpForm } from "./signup-form";
 import { Button } from "@/components/ui/button";
 import { signInGoogle } from "@/lib/auth-client";
+import { FcGoogle } from "react-icons/fc";
+import { Separator } from "@/components/ui/separator";
 
 export default function SignUp() {
   const [isMounted, setIsMounted] = useState(false);
@@ -34,16 +36,24 @@ export default function SignUp() {
           <CardDescription>{t("generals.signup.description")}</CardDescription>
         </CardHeader>
         <CardContent>
-          <SignUpForm />
-          <div className='flex justify-center'>
-            <Button
-              variant='outline'
-              className='w-full max-w-xs'
-              onClick={() => signInGoogle()}
-            >
-              {t("generals.signup.signInWithGoogle")}
-            </Button>
+          <div>
+            <div className='flex flex-3 justify-center mb-4 gap-5'>
+              <Button
+                variant='outline'
+                onClick={signInGoogle}
+                className='flex-1 flex items-center justify-center gap-2'
+              >
+                <FcGoogle size={20} />
+                Google
+              </Button>
+            </div>
+            <div className=' flex flex-4 text-center items-center text-sm text-muted-foreground'>
+              <Separator className='flex-1' />
+              <p className='flex-2 mx-5'>{t("generals.orContinueWith")}</p>
+              <Separator className='flex-1' />
+            </div>
           </div>
+          <SignUpForm />
         </CardContent>
         <CardFooter className='justify-center'>
           <p className='text-sm'>
