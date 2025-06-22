@@ -11,6 +11,8 @@ RUN npm install -g pnpm && pnpm install
 
 COPY . .
 
+RUN npx prisma generate
+
 RUN pnpm build
 
 FROM node:20-alpine
