@@ -5,14 +5,13 @@ import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
-import { Footer } from "@/components/Footer";
-
 import favicon from "@public/favicon.ico";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
 
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarLayout } from "@/components/sidebar/sidebar-layout";
+import { ClientLayout } from "./snapping-layout";
 export function generateMetadata({
   params: { locale },
 }: {
@@ -46,6 +45,7 @@ interface LocaleLayoutProps {
   children: React.ReactNode;
   params: { locale: string };
 }
+
 export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   if (!routing.locales.includes(props.params.locale as any)) {
     notFound();
@@ -60,10 +60,7 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
       <NextIntlClientProvider messages={messages}>
         <SidebarProvider>
           <SidebarLayout>
-            <main className='overflow-auto h-screen'>
-              {props.children}
-              <Footer />
-            </main>
+            <ClientLayout>{props.children}</ClientLayout>
           </SidebarLayout>
           <Toaster richColors />
         </SidebarProvider>
