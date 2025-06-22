@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createBooking } from "@/queries/bookings/bookings-queries";
+import { BookingCodes } from "@/queries/bookings/bookings-codes";
 
 export async function POST(
   req: NextRequest,
@@ -19,7 +20,11 @@ export async function POST(
 
     if (!result) {
       return NextResponse.json(
-        { code: "UNAUTHORIZED", key: "booking.unauthorized" },
+        {
+          code: BookingCodes.NOT_AUTHENTICATED,
+          key: "booking.not_authenticated",
+          redirectTo: "/auth/sign-in",
+        },
         { status: 401 }
       );
     }

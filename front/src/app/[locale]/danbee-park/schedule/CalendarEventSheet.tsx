@@ -12,6 +12,7 @@ import { CalendarEvent } from "@/components/calendar/Calendar";
 import { Lesson } from "@/types/type";
 import { useSession } from "@/lib/auth-client";
 import { createBooking } from "./actions";
+import { useRouter } from "@/i18n/routing";
 
 interface EventSheetProps {
   selectedEvent: CalendarEvent<Lesson> | null;
@@ -24,9 +25,8 @@ function formatTime(date: Date | undefined): string {
 
 const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const user = useSession();
-  const profile = user.data?.user;
-  if (!profile) return null;
   const t = useTranslations();
+  const router = useRouter();
 
   const renderLanguages = (languages: string | string[] | undefined) => {
     if (!languages) return "Pas de langue";
@@ -50,9 +50,10 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const mutation = useMutation({
     mutationFn: createBooking,
     onError: (error) => {
-      toast.error(error.message);
+      const json = JSON.parse(error.message);
+      toast.error(t(json.key));
     },
-    onSuccess: () => {
+    onSuccess: (data, vars, ctx) => {
       toast.success("Leçon réservée avec succès");
       setSelectedEvent(null);
     },
@@ -60,6 +61,11 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const isLoading = mutation.isPending;
 
   function onSubmit() {
+    if (!user) {
+      toast.error(t("generals.signin.required"));
+      router.push("/auth/sign-in");
+      return;
+    }
     if (!selectedEvent?.resource.idLesson || mutation.isPending) return;
 
     mutation.mutateAsync(selectedEvent.resource.idLesson);
@@ -92,7 +98,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             <p className='flex items-center space-x-2 text-md mt-2'>
               <FaBook className='text-primary text-xl' />
               <span>
-                <span className='font-bold'>Enseignant</span>:{name}
+                <span className='font-bold'>Enseignant</span>: {name}
               </span>
             </p>
           </div>
@@ -118,16 +124,14 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
           </div>
         </div>
 
-        {profile && profile.role == "student" && (
-          <Button
-            type={"submit"}
-            className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
-            disabled={isLoading}
-            onClick={onSubmit}
-          >
-            {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
-          </Button>
-        )}
+        <Button
+          type={"submit"}
+          className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
+          disabled={isLoading}
+          onClick={onSubmit}
+        >
+          {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
+        </Button>
       </SheetContent>
     </Sheet>
   );
