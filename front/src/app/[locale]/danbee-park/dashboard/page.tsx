@@ -14,13 +14,20 @@ export default async function LessonsContent() {
     (await getEarningsComparison()) as unknown as EarningsComparison;
 
   return (
-    <div className='snap-start snap-always h-screen'>
+    <div>
       <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mb-8 p-15'>
         <PreviousMonthsStats />
         <PreviousMonthsStats />
         <PreviousMonthsStats />
         <PreviousMonthsStats />
         <TotalRevenueMonth />
+
+        {/* <p>col1</p>
+        <p>col2</p>
+        <p>col3</p>
+        <p>col4</p>
+        <p>col5</p>
+        <p>col6</p> */}
       </div>
 
       <LessonTable

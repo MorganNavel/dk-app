@@ -11,7 +11,7 @@ export default function Home() {
       <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always'>
         <FirstCaroussel />
       </section>
-      <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always '>
+      <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always'>
         <ELearningComponent />
       </section>
       <section className='w-full min-h-screen flex items-center justify-center snap-start snap-always'>
