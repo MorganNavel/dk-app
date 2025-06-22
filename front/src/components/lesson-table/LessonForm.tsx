@@ -5,12 +5,11 @@ import { LessonScheme } from "@/scheme/lesson";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ControlledInput } from "../fields/ControlledInput";
 import { ControlledTextarea } from "../fields/ControlledTextarea";
-import { ControlledDatePicker } from "../fields/ControlledDatePicker";
 import { Button } from "@ui/button";
 import { toast } from "sonner";
-import { ApiResponse } from "@/types/ApiResponse";
-import { errorToasts } from "@/utils/toast";
 import { createLessonAndRevalidate } from "@/app/[locale]/danbee-park/dashboard/actions";
+import { startOfDay } from "date-fns";
+import { DateTimePickerForm } from "@ui/date-picker-form";
 interface FormProps {
   title: string;
   description: string;
@@ -36,18 +35,19 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
       await createLessonAndRevalidate(data);
       toast.success(t("lesson.create.success"));
     } catch (e) {
-      if (e instanceof Error) {
-        console.log(e.message);
-        const err: ApiResponse<any> = JSON.parse(e.message);
-        errorToasts(t, err);
-      }
+      console.error("Error creating lesson:", e);
+      toast.error(t("lesson.create.error"));
+      return;
     }
     onFinish();
   }
 
   return (
     <Form {...methods}>
-      <form onSubmit={methods.handleSubmit(handleSubmit)} className='p-10'>
+      <form
+        onSubmit={methods.handleSubmit(handleSubmit)}
+        className='p-10 flex flex-col gap-5'
+      >
         <ControlledInput
           label={t("lessons.data-table.columns.title")}
           name='title'
@@ -60,12 +60,12 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           name='description'
           control={methods.control}
         />
-        <ControlledDatePicker
+        <DateTimePickerForm
+          label={t("lessons.data-table.columns.startDate")}
           name='startDate'
           control={methods.control}
-          format='24h'
+          disabled={(date) => date < startOfDay(new Date())}
           required
-          label={t("lessons.data-table.columns.startDate")}
         />
         <ControlledInput
           label={t("lessons.data-table.columns.duration")}

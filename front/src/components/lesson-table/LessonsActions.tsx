@@ -11,11 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
-import { DateTimePicker } from "@/components/DatePicker";
-import { apiCall } from "@/utils/apiCall";
 import { toast } from "sonner";
-import { errorToasts } from "@/utils/toast";
-import { ApiResponse } from "@/types/ApiResponse";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { Lesson } from "@/types/type";
 import {
@@ -23,6 +19,8 @@ import {
   deleteLessonsAndRevalidate,
   rescheduleLessonsAndRevalidate,
 } from "@/app/[locale]/danbee-park/dashboard/actions";
+import { DateTimePicker } from "../ui/date-picker";
+import { startOfDay } from "date-fns";
 interface LessonActions {
   lesson: Lesson;
 }
@@ -96,8 +94,6 @@ function DialogAction({
   const t = useTranslations();
   const [reschedule, setReschedule] = useState<Date | null>(null);
 
-  const refetchLesson = async (lessonId: number) => {};
-
   const handleConfirm = async () => {
     try {
       if (action === "reschedule" && reschedule)
@@ -106,16 +102,10 @@ function DialogAction({
         await cancelLessonsAndRevalidate([lesson.idLesson]);
       if (action === "delete")
         await deleteLessonsAndRevalidate([lesson.idLesson]);
-
       toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
-      await refetchLesson(lesson.idLesson);
     } catch (error: any) {
-      try {
-        const err: ApiResponse<any> = JSON.parse(error.message);
-        errorToasts(t, err);
-      } catch {
-        toast.error(t("errors.unexpected"));
-      }
+      console.error("Error in lesson action:", error);
+      return;
     }
   };
 
@@ -140,9 +130,10 @@ function DialogAction({
     >
       {action === "reschedule" && (
         <DateTimePicker
-          disabled={{ before: new Date() }}
+          label={t("lessons.data-table.columns.startDate")}
+          value={reschedule ?? undefined}
           onChange={(date) => setReschedule(date ?? null)}
-          initialDate={new Date(lesson.startDate)}
+          disabled={(date) => date < startOfDay(new Date())}
         />
       )}
     </ConfirmDialog>
