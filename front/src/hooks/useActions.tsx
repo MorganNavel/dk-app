@@ -1,6 +1,9 @@
+import {
+  cancelLessonsAndRevalidate,
+  deleteLessonsAndRevalidate,
+} from "@/app/[locale]/danbee-park/dashboard/actions";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { LessonForm } from "@/components/lesson-table/LessonForm";
-import { apiCall } from "@/utils/apiCall";
 
 export type TableAction<T extends (...args: any[]) => any> = {
   title?: string;
@@ -21,7 +24,7 @@ export const useLessonTableActions = () => {
       content: "lessons.data-table.actions.dialog.delete.content",
       type: "dialog",
       onConfirm: async (idLessons: number[]) => {
-        await apiCall("/lesson/bulk", "DELETE", { idLessons });
+        await deleteLessonsAndRevalidate(idLessons);
       },
       component: ConfirmDialog,
     } satisfies TableAction<(idLessons: number[]) => Promise<void>>,
@@ -32,22 +35,7 @@ export const useLessonTableActions = () => {
       type: "dialog",
       component: ConfirmDialog,
       onConfirm: async (idLessons: number[]) => {
-        await apiCall("/lesson/status/bulk", "PATCH", {
-          idLessons,
-          status: "cancelled",
-        });
-      },
-    } satisfies TableAction<(idLessons: number[]) => Promise<void>>,
-    reschedule: {
-      title: "lessons.data-table.actions.dialog.reschedule.title",
-      content: "lessons.data-table.actions.dialog.reschedule.content",
-      type: "dialog",
-      component: ConfirmDialog,
-      onConfirm: async (idLessons: number[]) => {
-        await apiCall("/lesson/status/bulk", "PATCH", {
-          idLessons,
-          status: "rescheduled",
-        });
+        await cancelLessonsAndRevalidate(idLessons);
       },
     } satisfies TableAction<(idLessons: number[]) => Promise<void>>,
   };
