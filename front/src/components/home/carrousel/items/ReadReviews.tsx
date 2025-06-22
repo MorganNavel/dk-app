@@ -1,7 +1,7 @@
 import graph from "@public/assets/img/graph.png";
 import { ItemLayout } from "./ItemLayout";
 import { useTranslations } from "next-intl";
-import { BadgeCheck, Leaf, Star, Sparkles } from "lucide-react";
+import { BadgeCheck, Sparkles } from "lucide-react";
 
 export const ReadReviewsComponent = () => {
   const t = useTranslations();

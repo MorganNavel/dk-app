@@ -20,7 +20,6 @@ import {
 } from "@/components/ui/sidebar";
 import { CaretSortIcon } from "@radix-ui/react-icons";
 import { FaChalkboardTeacher, FaMoneyBillWave } from "react-icons/fa";
-import { ProfileMe } from "@/types/User";
 import { PiStudentBold } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";
 import { useTranslations } from "next-intl";

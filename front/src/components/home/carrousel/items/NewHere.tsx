@@ -1,7 +1,7 @@
 import questionMark from "@public/assets/img/question-mark.png";
 import { ItemLayout } from "./ItemLayout";
 import { useTranslations } from "next-intl";
-import { BadgeCheck, Headset, Leaf, Star } from "lucide-react";
+import { Leaf } from "lucide-react";
 
 export const NewHereComponent = () => {
   const t = useTranslations("home.intro.slider.newHere");
