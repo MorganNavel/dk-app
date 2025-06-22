@@ -24,22 +24,18 @@ import { ProfileMe } from "@/types/User";
 import { PiStudentBold } from "react-icons/pi";
 import { VscAccount } from "react-icons/vsc";
 import { useTranslations } from "next-intl";
-import { apiCall } from "@/utils/apiCall";
 import { useRouter } from "@/i18n/routing";
-import { useQueryClient } from "@tanstack/react-query";
-interface NavUserProps {
-  profile: ProfileMe;
-}
+import { signOut, useSession } from "@/lib/auth-client";
 
-export function NavUser({ profile }: Readonly<NavUserProps>) {
+export function NavUser() {
   const { isMobile } = useSidebar();
   const t = useTranslations();
-  const queryClient = useQueryClient();
   const router = useRouter();
+  const session = useSession();
+  const user = session.data?.user;
   const signout = async () => {
     try {
-      await apiCall("/auth/signout", "POST");
-      queryClient.clear();
+      await signOut();
       router.refresh();
     } catch {}
   };
@@ -54,14 +50,16 @@ export function NavUser({ profile }: Readonly<NavUserProps>) {
               className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground'
             >
               <Avatar className='h-8 w-8 rounded-lg'>
-                {profile.role === "teacher" && (
+                {user && user?.role === "teacher" && (
                   <FaChalkboardTeacher size={32} />
                 )}
-                {profile.role == "student" && <PiStudentBold size={32} />}
+                {user && user?.role === "student" && (
+                  <PiStudentBold size={32} />
+                )}
               </Avatar>
               <div className='grid flex-1 text-left text-sm leading-tight'>
-                <span className='truncate font-semibold'>{profile.name}</span>
-                <span className='truncate text-xs'>{profile.email}</span>
+                <span className='truncate font-semibold'>{user?.name}</span>
+                <span className='truncate text-xs'>{user?.email}</span>
               </div>
               <CaretSortIcon className='ml-auto size-4' />
             </SidebarMenuButton>
@@ -75,14 +73,16 @@ export function NavUser({ profile }: Readonly<NavUserProps>) {
             <DropdownMenuLabel className='p-0 font-normal'>
               <div className='flex items-center gap-2 px-1 py-1.5 text-left text-sm'>
                 <div className='h-14 w-14 rounded-lg flex items-center justify-center'>
-                  {profile.role === "teacher" && (
+                  {user && user?.role === "teacher" && (
                     <FaChalkboardTeacher size={32} />
                   )}
-                  {profile.role == "student" && <PiStudentBold size={32} />}
+                  {user && user?.role === "student" && (
+                    <PiStudentBold size={32} />
+                  )}
                 </div>
                 <div className='grid flex-1 text-left text-sm leading-tight'>
-                  <span className='truncate font-semibold'>{profile.name}</span>
-                  <span className='truncate text-xs'>{profile.email}</span>
+                  <span className='truncate font-semibold'>{user?.name}</span>
+                  <span className='truncate text-xs'>{user?.email}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

@@ -19,8 +19,8 @@ import logo from "@public/assets/img/logo.png";
 import { FaChalkboardTeacher, FaRegEnvelope } from "react-icons/fa";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/routing";
-import { useProfile } from "@/providers/Profile";
 import { Button } from "../ui/button";
+import { useSession } from "@/lib/auth-client";
 
 const data: {
   navMain: NavMainProps["items"];
@@ -71,9 +71,11 @@ const data: {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { isMobile, setOpenMobile, open } = useSidebar();
-  const { profile } = useProfile();
+  const session = useSession();
+  const user = session.data?.user;
   const t = useTranslations();
   const router = useRouter();
+  const role = user?.role;
 
   return (
     <Sidebar collapsible='icon' {...props}>
@@ -104,21 +106,20 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
+        {process.env.NODE_ENV == "development" && role && <NavUser />}
         {process.env.NODE_ENV == "development" &&
-          profile.role != "anonymous" && <NavUser profile={profile} />}
-        {process.env.NODE_ENV == "development" &&
-          profile.role == "anonymous" &&
+          !user &&
           (open ? (
             <Button
               variant={"round-outline"}
               className='w-full h-full'
-              onClick={() => router.push("/sign-in")}
+              onClick={() => router.push("/auth/sign-in")}
             >
-              {t("generals.signin")}
+              {t("generals.signin.title")}
             </Button>
           ) : (
             <LogIn
-              onClick={() => router.push("/sign-in")}
+              onClick={() => router.push("/auth/sign-in")}
               className='cursor-pointer'
             />
           ))}

@@ -5,6 +5,23 @@
     "date-picker": {
       "placeholder": "Sélectionner une date"
     },
+    "signin": {
+      "title": "Se connecter",
+      "description": "Veuillez vous connecter à votre compte.",
+      "message": {
+        "success": "Vous êtes connecté avec succès.",
+        "error": "L'email ou le mot de passe est incorrect. Veuillez réessayer."
+      }
+    },
+    "signup": {
+      "title": "S'inscrire",
+      "description": "Veuillez vous inscrire pour un compte.",
+      "message": {
+        "success": "Votre compte a été créé avec succès. Vous êtes maintenant connecté.",
+        "error": "Une erreur s'est produite lors de la création de votre compte. Veuillez réessayer plus tard."
+      }
+    },
+    "forgotPassword": "Mot de passe oublié ?",
     "description": "Description",
     "toggle-cols": "Afficher les colonnes",
     "no-data": "Aucune donnée",
@@ -12,8 +29,6 @@
     "emailFormat": "Le format de l'email est invalide",
     "passwordLength": "Le mot de passe doit contenir au moins 6 caractères",
     "captcha_required": "Confirmez que vous n'êtes pas un robot.",
-    "signin": "Se connecter",
-    "signup": "S'inscrire",
     "signout": "Se déconnecter",
     "others": "Autres",
     "learnMore": "En savoir plus",

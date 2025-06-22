@@ -3,7 +3,7 @@ import { Card, CardContent, CardTitle } from "@ui/card";
 import { Button } from "@ui/button";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import ParkDanbeeAvatar from "@public/assets/img/park-danbee-avatar.jpg";
 
 const teacher = {

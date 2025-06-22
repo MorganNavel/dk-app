@@ -1,6 +1,4 @@
 import { cn } from "@/lib/utils";
-import { Lesson } from "@/types/Lesson";
-import { ProfileMe, Teacher } from "@/types/User";
 import { tsToLocaleDate } from "@/utils/dateUtils";
 import { ColumnDef } from "@tanstack/react-table";
 import LessonActions from "./LessonsActions";
@@ -8,7 +6,8 @@ import EditableCell from "@/components/reusable/table/EditableCell";
 import { SortableColumn } from "@/components/reusable/table/SortableColumn";
 import { Checkbox } from "@/components/ui/checkbox";
 import { hasPermission } from "@/utils/permissions";
-import { useProfile } from "@/providers/Profile";
+import { User } from "@prisma/client";
+import { Lesson, UserProfile } from "@/types/type";
 
 const statusColors = {
   planned: "bg-blue-100 text-blue-600",
@@ -17,7 +16,7 @@ const statusColors = {
   "in progress": "bg-yellow-100 text-yellow-600",
 };
 
-export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
+export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
   return [
     {
       id: "select",
@@ -56,10 +55,10 @@ export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
       accessorKey: "status",
       header: () => t("lessons.data-table.columns.status"),
       cell: ({ row }) => {
-        let status = row.getValue("status") as string;
+        let status = row.original.status as keyof typeof statusColors;
 
-        const startDate = row.getValue("startDate") as number;
-        const duration = row.getValue("duration") as number;
+        const startDate = row.original.startDate.getTime();
+        const duration = row.original.duration;
         const endDate = new Date(startDate).setMinutes(duration);
         const now = Date.now();
         if (status === "planned" && endDate > now && startDate < now) {
@@ -94,8 +93,8 @@ export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
       accessorKey: "title",
       header: () => t("lessons.data-table.columns.title"),
       cell: ({ row }) => {
-        const title = row.getValue("title") as string;
-        if (!hasPermission(profile, "lessons", "update", row.original)) {
+        const title = row.original.title;
+        if (!hasPermission(user, "lessons", "update", row.original)) {
           return title;
         }
 
@@ -115,9 +114,7 @@ export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
       accessorKey: "nbParticipants",
       header: () => t("lessons.data-table.columns.nbParticipants"),
       cell: ({ row }) => {
-        const nbParticipants = row.getValue("nbParticipants") as string;
-
-        return `${nbParticipants}/2`;
+        return `${row.original.bookings.length}/2`;
       },
       enableSorting: false,
       enableColumnFilter: false,
@@ -126,23 +123,17 @@ export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
       accessorKey: "teacher",
       header: () => t("lessons.data-table.columns.teacher"),
       cell: ({ row }) => {
-        const teacher = row.getValue("teacher") as Teacher;
+        const teacher = row.getValue("teacher") as User;
         if (!teacher) return null;
 
-        return `${teacher.firstname} ${teacher.name}`;
+        return teacher.name;
       },
       enableSorting: false,
       filterFn: (row, columnId, filterValue) => {
-        const teacher = row.getValue(columnId) as Teacher;
+        const teacher = row.getValue(columnId) as User;
         if (!teacher) return false;
 
-        return (
-          teacher.firstname.toLowerCase().includes(filterValue.toLowerCase()) ||
-          teacher.name.toLowerCase().includes(filterValue.toLowerCase()) ||
-          `${teacher.firstname} ${teacher.name}`
-            .toLowerCase()
-            .includes(filterValue.toLowerCase())
-        );
+        return teacher.name.toLowerCase().includes(filterValue.toLowerCase());
       },
     },
     {
@@ -165,8 +156,7 @@ export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
       accessorKey: "duration",
       header: () => t("lessons.data-table.columns.duration"),
       cell: ({ row }) => {
-        const duration = row.getValue("duration") as string;
-
+        const duration = row.original.duration;
         return `${duration} min`;
       },
       enableColumnFilter: false,
@@ -175,7 +165,7 @@ export function columns(t: any, profile: ProfileMe): ColumnDef<Lesson>[] {
       id: "actions",
       cell: ({ row }) => {
         const lesson = row.original;
-        if (!hasPermission(profile, "lessons", "update", lesson)) return null;
+        if (!hasPermission(user, "lessons", "update", lesson)) return null;
         return <LessonActions lesson={lesson} />;
       },
       enableSorting: false,

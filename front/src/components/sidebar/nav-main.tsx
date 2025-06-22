@@ -22,8 +22,9 @@ import { ChevronRightIcon } from "@radix-ui/react-icons";
 import { ComponentType } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter, Link } from "@/i18n/routing";
-import { UserRole } from "@/types/User";
-import { useProfile } from "@/providers/Profile";
+import { useSession } from "@/lib/auth-client";
+import { UserProfile, UserRole } from "@/types/type";
+
 export interface NavMainProps {
   items: {
     title: string;
@@ -57,7 +58,8 @@ export function NavMain({
 
   const { open, isMobile, setOpenMobile } = useSidebar();
   const t = useTranslations();
-  const { profile } = useProfile();
+  const user = useSession();
+  const profile = user.data?.user as unknown as UserProfile;
 
   return (
     <SidebarGroup>
