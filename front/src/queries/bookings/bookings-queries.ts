@@ -49,7 +49,6 @@ export async function createBooking(idLesson: number) {
       data: {
         idUser,
         idLesson,
-        createdAt: new Date(),
       },
       select: SELECT_BOOKING_FIELDS,
     });
