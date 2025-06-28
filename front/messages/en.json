@@ -75,6 +75,46 @@
     "delete": "Delete",
     "add": "Add"
   },
+  "dashboard": {
+    "stats": {
+      "monthly": {
+        "title": "Total revenue for the current month",
+        "new": "New",
+        "noRevenue": "No revenue last month.",
+        "trendingUp": "Trending up this month",
+        "trendingDown": "Trending down this month",
+        "description": "Compared to the same period last month"
+      },
+      "yearly": {
+        "title": "Total revenue for the current year",
+        "new": "New",
+        "trendingUp": "Trending up",
+        "trendingDown": "Trending down",
+        "noRevenue": "No revenue last year.",
+        "description": "Compared to the same period last year"
+      },
+      "chartEarnings": {
+        "title": "Total Revenue (in USD)",
+        "descriptionDesktop": "Total for the last 36 months",
+        "descriptionMobile": "Last 36 months",
+        "toggleGroup": {
+          "12m": "Last 12 months",
+          "24m": "Last 24 months",
+          "36m": "Last 36 months"
+        },
+        "selectPlaceholder": "Last 36 months",
+        "selectItems": {
+          "12m": "Last 12 months",
+          "24m": "Last 24 months",
+          "36m": "Last 36 months"
+        },
+        "chartConfig": {
+          "visitorsLabel": "Revenue",
+          "earningsLabel": "Earnings"
+        }
+      }
+    }
+  },
   "signup": {
     "message": {
       "success": "Your account has been successfully created. You can now sign in.",

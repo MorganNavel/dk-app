@@ -10,24 +10,24 @@ import {
 } from "date-fns";
 
 export async function getTotalEarnings(
-  id: string,
+  idTeacher: string,
   startDate?: Date,
   endDate?: Date
 ) {
-  const res = await prisma.lesson.aggregate({
+  const res = await prisma.billing.aggregate({
     _sum: {
-      earned: true,
+      price: true,
     },
     where: {
-      teacher: { id },
+      idTeacher,
       status: "done",
-      ...(startDate && { startDate: { gte: startDate } }),
-      ...(endDate && {
-        startDate: { ...(startDate ? { gte: startDate } : {}), lte: endDate },
-      }),
+      createdAt: {
+        gte: startDate ?? new Date(0),
+        lte: endDate ?? new Date(),
+      },
     },
   });
-  return res._sum.earned ?? 0;
+  return res._sum.price ?? 0;
 }
 
 export async function getEarnings(startDate?: Date, endDate?: Date) {
@@ -69,9 +69,12 @@ export async function getEarningsComparison() {
     ]);
 
   // Pourcentage d’évolution
-  function getPercentageChange(current: number, previous: number): number {
+  function getPercentageChange(
+    current: number,
+    previous: number
+  ): number | null {
     if (previous === 0) {
-      return current > 0 ? Math.round(current * 100) : 0;
+      return current === 0 ? 0 : null; // null pour "indéfini" ou "new"
     }
     return Math.round(((current - previous) / previous) * 100);
   }
@@ -88,4 +91,39 @@ export async function getEarningsComparison() {
       percentageChange: getPercentageChange(currentYear, previousYear),
     },
   };
+}
+export async function getEarningsChartData(
+  startDate: Date,
+  endDate: Date
+): Promise<{ date: string; earnings: number }[]> {
+  const user = await getUser();
+  if (!user || user.role !== "teacher") {
+    return [];
+  }
+  const idTeacher = user.id;
+  const rawData = await prisma.$queryRaw<
+    { year: number; month: number; earnings: number }[]
+  >`
+    SELECT
+      EXTRACT(YEAR FROM "createdAt") AS year,
+      EXTRACT(MONTH FROM "createdAt") AS month,
+      SUM(price) AS earnings
+    FROM "Billing"
+    WHERE
+      "idTeacher" = ${idTeacher}
+      AND status = 'done'
+      AND "createdAt" BETWEEN ${startDate} AND ${endDate}
+    GROUP BY year, month
+    ORDER BY year, month;
+  `;
+  let result: { [date: string]: { date: string; earnings: number } } = {};
+  for (const row of rawData) {
+    const date = `${row.year}-${String(row.month).padStart(2, "0")}`;
+    if (result[date]) {
+      result[date].earnings += row.earnings;
+      break;
+    }
+    result[date] = { date, earnings: row.earnings };
+  }
+  return Object.values(result);
 }

@@ -5,31 +5,28 @@ import {
   cancelLessonsAndRevalidate,
 } from "./actions";
 import { getUpcomingLessons } from "@/queries/lessons/lessons-queries";
-import { PreviousMonthsStats, TotalRevenueMonth } from "./stats";
-import { getEarningsComparison } from "@/queries/lessons/earnings.service";
+import {
+  getEarningsChartData,
+  getEarningsComparison,
+} from "@/queries/lessons/earnings.service";
+import { ChartEarnings, ComparisionStats } from "./stats";
 
 export default async function LessonsContent() {
   const lessons = (await getUpcomingLessons()) as unknown as Lesson[];
   const revenue =
-    (await getEarningsComparison()) as unknown as EarningsComparison;
+    await (getEarningsComparison() as unknown as EarningsComparison);
+  const date3yearsAgo = new Date();
+  date3yearsAgo.setFullYear(date3yearsAgo.getFullYear() - 3);
+  const now = new Date();
+  const chartData = await getEarningsChartData(date3yearsAgo, now);
 
   return (
-    <div>
-      <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 mb-8 p-15'>
-        <PreviousMonthsStats />
-        <PreviousMonthsStats />
-        <PreviousMonthsStats />
-        <PreviousMonthsStats />
-        <TotalRevenueMonth />
-
-        {/* <p>col1</p>
-        <p>col2</p>
-        <p>col3</p>
-        <p>col4</p>
-        <p>col5</p>
-        <p>col6</p> */}
+    <div className='flex flex-col gap-6'>
+      <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 lg:p-15 p-5'>
+        <ComparisionStats earnings={revenue?.month} type='monthly' />
+        <ComparisionStats earnings={revenue?.year} type='yearly' />
       </div>
-
+      <ChartEarnings chartData={chartData} className=' mx-5 lg:mx-15' />
       <LessonTable
         lessons={lessons}
         onDelete={deleteLessonsAndRevalidate}

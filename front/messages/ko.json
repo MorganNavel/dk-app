@@ -26,8 +26,9 @@
     "view": "View",
     "toggle-cols": "Toggle columns",
     "no-data": "No data",
-    "emailFormat": "Email format is invalid",
     "passwordLength": "Password must be at least 6 characters long",
+    "passwordMissmatch": "Password must be the same",
+    "emailFormat": "Email format is invalid",
     "captcha_required": "Confirm you're not a robot.",
     "signout": "Sign Out",
     "others": "Others",
@@ -74,15 +75,47 @@
     "delete": "Delete",
     "add": "Add"
   },
+  "dashboard": {
+    "stats": {
+      "monthly": {
+        "title": "Total revenue for the current month",
+        "new": "New",
+        "noRevenue": "No revenue last month.",
+        "trendingUp": "Trending up this month",
+        "trendingDown": "Trending down this month",
+        "description": "Compared to the same period last month"
+      },
+      "yearly": {
+        "title": "Total revenue for the current year",
+        "new": "New",
+        "trendingUp": "Trending up",
+        "trendingDown": "Trending down",
+        "noRevenue": "No revenue last year.",
+        "description": "Compared to the same period last year"
+      },
+      "chartEarnings": {
+        "title": "Total Revenue (in USD)",
+        "descriptionDesktop": "Total for the last 36 months",
+        "descriptionMobile": "Last 36 months",
+        "toggleGroup": {
+          "12m": "Last 12 months",
+          "24m": "Last 24 months",
+          "36m": "Last 36 months"
+        },
+        "selectPlaceholder": "Last 36 months",
+        "selectItems": {
+          "12m": "Last 12 months",
+          "24m": "Last 24 months",
+          "36m": "Last 36 months"
+        },
+        "chartConfig": {
+          "visitorsLabel": "Revenue",
+          "earningsLabel": "Earnings"
+        }
+      }
+    }
+  },
   "signup": {
-    "passwordMissmatch": "Password must be the same",
-    "emailFormat": "Email format is invalid",
-    "passwordLength": "Password must be at least 6 characters long",
-    "min": {
-      "password": "Password must be at least 6 characters long",
-      "name": "Name must be at least 3 characters long",
-      "firstname": "Firstname must be at least 3 characters long"
-    },
     "message": {
       "success": "Your account has been successfully created. You can now sign in.",
       "error": "An error occurred while creating your account. Please try again later."
@@ -123,7 +156,7 @@
     "myprofile": "My Profile",
     "aboutUs": "About Us",
     "contact": "Contact",
-    "billing": "Facture",
+    "billing": "Billing",
     "notifications": "Notifications"
   },
   "footer": {
@@ -300,7 +333,17 @@
     "planned": "Planned",
     "done": "Done",
     "cancelled": "Cancelled",
-    "in-progress": "In Progress"
+    "in-progress": "In Progress",
+    "reschedule": {
+      "title": "Reschedule Lesson",
+      "description": "You are about to reschedule the lesson. Please select a new date and time for the lesson.",
+      "date": "Date",
+      "time": "Time",
+      "submit": "Reschedule"
+    },
+    "create": {
+      "success": "The lesson has been successfully created."
+    }
   },
   "data-table": {
     "pagination": {
@@ -334,6 +377,11 @@
         "cancel": "Cancel",
         "reschedule": "Reschedule",
         "delete": "Delete",
+        "modal": {
+          "add": {
+            "title": "Create a new lesson"
+          }
+        },
         "dialog": {
           "cancel": {
             "title": "Cancel lesson{selected, plural, one {} other {s}}",
@@ -347,7 +395,8 @@
           },
           "reschedule": {
             "title": "Reschedule lesson",
-            "content": "Please select a new date and time for the lesson."
+            "content": "Please select a new date and time for the lesson.",
+            "success": "The lesson has been successfully rescheduled."
           }
         }
       }

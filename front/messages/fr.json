@@ -75,6 +75,46 @@
     "delete": "Supprimer",
     "add": "Ajouter"
   },
+  "dashboard": {
+    "stats": {
+      "monthly": {
+        "title": "Revenu total pour le mois en cours",
+        "new": "Nouveau",
+        "noRevenue": "Aucun revenu le mois dernier.",
+        "trendingUp": "En hausse ce mois-ci",
+        "trendingDown": "En baisse ce mois-ci",
+        "description": "Comparé à la même période le mois dernier"
+      },
+      "yearly": {
+        "title": "Revenu total pour l'année en cours",
+        "new": "Nouveau",
+        "trendingUp": "En hausse",
+        "trendingDown": "En baisse",
+        "noRevenue": "Aucun revenu l'an dernier.",
+        "description": "Comparé à la même période l'année dernière"
+      },
+      "chartEarnings": {
+        "title": "Revenu total (en USD)",
+        "descriptionDesktop": "Total pour les 36 derniers mois",
+        "descriptionMobile": "36 derniers mois",
+        "toggleGroup": {
+          "12m": "12 derniers mois",
+          "24m": "24 derniers mois",
+          "36m": "36 derniers mois"
+        },
+        "selectPlaceholder": "Derniers 3 mois",
+        "selectItems": {
+          "12m": "12 derniers mois",
+          "24m": "24 derniers mois",
+          "36m": "36 derniers mois"
+        },
+        "chartConfig": {
+          "visitorsLabel": "Revenu",
+          "earningsLabel": "Gains"
+        }
+      }
+    }
+  },
   "signup": {
     "message": {
       "success": "Votre compte a été créé avec succès. Vous pouvez maintenant vous connecter.",
