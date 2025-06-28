@@ -9,17 +9,20 @@ export const BookingCodes = {
   LESSON_NO_CAPACITY: 1004,
   LESSON_FULL: 1005,
 
+  CREDIT_NOT_ENOUGH: 1100,
   BOOKING_ALREADY_EXISTS: 1101,
   UNKNOWN_ERROR: 1999,
 } as const;
 
 export type BookingKeys =
-  | "user.not_authenticated"
-  | "success"
-  | "lesson.not_found"
-  | "lesson.past"
-  | "lesson.not_planned"
-  | "lesson.no_capacity"
-  | "lesson.full"
-  | "booking.exists"
-  | "booking.unknown";
+  | "codes.user.not_authenticated"
+  | "codes.booking.success"
+  | "codes.booking.exists"
+  | "codes.booking.unknown"
+  | "codes.booking.delete.success"
+  | "codes.booking.credit_not_enough"
+  | "codes.lesson.not_found"
+  | "codes.lesson.past"
+  | "codes.lesson.not_planned"
+  | "codes.lesson.no_capacity"
+  | "codes.lesson.full";

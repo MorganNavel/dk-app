@@ -11,8 +11,13 @@ import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
 import { CalendarEvent } from "@/components/calendar/Calendar";
 import { Lesson } from "@/types/type";
 import { useSession } from "@/lib/auth-client";
-import { createBooking } from "./actions";
+import {
+  BookingResponse,
+  cancelBookingAction,
+  createBookingAction,
+} from "./actions";
 import { useRouter } from "@/i18n/routing";
+import { BookingCodes } from "@/queries/bookings/bookings-codes";
 
 interface EventSheetProps {
   selectedEvent: CalendarEvent<Lesson> | null;
@@ -29,7 +34,9 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const router = useRouter();
 
   const renderLanguages = (languages: string | string[] | undefined) => {
-    if (!languages) return "Pas de langue";
+    if (!languages || (Array.isArray(languages) && languages.length === 0)) {
+      return "Pas de langue";
+    }
 
     const langs = Array.isArray(languages) ? languages : languages.split(",");
 
@@ -47,18 +54,39 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const { resource, start, end } = selectedEvent ?? {};
   const { description, groupSize, teacher } = resource ?? {};
   const { name, languages } = teacher ?? {};
-  const mutation = useMutation({
-    mutationFn: createBooking,
-    onError: (error) => {
-      const json = JSON.parse(error.message);
+  const isParticipating = resource?.bookings?.find(
+    (booking) => booking.idUser === user.data?.user.id
+  );
+  const handleError = (error: Error) => {
+    const json = JSON.parse(error.message);
+    if (json.code !== BookingCodes.SUCCESS) {
       toast.error(t(json.key));
-    },
-    onSuccess: (data, vars, ctx) => {
-      toast.success("Leçon réservée avec succès");
-      setSelectedEvent(null);
-    },
+      if (json.redirectTo) router.push(json.redirectTo);
+      return;
+    }
+    toast.error(t(json.key));
+  };
+  const handleSuccess = (data: BookingResponse) => {
+    if (data.code !== BookingCodes.SUCCESS) {
+      toast.error(t(data.key));
+      if (data.redirectTo) router.push(data.redirectTo);
+      return;
+    }
+    toast.success(t(data.key));
+    setSelectedEvent(null);
+  };
+  const reservationMutation = useMutation({
+    mutationFn: createBookingAction,
+    onError: handleError,
+    onSuccess: handleSuccess,
   });
-  const isLoading = mutation.isPending;
+  const cancelMutation = useMutation({
+    mutationFn: async (idBooking: number) =>
+      await cancelBookingAction(idBooking),
+    onError: handleError,
+    onSuccess: handleSuccess,
+  });
+  const isLoading = reservationMutation.isPending || cancelMutation.isPending;
 
   function onSubmit() {
     if (!user) {
@@ -66,9 +94,21 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
       router.push("/auth/sign-in");
       return;
     }
-    if (!selectedEvent?.resource.idLesson || mutation.isPending) return;
+    if (!selectedEvent?.resource.idLesson || reservationMutation.isPending)
+      return;
 
-    mutation.mutateAsync(selectedEvent.resource.idLesson);
+    reservationMutation.mutateAsync(selectedEvent.resource.idLesson);
+  }
+  function onCancel() {
+    if (!user) {
+      toast.error(t("generals.signin.required"));
+      router.push("/auth/sign-in");
+      return;
+    }
+    if (!isParticipating) return;
+    if (cancelMutation.isPending) return;
+
+    cancelMutation.mutateAsync(isParticipating.idBooking);
   }
 
   return (
@@ -109,9 +149,9 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
               <span className='font-bold'>Langues</span>:
             </div>
 
-            <p className='flex  space-x-2 text-md'>
-              <span>{renderLanguages(languages)}</span>
-            </p>
+            <span className='flex  space-x-2 text-md'>
+              {renderLanguages(languages)}
+            </span>
           </div>
 
           <div className='pt-4'>
@@ -123,15 +163,35 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             </p>
           </div>
         </div>
-
+        {isParticipating && (
+          <Button
+            type={"submit"}
+            className='w-full mt-4'
+            disabled={isLoading}
+            variant={"destructive"}
+            onClick={onCancel}
+          >
+            {isLoading ? (
+              <Spinner size='sm' color='white' />
+            ) : (
+              "Annuler la réservation"
+            )}
+          </Button>
+        )}
         <Button
           type={"submit"}
-          className='w-full mt-6 bg-primary hover:bg-primary-dark text-white py-2 px-4 rounded-lg shadow-lg'
-          disabled={isLoading}
+          className='w-full mt-4'
+          disabled={isLoading || !!isParticipating}
+          variant={"default"}
           onClick={onSubmit}
         >
           {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
         </Button>
+        {isParticipating && (
+          <p className='mt-4 text-sm text-gray-500'>
+            Vous participez déjà à cet événement.
+          </p>
+        )}
       </SheetContent>
     </Sheet>
   );

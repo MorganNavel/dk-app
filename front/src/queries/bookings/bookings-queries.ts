@@ -1,62 +1,95 @@
 import { prisma } from "@/lib/prisma";
 import { SELECT_BOOKING_FIELDS } from "../select-fields";
-import { BookingCodes } from "./bookings-codes";
+import { BookingCodes, BookingKeys } from "./bookings-codes";
 import { getUser } from "@/lib/auth-server";
+interface BookingResponse {
+  code: number;
+  key: BookingKeys;
+  data?: any;
+  redirectTo?: string;
+}
 
-export async function createBooking(idLesson: number) {
+export async function createBooking(
+  idLesson: number
+): Promise<BookingResponse> {
   const user = await getUser();
-  if (!user) return;
+  if (!user) {
+    return {
+      code: BookingCodes.NOT_AUTHENTICATED,
+      key: "codes.user.not_authenticated",
+      redirectTo: "/auth/sign-in",
+    };
+  }
   const idUser = user.id;
+  const credits = await prisma.user.findUnique({
+    where: { id: idUser },
+    select: { nbLessons: true },
+  });
+  if (!credits?.nbLessons || credits.nbLessons < 0) {
+    return {
+      code: BookingCodes.CREDIT_NOT_ENOUGH,
+      key: "codes.booking.credit_not_enough",
+      redirectTo: "/pricing",
+    };
+  }
+
   const lesson = await prisma.lesson.findUnique({ where: { idLesson } });
   if (!lesson) {
     return {
       code: BookingCodes.LESSON_NOT_FOUND,
-      key: "lesson.not_found",
+      key: "codes.lesson.not_found",
     };
   }
 
   if (lesson.startDate < new Date()) {
     return {
       code: BookingCodes.LESSON_ALREADY_PAST,
-      key: "lesson.past",
+      key: "codes.lesson.past",
     };
   }
 
   if (lesson.status !== "planned") {
     return {
       code: BookingCodes.LESSON_NOT_PLANNED,
-      key: "lesson.not_planned",
+      key: "codes.lesson.not_planned",
     };
   }
 
   if (!lesson.groupSize || lesson.groupSize <= 0) {
     return {
       code: BookingCodes.LESSON_NO_CAPACITY,
-      key: "lesson.no_capacity",
+      key: "codes.lesson.no_capacity",
     };
   }
 
   const count = await prisma.booking.count({ where: { idLesson } });
   if (count >= lesson.groupSize) {
     return {
-      code: BookingCodes.LESSON_FULL,
-      key: "lesson.full",
+      code: BookingCodes.LESSON_NO_CAPACITY,
+      key: "codes.lesson.no_capacity",
     };
   }
 
   try {
-    const booking = await prisma.booking.create({
+    await prisma.booking.create({
       data: {
         idUser,
         idLesson,
       },
       select: SELECT_BOOKING_FIELDS,
     });
+    await prisma.user.update({
+      where: { id: idUser },
+      data: {
+        nbLessons: {
+          decrement: 1,
+        },
+      },
+    });
 
     return {
       code: BookingCodes.SUCCESS,
-      key: "success",
-      data: booking,
+      key: "codes.booking.success",
     };
   } catch (error: any) {
     if (
@@ -65,45 +98,81 @@ export async function createBooking(idLesson: number) {
     ) {
       return {
         code: BookingCodes.BOOKING_ALREADY_EXISTS,
-        key: "booking.exists",
+        key: "codes.booking.exists",
       };
     }
 
-    console.error("Erreur lors de la réservation :", error);
     return {
       code: BookingCodes.UNKNOWN_ERROR,
-      key: "booking.unknown",
+      key: "codes.booking.unknown",
     };
   }
 }
-export async function deleteBooking(idUser: string, idLesson: number) {
-  const result = await prisma.booking.deleteMany({
-    where: { idUser, idLesson },
-  });
-
-  return {
-    code: BookingCodes.SUCCESS,
-    key: "success",
-    data: result,
-  };
+export async function deleteBookingById(
+  idBooking: number
+): Promise<BookingResponse> {
+  const user = await getUser();
+  if (!user) {
+    return {
+      code: BookingCodes.NOT_AUTHENTICATED,
+      key: "codes.user.not_authenticated",
+      redirectTo: "/auth/sign-in",
+    };
+  }
+  try {
+    await prisma.booking.findUniqueOrThrow({
+      where: { idBooking, idUser: user.id },
+    });
+    const result = await prisma.booking.delete({
+      where: { idBooking, idUser: user.id },
+      select: SELECT_BOOKING_FIELDS,
+    });
+    return {
+      code: BookingCodes.SUCCESS,
+      key: "codes.booking.delete.success",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      code: BookingCodes.UNKNOWN_ERROR,
+      key: "codes.booking.unknown",
+    };
+  }
 }
+export async function deleteBooking(
+  idUser: string,
+  idLesson: number
+): Promise<BookingResponse> {
+  try {
+    const result = await prisma.booking.deleteMany({
+      where: { idUser, idLesson },
+    });
+    await prisma.user.update({
+      where: { id: idUser },
+      data: {
+        nbLessons: {
+          increment: result.count,
+        },
+      },
+    });
 
-export async function deleteUserBooking(idUser: string, idLesson: number) {
-  const result = await prisma.booking.deleteMany({
-    where: { idUser, idLesson },
-  });
-
-  return {
-    code: BookingCodes.SUCCESS,
-    key: "success",
-    data: result,
-  };
+    return {
+      code: BookingCodes.SUCCESS,
+      key: "codes.booking.success",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      code: BookingCodes.UNKNOWN_ERROR,
+      key: "codes.booking.unknown",
+    };
+  }
 }
 
 export async function deleteBookingsUserBulk(
   idUser: string,
   idLessons: number[]
-) {
+): Promise<BookingResponse> {
   const validLessonIds = await prisma.booking.findMany({
     where: {
       idUser,
@@ -118,7 +187,7 @@ export async function deleteBookingsUserBulk(
   if (!allMatch) {
     return {
       code: BookingCodes.UNKNOWN_ERROR,
-      key: "booking.unknown",
+      key: "codes.booking.unknown",
       data: { count: 0 },
     };
   }
@@ -132,12 +201,14 @@ export async function deleteBookingsUserBulk(
 
   return {
     code: BookingCodes.SUCCESS,
-    key: "success",
+    key: "codes.booking.unknown",
     data: deleted,
   };
 }
 
-export async function getBookingsByUser(idUser: string) {
+export async function getBookingsByUser(
+  idUser: string
+): Promise<BookingResponse> {
   const data = await prisma.booking.findMany({
     where: { idUser },
     select: SELECT_BOOKING_FIELDS,
@@ -145,12 +216,14 @@ export async function getBookingsByUser(idUser: string) {
 
   return {
     code: BookingCodes.SUCCESS,
-    key: "success",
+    key: "codes.booking.success",
     data,
   };
 }
 
-export async function getBookingsByLesson(idLesson: number) {
+export async function getBookingsByLesson(
+  idLesson: number
+): Promise<BookingResponse> {
   const data = await prisma.booking.findMany({
     where: { idLesson },
     select: SELECT_BOOKING_FIELDS,
@@ -158,12 +231,14 @@ export async function getBookingsByLesson(idLesson: number) {
 
   return {
     code: BookingCodes.SUCCESS,
-    key: "success",
+    key: "codes.booking.success",
     data,
   };
 }
 
-export async function countBookingByLesson(idLesson: number) {
+export async function countBookingByLesson(
+  idLesson: number
+): Promise<BookingResponse> {
   const result = await prisma.lesson.findUnique({
     where: { idLesson },
     select: {
@@ -175,7 +250,7 @@ export async function countBookingByLesson(idLesson: number) {
 
   return {
     code: BookingCodes.SUCCESS,
-    key: "success",
+    key: "codes.booking.success",
     data: result?._count.bookings ?? 0,
   };
 }
