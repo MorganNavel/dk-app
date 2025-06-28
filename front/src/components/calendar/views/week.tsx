@@ -96,10 +96,16 @@ export function WeekView<T>({
                     );
 
                     return (
-                      <div
+                      <button
                         key={event.title}
-                        className='absolute left-1 right-1 bg-primary text-primary-foreground rounded-lg p-1 text-xs shadow-md'
-                        style={{ top: `${top}px`, height: `${height}px` }}
+                        className={
+                          "text-left absolute left-1 right-1 bg-primary text-primary-foreground rounded-lg p-1 text-xs shadow-md"
+                        }
+                        style={{
+                          top: `${top}px`,
+                          height: `${height}px`,
+                          ...components.eventStyle?.(event),
+                        }}
                         onClick={() => onEventClick?.(event)}
                       >
                         {components.event ? (
@@ -107,7 +113,7 @@ export function WeekView<T>({
                         ) : (
                           <EventComponent event={event} />
                         )}
-                      </div>
+                      </button>
                     );
                   })}
                 </div>

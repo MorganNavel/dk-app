@@ -28,6 +28,10 @@ export interface CalendarEvent<T> {
   resource: T;
 }
 export type CalendarView = "day" | "week" | "month";
+interface ComponentsProps<T> {
+  event?: React.ComponentType<CalendarEventProps<T>>;
+  eventStyle?: (event: CalendarEvent<T>) => React.CSSProperties;
+}
 export interface CalendarProps<T> extends LocaleProps {
   events: CalendarEvent<T>[];
   onEventClick?: (event: CalendarEvent<T>) => void;
@@ -38,6 +42,7 @@ export interface CalendarProps<T> extends LocaleProps {
   isMobile?: boolean;
   components?: {
     event?: React.ComponentType<CalendarEventProps<T>>;
+    eventStyle?: (event: CalendarEvent<T>) => React.CSSProperties;
     actions?: ReactNode[];
   };
 }
@@ -215,63 +220,44 @@ interface CalendarBodyProps<T> extends LocaleProps {
   onDayClick: (date: Date) => void;
   onViewChange: (view: CalendarView) => void;
   mondayFirst: boolean;
-  components?: {
-    event?: React.ComponentType<CalendarEventProps<T>>;
-  };
+  components?: ComponentsProps<T>;
 }
+
 function CalendarBody<T>({
   view,
-  date,
   onEventClick,
   mondayFirst = true,
-  events,
-  components = {},
   onViewChange,
   onDayClick,
-  locale,
+  ...props
 }: Readonly<CalendarBodyProps<T>>) {
   return (
     <div>
       {view === "month" && (
         <MonthView<T>
-          date={date}
-          components={components}
-          events={events}
           onMonthChange={(newDate) => console.log(newDate)}
           onViewChange={onViewChange}
           onDayClick={onDayClick}
-          locale={locale}
+          {...props}
         />
       )}
       {view === "week" && (
         <WeekView<T>
-          date={date}
-          events={events}
-          components={components}
           mondayFirst={mondayFirst}
           onEventClick={onEventClick}
-          locale={locale}
+          {...props}
         />
       )}
-      {view === "day" && (
-        <DayView<T>
-          date={date}
-          components={components}
-          events={events}
-          onEventClick={onEventClick}
-          locale={locale}
-        />
-      )}
+      {view === "day" && <DayView<T> onEventClick={onEventClick} {...props} />}
     </div>
   );
 }
 export interface ViewProps<T> extends LocaleProps {
   date: Date;
   events: CalendarEvent<T>[];
-  components?: {
-    event?: React.ComponentType<CalendarEventProps<T>>;
-  };
+  components?: ComponentsProps<T>;
   onEventClick?: (event: CalendarEvent<T>) => void;
+  onViewChange?: (view: CalendarView) => void;
 }
 
 export function CalendarSkeleton({ className = "" }: { className?: string }) {

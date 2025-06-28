@@ -2,6 +2,7 @@ import { format, getHours, getMinutes, isSameDay } from "date-fns";
 import { CalendarEvent, ViewProps } from "@/components/calendar/Calendar";
 import { EventComponent } from "@/components/calendar/event/default";
 import { CurrentTimeIndicator } from "./indicator";
+import { cn } from "@/lib/utils";
 
 export function DayView<T>({
   date,
@@ -66,10 +67,16 @@ export function DayView<T>({
                   );
 
                   return (
-                    <div
+                    <button
                       key={format(event.start, "HH:mm")}
-                      className='absolute left-1 right-1 bg-primary text-primary-foreground rounded-lg p-1 text-xs shadow-md'
-                      style={{ top: `${top}px`, height: `${height}px` }}
+                      className={cn(
+                        "text-left absolute left-1 right-1 bg-primary text-primary-foreground rounded-lg p-1 text-xs shadow-md"
+                      )}
+                      style={{
+                        top: `${top}px`,
+                        height: `${height}px`,
+                        ...components.eventStyle?.(event),
+                      }}
                       onClick={() => onEventClick?.(event)}
                     >
                       {components.event ? (
@@ -77,7 +84,7 @@ export function DayView<T>({
                       ) : (
                         <EventComponent event={event} />
                       )}
-                    </div>
+                    </button>
                   );
                 })}
             </div>
