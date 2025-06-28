@@ -392,5 +392,24 @@
         }
       }
     }
+  },
+  "codes": {
+    "user": {
+      "not_authenticated": "Vous n'êtes pas authentifié. Veuillez vous connecter pour accéder à cette ressource."
+    },
+    "booking": {
+      "success": "Votre réservation a été créée avec succès.",
+      "exists": "Vous avez déjà une réservation pour cette leçon.",
+      "unknown": "Une erreur inconnue s'est produite lors de la création de votre réservation.",
+      "delete": {
+        "success": "Votre réservation a été annulée avec succès."
+      },
+      "credit_not_enough": "Vous n'avez pas assez de crédits pour réserver cette leçon. Veuillez recharger votre compte."
+    },
+    "lesson": {
+      "not_found": "La leçon demandée est introuvable.",
+      "past": "Vous ne pouvez pas réserver une leçon qui a déjà commencé.",
+      "no_capacity": "Il n'y a plus de places disponibles pour cette leçon."
+    }
   }
 }

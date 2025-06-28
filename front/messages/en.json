@@ -401,5 +401,24 @@
         }
       }
     }
+  },
+  "codes": {
+    "user": {
+      "not_authenticated": "You are not authenticated. Please sign in to access this resource."
+    },
+    "booking": {
+      "success": "Your booking has been successfully created.",
+      "exists": "You already have a booking for this lesson.",
+      "unknown": "An unknown error occurred while creating your booking.",
+      "delete": {
+        "success": "Your booking has been successfully cancelled."
+      },
+      "credit_not_enough": "You do not have enough credits to book this lesson. Please recharge your account."
+    },
+    "lesson": {
+      "not_found": "The requested lesson was not found.",
+      "past": "You cannot book a lesson that has already started.",
+      "no_capacity": "There is no capacity left for this lesson."
+    }
   }
 }

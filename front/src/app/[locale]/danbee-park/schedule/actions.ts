@@ -1,25 +1,39 @@
 "use server";
 
-import { redirect } from "@/i18n/routing";
+import { getUser } from "@/lib/auth-server";
+import { BookingCodes } from "@/queries/bookings/bookings-codes";
+import {
+  createBooking,
+  deleteBookingById,
+} from "@/queries/bookings/bookings-queries";
+import { revalidatePath } from "next/cache";
 
-export async function createBooking(idLesson: number) {
-  const response = await fetch(
-    `http://localhost:3000/api/lesson/${idLesson}/booking`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+export interface BookingResponse {
+  code: number;
+  key: string;
+  data?: any;
+  redirectTo?: string;
+}
+export async function createBookingAction(
+  idLesson: number
+): Promise<BookingResponse> {
+  const r = await createBooking(idLesson);
+  revalidatePath("/danbee-park/schedule");
+  return r;
+}
 
-  if (!response.ok) {
-    const errorData = await response.json();
-    if (errorData.redirectTo) {
-      redirect({ href: errorData.redirectTo, locale: "fr" });
-      throw new Error(`Redirection to ${errorData.redirectTo} failed`);
-    }
+export async function cancelBookingAction(
+  idBooking: number
+): Promise<BookingResponse> {
+  const user = await getUser();
+  if (!user) {
+    return {
+      code: BookingCodes.NOT_AUTHENTICATED,
+      key: "codes.user.not_authenticated",
+      redirectTo: "/auth/sign-in",
+    };
   }
-
-  return await response.json();
+  const r = await deleteBookingById(idBooking);
+  revalidatePath("/danbee-park/schedule");
+  return r;
 }

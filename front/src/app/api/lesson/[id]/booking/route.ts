@@ -11,7 +11,7 @@ export async function POST(
 
     if (Number.isNaN(id)) {
       return NextResponse.json(
-        { code: "INVALID_ID", key: "lesson.invalid_id" },
+        { code: BookingCodes.UNKNOWN_ERROR, key: "codes.booking.unknown" },
         { status: 400 }
       );
     }
@@ -32,7 +32,7 @@ export async function POST(
   } catch (e) {
     console.error("POST /api/lesson/[id]/booking error:", e);
     return NextResponse.json(
-      { code: "UNKNOWN_ERROR", key: "booking.unknown" },
+      { code: BookingCodes.UNKNOWN_ERROR, key: "codes.booking.unknown" },
       { status: 500 }
     );
   }
