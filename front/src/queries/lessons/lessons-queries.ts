@@ -108,7 +108,7 @@ export async function createLesson(data: {
       createdAt: new Date(),
       groupSize: data.groupSize,
     },
-    select: await getLessonSelectByUser(false, true),
+    select: await getLessonSelectByUser(true),
   });
 }
 

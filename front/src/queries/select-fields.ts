@@ -39,10 +39,6 @@ export const SELECT_LESSON_AS_PARTICIPANT = {
   ...SELECT_LESSON_FIELDS,
   url: true,
 } satisfies Prisma.LessonSelect;
-export const SELECT_LESSON_AS_PARTICIPANT_TEACHER = {
-  ...SELECT_LESSON_AS_PARTICIPANT,
-  earned: true,
-} satisfies Prisma.LessonSelect;
 
 export const SELECT_BOOKING_FIELDS = {
   idBooking: true,
@@ -68,10 +64,8 @@ export const SELECT_PRICING_FIELDS = {
 } satisfies Prisma.PricingsSelect;
 
 export async function getLessonSelectByUser(
-  isParticipant: boolean,
-  isTeacher: boolean = false
+  isParticipant: boolean
 ): Promise<Prisma.LessonSelect> {
-  if (isTeacher) return SELECT_LESSON_AS_PARTICIPANT_TEACHER;
   if (isParticipant) return SELECT_LESSON_AS_PARTICIPANT;
   return SELECT_LESSON_FIELDS;
 }
