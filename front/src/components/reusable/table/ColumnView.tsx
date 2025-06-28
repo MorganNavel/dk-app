@@ -16,23 +16,19 @@ import { useTranslations } from "next-intl";
 
 interface DataTableViewOptionsProps<TData> {
   table: Table<TData>;
-  name: String;
+  name: string;
 }
 
 export function DataTableViewOptions<TData>({
   table,
   name,
-}: DataTableViewOptionsProps<TData>) {
+}: Readonly<DataTableViewOptionsProps<TData>>) {
   const t = useTranslations();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button
-          variant='outline'
-          size='sm'
-          className='ml-auto hidden h-8 lg:flex'
-        >
+        <Button variant='outline' size='sm' className='ml-auto hidden lg:flex'>
           <Settings2 />
           {t("generals.view")}
         </Button>

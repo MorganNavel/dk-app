@@ -35,11 +35,13 @@ interface LessonTableProps {
   lessons: Lesson[] | null;
   onDelete: (ids: number[]) => Promise<void>;
   onCancel: (ids: number[]) => Promise<void>;
+  className?: string;
 }
 export default function LessonTable({
   lessons,
   onDelete,
   onCancel,
+  className = "",
 }: Readonly<LessonTableProps>) {
   const t = useTranslations();
 
@@ -149,7 +151,7 @@ export default function LessonTable({
   ];
 
   return (
-    <div className='p-15 h-full'>
+    <div className={className}>
       <DataTable
         name='lessons'
         data={lessons || []}

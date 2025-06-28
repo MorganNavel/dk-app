@@ -49,7 +49,7 @@ export function RowFiltering<TData, TValue>({
   }, [columns]);
   if (!filterableColumns.length) return null;
   return (
-    <>
+    <div className='flex items-center gap-2 '>
       <Select
         onValueChange={(value) => {
           setColumnFilters([]);
@@ -60,8 +60,8 @@ export function RowFiltering<TData, TValue>({
           setFilter(filtersConfig?.[parseInt(value)] ?? null);
         }}
       >
-        <SelectTrigger>
-          <div className='flex items-center space-x-2'>
+        <SelectTrigger className='flex-1'>
+          <div className='flex items-center gap-2'>
             <Filter className='h-5 w-5 text-gray-500' />
             <SelectValue placeholder={t(`${name}.data-table.filters.title`)} />
           </div>
@@ -70,7 +70,6 @@ export function RowFiltering<TData, TValue>({
           <SelectGroup>
             <SelectLabel>{t(`${name}.data-table.filters.label`)}</SelectLabel>
             <SelectItem value='-1'>
-              {" "}
               {t("lessons.data-table.filters.none")}
             </SelectItem>
             {filtersConfig?.map((filter, index) => {
@@ -86,13 +85,13 @@ export function RowFiltering<TData, TValue>({
           </SelectGroup>
         </SelectContent>
       </Select>
-      <div className='w-[180px]'>
+      <div className='flex-1'>
         {filter?.render(
           (table.getColumn(filter.columnId)?.getFilterValue() as string) ?? "",
           table.getColumn(filter.columnId)?.setFilterValue
         )}
       </div>
-    </>
+    </div>
   );
 }
 

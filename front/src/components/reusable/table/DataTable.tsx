@@ -101,16 +101,9 @@ function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className='flex items-center justify-between space-x-4 py-4'>
-        <div className='flex space-x-4'>
+      <div className='flex gap-4 sm:flex-row justify-between my-4'>
+        <div className='flex items-center gap-2'>
           <DataTableViewOptions table={table} name={name} />
-          {/* <RowFilteringPopover
-            table={table}
-            name={name}
-            columns={columns}
-            filtersConfig={filtersConfig}
-            setColumnFilters={setColumnFilters}
-          /> */}
           <RowFiltering
             table={table}
             name={name}
@@ -120,9 +113,7 @@ function DataTable<TData, TValue>({
           />
         </div>
 
-        <div className='flex space-x-1'>
-          <Actions actions={actions ?? []} rowSelection={rowSelection} />
-        </div>
+        <Actions actions={actions ?? []} rowSelection={rowSelection} />
       </div>
 
       <div className='rounded-md border'>
@@ -195,7 +186,7 @@ interface ActionProps {
 function Actions({ actions, rowSelection }: Readonly<ActionProps>) {
   const [open, setOpen] = useState(false);
   return (
-    <>
+    <div className='flex '>
       <Popover open={open} onOpenChange={(open) => setOpen(open)}>
         <PopoverTrigger asChild className='lg:hidden'>
           <Button variant='ghost'>
@@ -235,7 +226,7 @@ function Actions({ actions, rowSelection }: Readonly<ActionProps>) {
           {action.render()}
         </Button>
       ))}
-    </>
+    </div>
   );
 }
 export default DataTable;
