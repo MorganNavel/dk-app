@@ -10,14 +10,14 @@ import { revalidatePath } from "next/cache";
 
 export async function deleteLessonsAndRevalidate(ids: number[]) {
   const res = await deleteLessonsBulk(ids);
-  if (!res) return;
   revalidatePath("/lessons");
+  return res;
 }
 
 export async function cancelLessonsAndRevalidate(ids: number[]) {
   const res = await changeLessonStatusBulk(ids, "cancelled");
-  if (!res) return;
   revalidatePath("/lessons");
+  return res;
 }
 interface CreateLessonData {
   title: string;
@@ -28,14 +28,14 @@ interface CreateLessonData {
 
 export async function createLessonAndRevalidate(data: CreateLessonData) {
   const res = await createLesson(data);
-  if (!res) return;
   revalidatePath("/lessons");
+  return res;
 }
 export async function rescheduleLessonsAndRevalidate(
   ids: number[],
   startDate: Date
 ) {
   const res = await rescheduleLessons(ids, startDate);
-  if (!res) return;
   revalidatePath("/lessons");
+  return res;
 }

@@ -31,15 +31,12 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
     },
   });
   async function handleSubmit(data: FormProps) {
-    try {
-      await createLessonAndRevalidate(data);
-      toast.success(t("lesson.create.success"));
-    } catch (e) {
-      console.error("Error creating lesson:", e);
-      toast.error(t("lesson.create.error"));
-      return;
-    }
-    onFinish();
+    const r = await createLessonAndRevalidate(data);
+    const text = t(r?.key) || "No message";
+    if (r?.code === 0) {
+      toast.success(text);
+      onFinish();
+    } else toast.error(text);
   }
 
   return (

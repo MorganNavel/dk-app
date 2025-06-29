@@ -244,3 +244,39 @@ export async function rescheduleLessons(
     key: "codes.lesson.success",
   });
 }
+
+export async function renameLesson(
+  idLesson: number,
+  title: string
+): Promise<LessonResponse> {
+  const user = await getUser();
+  if (!user || user.role !== "teacher")
+    return {
+      code: LessonCodes.NOT_AUTHENTICATED,
+      key: "codes.user.not_authenticated",
+      redirectTo: "/auth/sign-in",
+    };
+  const isOwner = await checkTeacherOwnership(user.id, [idLesson]);
+  if (!isOwner)
+    return {
+      code: LessonCodes.UNAUTHORIZED_ACTION,
+      key: "codes.lesson.unauthorized_action",
+    };
+  try {
+    const r = await prisma.lesson.update({
+      where: { idLesson },
+      data: { title },
+    });
+
+    return {
+      code: LessonCodes.SUCCESS,
+      data: r,
+    };
+  } catch (error) {
+    console.error("Error updating lesson:", error);
+    return {
+      code: LessonCodes.UNKNOWN_ERROR,
+      key: "codes.lesson.unknown_error",
+    };
+  }
+}

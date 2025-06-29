@@ -26,7 +26,7 @@ import { useTranslations } from "next-intl";
 import { ReactNode, useEffect, useState } from "react";
 import { DataTablePagination } from "./Pagination";
 import { DataTableViewOptions } from "./ColumnView";
-import { RowFiltering, RowFilteringPopover } from "./RowFiltering";
+import { RowFiltering } from "./RowFiltering";
 import { Button } from "@/components/ui/button";
 import {
   Popover,

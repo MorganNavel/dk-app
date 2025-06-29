@@ -96,13 +96,16 @@ function DialogAction({
 
   const handleConfirm = async () => {
     try {
+      let r = null;
       if (action === "reschedule" && reschedule)
-        await rescheduleLessonsAndRevalidate([lesson.idLesson], reschedule);
+        r = await rescheduleLessonsAndRevalidate([lesson.idLesson], reschedule);
       if (action === "cancel")
-        await cancelLessonsAndRevalidate([lesson.idLesson]);
+        r = await cancelLessonsAndRevalidate([lesson.idLesson]);
       if (action === "delete")
-        await deleteLessonsAndRevalidate([lesson.idLesson]);
-      toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
+        r = await deleteLessonsAndRevalidate([lesson.idLesson]);
+      if (r?.code === 0)
+        toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
+      else toast.error(t(`lessons.data-table.actions.dialog.${action}.error`));
     } catch (error: any) {
       console.error("Error in lesson action:", error);
       return;

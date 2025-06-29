@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { hasPermission } from "@/utils/permissions";
 import { User } from "@prisma/client";
 import { Lesson, UserProfile } from "@/types/type";
+import { renameLessonAction } from "./actions";
 
 const statusColors = {
   planned: "bg-blue-100 text-blue-600",
@@ -102,7 +103,7 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
           <EditableCell
             initialText={title}
             onSave={(title) => {
-              console.log("title", title);
+              renameLessonAction(row.original.idLesson, title);
             }}
           />
         );
