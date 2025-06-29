@@ -95,7 +95,7 @@ export async function changeLessonStatus(
 export async function changeLessonStatusBulk(
   ids: number[],
   status: LessonStatus
-) {
+): Promise<LessonResponse> {
   const user = await getUser();
   if (!user || user.role !== "teacher")
     return {
@@ -104,7 +104,11 @@ export async function changeLessonStatusBulk(
       redirectTo: "/auth/sign-in",
     };
   const isOwner = await verifyOwnership(ids, user.id);
-  if (!isOwner) return;
+  if (!isOwner)
+    return {
+      code: LessonCodes.UNAUTHORIZED_ACTION,
+      key: "codes.lesson.unauthorized_action",
+    };
   const r = await prisma.lesson.updateMany({
     where: { idLesson: { in: ids } },
     data: { status },

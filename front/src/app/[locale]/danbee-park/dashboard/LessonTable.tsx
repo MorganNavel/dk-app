@@ -30,11 +30,12 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { cn } from "@/lib/utils";
 import { useSession } from "@/lib/auth-client";
 import { Lesson, UserProfile } from "@/types/type";
+import { LessonResponse } from "@/queries/lessons/lessons-queries";
 type Action = "delete" | "cancel" | "add";
 interface LessonTableProps {
   lessons: Lesson[] | null;
-  onDelete: (ids: number[]) => Promise<void>;
-  onCancel: (ids: number[]) => Promise<void>;
+  onDelete: (ids: number[]) => Promise<LessonResponse>;
+  onCancel: (ids: number[]) => Promise<LessonResponse>;
   className?: string;
 }
 export default function LessonTable({
