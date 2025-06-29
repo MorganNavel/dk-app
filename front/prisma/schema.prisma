@@ -45,6 +45,7 @@ model Lesson {
   description String?
   url         String?
   startDate   DateTime     @db.Timestamp(0)
+  endDate     DateTime     @db.Timestamp(0)
   duration    Int          @default(50)
   status      LessonStatus @default(planned)
   groupSize   Int          @default(2)

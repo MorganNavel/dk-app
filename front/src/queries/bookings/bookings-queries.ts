@@ -2,12 +2,8 @@ import { prisma } from "@/lib/prisma";
 import { SELECT_BOOKING_FIELDS } from "../select-fields";
 import { BookingCodes, BookingKeys } from "./bookings-codes";
 import { getUser } from "@/lib/auth-server";
-interface BookingResponse {
-  code: number;
-  key: BookingKeys;
-  data?: any;
-  redirectTo?: string;
-}
+import { ResponseType } from "../reponse-type";
+export interface BookingResponse extends ResponseType<BookingKeys> {}
 
 export async function createBooking(
   idLesson: number

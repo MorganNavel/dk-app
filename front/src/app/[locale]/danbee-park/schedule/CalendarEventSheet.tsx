@@ -9,15 +9,16 @@ import { useTranslations } from "next-intl";
 import { Spinner } from "@nextui-org/react";
 import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
 import { CalendarEvent } from "@/components/calendar/Calendar";
-import { Lesson } from "@/types/type";
+import { Booking, Lesson, UserProfile } from "@/types/type";
 import { useSession } from "@/lib/auth-client";
 import {
-  BookingResponse,
   cancelBookingAction,
   createBookingAction,
+  deleteLessonAction,
 } from "./actions";
 import { useRouter } from "@/i18n/routing";
-import { BookingCodes } from "@/queries/bookings/bookings-codes";
+import { hasPermission } from "@/utils/permissions";
+import { ResponseType } from "@/queries/reponse-type";
 
 interface EventSheetProps {
   selectedEvent: CalendarEvent<Lesson> | null;
@@ -29,9 +30,10 @@ function formatTime(date: Date | undefined): string {
 }
 
 const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
-  const user = useSession();
+  const session = useSession();
   const t = useTranslations();
   const router = useRouter();
+  const user = session.data?.user as unknown as UserProfile;
 
   const renderLanguages = (languages: string | string[] | undefined) => {
     if (!languages || (Array.isArray(languages) && languages.length === 0)) {
@@ -55,19 +57,19 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const { description, groupSize, teacher } = resource ?? {};
   const { name, languages } = teacher ?? {};
   const isParticipating = resource?.bookings?.find(
-    (booking) => booking.idUser === user.data?.user.id
-  );
+    (booking: any) => booking.idUser === user?.id
+  ) as Booking | undefined;
   const handleError = (error: Error) => {
     const json = JSON.parse(error.message);
-    if (json.code !== BookingCodes.SUCCESS) {
+    if (json.code !== 0) {
       toast.error(t(json.key));
       if (json.redirectTo) router.push(json.redirectTo);
       return;
     }
     toast.error(t(json.key));
   };
-  const handleSuccess = (data: BookingResponse) => {
-    if (data.code !== BookingCodes.SUCCESS) {
+  const handleSuccess = (data: ResponseType<any>) => {
+    if (data.code !== 0) {
       toast.error(t(data.key));
       if (data.redirectTo) router.push(data.redirectTo);
       return;
@@ -86,11 +88,16 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
     onError: handleError,
     onSuccess: handleSuccess,
   });
+  const deleteMutation = useMutation({
+    mutationFn: deleteLessonAction,
+    onError: handleError,
+    onSuccess: handleSuccess,
+  });
   const isLoading = reservationMutation.isPending || cancelMutation.isPending;
 
   function onSubmit() {
     if (!user) {
-      toast.error(t("generals.signin.required"));
+      toast.error(t("codes.user.not_authenticated"));
       router.push("/auth/sign-in");
       return;
     }
@@ -163,7 +170,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             </p>
           </div>
         </div>
-        {isParticipating && (
+        {user && hasPermission(user, "bookings", "delete", isParticipating) && (
           <Button
             type={"submit"}
             className='w-full mt-4'
@@ -178,15 +185,33 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             )}
           </Button>
         )}
-        <Button
-          type={"submit"}
-          className='w-full mt-4'
-          disabled={isLoading || !!isParticipating}
-          variant={"default"}
-          onClick={onSubmit}
-        >
-          {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
-        </Button>
+        {user &&
+          hasPermission(user, "lessons", "delete", selectedEvent?.resource) && (
+            <Button
+              type={"submit"}
+              className='w-full mt-4'
+              disabled={isLoading || !!isParticipating}
+              variant={"destructive"}
+              onClick={() =>
+                deleteMutation.mutateAsync(
+                  selectedEvent?.resource.idLesson as number
+                )
+              }
+            >
+              {isLoading ? <Spinner size='sm' color='white' /> : "Supprimer"}
+            </Button>
+          )}
+
+        {hasPermission(user, "bookings", "create") && (
+          <Button
+            type={"submit"}
+            className='w-full mt-4'
+            disabled={isLoading || !!isParticipating}
+            onClick={onSubmit}
+          >
+            {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
+          </Button>
+        )}
         {isParticipating && (
           <p className='mt-4 text-sm text-gray-500'>
             Vous participez déjà à cet événement.

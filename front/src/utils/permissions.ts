@@ -44,6 +44,12 @@ const ROLES = {
         }
       },
     },
+    bookings: {
+      read: true,
+      create: false,
+      update: false,
+      delete: false,
+    },
   },
   student: {
     lessons: {
@@ -79,7 +85,7 @@ const ROLES = {
       delete: false,
     },
     bookings: {
-      create: false,
+      create: true,
       read: false,
       update: false,
       delete: false,

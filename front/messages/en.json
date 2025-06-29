@@ -418,7 +418,19 @@
     "lesson": {
       "not_found": "The requested lesson was not found.",
       "past": "You cannot book a lesson that has already started.",
-      "no_capacity": "There is no capacity left for this lesson."
+      "no_capacity": "There is no capacity left for this lesson.",
+      "invalid_input": "The input provided is invalid. Please check the data and try again.",
+      "unauthorized_action": "You are not authorized to perform this action.",
+      "unknown_error": "An unknown error occurred. Please try again later.",
+      "create": {
+        "success": "The lesson has been successfully created.",
+        "unknown_error": "An unknown error occurred while creating the lesson. Please try again later.",
+        "already_exists": "A lesson is already scheduled for this date and time. Please choose another date or time."
+      },
+      "delete": {
+        "success": "The lesson has been successfully deleted.",
+        "unknown_error": "An unknown error occurred. Please try again later."
+      }
     }
   }
 }
