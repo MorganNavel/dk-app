@@ -3,17 +3,16 @@
 import { getUser } from "@/lib/auth-server";
 import { BookingCodes } from "@/queries/bookings/bookings-codes";
 import {
+  BookingResponse,
   createBooking,
   deleteBookingById,
 } from "@/queries/bookings/bookings-queries";
 import { revalidatePath } from "next/cache";
+import {
+  deleteLessonsBulk,
+  LessonResponse,
+} from "@/queries/lessons/lessons-queries";
 
-export interface BookingResponse {
-  code: number;
-  key: string;
-  data?: any;
-  redirectTo?: string;
-}
 export async function createBookingAction(
   idLesson: number
 ): Promise<BookingResponse> {
@@ -34,6 +33,14 @@ export async function cancelBookingAction(
     };
   }
   const r = await deleteBookingById(idBooking);
+  revalidatePath("/danbee-park/schedule");
+  return r;
+}
+
+export async function deleteLessonAction(
+  idLesson: number
+): Promise<LessonResponse> {
+  const r = await deleteLessonsBulk([idLesson]);
   revalidatePath("/danbee-park/schedule");
   return r;
 }
