@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { FaCheck, FaEdit } from "react-icons/fa";
@@ -22,7 +23,10 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
   const handleSave = () => {
     if (text.trim() !== "") {
       onSave(text);
+    } else {
+      setText(initialText);
     }
+
     setIsEditing(false);
   };
 
@@ -49,7 +53,8 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
           />
         </>
       ) : (
-        <button
+        <Button
+          variant='ghost'
           className='flex gap-2 items-center group'
           onClick={handleEditClick}
           onKeyDown={(e) => {
@@ -62,7 +67,7 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
             onClick={handleEditClick}
             className='opacity-0 cursor-pointer text-orange-400 hover:text-orange-500 group-hover:opacity-100 transition-opacity duration-200 '
           />
-        </button>
+        </Button>
       )}
     </div>
   );
