@@ -127,6 +127,14 @@ export async function deleteBookingById(
       where: { idBooking, idUser: user.id },
       select: SELECT_BOOKING_FIELDS,
     });
+    await prisma.user.update({
+      where: { id: user.id },
+      data: {
+        nbLessons: {
+          increment: 1,
+        },
+      },
+    });
     return {
       code: BookingCodes.SUCCESS,
       key: "codes.booking.delete.success",
@@ -146,14 +154,6 @@ export async function deleteBooking(
   try {
     const result = await prisma.booking.deleteMany({
       where: { idUser, idLesson },
-    });
-    await prisma.user.update({
-      where: { id: idUser },
-      data: {
-        nbLessons: {
-          increment: result.count,
-        },
-      },
     });
 
     return {
