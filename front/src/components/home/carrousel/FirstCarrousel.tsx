@@ -17,5 +17,5 @@ export const FirstCaroussel = () => {
     },
   ];
 
-  return <Caroussel config={config} type="bullets" className=" w-full" />;
+  return <Caroussel config={config} className='w-full' />;
 };

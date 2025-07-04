@@ -29,7 +29,7 @@ export const ItemLayout = ({
   onClick,
 }: ItemLayoutProps) => {
   return (
-    <Card className='mx-8 relative flex flex-col lg:flex-row items-center p-5 sm:p-8 lg:p-12 gap-6 sm:gap-8 shadow-xl hover:shadow-2xl  transition-all'>
+    <Card className='mx-8 relative flex flex-col lg:flex-row items-center p-5 sm:p-8 lg:p-12 gap-6 sm:gap-8 shadow-xl hover:shadow-2xl transition-all duration-300 ease-in-out'>
       <div className='flex-1 text-center lg:text-left'>
         <h2 className='text-primary font-bold text-lg sm:text-2xl lg:text-3xl mb-3 sm:mb-4 drop-shadow-md'>
           {title}

@@ -21,7 +21,7 @@ export function Cta({
   return (
     <Card
       className={cn(
-        "bg-primary/10 p-2 md:p-8 text-center hover:shadow-lg transition-all duration-300 rounded-xl mb-8",
+        "bg-primary/10 p-2 md:p-8 text-center hover:scale-105 shadow-lg transition-all duration-300 rounded-xl mb-8",
         className
       )}
     >
