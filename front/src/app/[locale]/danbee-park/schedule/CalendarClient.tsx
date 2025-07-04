@@ -60,6 +60,26 @@ export default function CalendarClient({
         className='m-5 h-screen'
         locale={locale}
         components={{
+          eventStyle(event) {
+            const isParticipating = event.resource.bookings?.some(
+              (booking: any) => booking.idUser === profile?.id
+            );
+            const maxCapacity = event.resource.groupSize || 0;
+            const currentBookings = event.resource.bookings?.length || 0;
+            const isFull = currentBookings >= maxCapacity;
+            if (isParticipating) {
+              return {
+                backgroundColor: "gray",
+              };
+            }
+            if (isFull) {
+              return {
+                backgroundColor: "red",
+              };
+            }
+            return {};
+          },
+
           actions: [
             profile && hasPermission(profile, "lessons", "create") && (
               <Button
@@ -67,7 +87,8 @@ export default function CalendarClient({
                 variant={"ghost"}
                 onClick={() => setAction("add")}
               >
-                <Plus className='w-4 h-4 text-primary' /> {t("generals.add")}
+                <Plus className='size-6 text-primary' />
+                <p className='hidden sm:inline'>{t("generals.add")}</p>
               </Button>
             ),
           ],
