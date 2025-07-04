@@ -60,7 +60,7 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
       <NextIntlClientProvider messages={messages}>
         <SidebarProvider>
           <SidebarLayout>
-            <main className='overflow-auto h-screen'>
+            <main className='overflow-auto h-screen font-Poppins'>
               {props.children}
               <Footer />
             </main>
