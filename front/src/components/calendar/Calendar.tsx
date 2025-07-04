@@ -142,7 +142,7 @@ function CalendarHeader({
       <span className='text-center font-bold text-xl text-foreground'>
         {getFormattedDate(date)}
       </span>
-      <div className='flex flex-col lg:items-start items-center'>
+      <div className='flex justify-between items-center'>
         <div className='flex gap-2'>
           {views.includes("month") && (
             <Button variant={"outline"} onClick={() => onViewChange("month")}>
@@ -163,7 +163,9 @@ function CalendarHeader({
             Today
           </Button>
         </div>
-        <div className='flex gap-2'>{actions}</div>
+        {actions && actions.length > 0 && (
+          <div className='flex gap-2'>{actions}</div>
+        )}
       </div>
     </div>
   );
