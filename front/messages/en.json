@@ -432,5 +432,33 @@
         "unknown_error": "An unknown error occurred. Please try again later."
       }
     }
+  },
+  "pricing": {
+    "title": "PRICING",
+    "subtitle": "A plan for every goal",
+    "description": "Explore Korean, no matter where you start.",
+    "perMonth": "/month",
+    "lessons": "{count} lesson{count, plural, one {unique} other {s unique}}",
+    "resources": "PDF support and resources",
+    "expireY": "Lessons valid for {count} year{count, plural, one {} other {s}}",
+    "expireM": "Lessons valid for {count} month{count, plural, one {} other {s}}",
+    "plans": {
+      "discover": {
+        "title": "Discover",
+        "description": "Ideal for beginners looking to learn the basics of Korean.",
+        "btnText": "Start Learning"
+      },
+      "advanced": {
+        "title": "Advanced",
+        "description": "For those who want to go further in their Korean learning.",
+        "btnText": "Start Adventure"
+      },
+      "expert": {
+        "title": "Expert",
+        "description": "Master the Korean language.",
+        "topik": "TOPIK Preparation",
+        "btnText": "Become an Expert"
+      }
+    }
   }
 }

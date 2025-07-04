@@ -423,5 +423,33 @@
         "unknown_error": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard."
       }
     }
+  },
+  "pricing": {
+    "title": "TARIFS",
+    "subtitle": "Un plan pour chaque objectif",
+    "description": "Explorez le coréen, quel que soit votre point de départ.",
+    "perMonth": "/mois",
+    "lessons": "{count} leçon{count, plural, one {unique} other {s uniques}}",
+    "resources": "Support PDF et ressources",
+    "expireY": "Leçons valables {count} an{count, plural, one {} other {s}}",
+    "expireM": "Leçons valables {count} mois",
+    "plans": {
+      "discover": {
+        "title": "Découverte",
+        "description": "Idéal pour les débutants et les nouveaux apprenants.",
+        "btnText": "Commencer tranquillement"
+      },
+      "advanced": {
+        "title": "Avancé",
+        "description": "Pour progresser régulièrement.",
+        "btnText": "Commencer l'aventure"
+      },
+      "expert": {
+        "title": "Expert",
+        "description": "Pour maîtriser le coréen.",
+        "topik": "Préparation au TOPIK",
+        "btnText": "Devenir un expert"
+      }
+    }
   }
 }
