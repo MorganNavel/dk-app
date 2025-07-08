@@ -29,7 +29,7 @@ export const ELearningComponent = () => {
         </p>
         <Button
           variant={"round-outline"}
-          onClick={() => console.log("learn more")}
+          onClick={() => {}}
           className=' mt-8  font-semibold  lg:w-auto px-7 py-6 text-lg'
         >
           {t("generals.learnMore")}

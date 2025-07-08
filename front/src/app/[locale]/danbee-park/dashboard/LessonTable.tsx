@@ -83,7 +83,6 @@ export default function LessonTable({
     if (!lessons) return;
 
     const idLessons = Object.keys(selected).map((value) => Number(value));
-    console.log(selected);
     switch (action) {
       case "delete":
         handleDelete(idLessons);

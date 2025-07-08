@@ -277,7 +277,6 @@ export async function renameLesson(
       data: r,
     };
   } catch (error) {
-    console.error("Error updating lesson:", error);
     return {
       code: LessonCodes.UNKNOWN_ERROR,
       key: "codes.lesson.unknown_error",

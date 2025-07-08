@@ -107,7 +107,6 @@ function DialogAction({
         toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
       else toast.error(t(`lessons.data-table.actions.dialog.${action}.error`));
     } catch (error: any) {
-      console.error("Error in lesson action:", error);
       return;
     }
   };

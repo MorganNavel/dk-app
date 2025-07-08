@@ -237,7 +237,7 @@ function CalendarBody<T>({
     <div>
       {view === "month" && (
         <MonthView<T>
-          onMonthChange={(newDate) => console.log(newDate)}
+          onMonthChange={(newDate) => {}}
           onViewChange={onViewChange}
           onDayClick={onDayClick}
           {...props}

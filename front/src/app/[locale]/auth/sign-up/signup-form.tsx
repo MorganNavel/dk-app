@@ -50,7 +50,6 @@ export function SignUpForm() {
         },
         onError: (error: any) => {
           toast.error(t("signup.message.error"));
-          console.error(error);
         },
       }
     );

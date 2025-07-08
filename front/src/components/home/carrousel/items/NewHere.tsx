@@ -15,7 +15,7 @@ export const NewHereComponent = () => {
       imageAlt={"question-mark"}
       width={320}
       height={320}
-      onClick={() => console.log("new here")}
+      onClick={() => {}}
       tags={
         <div className='flex items-center gap-2 text-green-600 font-medium'>
           <Leaf className='w-5 h-5' /> {t("tags.natural")}

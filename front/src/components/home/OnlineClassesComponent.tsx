@@ -26,7 +26,7 @@ export const OnlineClassesComponent = () => {
         </p>
 
         <Button
-          onClick={() => console.log("learn more")}
+          onClick={() => {}}
           variant={"round-outline"}
           className='mt-6  text-md px-6 py-5 lg:px-7 lg:py-6 lg:text-lg font-semibold'
         >

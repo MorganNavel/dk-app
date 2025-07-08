@@ -43,7 +43,6 @@ export function SignInForm() {
         },
         onError: (error) => {
           toast.error(t("generals.signin.message.error"));
-          console.error(error);
         },
       }
     );
