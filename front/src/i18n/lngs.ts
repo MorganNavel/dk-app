@@ -1,1 +1,2 @@
-export default ["en", "fr", "ko"];
+const lngs = ["en", "fr", "ko"];
+export default lngs;
