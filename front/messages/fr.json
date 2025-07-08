@@ -1,4 +1,5 @@
 {
+  "siteName": "Danbee Korean",
   "danbee-park": "Danbee Park",
   "generals": {
     "view": "Voir",
@@ -175,7 +176,10 @@
     "newsletter": "Newsletter",
     "copyRight": "© {year} Danbee Korean. Tous droits réservés.",
     "home": "Accueil",
-    "cookies": "Paramètres des cookies"
+    "cookies": "Paramètres des cookies",
+    "company": "Entreprise",
+    "legal": "Légal",
+    "description": "La plateforme d'apprentissage du coréen qui s'adapte à vous — débutant ou avancé, apprenez à votre manière."
   },
   "home": {
     "intro": {

@@ -1,4 +1,5 @@
 {
+  "siteName": "단비 한국어",
   "danbee-park": "Danbee Park",
   "generals": {
     "date-picker": {
@@ -174,7 +175,10 @@
     "newsletter": "Newsletter",
     "copyRight": "© {year} Danbee Korean. All rights reserved.",
     "home": "Home",
-    "cookies": "Cookies Settings"
+    "cookies": "Cookies Settings",
+    "company": "Company",
+    "legal": "Legal",
+    "description": "The Korean learning platform that fits you — beginner or advanced, learn your way."
   },
   "home": {
     "intro": {
