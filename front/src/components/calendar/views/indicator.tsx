@@ -1,5 +1,5 @@
 import { getHours, getMinutes, format } from "date-fns";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 export function CurrentTimeIndicator({
   hourHeight = 0,
@@ -8,14 +8,14 @@ export function CurrentTimeIndicator({
   const [position, setPosition] = useState(() => calculatePosition());
   const [time, setTime] = useState(() => format(new Date(), "HH:mm"));
   const indicatorRef = useRef<HTMLDivElement | null>(null);
-  function calculatePosition() {
+  const calculatePosition = useCallback(() => {
+    if (hourHeight <= 0 || hourWidth <= 0) return 0;
     const now = new Date();
-
     const hours = getHours(now);
     const minutes = getMinutes(now);
 
     return Math.round(hours * hourHeight + (minutes / 60) * hourHeight);
-  }
+  }, [hourHeight, hourWidth]);
 
   useEffect(() => {
     if (indicatorRef.current) {
@@ -30,7 +30,7 @@ export function CurrentTimeIndicator({
     }, 1000 * 60);
 
     return () => clearInterval(interval);
-  }, [hourHeight]);
+  }, [hourHeight, calculatePosition]);
 
   return (
     <div
