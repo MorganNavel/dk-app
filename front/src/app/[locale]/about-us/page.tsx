@@ -21,9 +21,9 @@ export default function AboutUs() {
   const t = useTranslations("about-us");
   return (
     <div className='flex flex-col min-h-screen gap-40'>
-      <section className='min-h-screen flex flex-col-reverse md:flex-row items-center justify-between gap-12 px-4 py-20 max-w-7xl mx-auto snap-start snap-always'>
+      <section className='lg:min-h-screen flex flex-col-reverse lg:flex-row items-center justify-between gap-12 px-4 py-48 max-w-7xl mx-auto snap-start snap-always'>
         <div className='w-full md:w-1/2 space-y-8 text-center md:text-left'>
-          <div className='text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary leading-snug'>
+          <div className='text-3xl sm:text-3xl lg:text-5xl font-extrabold text-primary'>
             {t("title")}
           </div>
           <div className='text-base sm:text-lg leading-relaxed'>
@@ -42,15 +42,15 @@ export default function AboutUs() {
         <div className='w-full md:w-1/2 flex justify-center'>
           <Image
             src={logo}
-            alt='Cours de coréen en ligne'
-            width={400}
-            height={400}
-            className='max-w-xs sm:max-w-sm md:max-w-md h-auto'
+            alt='Logo'
+            width={775}
+            height={518}
+            className='w-64 h-auto md:w-72 lg:w-1/2 object-contain mx-auto md:mx-0'
           />
         </div>
       </section>
 
-      <section className='w-full min-h-screen snap-start snap-always py-20  px-6 h-screen flex items-center'>
+      <section className='w-full lg:min-h-screen snap-start snap-always py-20  px-6 h-screen flex items-center'>
         <div className='max-w-5xl mx-auto text-center space-y-8'>
           <Title>{t("why.title")}</Title>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-8'>
