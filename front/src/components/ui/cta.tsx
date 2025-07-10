@@ -34,7 +34,7 @@ export function Cta({
         </p>
         <Button
           variant={"round-outline"}
-          className='w-full sm:w-auto text-sm md:text-md px-6 py-3 gap-2 '
+          className='w-full sm:w-auto text-sm md:text-md px-6 py-3 gap-2 mb-4'
           onClick={() => router.push(href)}
         >
           <span>{buttonText}</span>
