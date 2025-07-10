@@ -10,6 +10,7 @@ import {
   getEarningsComparison,
 } from "@/queries/lessons/earnings.service";
 import { ChartEarnings, ComparisionStats } from "./stats";
+import { DashboardLayout } from "./dashboard";
 
 export default async function LessonsContent() {
   const lessons = (await getUpcomingLessons()) as unknown as Lesson[];
@@ -21,7 +22,7 @@ export default async function LessonsContent() {
   const chartData = await getEarningsChartData(date3yearsAgo, now);
 
   return (
-    <div className='mx-5 lg:mx-15 min-h-screen pt-32 flex flex-col gap-6'>
+    <DashboardLayout>
       <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 '>
         <ComparisionStats earnings={revenue?.month} type='monthly' />
         <ComparisionStats earnings={revenue?.year} type='yearly' />
@@ -32,6 +33,6 @@ export default async function LessonsContent() {
         onDelete={deleteLessonsAndRevalidate}
         onCancel={cancelLessonsAndRevalidate}
       />
-    </div>
+    </DashboardLayout>
   );
 }
