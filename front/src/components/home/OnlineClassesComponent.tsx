@@ -13,7 +13,7 @@ export const OnlineClassesComponent = () => {
   const t = useTranslations();
 
   return (
-    <div className='text-green-950 flex flex-col lg:flex-row items-center gap-12 lg:gap-0 mx-8 lg:mx-0 '>
+    <div className='text-green-950 flex flex-col lg:flex-row items-center gap-12 lg:gap-0 lg:mx-0 lg:mb-0 mb-12'>
       <div className='flex flex-col items-center lg:mx-auto w-full lg:block'>
         <h1 className='text-2xl  font-semibold font-Poppins max-w-md lg:max-w-lg text-center lg:text-left'>
           {t("home.onlineClasses.title")}
@@ -28,7 +28,7 @@ export const OnlineClassesComponent = () => {
         <Button
           onClick={() => {}}
           variant={"round-outline"}
-          className='mt-6  text-md px-6 py-5 lg:px-7 lg:py-6 lg:text-lg font-semibold'
+          className='mt-8 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 font-semibold'
         >
           {t("generals.learnMore")}
         </Button>

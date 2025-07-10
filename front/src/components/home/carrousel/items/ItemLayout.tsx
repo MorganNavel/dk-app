@@ -88,7 +88,7 @@ export const ItemLayout = ({
         <Button
           onClick={onClick}
           variant='round-outline'
-          className='text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 font-semibold flex items-center gap-2 transition-all hover:bg-primary hover:text-white'
+          className='text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 font-semibold flex items-center gap-2 transition-all'
         >
           {buttonText}
           <svg

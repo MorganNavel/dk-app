@@ -8,7 +8,7 @@ export const ELearningComponent = () => {
   const t = useTranslations();
 
   return (
-    <div className='mx-8 lg:mx-0 flex flex-col lg:flex-row text-green-950  grid-flow-row  grid-cols-1 lg:grid-flow-col lg:grid-cols-2 gap-12 items-center'>
+    <div className='flex flex-col lg:flex-row text-green-950  grid-flow-row  grid-cols-1 lg:grid-flow-col lg:grid-cols-2 gap-12 items-center'>
       <Image
         src={eLearningImg}
         alt='Elearning icons'
@@ -30,7 +30,7 @@ export const ELearningComponent = () => {
         <Button
           variant={"round-outline"}
           onClick={() => {}}
-          className=' mt-8  font-semibold  lg:w-auto px-7 py-6 text-lg'
+          className='mt-8 text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4 font-semibold'
         >
           {t("generals.learnMore")}
         </Button>
