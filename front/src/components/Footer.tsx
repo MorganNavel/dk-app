@@ -1,8 +1,7 @@
 "use client";
 import { useTranslations } from "next-intl";
 import { FaInstagram, FaYoutube } from "react-icons/fa";
-import { IoLogoDiscord } from "react-icons/io5";
-import logo from "@public/assets/img/logo-25.png";
+import logo from "@public/assets/img/logo.png";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 
@@ -15,21 +14,30 @@ export function Footer() {
         <div className='flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left text-center'>
           <div className='flex w-full flex-col justify-between gap-6 lg:items-start items-center'>
             <div className='font-semibold flex items-center gap-4 flex-col lg:flex-row'>
-              <Image src={logo} alt='Logo' width={64} height={64} />
+              <Image
+                src={logo}
+                alt='Logo'
+                width={775}
+                height={518}
+                className='w-24 h-auto'
+              />
               <p>{t("siteName")}</p>
             </div>
             <p className='text-muted max-w-[70%] text-sm'>
               {t("footer.description")}
             </p>
             <div className='flex gap-6'>
-              <SocialIcon href='https://instagram.com' label='Instagram'>
+              <SocialIcon
+                href='https://www.instagram.com/korean_with_danbee?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=='
+                label='Instagram'
+              >
                 <FaInstagram size={24} />
               </SocialIcon>
-              <SocialIcon href='https://youtube.com' label='YouTube'>
+              <SocialIcon
+                href='https://www.youtube.com/@TuteurDeCoréenDanbee'
+                label='YouTube'
+              >
                 <FaYoutube size={24} />
-              </SocialIcon>
-              <SocialIcon href='https://discord.com' label='Discord'>
-                <IoLogoDiscord size={24} />
               </SocialIcon>
             </div>
           </div>
