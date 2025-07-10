@@ -21,12 +21,12 @@ export default async function LessonsContent() {
   const chartData = await getEarningsChartData(date3yearsAgo, now);
 
   return (
-    <div className='flex flex-col gap-6'>
-      <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 lg:p-15 p-5'>
+    <div className='mx-5 lg:mx-15 min-h-screen pt-32 flex flex-col gap-6'>
+      <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 '>
         <ComparisionStats earnings={revenue?.month} type='monthly' />
         <ComparisionStats earnings={revenue?.year} type='yearly' />
       </div>
-      <ChartEarnings chartData={chartData} className=' mx-5 lg:mx-15' />
+      <ChartEarnings chartData={chartData} />
       <LessonTable
         lessons={lessons}
         onDelete={deleteLessonsAndRevalidate}
