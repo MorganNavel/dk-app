@@ -10,11 +10,11 @@ export function Footer() {
   const t = useTranslations();
 
   return (
-    <footer className='bg-primary w-full text-white py-32'>
-      <div className='lg:max-w-screen-2xl max-w-3xl mx-auto'>
-        <div className='flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left'>
-          <div className='flex w-full flex-col justify-between gap-6 lg:items-start'>
-            <div className='font-semibold flex items-center gap-4'>
+    <footer className='bg-primary w-full text-white lg:pt-32 lg:pb-10 pt-12 pb-4 mt-16'>
+      <div className=' mx-auto lg:px-20 px-6 max-w-full'>
+        <div className='flex w-full flex-col justify-between gap-10 lg:flex-row lg:items-start lg:text-left text-center'>
+          <div className='flex w-full flex-col justify-between gap-6 lg:items-start items-center'>
+            <div className='font-semibold flex items-center gap-4 flex-col lg:flex-row'>
               <Image src={logo} alt='Logo' width={64} height={64} />
               <p>{t("siteName")}</p>
             </div>
