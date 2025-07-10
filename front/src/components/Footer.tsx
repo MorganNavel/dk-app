@@ -62,7 +62,7 @@ export function Footer() {
         </div>
 
         {/* Socials & Copyright */}
-        <div className='mt-8 flex flex-col justify-between gap-4 border-t py-8 text-xs font-medium md:flex-row md:items-center md:text-left'>
+        <div className='mt-8 flex flex-col justify-between gap-4 border-t py-8 text-xs font-medium md:flex-row md:items-center md:text-left text-center'>
           <p className='text-sm text-gray-200'>
             {t("footer.copyRight", { year: new Date().getFullYear() })}
           </p>
