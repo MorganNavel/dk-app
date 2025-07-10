@@ -5,7 +5,6 @@ export function CurrentTimeIndicator({
   hourHeight = 0,
   hourWidth = 0,
 }: Readonly<{ hourHeight?: number; hourWidth?: number }>) {
-  const [position, setPosition] = useState(() => calculatePosition());
   const [time, setTime] = useState(() => format(new Date(), "HH:mm"));
   const indicatorRef = useRef<HTMLDivElement | null>(null);
   const calculatePosition = useCallback(() => {
@@ -13,9 +12,9 @@ export function CurrentTimeIndicator({
     const now = new Date();
     const hours = getHours(now);
     const minutes = getMinutes(now);
-
     return Math.round(hours * hourHeight + (minutes / 60) * hourHeight);
   }, [hourHeight, hourWidth]);
+  const [position, setPosition] = useState(() => calculatePosition());
 
   useEffect(() => {
     if (indicatorRef.current) {
