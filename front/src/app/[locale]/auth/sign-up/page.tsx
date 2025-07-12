@@ -29,7 +29,7 @@ export default function SignUp() {
   if (!isMounted) return <SkeletonSignUp />;
 
   return (
-    <div className='flex items-center justify-center min-h-screen p-4 '>
+    <div className='flex items-center justify-center min-h-screen pt-32 lg:pt-15 mx-3'>
       <Card className='lg:max-w-md max-w-sm w-full'>
         <CardHeader className='text-center text-2xl font-bold text-primary'>
           <CardTitle>{t("generals.signup.title")}</CardTitle>
@@ -55,7 +55,7 @@ export default function SignUp() {
           </div>
           <SignUpForm />
         </CardContent>
-        <CardFooter className='justify-center'>
+        <CardFooter className='justify-center py-4 border-t'>
           <p className='text-sm'>
             {t("generals.alreadyAccount")}{" "}
             <Link
@@ -73,12 +73,29 @@ export default function SignUp() {
 
 const SkeletonSignUp = () => {
   return (
-    <div className='flex items-center justify-center min-h-screen p-6 '>
-      <Card className='lg:max-w-md max-w-sm w-full p-4'>
-        <CardHeader className='lg:max-w-md max-w-sm w-full items-center '>
-          <Skeleton className='h-7 w-1/2' />
+    <div className='flex items-center justify-center min-h-screen pt-32 lg:pt-15 mx-3'>
+      <Card className='lg:max-w-md max-w-sm w-full'>
+        <CardHeader className='flex flex-col justify-center items-center text-2xl font-bold text-primary'>
+          <Skeleton className='h-7 w-32' />
+          <Skeleton className='h-3 w-2/3' />
         </CardHeader>
         <CardContent className='space-y-3'>
+          <div>
+            <div className='flex flex-3 justify-center mb-4 gap-5'>
+              <Button
+                variant='outline'
+                className='flex-1 flex items-center justify-center gap-2'
+              >
+                <FcGoogle size={20} />
+                Google
+              </Button>
+            </div>
+            <div className='flex flex-4 text-center items-center text-sm text-muted-foreground'>
+              <Separator className='flex-1' />
+              <Skeleton className='h-7 w-1/2 flex-2 mx-3' />
+              <Separator className='flex-1' />
+            </div>
+          </div>
           {[...Array(6)].map((_, i) => (
             <div key={i} className='mb-6'>
               <Skeleton className='h-3 w-48 mb-2' />
@@ -88,9 +105,9 @@ const SkeletonSignUp = () => {
           <div className=' flex justify-center'>
             <Skeleton className='h-16  w-4/5 my-5 ' />
           </div>
-          <Skeleton className='h-9 rounded-3xl w-full mt-9 ' />
+          <Skeleton className='h-9 w-full mt-9' />
         </CardContent>
-        <div className=' flex justify-center'>
+        <div className='flex justify-center py-4 border-t'>
           <Skeleton className='h-3 w-1/2 ' />
         </div>
       </Card>

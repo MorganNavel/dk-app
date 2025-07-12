@@ -52,7 +52,7 @@ export function SignInForm() {
     <Form {...methods}>
       <form
         onSubmit={methods.handleSubmit(onSubmit)}
-        className=' px-4 py-6 rounded-lg flex flex-col gap-4'
+        className='py-6 rounded-lg gap-4 flex flex-col'
       >
         <ControlledInput
           label={t("generals.user-profile.label.email")}
