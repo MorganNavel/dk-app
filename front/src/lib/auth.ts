@@ -31,6 +31,10 @@ export const auth = betterAuth({
     enabled: true,
     autoSignIn: true,
   },
+  trustedOrigins: [
+    "https://dev.danbee-korean.com",
+    "https://danbee-korean.com",
+  ],
 });
 
 async function findUserRole(id: string) {
