@@ -1,5 +1,4 @@
 import { useLocale } from "next-intl";
-import { useEffect } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
 interface ReCAPTCHAProps {
