@@ -33,10 +33,8 @@ export function NavUser() {
   const session = useSession();
   const user = session.data?.user;
   const signout = async () => {
-    try {
-      await signOut();
-      router.refresh();
-    } catch {}
+    await signOut();
+    router.refresh();
   };
 
   return (
