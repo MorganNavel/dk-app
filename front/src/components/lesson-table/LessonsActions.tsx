@@ -103,9 +103,8 @@ function DialogAction({
         r = await cancelLessonsAndRevalidate([lesson.idLesson]);
       if (action === "delete")
         r = await deleteLessonsAndRevalidate([lesson.idLesson]);
-      if (r?.code === 0)
-        toast.success(t(`lessons.data-table.actions.dialog.${action}.success`));
-      else toast.error(t(`lessons.data-table.actions.dialog.${action}.error`));
+      const fn = r?.code === 0 ? toast.success : toast.error;
+      fn(r?.key);
     } catch (error: any) {
       return;
     }
