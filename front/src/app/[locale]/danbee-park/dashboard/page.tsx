@@ -1,10 +1,9 @@
-import { EarningsComparison, Lesson } from "@/types/type";
 import LessonTable from "./LessonTable";
 import {
   deleteLessonsAndRevalidate,
   cancelLessonsAndRevalidate,
 } from "./actions";
-import { getUpcomingLessons } from "@/queries/lessons/lessons-queries";
+import { getAllLessons } from "@/queries/lessons/lessons-queries";
 import {
   getEarningsChartData,
   getEarningsComparison,
@@ -13,9 +12,8 @@ import { ChartEarnings, ComparisionStats } from "./stats";
 import { DashboardLayout } from "./dashboard";
 
 export default async function LessonsContent() {
-  const lessons = (await getUpcomingLessons()) as unknown as Lesson[];
-  const revenue =
-    await (getEarningsComparison() as unknown as EarningsComparison);
+  const lessons = await getAllLessons();
+  const revenue = await getEarningsComparison();
   const date3yearsAgo = new Date();
   date3yearsAgo.setFullYear(date3yearsAgo.getFullYear() - 3);
   const now = new Date();
@@ -24,12 +22,12 @@ export default async function LessonsContent() {
   return (
     <DashboardLayout>
       <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 '>
-        <ComparisionStats earnings={revenue?.month} type='monthly' />
-        <ComparisionStats earnings={revenue?.year} type='yearly' />
+        <ComparisionStats earnings={revenue.data?.month} type='monthly' />
+        <ComparisionStats earnings={revenue.data?.year} type='yearly' />
       </div>
       <ChartEarnings chartData={chartData} />
       <LessonTable
-        lessons={lessons}
+        lessons={lessons.data}
         onDelete={deleteLessonsAndRevalidate}
         onCancel={cancelLessonsAndRevalidate}
       />

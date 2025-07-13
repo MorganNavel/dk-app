@@ -5,7 +5,7 @@ import { LessonCodes, LessonKeys } from "./lessons-codes";
 import { ResponseType } from "../reponse-type";
 export type LessonStatus = "planned" | "done" | "cancelled";
 
-export interface LessonResponse extends ResponseType<LessonKeys> {}
+export interface LessonResponse<T = any> extends ResponseType<LessonKeys, T> {}
 
 async function checkTeacherOwnership(idUser: string, ids: number[]) {
   const count = await prisma.lesson.count({
@@ -172,28 +172,16 @@ export async function deleteLessonsBulk(
   });
 }
 
-export async function getLessonsAsTeacher() {
-  const user = await getUser();
-  if (!user || user.role !== "teacher") return [];
-
-  const select = await getLessonSelectByUser(true);
-
-  return prisma.lesson.findMany({
-    where: {
-      teacher: { id: user.id },
-      status: "planned",
-      startDate: { gte: new Date() },
-    },
-    select,
-  });
-}
-
-export async function getUpcomingLessons() {
+export async function getAllLessons(): Promise<LessonResponse> {
   const user = await getUser();
   const isTeacher = user?.role === "teacher";
+  if (!isTeacher)
+    return {
+      code: LessonCodes.UNAUTHORIZED_ACTION,
+      key: "codes.lesson.unauthorized_action",
+    };
   const select = await getLessonSelectByUser(isTeacher);
-
-  return await prisma.lesson.findMany({
+  const lessons = await prisma.lesson.findMany({
     where: {
       ...(isTeacher ? { teacher: { id: user.id } } : {}),
       status: isTeacher ? { in: ["planned", "cancelled"] } : "planned",
@@ -201,7 +189,30 @@ export async function getUpcomingLessons() {
     },
     select,
   });
+
+  return {
+    code: LessonCodes.SUCCESS,
+    data: lessons,
+  };
 }
+export async function getUpcomingLessons(): Promise<LessonResponse> {
+  const user = await getUser();
+  const isTeacher = user?.role === "teacher";
+  const select = await getLessonSelectByUser(isTeacher);
+  const lessons = await prisma.lesson.findMany({
+    where: {
+      ...(isTeacher ? { teacher: { id: user.id } } : {}),
+      status: "planned",
+      startDate: { gte: new Date() },
+    },
+    select,
+  });
+  return {
+    code: LessonCodes.SUCCESS,
+    data: lessons,
+  };
+}
+
 export async function createLesson(data: {
   title: string;
   description?: string;
@@ -247,8 +258,12 @@ export async function createLesson(data: {
 export async function rescheduleLessons(
   ids: number[],
   startDate: Date
-): Promise<LessonResponse | undefined> {
-  if (!startDate || startDate < new Date()) return;
+): Promise<LessonResponse> {
+  if (!startDate || startDate < new Date())
+    return {
+      code: LessonCodes.INVALID_INPUT,
+      key: "codes.lesson.invalid_input",
+    };
   const user = await getUser();
   if (!user || user.role !== "teacher")
     return {
@@ -258,7 +273,11 @@ export async function rescheduleLessons(
     };
 
   const isOwner = await verifyOwnership(ids, user.id);
-  if (!isOwner) return;
+  if (!isOwner)
+    return {
+      code: LessonCodes.UNAUTHORIZED_ACTION,
+      key: "codes.lesson.unauthorized_action",
+    };
   const isOverlap = await isOverlappingLesson(user.id, startDate);
   if (isOverlap) {
     return {

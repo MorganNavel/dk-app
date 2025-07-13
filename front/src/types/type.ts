@@ -5,7 +5,6 @@ import {
   SELECT_PRICING_FIELDS,
   SELECT_USER_FIELDS,
 } from "@/queries/select-fields";
-import { getEarningsComparison } from "@/queries/lessons/earnings.service";
 export type UserProfile = Prisma.UserGetPayload<{
   select: typeof SELECT_USER_FIELDS;
 }>;
@@ -19,4 +18,3 @@ export type Lesson = Prisma.LessonGetPayload<{
   select: typeof SELECT_LESSON_FIELDS;
 }>;
 export type UserRole = "student" | "teacher" | "admin";
-export type EarningsComparison = ReturnType<typeof getEarningsComparison>;

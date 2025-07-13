@@ -8,6 +8,8 @@ import {
   subMonths,
   subYears,
 } from "date-fns";
+import { LessonResponse } from "./lessons-queries";
+import { LessonCodes } from "./lessons-codes";
 
 export async function getTotalEarnings(
   idTeacher: string,
@@ -39,12 +41,27 @@ export async function getEarnings(startDate?: Date, endDate?: Date) {
   }
   return await getTotalEarnings(user.id, startDate, endDate);
 }
-
-export async function getEarningsComparison() {
+interface EarningsComparison {
+  month: {
+    current: number;
+    previous: number;
+    percentageChange: number | null;
+  };
+  year: {
+    current: number;
+    previous: number;
+    percentageChange: number | null;
+  };
+}
+export async function getEarningsComparison(): Promise<
+  LessonResponse<EarningsComparison>
+> {
   const user = await getUser();
-  if (!user) {
-    return null;
-  }
+  if (!user)
+    return {
+      code: LessonCodes.NOT_AUTHENTICATED,
+      key: "codes.user.not_authenticated",
+    };
 
   // Périodes
   const now = new Date();
@@ -73,13 +90,11 @@ export async function getEarningsComparison() {
     current: number,
     previous: number
   ): number | null {
-    if (previous === 0) {
-      return current === 0 ? 0 : null; // null pour "indéfini" ou "new"
-    }
+    if (previous === 0) return current === 0 ? 0 : null; // null pour "indéfini" ou "new"
+
     return Math.round(((current - previous) / previous) * 100);
   }
-
-  return {
+  const data = {
     month: {
       current: currentMonth,
       previous: previousMonth,
@@ -90,6 +105,11 @@ export async function getEarningsComparison() {
       previous: previousYear,
       percentageChange: getPercentageChange(currentYear, previousYear),
     },
+  };
+
+  return {
+    code: LessonCodes.SUCCESS,
+    data,
   };
 }
 export async function getEarningsChartData(
