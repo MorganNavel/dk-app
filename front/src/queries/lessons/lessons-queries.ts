@@ -37,10 +37,7 @@ function handleManyChanges(
     code: LessonCodes.UNKNOWN_ERROR,
     key: "codes.lesson.unknown_error",
   };
-  if (!count) {
-    return onError ?? error;
-  }
-
+  if (count == undefined) return onError ?? error;
   if (count >= min) {
     return onSuccess;
   }
