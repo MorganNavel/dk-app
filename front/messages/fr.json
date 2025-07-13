@@ -331,16 +331,16 @@
       "submit": "Reprogrammer"
     },
     "create": {
-      "success": "Le cours a été créé avec succès."
-    },
-    "form": {
-      "participants": "Participants",
-      "teacher": "Enseignant",
-      "lngs": "Langues",
-      "time": "Horraire",
-      "already_participating": "Vous participez déjà à ce cours.",
-      "book": "Reserver",
-      "delete": "Annuler le cours"
+      "success": "Le cours a été créé avec succès.",
+      "form": {
+        "participants": "Participants",
+        "teacher": "Enseignant",
+        "lngs": "Langues",
+        "time": "Horraire",
+        "already_participating": "Vous participez déjà à ce cours.",
+        "book": "Reserver",
+        "delete": "Annuler le cours"
+      }
     }
   },
   "data-table": {
