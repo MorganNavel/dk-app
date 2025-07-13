@@ -7,6 +7,7 @@ export function DashboardLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   const user = useSession();
+  if (user.isPending) return <div className='min-h-screen' />;
   if (!user || user.data?.user.role !== "teacher") notFound();
   return (
     <div className='mx-5 lg:mx-15 min-h-screen pt-32 flex flex-col gap-6'>
