@@ -2,6 +2,7 @@
   "siteName": "Danbee Korean",
   "danbee-park": "Danbee Park",
   "generals": {
+    "dateGtNow": "The selected date must be later than the current date.",
     "date-picker": {
       "placeholder": "Select a date"
     },

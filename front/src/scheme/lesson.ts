@@ -6,17 +6,26 @@ export const LessonScheme = (t: Function) => {
       message: t("generals.requiredField"),
     }),
     description: z.string(),
-    startDate: z.date().refine(
-      (val) => {
-        if (isNaN(val.getTime())) {
-          return false; // Invalid date
+    startDate: z
+      .date()
+      .optional()
+      .superRefine((val, ctx) => {
+        if (!val) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t("generals.requiredField"),
+          });
+          return;
         }
-        return val.getTime() > new Date().getTime();
-      },
-      {
-        message: t("generals.requiredField"),
-      }
-    ),
+
+        const isGtNow = val.getTime() > new Date().getTime();
+        if (!isGtNow)
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: t("generals.dateGtNow"),
+          });
+        return isGtNow;
+      }),
     duration: z.number().refine((val) => val > 15, {
       message: t("generals.requiredField"),
     }),

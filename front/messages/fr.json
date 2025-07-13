@@ -6,6 +6,7 @@
     "date-picker": {
       "placeholder": "Sélectionner une date"
     },
+    "dateGtNow": "La date indiquée doit être postérieure à la date actuelle",
     "signin": {
       "title": "Se connecter",
       "description": "Veuillez vous connecter à votre compte.",

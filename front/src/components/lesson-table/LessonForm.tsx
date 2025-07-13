@@ -29,7 +29,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
     defaultValues: {
       title: "",
       description: "",
-      startDate: new Date(),
+      startDate: undefined,
       duration: 50,
       languages: [],
     },
@@ -53,7 +53,6 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           label={t("lessons.data-table.columns.title")}
           name='title'
           type='text'
-          required
           control={methods.control}
           required
         />
@@ -81,7 +80,6 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           label={t("lessons.data-table.columns.duration")}
           name='duration'
           type='number'
-          required
           control={methods.control}
           required
           disabled
