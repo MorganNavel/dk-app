@@ -20,6 +20,7 @@ export const SELECT_LESSON_FIELDS = {
   description: true,
   createdAt: true,
   groupSize: true,
+  languages: true,
   bookings: {
     select: {
       idBooking: true,

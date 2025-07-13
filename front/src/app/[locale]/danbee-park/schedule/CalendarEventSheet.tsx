@@ -36,11 +36,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const router = useRouter();
   const user = session.data?.user as unknown as UserProfile;
 
-  const renderLanguages = (languages: string | string[] | undefined) => {
-    if (!languages || (Array.isArray(languages) && languages.length === 0)) {
-      return "Pas de langue";
-    }
-
+  const renderLanguages = (languages: string | string[]) => {
     const langs = Array.isArray(languages) ? languages : languages.split(",");
 
     return (
@@ -56,7 +52,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
 
   const { resource, start, end } = selectedEvent ?? {};
   const { description, groupSize, teacher } = resource ?? {};
-  const { name, languages } = teacher ?? {};
+  const { name } = teacher ?? {};
   const isParticipating = resource?.bookings?.find(
     (booking: any) => booking.idUser === user?.id
   ) as Booking | undefined;
@@ -139,14 +135,19 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             <p className='flex items-center space-x-2 text-md'>
               <FaUser className='text-primary text-xl' />
               <span>
-                <span className='font-bold'>Participants</span>:{" "}
-                {resource?.bookings.length} / {groupSize}
+                <span className='font-bold'>
+                  {t("lesson.create.form.participants")}
+                </span>{" "}
+                : {resource?.bookings.length} / {groupSize}
               </span>
             </p>
             <p className='flex items-center space-x-2 text-md mt-2'>
               <FaBook className='text-primary text-xl' />
               <span>
-                <span className='font-bold'>Enseignant</span>: {name}
+                <span className='font-bold'>
+                  {t("lesson.create.form.teacher")}
+                </span>{" "}
+                : {name}
               </span>
             </p>
           </div>
@@ -154,11 +155,16 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
           <div className='pt-4'>
             <div className='flex items-center space-x-2 text-md'>
               <FaLanguage className='text-primary text-4xl' />
-              <span className='font-bold'>Langues</span>:
+              <span>
+                <span className='font-bold'>
+                  {t("lesson.create.form.lngs")}
+                </span>{" "}
+                :
+              </span>
             </div>
 
             <span className='flex  space-x-2 text-md'>
-              {renderLanguages(languages)}
+              {renderLanguages(resource?.languages)}
             </span>
           </div>
 
@@ -166,7 +172,8 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             <p className='flex items-center space-x-2 text-lg font-semibold text-gray-800'>
               <FaClock className='text-primary' />
               <span>
-                Horaire: {formatTime(start)} - {formatTime(end)}
+                {t("lesson.create.form.time")} : {formatTime(start)} -{" "}
+                {formatTime(end)}
               </span>
             </p>
           </div>
@@ -182,7 +189,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             {isLoading ? (
               <Spinner size='sm' color='white' />
             ) : (
-              "Annuler la réservation"
+              <span>{t("lesson.create.form.cancel")}</span>
             )}
           </Button>
         )}
@@ -194,12 +201,16 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
               disabled={isLoading || !!isParticipating}
               variant={"destructive"}
               onClick={() =>
-                deleteMutation.mutateAsync(
-                  selectedEvent?.resource.idLesson as number
-                )
+                cancelLessonMutation.mutateAsync([
+                  selectedEvent?.resource.idLesson as number,
+                ])
               }
             >
-              {isLoading ? <Spinner size='sm' color='white' /> : "Supprimer"}
+              {isLoading ? (
+                <Spinner size='sm' color='white' />
+              ) : (
+                <span>{t("lesson.create.form.delete")}</span>
+              )}
             </Button>
           )}
 
@@ -210,12 +221,16 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
             disabled={isLoading || !!isParticipating}
             onClick={onSubmit}
           >
-            {isLoading ? <Spinner size='sm' color='white' /> : "Réserver"}
+            {isLoading ? (
+              <Spinner size='sm' color='white' />
+            ) : (
+              <span>{t("lesson.create.form.book")}</span>
+            )}
           </Button>
         )}
         {isParticipating && (
           <p className='mt-4 text-sm text-gray-500'>
-            Vous participez déjà à cet événement.
+            {t("lesson.create.form.already_participating")}
           </p>
         )}
       </SheetContent>

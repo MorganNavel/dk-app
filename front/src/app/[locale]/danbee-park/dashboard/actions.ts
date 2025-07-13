@@ -24,6 +24,7 @@ interface CreateLessonData {
   description?: string;
   startDate: Date;
   duration?: number;
+  languages: string[];
 }
 
 export async function createLessonAndRevalidate(data: CreateLessonData) {

@@ -44,6 +44,7 @@ model Lesson {
   title       String
   description String?
   url         String?
+  languages   String[]
   startDate   DateTime     @db.Timestamp(0)
   endDate     DateTime     @db.Timestamp(0)
   duration    Int          @default(50)

@@ -10,11 +10,14 @@ import { toast } from "sonner";
 import { createLessonAndRevalidate } from "@/app/[locale]/danbee-park/dashboard/actions";
 import { startOfDay } from "date-fns";
 import { DateTimePickerForm } from "@ui/date-picker-form";
+import { ControlledMultiSelect } from "../fields/ControlledMultiSelect";
+import LNGS from "@/types/languages";
 interface FormProps {
   title: string;
   description: string;
   startDate: Date;
   duration: number;
+  languages: string[];
 }
 interface LessonFormProps {
   onFinish: () => void;
@@ -28,6 +31,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
       description: "",
       startDate: new Date(),
       duration: 50,
+      languages: [],
     },
   });
   async function handleSubmit(data: FormProps) {
@@ -43,7 +47,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
     <Form {...methods}>
       <form
         onSubmit={methods.handleSubmit(handleSubmit)}
-        className='p-10 flex flex-col gap-5'
+        className='p-10 flex flex-col gap-5 overflow-auto'
       >
         <ControlledInput
           label={t("lessons.data-table.columns.title")}
@@ -51,11 +55,20 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           type='text'
           required
           control={methods.control}
+          required
         />
         <ControlledTextarea
           label={t("generals.description")}
           name='description'
           control={methods.control}
+        />
+        <ControlledMultiSelect
+          control={methods.control}
+          name='languages'
+          options={LNGS}
+          label={t("generals.user-profile.label.lngs")}
+          placeholder={t("generals.user-profile.placeholder.lngs")}
+          required
         />
         <DateTimePickerForm
           label={t("lessons.data-table.columns.startDate")}
@@ -70,6 +83,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           type='number'
           required
           control={methods.control}
+          required
           disabled
         />
 

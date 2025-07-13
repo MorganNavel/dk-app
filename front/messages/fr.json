@@ -338,7 +338,26 @@
     "planned": "Programmé",
     "done": "Terminé",
     "cancelled": "Annulé",
-    "in-progress": "En cours"
+    "in-progress": "En cours",
+    "reschedule": {
+      "title": "Reprogrammer le cours",
+      "description": "Vous allez reprogrammer le coours. Veuillez choisir une nouvelle date et un nouvel horaire pour ce cours.",
+      "date": "Date",
+      "time": "Horaire",
+      "submit": "Reprogrammer"
+    },
+    "create": {
+      "success": "Le cours a été créé avec succès."
+    },
+    "form": {
+      "participants": "Participants",
+      "teacher": "Enseignant",
+      "lngs": "Langues",
+      "time": "Horraire",
+      "already_participating": "Vous participez déjà à ce cours.",
+      "book": "Reserver",
+      "delete": "Annuler le cours"
+    }
   },
   "data-table": {
     "pagination": {

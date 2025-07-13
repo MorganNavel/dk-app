@@ -208,6 +208,7 @@ export async function createLesson(data: {
   startDate: Date;
   duration?: number;
   groupSize?: number;
+  languages: string[];
 }): Promise<LessonResponse> {
   const user = await getUser();
   if (!user || user.role !== "teacher")

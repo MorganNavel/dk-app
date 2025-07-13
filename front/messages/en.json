@@ -346,7 +346,17 @@
       "submit": "Reschedule"
     },
     "create": {
-      "success": "The lesson has been successfully created."
+      "success": "The lesson has been successfully created.",
+      "form": {
+        "participants": "Participants",
+        "teacher": "Teacher",
+        "lngs": "Languages",
+        "time": "Time",
+        "already_participating": "You already participate to this lesson.",
+        "cancel": "Cancel reservation",
+        "book": "Reserve",
+        "delete": "Cancel lesson"
+      }
     }
   },
   "data-table": {

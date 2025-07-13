@@ -20,5 +20,8 @@ export const LessonScheme = (t: Function) => {
     duration: z.number().refine((val) => val > 15, {
       message: t("generals.requiredField"),
     }),
+    languages: z.array(z.string()).refine((val) => val.length > 0, {
+      message: t("generals.requiredField"),
+    }),
   });
 };
