@@ -12,6 +12,8 @@ import {
   deleteLessonsBulk,
   LessonResponse,
 } from "@/queries/lessons/lessons-queries";
+import { prisma } from "@/lib/prisma";
+import { SELECT_BOOKING_FIELDS } from "@/queries/select-fields";
 
 export async function createBookingAction(
   idLesson: number
@@ -32,6 +34,22 @@ export async function cancelBookingAction(
       redirectTo: "/auth/sign-in",
     };
   }
+  const b = await prisma.booking.findUnique({
+    where: { idBooking },
+    select: SELECT_BOOKING_FIELDS,
+  });
+  if (!b)
+    return {
+      code: BookingCodes.BOOKING_NOT_FOUND,
+      key: "codes.booking.not_found",
+    };
+  const timeCancelLimit = 12;
+  const limitToMilli = timeCancelLimit * 60 * 60 * 1000;
+  if (b.lesson.startDate.getTime() - Date.now() < limitToMilli)
+    return {
+      code: BookingCodes.BOOKING_LIMIT_EXCEED,
+      key: "codes.booking.delete.limit_exceed",
+    };
   const r = await deleteBookingById(idBooking);
   revalidatePath("/danbee-park/schedule");
   return r;

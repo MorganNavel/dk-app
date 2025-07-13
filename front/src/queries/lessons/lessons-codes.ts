@@ -24,4 +24,5 @@ export type LessonKeys =
   | "codes.lesson.create.already_exists"
   | "codes.lesson.create.unknown_error"
   | "codes.lesson.delete.success"
-  | "codes.lesson.delete.unknown_error";
+  | "codes.lesson.delete.unknown_error"
+  | "codes.lesson.update.success";

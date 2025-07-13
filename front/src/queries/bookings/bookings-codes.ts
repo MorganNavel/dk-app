@@ -11,6 +11,8 @@ export const BookingCodes = {
 
   CREDIT_NOT_ENOUGH: 1100,
   BOOKING_ALREADY_EXISTS: 1101,
+  BOOKING_NOT_FOUND: 1102,
+  BOOKING_LIMIT_EXCEED: 1103,
   UNKNOWN_ERROR: 1999,
 } as const;
 
@@ -21,6 +23,8 @@ export type BookingKeys =
   | "codes.booking.unknown"
   | "codes.booking.delete.success"
   | "codes.booking.credit_not_enough"
+  | "codes.booking.not_found"
+  | "codes.booking.delete.limit_exceed"
   | "codes.lesson.not_found"
   | "codes.lesson.past"
   | "codes.lesson.not_planned"

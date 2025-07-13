@@ -65,7 +65,7 @@ async function isOverlappingLesson(
 export async function changeLessonStatus(
   idLesson: number,
   status: LessonStatus
-): Promise<LessonResponse | undefined> {
+): Promise<LessonResponse> {
   const user = await getUser();
   const isOwner = await checkTeacherOwnership(user?.id ?? "", [idLesson]);
   if (!isOwner)
@@ -112,7 +112,37 @@ export async function changeLessonStatusBulk(
   });
   return handleManyChanges(r.count, 0, {
     code: LessonCodes.SUCCESS,
-    key: "codes.lesson.success",
+    key: "codes.lesson.update.success",
+  });
+}
+export async function cancelLessonBulk(ids: number[]): Promise<LessonResponse> {
+  const res = await changeLessonStatusBulk(ids, "cancelled");
+  if (res.code !== LessonCodes.SUCCESS) return res;
+  const d = await prisma.booking.findMany({
+    select: {
+      idUser: true,
+    },
+    where: {
+      idLesson: { in: ids },
+      lesson: {
+        is: {
+          status: "cancelled",
+        },
+      },
+    },
+  });
+  const idUsers = d.flatMap(({ idUser }) => idUser);
+  const r = await prisma.user.updateMany({
+    where: { id: { in: idUsers } },
+    data: {
+      nbLessons: {
+        increment: 1,
+      },
+    },
+  });
+  return handleManyChanges(r.count, idUsers.length, {
+    code: LessonCodes.SUCCESS,
+    key: "codes.lesson.delete.success",
   });
 }
 

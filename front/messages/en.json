@@ -411,11 +411,12 @@
       "not_authenticated": "You are not authenticated. Please sign in to access this resource."
     },
     "booking": {
-      "success": "Your booking has been successfully created.",
-      "exists": "You already have a booking for this lesson.",
-      "unknown": "An unknown error occurred while creating your booking.",
+      "success": "Your reservation has been successfully created.",
+      "exists": "You already have a reservation for this lesson.",
+      "unknown": "An unknown error occurred while creating your reservation.",
       "delete": {
-        "success": "Your booking has been successfully cancelled."
+        "success": "Your reservation has been successfully cancelled.",
+        "limit_exceed": "You can no longer cancel a reservation. Cancellations must be made at least 12 hours before the class starts."
       },
       "credit_not_enough": "You do not have enough credits to book this lesson. Please recharge your account."
     },

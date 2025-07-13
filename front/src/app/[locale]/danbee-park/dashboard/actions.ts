@@ -2,9 +2,9 @@
 
 import {
   deleteLessonsBulk,
-  changeLessonStatusBulk,
   createLesson,
   rescheduleLessons,
+  cancelLessonBulk,
 } from "@/queries/lessons/lessons-queries";
 import { revalidatePath } from "next/cache";
 
@@ -15,7 +15,7 @@ export async function deleteLessonsAndRevalidate(ids: number[]) {
 }
 
 export async function cancelLessonsAndRevalidate(ids: number[]) {
-  const res = await changeLessonStatusBulk(ids, "cancelled");
+  const res = await cancelLessonBulk(ids);
   revalidatePath("/lessons");
   return res;
 }

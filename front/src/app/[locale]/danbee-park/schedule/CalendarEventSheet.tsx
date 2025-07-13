@@ -19,9 +19,10 @@ import {
 import { useRouter } from "@/i18n/routing";
 import { hasPermission } from "@/utils/permissions";
 import { ResponseType } from "@/queries/reponse-type";
+import { cancelLessonsAndRevalidate } from "../dashboard/actions";
 
 interface EventSheetProps {
-  selectedEvent: CalendarEvent<Lesson> | null;
+  selectedEvent: CalendarEvent<Lesson>;
   setSelectedEvent: (event: CalendarEvent<Lesson> | null) => void;
 }
 
@@ -59,7 +60,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   const isParticipating = resource?.bookings?.find(
     (booking: any) => booking.idUser === user?.id
   ) as Booking | undefined;
-  const handleError = (error: Error) => {
+  const onError = (error: Error) => {
     const json = JSON.parse(error.message);
     if (json.code !== 0) {
       toast.error(t(json.key));
@@ -68,7 +69,7 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
     }
     toast.error(t(json.key));
   };
-  const handleSuccess = (data: ResponseType<any>) => {
+  const onSuccess = (data: ResponseType<any>) => {
     if (data.code !== 0) {
       toast.error(t(data.key));
       if (data.redirectTo) router.push(data.redirectTo);
@@ -79,19 +80,19 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
   };
   const reservationMutation = useMutation({
     mutationFn: createBookingAction,
-    onError: handleError,
-    onSuccess: handleSuccess,
+    onError,
+    onSuccess,
   });
   const cancelMutation = useMutation({
     mutationFn: async (idBooking: number) =>
       await cancelBookingAction(idBooking),
-    onError: handleError,
-    onSuccess: handleSuccess,
+    onError,
+    onSuccess,
   });
-  const deleteMutation = useMutation({
-    mutationFn: deleteLessonAction,
-    onError: handleError,
-    onSuccess: handleSuccess,
+  const cancelLessonMutation = useMutation({
+    mutationFn: cancelLessonsAndRevalidate,
+    onError,
+    onSuccess,
   });
   const isLoading = reservationMutation.isPending || cancelMutation.isPending;
 
