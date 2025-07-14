@@ -70,6 +70,8 @@ export function Calendar<T>({
         setCurrentDate={setCurrentDate}
         actions={components.actions}
         locale={locale}
+        onNext={(date) => setCurrentDate(date)}
+        onPrevious={(date) => setCurrentDate(date)}
       />
       <CalendarBody<T>
         view={currentView}
@@ -82,15 +84,6 @@ export function Calendar<T>({
         onDayClick={(date: Date) => setCurrentDate(date)}
         locale={locale}
       />
-      <div className='flex justify-center '>
-        <CalendarPagination
-          date={currentDate}
-          view={currentView}
-          onNext={(date) => setCurrentDate(date)}
-          onPrevious={(date) => setCurrentDate(date)}
-          locale={locale}
-        />
-      </div>
     </div>
   );
 }
@@ -103,17 +96,22 @@ interface CalendarHeaderProps extends LocaleProps {
   mondayFirst?: boolean;
   isMobile: boolean;
   setCurrentDate: (date: Date) => void;
+  onNext: (date: Date) => void;
+  onPrevious: (date: Date) => void;
+
   actions?: ReactNode[];
 }
 function CalendarHeader({
   date,
   view,
   views,
-  onViewChange,
   mondayFirst = true,
-  isMobile,
-  setCurrentDate,
   actions,
+  locale,
+  onViewChange,
+  setCurrentDate,
+  onNext,
+  onPrevious,
 }: Readonly<CalendarHeaderProps>) {
   function getFormattedDate(date: Date) {
     switch (view) {
@@ -142,7 +140,15 @@ function CalendarHeader({
       <span className='text-center font-bold text-xl text-foreground'>
         {getFormattedDate(date)}
       </span>
-      <div className='flex justify-between items-center'>
+      <CalendarPagination
+        date={date}
+        view={view}
+        onNext={onNext}
+        onPrevious={onPrevious}
+        locale={locale}
+        className=' justify-center'
+      />
+      <div className='flex justify-between items-center '>
         <div className='flex gap-2'>
           {views.includes("month") && (
             <Button variant={"outline"} onClick={() => onViewChange("month")}>
@@ -163,6 +169,7 @@ function CalendarHeader({
             Today
           </Button>
         </div>
+
         {actions && actions.length > 0 && (
           <div className='flex gap-2'>{actions}</div>
         )}
@@ -175,6 +182,7 @@ interface CalendarPaginationProps extends LocaleProps {
   view: CalendarView;
   onNext: (date: Date) => void;
   onPrevious: (date: Date) => void;
+  className?: string;
 }
 
 function CalendarPagination({
@@ -182,6 +190,7 @@ function CalendarPagination({
   view,
   onNext,
   onPrevious,
+  className,
 }: Readonly<CalendarPaginationProps>) {
   function getNextDate() {
     switch (view) {
@@ -204,7 +213,7 @@ function CalendarPagination({
     }
   }
   return (
-    <div className='flex gap-2'>
+    <div className={cn("flex gap-2", className)}>
       <Button variant={"outline"} onClick={() => onPrevious(getPreviousDate())}>
         Previous
       </Button>

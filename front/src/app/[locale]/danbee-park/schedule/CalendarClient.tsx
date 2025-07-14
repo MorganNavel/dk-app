@@ -35,7 +35,7 @@ const formatLesson = (lessons: Lesson[]): CalendarEvent<Lesson>[] => {
   });
 };
 type Action = "add";
-export default function CalendarClient({
+export function CalendarClient({
   lessons,
 }: Readonly<{
   lessons: Lesson[] | null;
