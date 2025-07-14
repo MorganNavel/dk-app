@@ -62,6 +62,64 @@ async function isOverlappingLesson(
   return !!overlappingLesson;
 }
 
+export async function updateLessonFields(
+  idLesson: number,
+  data: {
+    title?: string;
+    languages?: string[];
+    description?: string;
+    startDate?: Date;
+    duration?: number;
+    groupSize?: number;
+  }
+): Promise<LessonResponse> {
+  if (data.startDate && data.startDate < new Date())
+    return {
+      code: LessonCodes.INVALID_INPUT,
+      key: "codes.lesson.invalid_input",
+    };
+  const user = await getUser();
+  if (!user || user.role !== "teacher")
+    return {
+      code: LessonCodes.NOT_AUTHENTICATED,
+      key: "codes.user.not_authenticated",
+      redirectTo: "/auth/sign-in",
+    };
+  const isOwner = await checkTeacherOwnership(user.id, [idLesson]);
+  if (!isOwner) {
+    return {
+      code: LessonCodes.UNAUTHORIZED_ACTION,
+      key: "codes.lesson.unauthorized_action",
+    };
+  }
+
+  if (data.startDate) {
+    const isOverlap = await isOverlappingLesson(user.id, data.startDate);
+    if (isOverlap) {
+      return {
+        code: LessonCodes.LESSON_ALREADY_EXISTS,
+        key: "codes.lesson.create.already_exists",
+      };
+    }
+  }
+  const r = await prisma.lesson.update({
+    where: { idLesson },
+    data,
+  });
+
+  if (!r) {
+    return {
+      code: LessonCodes.UNKNOWN_ERROR,
+      key: "codes.lesson.unknown_error",
+    };
+  }
+
+  return {
+    code: LessonCodes.SUCCESS,
+    key: "codes.lesson.update.success",
+  };
+}
+
 export async function changeLessonStatus(
   idLesson: number,
   status: LessonStatus

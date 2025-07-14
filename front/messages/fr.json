@@ -2,6 +2,17 @@
   "siteName": "Danbee Korean",
   "danbee-park": "Danbee Park",
   "generals": {
+    "languages": {
+      "fr": "Français",
+      "en": "Anglais",
+      "ko": "Coréen",
+      "jp": "Japonais",
+      "it": "Italien",
+      "ru": "Russe",
+      "zh": "Chinois",
+      "de": "Allemand",
+      "es": "Espagnol"
+    },
     "view": "Voir",
     "date-picker": {
       "placeholder": "Sélectionner une date"
@@ -75,7 +86,8 @@
     "cancel": "Annuler",
     "submit": "Valider",
     "delete": "Supprimer",
-    "add": "Ajouter"
+    "add": "Ajouter",
+    "edit": "Modifier"
   },
   "dashboard": {
     "stats": {
@@ -363,11 +375,13 @@
       },
       "columns": {
         "title": "Titre",
+        "description": "Description",
         "duration": "Durée",
         "startDate": "Horaire",
         "teacher": "Professeur",
         "nbParticipants": "Participants",
-        "status": "Statut"
+        "status": "Statut",
+        "languages": "Langues"
       },
       "actions": {
         "title": "Actions",
@@ -378,6 +392,9 @@
         "modal": {
           "add": {
             "title": "Create a new lesson"
+          },
+          "update": {
+            "title": "Modifier le cours"
           }
         },
         "dialog": {
@@ -425,6 +442,9 @@
         "success": "La leçon a été créée avec succès.",
         "unknown_error": "Une erreur inconnue s'est produite lors de la création de la leçon. Veuillez réessayer plus tard.",
         "already_exists": "Une leçon est déjà prévue à cette date et heure. Veuillez choisir une autre date ou heure."
+      },
+      "update": {
+        "success": "La leçon a été modifiée avec succès."
       },
       "delete": {
         "success": "La leçon a été supprimée avec succès.",

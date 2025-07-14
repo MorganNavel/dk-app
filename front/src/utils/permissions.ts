@@ -32,16 +32,14 @@ const ROLES = {
       update: (user: UserProfile, data: Lesson[] | Lesson) => {
         if (Array.isArray(data)) {
           return data.every((lesson) => lesson.teacher.id === user.id);
-        } else {
-          return data.teacher.id === user.id;
         }
+        return data.idTeacher === user.id;
       },
       delete: (user: UserProfile, data: Lesson | Lesson[]) => {
         if (Array.isArray(data)) {
           return data.every((lesson) => lesson.teacher.id === user.id);
-        } else {
-          return data.teacher.id === user.id;
         }
+        return data.idTeacher === user.id;
       },
     },
     bookings: {
@@ -63,17 +61,15 @@ const ROLES = {
       read: true,
       update: (user: UserProfile, data: Booking[] | Booking) => {
         if (Array.isArray(data)) {
-          return data.every((booking) => booking.user?.id === user.id);
-        } else {
-          return data.user.id === user.id;
+          return data.every((booking) => booking.idUser === user.id);
         }
+        return data.idUser === user.id;
       },
       delete: (user: UserProfile, data: Booking[] | Booking) => {
         if (Array.isArray(data)) {
           return data.every((booking) => booking.user.id === user.id);
-        } else {
-          return data.user.id === user.id;
         }
+        return data.idUser === user.id;
       },
     },
   },

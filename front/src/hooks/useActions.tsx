@@ -19,6 +19,10 @@ export const useLessonTableActions = () => {
       type: "modal",
       component: LessonForm,
     },
+    update: {
+      type: "modal",
+      component: LessonForm,
+    },
     delete: {
       title: "lessons.data-table.actions.delete.title",
       content: "lessons.data-table.actions.dialog.delete.content",

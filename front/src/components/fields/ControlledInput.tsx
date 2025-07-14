@@ -39,20 +39,14 @@ export const ControlledInput = <T extends FieldValues>({
   labelInlineComponent,
   ...props
 }: ControlledInputProps<T>) => {
-  const t = useTranslations("generals");
+  const t = useTranslations();
 
   return (
     <FormField
       name={name}
       control={control}
       rules={{
-        required: { value: required, message: t("requiredField") },
-        validate: (value) => {
-          if (required && !value.trim()) {
-            return t("requiredField");
-          }
-          return true;
-        },
+        required: { value: required, message: t("generals.requiredField") },
         ...rules,
       }}
       render={({ field, fieldState }) => (
@@ -81,8 +75,13 @@ export const ControlledInput = <T extends FieldValues>({
                   aria-describedby={`${name}-error`}
                   onBlur={field.onBlur}
                   onChange={(e) => {
-                    field.onChange(e.target.value);
-                    onChange && onChange(e.target.value);
+                    const value =
+                      props.type === "number"
+                        ? Number(e.target.value)
+                        : e.target.value;
+
+                    field.onChange(value);
+                    onChange && onChange(value);
                   }}
                 />
                 <span className='absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground'>
@@ -95,7 +94,7 @@ export const ControlledInput = <T extends FieldValues>({
                   id={`${name}-error`}
                   className='text-red-500 text-xs mt-1'
                 >
-                  {fieldState.error.message}
+                  {t(fieldState.error.message)}
                 </span>
               )}
             </>

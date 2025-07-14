@@ -27,6 +27,8 @@ interface ControlledMultiSelectProps<T extends FieldValues> {
   className?: string;
   size?: string;
   required?: boolean;
+  values?: string[];
+  defaultValue?: string[];
 }
 
 export const ControlledMultiSelect = <T extends FieldValues>({

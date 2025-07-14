@@ -31,7 +31,9 @@ import { cn } from "@/lib/utils";
 import { useSession } from "@/lib/auth-client";
 import { Lesson, UserProfile } from "@/types/type";
 import { LessonResponse } from "@/queries/lessons/lessons-queries";
-type Action = "delete" | "cancel" | "add";
+import { FaEdit } from "react-icons/fa";
+
+type Action = "delete" | "cancel" | "add" | "update";
 interface LessonTableProps {
   lessons: Lesson[] | null;
   onDelete: (ids: number[]) => Promise<LessonResponse>;
@@ -45,7 +47,6 @@ export default function LessonTable({
   className = "",
 }: Readonly<LessonTableProps>) {
   const t = useTranslations();
-
   const [action, setAction] = useState<Action | null>(null);
   const [selected, setSelected] = useState<RowSelectionState>({});
   const selectedCount = Object.keys(selected).length;
@@ -94,7 +95,9 @@ export default function LessonTable({
         return;
     }
   };
-  function getSelectedLessons(selected: RowSelectionState | undefined) {
+  function getSelectedLessons(
+    selected: RowSelectionState | undefined
+  ): Lesson[] {
     if (!selected || !lessons) return [];
     const selectedIndex = Object.keys(selected);
     const selectedLessons = lessons?.filter((lesson) =>
@@ -107,8 +110,22 @@ export default function LessonTable({
     {
       name: t("generals.add"),
       actionFn: () => setAction("add"),
-      render: () => <Plus className='w-4 h-4 text-primary' />,
+      render: () => <Plus size={18} className=' text-primary' />,
       isDisable: () => false,
+    },
+    {
+      name: t("generals.edit"),
+      actionFn: (selected: RowSelectionState) => {
+        setAction("update");
+        setSelected(selected);
+      },
+      render: () => <FaEdit size={18} className='text-warning' />,
+      isDisable: (selected: RowSelectionState) => {
+        if (!lessons) return true;
+        const selectedLessons = getSelectedLessons(selected);
+        if (selectedLessons.length !== 1) return true;
+        return !hasPermission(profile, "lessons", "update", selectedLessons);
+      },
     },
     {
       name: t("generals.cancel"),
@@ -116,7 +133,7 @@ export default function LessonTable({
         setAction("cancel");
         setSelected(selected);
       },
-      render: () => <XCircle className='w-5 h-5 text-warning' />,
+      render: () => <XCircle size={18} className='text-warning' />,
       isDisable: (selected: RowSelectionState) => {
         if (!lessons) return true;
         const selectedLessons = getSelectedLessons(selected);
@@ -135,7 +152,7 @@ export default function LessonTable({
         setAction("delete");
         setSelected(selected);
       },
-      render: () => <Trash className='w-5 h-5 text-destructive' />,
+      render: () => <Trash size={18} className='text-destructive' />,
       isDisable: (selected: RowSelectionState) => {
         if (!lessons) return true;
         const selectedLessons = getSelectedLessons(selected);
@@ -273,6 +290,8 @@ export default function LessonTable({
               onFinish: () => {
                 setAction(null);
               },
+              lesson:
+                action === "add" ? undefined : getSelectedLessons(selected)[0],
             })}
         </DrawerContent>
       </Drawer>

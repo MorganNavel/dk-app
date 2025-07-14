@@ -5,6 +5,7 @@ import {
   createLesson,
   rescheduleLessons,
   cancelLessonBulk,
+  updateLessonFields,
 } from "@/queries/lessons/lessons-queries";
 import { revalidatePath } from "next/cache";
 
@@ -25,6 +26,7 @@ interface CreateLessonData {
   startDate: Date;
   duration?: number;
   languages: string[];
+  groupSize?: number;
 }
 
 export async function createLessonAndRevalidate(data: CreateLessonData) {
@@ -37,6 +39,23 @@ export async function rescheduleLessonsAndRevalidate(
   startDate: Date
 ) {
   const res = await rescheduleLessons(ids, startDate);
+  revalidatePath("/lessons");
+  return res;
+}
+interface UpdateLessonData {
+  title?: string;
+  description?: string;
+  startDate?: Date;
+  languages?: string[];
+  duration?: number;
+  groupSize?: number;
+}
+
+export async function updateLessonAndRevalidate(
+  id: number,
+  data: UpdateLessonData
+) {
+  const res = updateLessonFields(id, data);
   revalidatePath("/lessons");
   return res;
 }

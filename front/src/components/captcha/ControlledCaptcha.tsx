@@ -1,6 +1,7 @@
 import { Control, FieldPath, FieldValues } from "react-hook-form";
 import { FormField, FormItem } from "../ui/form";
 import { Captcha } from "./Captcha";
+import { useTranslations } from "next-intl";
 
 interface ControlledCaptchatProps<T extends FieldValues> {
   name: FieldPath<T>;
@@ -9,7 +10,8 @@ interface ControlledCaptchatProps<T extends FieldValues> {
 export function ControlledCaptchat<T extends FieldValues>({
   name,
   control,
-}: ControlledCaptchatProps<T>) {
+}: Readonly<ControlledCaptchatProps<T>>) {
+  const t = useTranslations();
   return (
     <FormField
       name={name}
@@ -18,8 +20,8 @@ export function ControlledCaptchat<T extends FieldValues>({
         <FormItem>
           <Captcha onChange={(token) => field.onChange(token ?? "")} />
           {fieldState.error && (
-            <span id={`${name}-error`} className="text-red-500 text-xs mt-1">
-              {fieldState.error.message}
+            <span id={`${name}-error`} className='text-red-500 text-xs mt-1'>
+              {t(fieldState.error.message)}
             </span>
           )}
         </FormItem>

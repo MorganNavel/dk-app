@@ -9,6 +9,10 @@ import { hasPermission } from "@/utils/permissions";
 import { User } from "@prisma/client";
 import { Lesson, UserProfile } from "@/types/type";
 import { renameLessonAction } from "./actions";
+import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
+import { Button } from "../ui/button";
+import { useRef, useState, useEffect } from "react";
+import { useLocale } from "next-intl";
 
 const statusColors = {
   planned: "bg-blue-100 text-blue-600",
@@ -35,6 +39,7 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
         <Checkbox
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
+          onClick={(e) => e.stopPropagation()}
           aria-label='Select row'
         />
       ),
@@ -112,10 +117,21 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
       enableSorting: false,
     },
     {
+      accessorKey: "description",
+      header: () => t("lessons.data-table.columns.description"),
+      cell: ({ row }) => {
+        const desc = row.original.description;
+        if (!desc) return;
+        return <TruncatedCell text={desc ?? ""} />;
+      },
+      filterFn: "includesString",
+      enableSorting: false,
+    },
+    {
       accessorKey: "nbParticipants",
       header: () => t("lessons.data-table.columns.nbParticipants"),
       cell: ({ row }) => {
-        return `${row.original.bookings.length}/2`;
+        return `${row.original.bookings.length}/${row.original.groupSize}`;
       },
       enableSorting: false,
       enableColumnFilter: false,
@@ -138,6 +154,18 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
       },
     },
     {
+      accessorKey: "languages",
+      header: () => t("lessons.data-table.columns.languages"),
+      cell: ({ row }) => {
+        const lngs = row.original.languages;
+        const displayText = lngs
+          .map((v) => t(`generals.languages.${v}`))
+          .join(", ");
+        return <TruncatedCell text={displayText} />;
+      },
+    },
+
+    {
       accessorKey: "startDate",
       header: ({ column }) => (
         <SortableColumn column={column}>
@@ -146,9 +174,8 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
       ),
 
       cell: ({ row }) => {
-        const startDate = row.getValue("startDate") as number;
-
-        return tsToLocaleDate(startDate, true);
+        const startDate = row.original.startDate;
+        return <DateCell date={startDate} />;
       },
       sortingFn: "datetime",
       enableColumnFilter: false,
@@ -173,4 +200,43 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
       enableHiding: false,
     },
   ];
+}
+
+function TruncatedCell({ text }: { text: string }) {
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const [isTruncated, setIsTruncated] = useState(false);
+
+  useEffect(() => {
+    const el = buttonRef.current;
+    if (el) {
+      setIsTruncated(el.scrollWidth > el.clientWidth);
+    }
+  }, [text]);
+
+  const button = (
+    <Button
+      ref={buttonRef}
+      variant='ghost'
+      className='block max-w-[200px] text-left cursor-pointer truncate'
+    >
+      {text}
+    </Button>
+  );
+
+  if (!isTruncated) return button;
+
+  return (
+    <Tooltip>
+      <TooltipTrigger asChild>{button}</TooltipTrigger>
+      <TooltipContent>
+        <p className='max-w-sm whitespace-normal break-words'>{text}</p>
+      </TooltipContent>
+    </Tooltip>
+  );
+}
+
+function DateCell({ date }: Readonly<{ date: Date }>) {
+  const lang = useLocale();
+  const formattedDate = tsToLocaleDate(date.getTime(), true, lang);
+  return <div>{formattedDate}</div>;
 }

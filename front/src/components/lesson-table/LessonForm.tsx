@@ -7,35 +7,47 @@ import { ControlledInput } from "../fields/ControlledInput";
 import { ControlledTextarea } from "../fields/ControlledTextarea";
 import { Button } from "@ui/button";
 import { toast } from "sonner";
-import { createLessonAndRevalidate } from "@/app/[locale]/danbee-park/dashboard/actions";
+import {
+  createLessonAndRevalidate,
+  updateLessonAndRevalidate,
+} from "@/app/[locale]/danbee-park/dashboard/actions";
 import { startOfDay } from "date-fns";
 import { DateTimePickerForm } from "@ui/date-picker-form";
 import { ControlledMultiSelect } from "../fields/ControlledMultiSelect";
 import LNGS from "@/types/languages";
+import { Lesson } from "@/types/type";
 interface FormProps {
   title: string;
   description: string;
   startDate: Date;
   duration: number;
   languages: string[];
+  groupSize: number;
 }
 interface LessonFormProps {
   onFinish: () => void;
+  lesson?: Lesson;
 }
-export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
+export function LessonForm({ onFinish, lesson }: Readonly<LessonFormProps>) {
   const t = useTranslations();
   const methods = useForm<FormProps>({
     resolver: zodResolver(LessonScheme(t)),
     defaultValues: {
-      title: "",
-      description: "",
-      startDate: undefined,
-      duration: 50,
-      languages: [],
+      title: lesson?.title ?? "",
+      description: lesson?.description ?? "",
+      startDate: lesson?.startDate ? new Date(lesson.startDate) : undefined,
+      duration: lesson?.duration ?? 50,
+      languages: lesson?.languages ?? [],
+      groupSize: lesson?.groupSize ?? 2,
     },
   });
   async function handleSubmit(data: FormProps) {
-    const r = await createLessonAndRevalidate(data);
+    let r;
+    if (lesson) {
+      r = await updateLessonAndRevalidate(lesson.idLesson, data);
+    } else {
+      r = await createLessonAndRevalidate(data);
+    }
     const text = t(r?.key) || "No message";
     if (r?.code === 0) {
       toast.success(text);
@@ -67,6 +79,7 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           options={LNGS}
           label={t("generals.user-profile.label.lngs")}
           placeholder={t("generals.user-profile.placeholder.lngs")}
+          defaultValue={lesson?.languages}
           required
         />
         <DateTimePickerForm
@@ -82,7 +95,13 @@ export function LessonForm({ onFinish }: Readonly<LessonFormProps>) {
           type='number'
           control={methods.control}
           required
-          disabled
+        />
+        <ControlledInput
+          label={t("lessons.data-table.columns.nbParticipants")}
+          name='groupSize'
+          type='number'
+          control={methods.control}
+          required
         />
 
         <div className='flex flex-col gap-3 mt-5 mx-5'>

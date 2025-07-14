@@ -13,7 +13,7 @@ export const LessonScheme = (t: Function) => {
         if (!val) {
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: t("generals.requiredField"),
+            message: "generals.requiredField",
           });
           return;
         }
@@ -22,15 +22,18 @@ export const LessonScheme = (t: Function) => {
         if (!isGtNow)
           ctx.addIssue({
             code: z.ZodIssueCode.custom,
-            message: t("generals.dateGtNow"),
+            message: "generals.dateGtNow",
           });
         return isGtNow;
       }),
     duration: z.number().refine((val) => val > 15, {
-      message: t("generals.requiredField"),
+      message: "generals.requiredField",
     }),
     languages: z.array(z.string()).refine((val) => val.length > 0, {
-      message: t("generals.requiredField"),
+      message: "generals.requiredField",
+    }),
+    groupSize: z.number().refine((val) => val > 0, {
+      message: "generals.requiredField",
     }),
   });
 };

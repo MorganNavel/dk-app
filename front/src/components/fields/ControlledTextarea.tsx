@@ -33,20 +33,14 @@ export const ControlledTextarea = <T extends FieldValues>({
   className,
   ...props
 }: ControlledTextareaProps<T>) => {
-  const t = useTranslations("generals");
+  const t = useTranslations();
 
   return (
     <FormField
       name={name}
       control={control}
       rules={{
-        required: { value: required, message: t("requiredField") },
-        validate: (value) => {
-          if (required && !value.trim()) {
-            return t("requiredField");
-          }
-          return true;
-        },
+        required: { value: required, message: "generals.requiredField" },
         ...rules,
       }}
       render={({ field, fieldState }) => (
@@ -74,7 +68,7 @@ export const ControlledTextarea = <T extends FieldValues>({
                   id={`${name}-error`}
                   className='text-red-500 text-xs mt-1'
                 >
-                  {fieldState.error.message}
+                  {t(fieldState.error.message)}
                 </span>
               )}
             </>
