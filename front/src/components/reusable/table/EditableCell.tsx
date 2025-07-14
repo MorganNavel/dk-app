@@ -11,7 +11,8 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(initialText);
 
-  const handleEditClick = () => {
+  const handleEditClick = (e: any) => {
+    e.stopPropagation();
     setIsEditing(true);
   };
 
@@ -20,7 +21,8 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
     setText(initialText);
   };
 
-  const handleSave = () => {
+  const handleSave = (e: any) => {
+    e.stopPropagation();
     if (text.trim() !== "") {
       onSave(text);
     } else {
@@ -31,7 +33,7 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") handleSave();
+    if (e.key === "Enter") handleSave(e);
     if (e.key === "Escape") handleBlur();
   };
 
@@ -40,9 +42,13 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
       {isEditing ? (
         <>
           <Input
-            onChange={(e) => setText(e.target.value)}
+            onChange={(e) => {
+              setText(e.target.value);
+              e.stopPropagation();
+            }}
             onBlur={handleBlur}
             onKeyDown={handleKeyDown}
+            onClick={(e) => e.stopPropagation()}
             value={text}
             autoFocus
           />
@@ -56,9 +62,9 @@ const EditableCell = ({ initialText, onSave }: EditableCellProps) => {
         <Button
           variant='ghost'
           className='flex gap-2 items-center group'
-          onClick={handleEditClick}
+          onClick={(e) => handleEditClick(e)}
           onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") handleEditClick();
+            if (e.key === "Enter" || e.key === " ") handleEditClick(e);
           }}
           tabIndex={0}
         >

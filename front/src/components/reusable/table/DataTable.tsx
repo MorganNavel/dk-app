@@ -55,6 +55,7 @@ interface DataTableProps<TData, TValue> {
   filtersConfig?: FilterConfig[];
   isLoading: boolean;
   name: string;
+  onRowClick?: (row: TData) => void;
   getRowId?: (
     originalRow: TData,
     index: number,
@@ -69,6 +70,7 @@ function DataTable<TData, TValue>({
   isLoading,
   name,
   getRowId,
+  onRowClick,
 }: Readonly<DataTableProps<TData, TValue>>) {
   const t = useTranslations();
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -160,6 +162,7 @@ function DataTable<TData, TValue>({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
+                  onClick={(e) => onRowClick && onRowClick(row.original)}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
