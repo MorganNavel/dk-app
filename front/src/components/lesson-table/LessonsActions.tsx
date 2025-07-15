@@ -98,13 +98,13 @@ function DialogAction({
     try {
       let r = null;
       if (action === "reschedule" && reschedule)
-        r = await rescheduleLessonsAndRevalidate([lesson.idLesson], reschedule);
+        r = await rescheduleLessonsAndRevalidate(lesson.idLesson, reschedule);
       if (action === "cancel")
         r = await cancelLessonsAndRevalidate([lesson.idLesson]);
       if (action === "delete")
         r = await deleteLessonsAndRevalidate([lesson.idLesson]);
       const fn = r?.code === 0 ? toast.success : toast.error;
-      fn(r?.key);
+      fn(t(r?.key));
     } catch (error: any) {
       return;
     }

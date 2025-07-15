@@ -11,7 +11,7 @@ import {
   createLessonAndRevalidate,
   updateLessonAndRevalidate,
 } from "@/app/[locale]/danbee-park/dashboard/actions";
-import { startOfDay } from "date-fns";
+import { addMinutes, startOfDay } from "date-fns";
 import { DateTimePickerForm } from "@ui/date-picker-form";
 import { ControlledMultiSelect } from "../fields/ControlledMultiSelect";
 import LNGS from "@/types/languages";
@@ -44,7 +44,10 @@ export function LessonForm({ onFinish, lesson }: Readonly<LessonFormProps>) {
   async function handleSubmit(data: FormProps) {
     let r;
     if (lesson) {
-      r = await updateLessonAndRevalidate(lesson.idLesson, data);
+      r = await updateLessonAndRevalidate(lesson.idLesson, {
+        ...data,
+        endDate: addMinutes(data.startDate, data.duration),
+      });
     } else {
       r = await createLessonAndRevalidate(data);
     }

@@ -3,7 +3,6 @@
 import {
   deleteLessonsBulk,
   createLesson,
-  rescheduleLessons,
   cancelLessonBulk,
   updateLessonFields,
 } from "@/queries/lessons/lessons-queries";
@@ -24,7 +23,7 @@ interface CreateLessonData {
   title: string;
   description?: string;
   startDate: Date;
-  duration?: number;
+  duration: number;
   languages: string[];
   groupSize?: number;
 }
@@ -35,10 +34,10 @@ export async function createLessonAndRevalidate(data: CreateLessonData) {
   return res;
 }
 export async function rescheduleLessonsAndRevalidate(
-  ids: number[],
+  idLesson: number,
   startDate: Date
 ) {
-  const res = await rescheduleLessons(ids, startDate);
+  const res = await updateLessonFields(idLesson, { startDate });
   revalidatePath("/lessons");
   return res;
 }
@@ -46,6 +45,7 @@ interface UpdateLessonData {
   title?: string;
   description?: string;
   startDate?: Date;
+  endDate?: Date;
   languages?: string[];
   duration?: number;
   groupSize?: number;
