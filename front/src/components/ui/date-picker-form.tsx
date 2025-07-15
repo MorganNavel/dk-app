@@ -48,7 +48,7 @@ export function DateTimePickerForm({
   required = false,
   rules = {},
 }: Readonly<DateTimePickerFormProps<any>>) {
-  const t = useTranslations("generals");
+  const t = useTranslations();
   const handleDateChange = (
     date: Date | undefined,
     current: Date | undefined,
@@ -77,13 +77,7 @@ export function DateTimePickerForm({
       name={name}
       control={control}
       rules={{
-        required: { value: required, message: t("requiredField") },
-        validate: (value) => {
-          if (required && !value.trim()) {
-            return t("requiredField");
-          }
-          return true;
-        },
+        required: { value: required, message: "generals.requiredField" },
         ...rules,
       }}
       render={({ fieldState }) => (
@@ -201,7 +195,7 @@ export function DateTimePickerForm({
           {description && <FormDescription>{description}</FormDescription>}
           {fieldState.error && (
             <span id={`${name}-error`} className='text-red-500 text-xs mt-1'>
-              {fieldState.error.message}
+              {t(fieldState.error.message)}
             </span>
           )}
         </FormItem>

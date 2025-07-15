@@ -43,14 +43,14 @@ export const ControlledMultiSelect = <T extends FieldValues>({
   required = false,
   ...props
 }: ControlledMultiSelectProps<T>) => {
-  const t = useTranslations("generals");
+  const t = useTranslations();
 
   return (
     <FormField
       name={name}
       control={control}
       rules={{
-        required: { value: required, message: t("requiredField") },
+        required: { value: required, message: "generals.requiredField" },
         ...rules,
       }}
       render={({ field, fieldState }) => (
@@ -83,7 +83,7 @@ export const ControlledMultiSelect = <T extends FieldValues>({
                     id={`${name}-error`}
                     className='text-red-500 text-xs mt-1'
                   >
-                    {fieldState.error.message}
+                    {t(fieldState.error.message)}
                   </span>
                 )}
               </>
