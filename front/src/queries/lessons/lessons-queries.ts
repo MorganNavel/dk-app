@@ -93,53 +93,32 @@ export async function updateLessonFields(
       key: "codes.lesson.unauthorized_action",
     };
   }
-
-  const l = await prisma.lesson.findUnique({
+  const lesson = await prisma.lesson.findUnique({
     where: { idLesson },
   });
-  if (!l)
+  if (!lesson)
     return {
-      code: LessonCodes.NOT_FOUND,
-      key: "codes.lesson.not_found",
+      code: LessonCodes.UNKNOWN_ERROR,
+      key: "codes.lesson.unknown_error",
     };
-  let endDate = data.endDate ?? undefined;
 
-  if (data.startDate) {
-    const duration = data.duration ?? l.duration;
-    endDate = data.endDate ?? addMinutes(data.startDate, duration);
-    const overlap = await isOverlappingLesson(
-      user.id,
-      data.startDate,
-      endDate,
-      idLesson
-    );
-    if (overlap) {
-      return {
-        code: LessonCodes.LESSON_ALREADY_EXISTS,
-        key: "codes.lesson.create.already_exists",
-      };
-    }
-  } else if (data.duration) {
-    endDate = data.endDate ?? addMinutes(l.startDate, data.duration);
-    const overlap = await isOverlappingLesson(
-      user.id,
-      l.startDate,
-      endDate,
-      idLesson
-    );
-    if (overlap) {
-      return {
-        code: LessonCodes.LESSON_ALREADY_EXISTS,
-        key: "codes.lesson.create.already_exists",
-      };
-    }
-  }
+  let start = data.startDate ?? lesson.startDate;
+  let duration = data.duration ?? lesson.duration;
+  let endDate = data.endDate ?? addMinutes(start, duration);
+  const isOverlap = await isOverlappingLesson(
+    user.id,
+    start,
+    endDate,
+    idLesson
+  );
+  if (isOverlap)
+    return {
+      code: LessonCodes.LESSON_ALREADY_EXISTS,
+      key: "codes.lesson.create.already_exists",
+    };
   const r = await prisma.lesson.update({
     where: { idLesson },
-    data: {
-      ...data,
-      endDate,
-    },
+    data,
   });
 
   if (!r) {
