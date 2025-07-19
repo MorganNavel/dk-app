@@ -57,6 +57,7 @@ export async function isOverlappingLesson(
       idLesson: { not: excludeLessonId },
       startDate: { lt: endDate },
       endDate: { gt: startDate },
+      status: "planned",
     },
   });
   return Boolean(overlappingLesson);
