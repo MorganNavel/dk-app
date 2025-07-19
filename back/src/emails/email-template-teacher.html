@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Class Invitation</title>
+  </head>
+  <body
+    style="
+      margin: 0;
+      padding: 0;
+      background-color: #f6f6f6;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    "
+  >
+    <table
+      width="100%"
+      cellpadding="0"
+      cellspacing="0"
+      border="0"
+      style="background-color: #f6f6f6; padding: 40px 0"
+    >
+      <tr>
+        <td align="center">
+          <table
+            width="600"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="
+              background-color: #ffffff;
+              padding: 30px;
+              border-radius: 8px;
+              box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            "
+          >
+            <tr>
+              <td style="color: #333333; font-size: 16px; line-height: 1.6">
+                <p>Dear <strong>{{NAME}}</strong>,</p>
+
+                <p>
+                  You are scheduled to conduct a virtual class using our
+                  platform.
+                </p>
+                <p>
+                  📅 <strong>{{DATE_START}} - {{DATE_END}}</strong>,
+                  {{DURATION}}
+                </p>
+
+                <p>
+                  Please use the following link to join the session at the
+                  scheduled time:
+                </p>
+
+                <p style="text-align: center; margin: 25px 0">
+                  <a
+                    href="{{JITSI_LINK}}"
+                    style="
+                      display: inline-block;
+                      padding: 12px 20px;
+                      background-color: #0056b3;
+                      color: #ffffff;
+                      text-decoration: none;
+                      border-radius: 5px;
+                    "
+                    >Join the Meeting</a
+                  >
+                </p>
+
+                <p>
+                  If the button above doesn't work, copy and paste this URL into
+                  your browser:<br />
+                  <a href="{{JITSI_LINK}}" style="color: #0056b3"
+                    >{{JITSI_LINK}}</a
+                  >
+                </p>
+
+                <p>
+                  Thank you for your commitment and support. We wish you a
+                  smooth and successful session.
+                </p>
+                <p>See you soon !</p>
+                <p>— Danbee Korean Team</p>
+
+                <p
+                  style="
+                    margin-top: 40px;
+                    font-size: 12px;
+                    color: #888888;
+                    text-align: center;
+                  "
+                >
+                  © Danbee Korean — Please do not reply to this email.
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
