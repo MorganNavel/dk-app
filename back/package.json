@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon -r tsconfig-paths/register src/index.ts",
     "build": "babel src --out-dir dist --extensions \".ts\"",
-    "start": "npm run build && node -r tsconfig-paths/register dist/index.js"
+    "start": "node -r tsconfig-paths/register dist/index.js"
   },
   "keywords": [],
   "author": "Morgan Navel",
