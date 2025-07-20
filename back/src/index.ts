@@ -11,7 +11,7 @@ async function main() {
   await client.connect();
   console.log("Connecté à la base");
 
-  cron.schedule("* * * * * *", async () => {
+  cron.schedule("*/15 * * * *", async () => {
     console.log("Tâche cron déclenchée", new Date().toISOString());
     try {
       const lessons = await getUpCommingLessons();
@@ -112,4 +112,5 @@ async function getUpCommingLessons(interval: number = 20) {
   }
   return lessonsMap;
 }
+
 main().catch(console.error);

@@ -1,4 +1,4 @@
-import nodemailer from "nodemailer";
+import nodemailer, { Transporter } from "nodemailer";
 import path from "path";
 import fs from "fs";
 import dotenv from "dotenv";
@@ -7,11 +7,21 @@ dotenv.config();
 const GMAIL_ADR = process.env.GMAIL_ADR!;
 const GMAIL_APP_PWD = process.env.GMAIL_APP_PWD!;
 
+const GMAIL_ADR2 = process.env.GMAIL_ADR2!;
+const GMAIL_APP_PWD2 = process.env.GMAIL_APP_PWD2!;
+
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
     user: GMAIL_ADR,
     pass: GMAIL_APP_PWD,
+  },
+});
+const transporter2 = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: GMAIL_ADR2,
+    pass: GMAIL_APP_PWD2,
   },
 });
 interface DateLesson {
@@ -41,20 +51,62 @@ export async function sendEmailStudent(
   html = buildHTML(name, date, jitsiLink, html);
   await sendEmail(email, name, html);
 }
-
 async function sendEmail(email: string, name: string, htmlContent: string) {
+  try {
+    await sendEmailToTransporter(
+      transporter,
+      GMAIL_ADR,
+      email,
+      name,
+      htmlContent
+    );
+  } catch (error: any) {
+    console.error("❌ Erreur lors de l'envoi de l'email :");
+    if (error.responseCode === 550 || error.message?.includes("quota")) {
+      console.warn("📛 Gmail quota :", error.message);
+      await sendEmailAgain(email, name, htmlContent);
+    } else {
+      console.error(error);
+    }
+  }
+}
+async function sendEmailAgain(
+  email: string,
+  name: string,
+  htmlContent: string
+) {
+  try {
+    await sendEmailToTransporter(
+      transporter2,
+      GMAIL_ADR2,
+      email,
+      name,
+      htmlContent
+    );
+  } catch (e) {
+    console.error(e);
+  }
+}
+async function sendEmailToTransporter(
+  transporter: Transporter,
+  senderEmail: string,
+  email: string,
+  name: string,
+  htmlContent: string
+) {
   const mailOptions = {
-    from: `"Danbee Korean 🇰🇷" <${GMAIL_ADR}>`,
+    from: `"Danbee Korean 🇰🇷" <${senderEmail}>`,
     to: `"${name}" <${email}>`,
     subject: "Link for incoming class",
     html: htmlContent,
   };
+  const info = await transporter.sendMail(mailOptions);
 
-  try {
-    const info = await transporter.sendMail(mailOptions);
-    console.log("Email sent:", info.messageId);
-  } catch (error) {
-    console.error("Error sending email:", error);
+  if (info.rejected.length > 0) {
+    console.warn("🚫 Email rejected :", info.rejected);
+  } else {
+    console.log("✅ Email envoyé à :", info.accepted);
+    console.log("📨 Message ID :", info.messageId);
   }
 }
 
