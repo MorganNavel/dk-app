@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@getbrevo/brevo": "^2.5.0",
-    "babel": "^6.23.0",
     "dotenv": "^16.4.5",
     "fs": "0.0.1-security",
     "jsonwebtoken": "^9.0.2",
@@ -31,16 +30,17 @@
     "uuid": "^11.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.25.6",
-    "@babel/core": "^7.25.2",
+    "@babel/cli": "^7.28.0",
+    "@babel/core": "^7.28.0",
     "@babel/plugin-proposal-class-properties": "^7.18.6",
     "@babel/plugin-proposal-private-methods": "^7.18.6",
-    "@babel/preset-env": "^7.25.4",
-    "@babel/preset-typescript": "^7.24.7",
+    "@babel/preset-env": "^7.28.0",
+    "@babel/preset-typescript": "^7.27.1",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node-cron": "^3.0.11",
     "@types/nodemailer": "^6.4.17",
     "@types/pg": "^8.15.4",
+    "babel-plugin-module-resolve": "^1.7.0",
     "babel-plugin-module-resolver": "^5.0.2",
     "nodemon": "^3.1.4",
     "os": "^0.1.2"
