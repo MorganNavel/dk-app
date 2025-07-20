@@ -88,12 +88,15 @@ async function getUpCommingLessons(interval: number = 30, offset: number = 5) {
     JOIN public.user AS ut ON ut.id = l."idTeacher"
     JOIN public."user" AS us ON us.id = b."idUser"
     WHERE l."startDate" BETWEEN 
-      NOW() + ($1 - $2 || ' minutes')::interval AND 
-      NOW() + (($1 + $2) || ' minutes')::interval
+      NOW() + (($1::int - $2::int) || ' minutes')::interval AND 
+      NOW() + (($1::int + $2::int) || ' minutes')::interval
     AND l.status = 'planned';
   `;
 
-  const result = await client.query<LessonResultQuery>(query, [interval, offset]);
+  const result = await client.query<LessonResultQuery>(query, [
+    interval,
+    offset,
+  ]);
   const lessonsMap = new Map<number, LessonInfo>();
   for (const row of result.rows) {
     const idLesson = row.idLesson;
