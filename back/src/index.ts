@@ -11,7 +11,7 @@ async function main() {
   await client.connect();
   console.log("Connecté à la base");
 
-  cron.schedule("*/15 * * * *", async () => {
+  cron.schedule("*/10 * * * *", async () => {
     console.log("Tâche cron déclenchée", new Date().toISOString());
     try {
       const lessons = await getUpCommingLessons();
@@ -72,26 +72,29 @@ interface LessonInfo {
   students: { name: string; email: string }[];
   teacher: { name: string; email: string };
 }
-async function getUpCommingLessons(interval: number = 20) {
+async function getUpCommingLessons(interval: number = 30, offset: number = 5) {
   const query = `
-        SELECT 
-        	l."startDate",
-          l."endDate",
-          l.duration,
-          l."idLesson", 
-          us.name AS "studentName", 
-          us.email AS "studentEmail",
-          ut.name AS "teacherName", 
-          ut.email AS "teacherEmail"
-        FROM "Lesson" AS l
-        JOIN "Booking" AS b ON l."idLesson" = b."idLesson"
-        JOIN public.user AS ut ON ut.id = l."idTeacher"
-        JOIN public."user" AS us ON us.id = b."idUser"
-        WHERE l."startDate" BETWEEN NOW()::timestamp AND NOW()::timestamp + ($1 || ' minutes')::interval
-        AND l.status = 'planned';
+    SELECT 
+      l."startDate",
+      l."endDate",
+      l.duration,
+      l."idLesson", 
+      us.name AS "studentName", 
+      us.email AS "studentEmail",
+      ut.name AS "teacherName", 
+      ut.email AS "teacherEmail"
+    FROM "Lesson" AS l
+    JOIN "Booking" AS b ON l."idLesson" = b."idLesson"
+    JOIN public.user AS ut ON ut.id = l."idTeacher"
+    JOIN public."user" AS us ON us.id = b."idUser"
+    WHERE l."startDate" BETWEEN 
+      NOW() + ($1 - $2 || ' minutes')::interval AND 
+      NOW() + (($1 + $2) || ' minutes')::interval
+    AND l.status = 'planned';
   `;
+
+  const result = await client.query<LessonResultQuery>(query, [interval, offset]);
   const lessonsMap = new Map<number, LessonInfo>();
-  const result = await client.query<LessonResultQuery>(query, [interval]);
   for (const row of result.rows) {
     const idLesson = row.idLesson;
     if (!lessonsMap.has(idLesson)) {
