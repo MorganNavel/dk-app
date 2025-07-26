@@ -23,6 +23,7 @@ interface GenJWTProps extends JitsiUser {
 }
 
 const JITSI_APP_ID = process.env.JITSI_APP_ID!;
+const JITSI_JWT_ISSUER_CRON = process.env.JITSI_JWT_ISSUER_CRON!
 const JITSI_APP_SECRET = process.env.JITSI_APP_SECRET!;
 const JITSI_DOMAIN = process.env.JITSI_DOMAIN!;
 
@@ -36,7 +37,7 @@ export function generateJitsiJWT({
   const payload: JWT = {
     room,
     aud: JITSI_APP_ID,
-    iss: JITSI_APP_ID,
+    iss: JITSI_JWT_ISSUER_CRON,
     sub: JITSI_DOMAIN,
     exp: now + 30 * 60,
     context: {
