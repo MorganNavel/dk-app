@@ -40,6 +40,8 @@ export interface CalendarProps<T> extends LocaleProps {
   mondayFirst?: boolean;
   className?: string;
   isMobile?: boolean;
+  onDateChange?: (date: Date) => void;
+  date?: Date;
   components?: {
     event?: React.ComponentType<CalendarEventProps<T>>;
     eventStyle?: (event: CalendarEvent<T>) => React.CSSProperties;
@@ -54,11 +56,17 @@ export function Calendar<T>({
   mondayFirst = true,
   isMobile = false,
   components = {},
+  date,
+  onDateChange,
   className = "",
   locale = "en",
 }: Readonly<CalendarProps<T>>) {
   const [currentView, setCurrentView] = useState<CalendarView>(view);
-  const [currentDate, setCurrentDate] = useState(new Date());
+  const [currentDate, setCurrentDate] = useState(date ?? new Date());
+  function handleDateChange(date: Date) {
+    setCurrentDate(date);
+    onDateChange && onDateChange(date);
+  }
   return (
     <div className={cn("flex flex-col justify-center  gap-5", className)}>
       <CalendarHeader
@@ -70,8 +78,8 @@ export function Calendar<T>({
         setCurrentDate={setCurrentDate}
         actions={components.actions}
         locale={locale}
-        onNext={(date) => setCurrentDate(date)}
-        onPrevious={(date) => setCurrentDate(date)}
+        onNext={handleDateChange}
+        onPrevious={handleDateChange}
       />
       <CalendarBody<T>
         view={currentView}
