@@ -145,6 +145,7 @@
     "levelTest": "Test de niveau",
     "pricing": "Tarifs",
     "profile": "Profil",
+    "remainingLessons": "Vous avez {count} leçon{count, plural, one {} other {s}} restante{count, plural, one {} other {s}}",
     "videos": {
       "title": "Vidéo",
       "grammar": "Grammaire",

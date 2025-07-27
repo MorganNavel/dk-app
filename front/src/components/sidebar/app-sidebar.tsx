@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sidebar";
 import Image from "next/image";
 import { NavMain, NavMainProps } from "./nav-main";
-import { NavUser } from "./nav-user";
+import { NavUser, SidebarRemainingLessons } from "./nav-user";
 import logo from "@public/assets/img/logo.png";
 import { FaChalkboardTeacher, FaRegEnvelope } from "react-icons/fa";
 import { useTranslations } from "next-intl";
@@ -75,7 +75,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = session.data?.user;
   const t = useTranslations();
   const router = useRouter();
-  const role = user?.role;
 
   return (
     <Sidebar collapsible='icon' {...props}>
@@ -105,8 +104,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarContent>
         <NavMain items={data.navMain} />
       </SidebarContent>
-      <SidebarFooter>
-        {role && <NavUser />}
+      <SidebarFooter className={open ? "gap-2" : "gap-5"}>
+        <SidebarRemainingLessons />
+        <NavUser />
         {!user &&
           (open ? (
             <Button

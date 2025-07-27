@@ -17,10 +17,11 @@ export const auth = betterAuth({
   },
   plugins: [
     customSession(async ({ user, session }) => {
-      const role = await findUserRole(session.userId);
+      const userInfo = await prisma.user.findUnique({ where: { id: user.id } });
       return {
         user: {
-          role: role?.role,
+          role: userInfo?.role,
+          credits: userInfo?.nbLessons,
           ...user,
         },
         session,
@@ -36,10 +37,3 @@ export const auth = betterAuth({
     "https://danbee-korean.com",
   ],
 });
-
-async function findUserRole(id: string) {
-  return await prisma.user.findUnique({
-    where: { id },
-    select: { role: true },
-  });
-}

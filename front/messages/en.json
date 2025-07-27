@@ -144,6 +144,7 @@
   "header": {
     "levelTest": "Level Test",
     "pricing": "Pricing",
+    "remainingLessons": "You have {count} lesson{count, plural, one {} other {s}} left",
     "videos": {
       "title": "Videos",
       "grammar": "Grammar",
