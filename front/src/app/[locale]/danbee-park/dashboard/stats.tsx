@@ -29,7 +29,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 interface ComparisionEarnings {
   earnings:
     | {
