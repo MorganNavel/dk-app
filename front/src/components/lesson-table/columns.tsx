@@ -9,10 +9,9 @@ import { hasPermission } from "@/utils/permissions";
 import { User } from "@prisma/client";
 import { Lesson, UserProfile } from "@/types/type";
 import { renameLessonAction } from "./actions";
-import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
-import { Button } from "../ui/button";
 import { useRef, useState, useEffect } from "react";
 import { useLocale } from "next-intl";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 const statusColors = {
   planned: "bg-blue-100 text-blue-600",
@@ -69,6 +68,9 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
         const now = Date.now();
         if (status === "planned" && endDate > now && startDate < now) {
           status = "in progress";
+        }
+        if (status === "planned" && now > endDate) {
+          status = "done";
         }
 
         const statusText =
@@ -202,36 +204,35 @@ export function columns(t: any, user: UserProfile): ColumnDef<Lesson>[] {
   ];
 }
 
-function TruncatedCell({ text }: { text: string }) {
-  const buttonRef = useRef<HTMLButtonElement>(null);
+function TruncatedCell({ text }: Readonly<{ text: string }>) {
+  const ref = useRef<HTMLDivElement>(null);
   const [isTruncated, setIsTruncated] = useState(false);
 
   useEffect(() => {
-    const el = buttonRef.current;
+    const el = ref.current;
     if (el) {
       setIsTruncated(el.scrollWidth > el.clientWidth);
     }
   }, [text]);
 
-  const button = (
-    <Button
-      ref={buttonRef}
-      variant='ghost'
-      className='block max-w-[200px] text-left cursor-pointer truncate'
+  const content = (
+    <div
+      ref={ref}
+      className='block max-w-[150px] text-left cursor-pointer truncate text-sm'
     >
       {text}
-    </Button>
+    </div>
   );
 
-  if (!isTruncated) return button;
+  if (!isTruncated) return content;
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{button}</TooltipTrigger>
-      <TooltipContent>
-        <p className='max-w-sm whitespace-normal break-words'>{text}</p>
-      </TooltipContent>
-    </Tooltip>
+    <Popover>
+      <PopoverTrigger asChild>{content}</PopoverTrigger>
+      <PopoverContent align='start' sideOffset={4}>
+        {text}
+      </PopoverContent>
+    </Popover>
   );
 }
 
