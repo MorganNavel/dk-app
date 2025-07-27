@@ -1,8 +1,6 @@
 import nodemailer, { Transporter } from "nodemailer";
 import path from "path";
 import fs from "fs";
-import dotenv from "dotenv";
-dotenv.config();
 
 const GMAIL_ADR = process.env.GMAIL_ADR!;
 const GMAIL_APP_PWD = process.env.GMAIL_APP_PWD!;
@@ -103,23 +101,28 @@ async function sendEmailToTransporter(
   const info = await transporter.sendMail(mailOptions);
 
   if (info.rejected.length > 0) {
-    console.warn("🚫 Email rejected :", info.rejected);
+    console.warn("🚫 Email rejected");
   } else {
-    console.log("✅ Email envoyé à :", info.accepted);
-    console.log("📨 Message ID :", info.messageId);
+    console.log("✅ Email envoyé");
   }
 }
 
 function loadEmailTemplate(isTeacher: boolean): string {
-  let filePath = path.join(__dirname, "emails", "email-template.html");
-  if (isTeacher) {
-    filePath = path.join(__dirname, "emails", "email-template-teacher.html");
-  }
+  const basePath = path.resolve(
+    `${process.cwd()}/src/lib/`,
+    "email",
+    "templates"
+  );
+  const fileName = isTeacher
+    ? "email-template-teacher.html"
+    : "email-template.html";
+  const filePath = path.join(basePath, fileName);
+
   return fs.readFileSync(filePath, "utf-8");
 }
 function formatUTCWithoutSeconds(date: Date) {
   const yyyy = date.getUTCFullYear();
-  const mm = String(date.getUTCMonth() + 1).padStart(2, "0"); // mois : 01-12
+  const mm = String(date.getUTCMonth() + 1).padStart(2, "0");
   const dd = String(date.getUTCDate()).padStart(2, "0");
   const hh = String(date.getUTCHours()).padStart(2, "0");
   const min = String(date.getUTCMinutes()).padStart(2, "0");

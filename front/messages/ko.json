@@ -449,6 +449,9 @@
       "delete": {
         "success": "The lesson has been successfully deleted.",
         "unknown_error": "An unknown error occurred. Please try again later."
+      },
+      "notification": {
+        "success": "The invitation link was successfully resent to all participants."
       }
     }
   },

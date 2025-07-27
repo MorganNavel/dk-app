@@ -449,6 +449,9 @@
       "delete": {
         "success": "La leçon a été supprimée avec succès.",
         "unknown_error": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard."
+      },
+      "notification": {
+        "success": "Le lien a été renvoyé avec succès à tous les participants."
       }
     }
   },

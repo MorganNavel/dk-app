@@ -1,6 +1,6 @@
 import { Client } from "pg";
 import cron from "node-cron";
-import { sendEmailStudent, sendEmailTeacher } from "./sendEmail";
+import { sendEmailStudent, sendEmailTeacher } from "./email/sendEmail";
 import { generateJitsiJWT } from "./jwt";
 import dotenv from "dotenv";
 dotenv.config();
@@ -25,7 +25,7 @@ async function main() {
         };
         const jwt = generateJitsiJWT({
           room,
-          role: "participant",
+          role: "moderator",
           email: l.teacher.email,
           name: l.teacher.name,
         });

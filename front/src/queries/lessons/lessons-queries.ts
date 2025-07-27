@@ -4,6 +4,8 @@ import { getUser } from "@/lib/auth-server";
 import { LessonCodes, LessonKeys } from "./lessons-codes";
 import { ResponseType } from "../reponse-type";
 import { addMinutes } from "date-fns";
+import { generateJitsiJWT } from "@/utils/jwt";
+import { sendEmailStudent, sendEmailTeacher } from "@/lib/email/sendEmail";
 export type LessonStatus = "planned" | "done" | "cancelled";
 
 export interface LessonResponse<T = any> extends ResponseType<LessonKeys, T> {}
@@ -361,4 +363,84 @@ export async function renameLesson(
       key: "codes.lesson.unknown_error",
     };
   }
+}
+
+export async function sendJitsiInvitationLink(
+  idLesson: number
+): Promise<LessonResponse> {
+  const user = await getUser();
+  const isTeacher = user?.role === "teacher";
+
+  if (!user || !isTeacher) {
+    return {
+      code: LessonCodes.NOT_AUTHENTICATED,
+      key: "codes.user.not_authenticated",
+      redirectTo: "/auth/sign-in",
+    };
+  }
+
+  const lesson = await prisma.lesson.findUnique({
+    select: {
+      teacher: {
+        select: { name: true, email: true },
+      },
+      bookings: {
+        select: {
+          user: {
+            select: { name: true, email: true },
+          },
+        },
+      },
+      startDate: true,
+      endDate: true,
+      duration: true,
+    },
+    where: {
+      idLesson,
+      idTeacher: user?.id,
+      endDate: {
+        gte: new Date(),
+      },
+    },
+  });
+
+  if (!lesson) {
+    return {
+      code: LessonCodes.NOT_FOUND,
+      key: "codes.lesson.not_found",
+    };
+  }
+
+  if (lesson.bookings.length > 0) {
+    const room = `meeting-${idLesson}`;
+    const link = `https://meet.danbee-korean.com/${room}`;
+    const date = {
+      startDate: lesson.startDate,
+      endDate: lesson.endDate,
+      duration: lesson.duration,
+    };
+
+    const jwt = generateJitsiJWT({
+      room,
+      role: "moderator",
+      email: lesson.teacher.email,
+      name: lesson.teacher.name,
+    });
+    const jitsiLink = `${link}?jwt=${jwt}`;
+
+    await sendEmailTeacher(
+      lesson.teacher.email,
+      lesson.teacher.name,
+      jitsiLink,
+      date
+    );
+
+    for (const booking of lesson.bookings) {
+      const student = booking.user;
+      await sendEmailStudent(student.email, student.name, jitsiLink, date);
+    }
+  }
+  return {
+    code: LessonCodes.SUCCESS,
+  };
 }

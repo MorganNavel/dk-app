@@ -21,6 +21,7 @@ import {
 } from "@/app/[locale]/danbee-park/dashboard/actions";
 import { DateTimePicker } from "../ui/date-picker";
 import { startOfDay } from "date-fns";
+import { sendNotification } from "./actions";
 interface LessonActions {
   lesson: Lesson;
 }
@@ -42,7 +43,15 @@ const LessonActions = ({ lesson }: LessonActions) => {
           <DropdownMenuLabel className='font-semibold'>
             {t("lessons.data-table.actions.title")}
           </DropdownMenuLabel>
-          <DropdownMenuItem className='flex items-center gap-2 focus:bg-primary-light focus:text-primary cursor-pointer'>
+          <DropdownMenuItem
+            className='flex items-center gap-2 focus:bg-primary-light focus:text-primary cursor-pointer'
+            onClick={() => {
+              sendNotification(lesson.idLesson).then((r) => {
+                if (r?.code === 0)
+                  toast.success(t("codes.lesson.notification.success"));
+              });
+            }}
+          >
             <RiSendPlaneFill className='h-4 w-4' />
             {t("lessons.data-table.actions.notif")}
           </DropdownMenuItem>
