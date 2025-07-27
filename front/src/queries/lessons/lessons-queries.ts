@@ -3,7 +3,7 @@ import { getLessonSelectByUser } from "../select-fields";
 import { getUser } from "@/lib/auth-server";
 import { LessonCodes, LessonKeys } from "./lessons-codes";
 import { ResponseType } from "../reponse-type";
-import { addMinutes } from "date-fns";
+import { addMinutes, subMonths } from "date-fns";
 import { generateJitsiJWT } from "@/utils/jwt";
 import { sendEmailStudent, sendEmailTeacher } from "@/lib/email/sendEmail";
 export type LessonStatus = "planned" | "done" | "cancelled";
@@ -260,7 +260,7 @@ export async function getAllLessons(): Promise<LessonResponse> {
     where: {
       ...(isTeacher ? { teacher: { id: user.id } } : {}),
       status: isTeacher ? { in: ["planned", "cancelled"] } : "planned",
-      startDate: { gte: new Date() },
+      startDate: { gte: subMonths(new Date(), 2) },
     },
     select,
   });
@@ -274,11 +274,12 @@ export async function getUpcomingLessons(): Promise<LessonResponse> {
   const user = await getUser();
   const isTeacher = user?.role === "teacher";
   const select = await getLessonSelectByUser(isTeacher);
+  const minDate = isTeacher ? subMonths(new Date(), 2) : new Date();
   const lessons = await prisma.lesson.findMany({
     where: {
       ...(isTeacher ? { teacher: { id: user.id } } : {}),
       status: "planned",
-      startDate: { gte: new Date() },
+      startDate: { gte: minDate },
     },
     select,
   });
