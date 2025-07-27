@@ -352,7 +352,8 @@
         "time": "Horraire",
         "already_participating": "Vous participez déjà à ce cours.",
         "book": "Reserver",
-        "delete": "Annuler le cours"
+        "delete": "Annuler le cours",
+        "cancel": "Annuler la réservation"
       }
     }
   },
@@ -428,7 +429,7 @@
       "unknown": "Une erreur inconnue s'est produite lors de la création de votre réservation.",
       "delete": {
         "success": "Votre réservation a été annulée avec succès.",
-        "limit_exceed": "Il n'est plus possible d'annuler ce cours. Les annulations doivent être effectuées au moins 12 heures avant le début du cours."
+        "limit_exceed": "Il n'est plus possible d'annuler cette réservation. Les annulations doivent être effectuées au moins 12 heures avant le début du cours."
       },
       "credit_not_enough": "Vous n'avez pas assez de crédits pour réserver cette leçon. Veuillez recharger votre compte."
     },
