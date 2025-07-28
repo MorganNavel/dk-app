@@ -30,6 +30,8 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { useMemo, useState } from "react";
+import { Separator } from "@/components/ui/separator";
+import { startOfMonth, startOfWeek } from "date-fns";
 interface ComparisionEarnings {
   earnings:
     | {
@@ -255,4 +257,99 @@ export function ChartEarnings({
       </CardContent>
     </Card>
   );
+}
+
+interface WorkTimeData {
+  totalHours: number;
+  dailyHours: Record<string, number>;
+  weeklyHours: Record<string, number>;
+  monthlyHours: Record<string, number>;
+}
+
+interface CurrentWorkingTimeSummaryProps {
+  data: WorkTimeData;
+}
+
+interface SummaryRowProps {
+  label: string;
+  value: number;
+  colorClass: string;
+}
+
+function SummaryRow({ label, value, colorClass }: Readonly<SummaryRowProps>) {
+  const t = useTranslations();
+  return (
+    <div className='flex justify-between items-center gap-10'>
+      <span className='text-sm font-medium text-gray-700 dark:text-gray-300'>
+        {label}
+      </span>
+      <div className={`text-lg font-bold ${colorClass}`}>
+        {formatTime(value, t)}
+      </div>
+    </div>
+  );
+}
+
+export function CurrentWorkingTimeSummary({
+  data,
+}: Readonly<CurrentWorkingTimeSummaryProps>) {
+  const t = useTranslations();
+  const todayKey = new Date().toDateString();
+  const weekKey = startOfWeek(new Date()).toDateString();
+  const monthKey = startOfMonth(new Date()).toDateString();
+  const stats = [
+    {
+      label: "dashboard.workTime.today",
+      value: data.dailyHours[todayKey] ?? 0,
+      color: "text-blue-600 dark:text-blue-400",
+    },
+    {
+      label: "dashboard.workTime.week",
+      value: data.weeklyHours[weekKey] ?? 0,
+      color: "text-green-600 dark:text-green-400",
+    },
+    {
+      label: "dashboard.workTime.month",
+      value: data.monthlyHours[monthKey] ?? 0,
+      color: "text-purple-600 dark:text-purple-400",
+    },
+  ];
+
+  return (
+    <Card className=''>
+      <CardHeader>
+        <CardDescription>{t("dashboard.workTime.title")}</CardDescription>
+        <CardTitle className='text-2xl font-semibold tabular-nums'>
+          {formatTime(data.totalHours, t)}
+        </CardTitle>
+      </CardHeader>
+      <Separator />
+      <CardContent className='flex flex-col gap-2'>
+        {stats.map((item) => (
+          <SummaryRow
+            key={item.label}
+            label={t(item.label)}
+            value={item.value}
+            colorClass={item.color}
+          />
+        ))}
+      </CardContent>
+
+      <CardFooter className='flex-col items-start gap-2 text-sm w-full'></CardFooter>
+    </Card>
+  );
+}
+function formatTime(value: number, t: (key: string) => string): string {
+  const hours = Math.floor(value);
+  const minutes = Math.round((value - hours) * 60);
+
+  if (hours > 0 && minutes > 0) {
+    return `${hours} ${t("generals.time.hour")} ${minutes
+      .toString()
+      .padStart(2, "0")} ${t("generals.time.minute")}`;
+  }
+  if (hours > 0) {
+    return `${hours} ${t("generals.time.hour")}`;
+  }
+  return `${minutes.toString().padStart(2, "0")} ${t("time.minute")}`;
 }

@@ -2,6 +2,10 @@
   "siteName": "Danbee Korean",
   "danbee-park": "Danbee Park",
   "generals": {
+    "time": {
+      "hour": "h",
+      "minute": "min"
+    },
     "languages": {
       "fr": "Français",
       "en": "Anglais",
@@ -127,6 +131,12 @@
           "earningsLabel": "Gains"
         }
       }
+    },
+    "workTime": {
+      "title": "Temps de travail",
+      "today": "Aujourd'hui",
+      "week": "Cette semaine",
+      "month": "Ce mois"
     }
   },
   "signup": {

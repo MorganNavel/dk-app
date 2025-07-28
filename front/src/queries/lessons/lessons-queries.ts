@@ -3,7 +3,15 @@ import { getLessonSelectByUser } from "../select-fields";
 import { getUser } from "@/lib/auth-server";
 import { LessonCodes, LessonKeys } from "./lessons-codes";
 import { ResponseType } from "../reponse-type";
-import { addMinutes, subMonths } from "date-fns";
+import {
+  addMinutes,
+  differenceInMinutes,
+  isSameDay,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
+} from "date-fns";
 import { generateJitsiJWT } from "@/utils/jwt";
 import { sendEmailStudent, sendEmailTeacher } from "@/lib/email/sendEmail";
 export type LessonStatus = "planned" | "done" | "cancelled";
@@ -443,5 +451,75 @@ export async function sendJitsiInvitationLink(
   }
   return {
     code: LessonCodes.SUCCESS,
+  };
+}
+interface WorkingTimeData {
+  totalHours: number;
+  dailyHours: Record<string, number>;
+  weeklyHours: Record<string, number>;
+  monthlyHours: Record<string, number>;
+}
+export async function getStatsWorkingTime(
+  since: Date
+): Promise<LessonResponse<WorkingTimeData>> {
+  const user = await getUser();
+  const isTeacher = user?.role === "teacher";
+  if (!user || !isTeacher)
+    return {
+      code: LessonCodes.NOT_AUTHENTICATED,
+      redirectTo: "/auth/sign-in",
+    };
+  const now = new Date();
+
+  const lessons = await prisma.lesson.findMany({
+    where: {
+      idTeacher: user.id,
+      status: "planned",
+      endDate: { lte: now },
+      startDate: { gte: since },
+    },
+  });
+
+  let totalHours = 0;
+  const weeklyHours: Record<string, number> = {};
+  const monthlyHours: Record<string, number> = {};
+  const dailyHours: Record<string, number> = {};
+  function appendToRecord(
+    record: Record<string, number>,
+    date: Date,
+    duration: number
+  ) {
+    const dateKey = date.toDateString();
+    if (!record[dateKey]) record[dateKey] = 0;
+    record[dateKey] += duration / 60;
+  }
+  function appendToRecords(date: Date, duration: number) {
+    const week = startOfWeek(date);
+    const month = startOfMonth(date);
+    appendToRecord(dailyHours, date, duration);
+    appendToRecord(weeklyHours, week, duration);
+    appendToRecord(monthlyHours, month, duration);
+  }
+  for (const lesson of lessons) {
+    totalHours += lesson.duration / 60;
+    const startDay = startOfDay(lesson.startDate);
+    const endDay = startOfDay(lesson.endDate);
+    if (!isSameDay(lesson.endDate, lesson.startDate)) {
+      const midnight = startOfDay(lesson.endDate);
+      const bfMidnight = differenceInMinutes(midnight, lesson.startDate);
+      const aftMidnight = lesson.duration - bfMidnight;
+      appendToRecords(startDay, bfMidnight);
+      appendToRecords(endDay, aftMidnight);
+    } else appendToRecords(startDay, lesson.duration);
+  }
+
+  return {
+    code: LessonCodes.SUCCESS,
+    data: {
+      totalHours,
+      dailyHours,
+      weeklyHours,
+      monthlyHours,
+    },
   };
 }

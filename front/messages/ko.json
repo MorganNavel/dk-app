@@ -2,6 +2,10 @@
   "siteName": "단비 한국어",
   "danbee-park": "Danbee Park",
   "generals": {
+    "time": {
+      "hour": "시간",
+      "minute": "분"
+    },
     "languages": {
       "fr": "French",
       "en": "English",
@@ -127,6 +131,12 @@
           "earningsLabel": "Earnings"
         }
       }
+    },
+    "workTime": {
+      "title": "Working Time",
+      "today": "Today",
+      "week": "This week",
+      "month": "This month"
     }
   },
   "signup": {
