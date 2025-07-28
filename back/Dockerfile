@@ -8,6 +8,9 @@ RUN npm install -g pnpm && pnpm install
 COPY . .
 RUN pnpm build
 
+RUN mkdir -p dist/email/templates
+RUN cp -r src/email/templates/* dist/email/templates/
+
 FROM node:20-alpine
 
 WORKDIR /app
