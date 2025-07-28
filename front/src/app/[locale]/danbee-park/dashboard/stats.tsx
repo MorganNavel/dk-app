@@ -351,5 +351,5 @@ function formatTime(value: number, t: (key: string) => string): string {
   if (hours > 0) {
     return `${hours} ${t("generals.time.hour")}`;
   }
-  return `${minutes.toString().padStart(2, "0")} ${t("time.minute")}`;
+  return `${minutes.toString().padStart(2, "0")} ${t("generals.time.minute")}`;
 }
