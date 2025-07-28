@@ -11,11 +11,7 @@ import { FaUser, FaLanguage, FaClock, FaBook } from "react-icons/fa";
 import { CalendarEvent } from "@/components/calendar/Calendar";
 import { Booking, Lesson, UserProfile } from "@/types/type";
 import { useSession } from "@/lib/auth-client";
-import {
-  cancelBookingAction,
-  createBookingAction,
-  deleteLessonAction,
-} from "./actions";
+import { cancelBookingAction, createBookingAction } from "./actions";
 import { useRouter } from "@/i18n/routing";
 import { hasPermission } from "@/utils/permissions";
 import { ResponseType } from "@/queries/reponse-type";
