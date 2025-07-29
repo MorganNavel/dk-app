@@ -110,9 +110,9 @@ async function sendEmailToTransporter(
 }
 
 function loadEmailTemplate(isTeacher: boolean): string {
-  let filePath = path.join(__dirname, "tempates", "email-template.html");
+  let filePath = path.join(__dirname, "templates", "email-template.html");
   if (isTeacher) {
-    filePath = path.join(__dirname, "tempates", "email-template-teacher.html");
+    filePath = path.join(__dirname, "templates", "email-template-teacher.html");
   }
   return fs.readFileSync(filePath, "utf-8");
 }
