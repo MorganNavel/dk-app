@@ -62,7 +62,7 @@ export function ComparisionStats({
   const TrendIcon = isPositive ? IoTrendingUp : IoTrendingDown;
 
   return (
-    <Card>
+    <Card className='flex flex-col justify-evenly'>
       <CardHeader>
         <CardDescription>{t("title")}</CardDescription>
         <CardTitle className='text-2xl font-semibold tabular-nums @[250px]/card:text-3xl'>
@@ -316,7 +316,7 @@ export function CurrentWorkingTimeSummary({
   ];
 
   return (
-    <Card className=''>
+    <Card className='flex flex-col justify-evenly'>
       <CardHeader>
         <CardDescription>{t("dashboard.workTime.title")}</CardDescription>
         <CardTitle className='text-2xl font-semibold tabular-nums'>

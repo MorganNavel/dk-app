@@ -30,7 +30,7 @@ export default async function LessonsContent() {
 
   return (
     <DashboardLayout>
-      <div className='grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4 '>
+      <div className='grid 2xl:grid-cols-4 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1  gap-4 '>
         <ComparisionStats earnings={revenue.data?.month} type='monthly' />
         <ComparisionStats earnings={revenue.data?.year} type='yearly' />
         <CurrentWorkingTimeSummary
