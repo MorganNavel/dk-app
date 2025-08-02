@@ -3,58 +3,13 @@ import cron from "node-cron";
 import { sendEmailStudent, sendEmailTeacher } from "./email/sendEmail";
 import { generateJitsiJWT } from "./jwt";
 import dotenv from "dotenv";
+
 dotenv.config();
+
 const connectionString = process.env.DATABASE_URL!;
-const client = new Client({ connectionString });
+export const client = new Client({ connectionString });
 
-async function main() {
-  await client.connect();
-  console.log("Connecté à la base");
-
-  cron.schedule("*/10 * * * *", async () => {
-    console.log("Tâche cron déclenchée", new Date().toISOString());
-    try {
-      const lessons = await getUpCommingLessons();
-      for (const l of lessons.values()) {
-        const room = `meeting-${l.idLesson}`;
-        let link = `https://meet.danbee-korean.com/${room}`;
-        const date = {
-          startDate: l.startDate,
-          endDate: l.endDate,
-          duration: l.duration,
-        };
-        const jwt = generateJitsiJWT({
-          room,
-          role: "moderator",
-          email: l.teacher.email,
-          name: l.teacher.name,
-        });
-        const jitsiLink = `${link}?jwt=${jwt}`;
-
-        await sendEmailTeacher(
-          l.teacher.email,
-          l.teacher.name,
-          jitsiLink,
-          date
-        );
-
-        for (const s of l.students) {
-          const jwt = generateJitsiJWT({
-            room,
-            role: "participant",
-            email: s.email,
-            name: s.name,
-          });
-          const jitsiLink = `${link}?jwt=${jwt}`;
-          await sendEmailStudent(s.email, s.name, jitsiLink, date);
-        }
-      }
-    } catch (err) {
-      console.error("Erreur lors de la tâche cron :", err);
-    }
-  });
-}
-interface LessonResultQuery {
+export interface LessonResultQuery {
   idLesson: number;
   startDate: Date;
   endDate: Date;
@@ -64,7 +19,8 @@ interface LessonResultQuery {
   teacherName: string;
   teacherEmail: string;
 }
-interface LessonInfo {
+
+export interface LessonInfo {
   idLesson: number;
   startDate: Date;
   endDate: Date;
@@ -72,11 +28,15 @@ interface LessonInfo {
   students: { name: string; email: string }[];
   teacher: { name: string; email: string };
 }
-async function getUpCommingLessons(interval: number = 30, offset: number = 5) {
+
+export async function getUpCommingLessons(
+  interval: number = 30,
+  offset: number = 5
+) {
   const query = `
     SELECT 
-      l."startDate",
-      l."endDate",
+      (l."startDate" AT TIME ZONE 'UTC') AS "startDate",
+      (l."endDate" AT TIME ZONE 'UTC') AS "endDate",
       l.duration,
       l."idLesson", 
       us.name AS "studentName", 
@@ -98,11 +58,11 @@ async function getUpCommingLessons(interval: number = 30, offset: number = 5) {
     offset,
   ]);
   const lessonsMap = new Map<number, LessonInfo>();
+
   for (const row of result.rows) {
-    const idLesson = row.idLesson;
-    if (!lessonsMap.has(idLesson)) {
-      lessonsMap.set(idLesson, {
-        idLesson: idLesson,
+    if (!lessonsMap.has(row.idLesson)) {
+      lessonsMap.set(row.idLesson, {
+        idLesson: row.idLesson,
         startDate: row.startDate,
         endDate: row.endDate,
         duration: row.duration,
@@ -110,8 +70,7 @@ async function getUpCommingLessons(interval: number = 30, offset: number = 5) {
         students: [],
       });
     }
-    const lesson = lessonsMap.get(idLesson)!;
-    lesson.students.push({
+    lessonsMap.get(row.idLesson)!.students.push({
       name: row.studentName,
       email: row.studentEmail,
     });
@@ -119,4 +78,54 @@ async function getUpCommingLessons(interval: number = 30, offset: number = 5) {
   return lessonsMap;
 }
 
-main().catch(console.error);
+async function main() {
+  await client.connect();
+  console.log("Connecté à la base");
+
+  cron.schedule("*/10 * * * *", async () => {
+    console.log("Tâche cron déclenchée", new Date().toISOString());
+    try {
+      const lessons = await getUpCommingLessons();
+      for (const l of lessons.values()) {
+        const room = `meeting-${l.idLesson}`;
+        const link = `https://meet.danbee-korean.com/${room}`;
+        const date = {
+          startDate: l.startDate,
+          endDate: l.endDate,
+          duration: l.duration,
+        };
+
+        const teacherJwt = generateJitsiJWT({
+          room,
+          role: "moderator",
+          email: l.teacher.email,
+          name: l.teacher.name,
+        });
+        await sendEmailTeacher(
+          l.teacher.email,
+          l.teacher.name,
+          `${link}?jwt=${teacherJwt}`,
+          date
+        );
+
+        for (const s of l.students) {
+          const studentJwt = generateJitsiJWT({
+            room,
+            role: "participant",
+            email: s.email,
+            name: s.name,
+          });
+          await sendEmailStudent(
+            s.email,
+            s.name,
+            `${link}?jwt=${studentJwt}`,
+            date
+          );
+        }
+      }
+    } catch (err) {
+      console.error("Erreur lors de la tâche cron :", err);
+    }
+  });
+}
+main();
