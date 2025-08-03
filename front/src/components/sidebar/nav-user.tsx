@@ -41,7 +41,7 @@ export function NavUser() {
   const user = session.data?.user;
   const signout = async () => {
     await signOut();
-    router.refresh();
+    router.replace("/");
   };
   if (!user) return;
 
