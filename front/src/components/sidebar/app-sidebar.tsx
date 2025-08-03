@@ -70,11 +70,15 @@ const data: {
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { isMobile, setOpenMobile, open } = useSidebar();
+  const { isMobile, open, toggleSidebar, openMobile } = useSidebar();
   const session = useSession();
   const user = session.data?.user;
   const t = useTranslations();
   const router = useRouter();
+  function redirectSignIn() {
+    openMobile && toggleSidebar();
+    router.push("/auth/sign-in");
+  }
 
   return (
     <Sidebar collapsible='icon' {...props}>
@@ -83,7 +87,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           size='lg'
           className='data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground '
           onClick={() => {
-            isMobile && setOpenMobile(false);
+            openMobile && toggleSidebar();
             router.push("/");
           }}
         >
@@ -108,19 +112,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <SidebarRemainingLessons />
         <NavUser />
         {!user &&
-          (open ? (
+          (open || isMobile ? (
             <Button
               variant={"round-outline"}
               className='w-full h-full'
-              onClick={() => router.push("/auth/sign-in")}
+              onClick={redirectSignIn}
             >
               {t("generals.signin.title")}
             </Button>
           ) : (
-            <LogIn
-              onClick={() => router.push("/auth/sign-in")}
-              className='cursor-pointer'
-            />
+            <LogIn onClick={redirectSignIn} className='cursor-pointer' />
           ))}
       </SidebarFooter>
       <SidebarRail />
