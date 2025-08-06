@@ -470,11 +470,12 @@
     "title": "PRICING",
     "subtitle": "A plan for every goal",
     "description": "Explore Korean, no matter where you start.",
-    "perMonth": "/month",
+    "perMonth": "/ month",
     "lessons": "{count} lesson{count, plural, one {unique} other {s unique}}",
     "resources": "PDF support and resources",
     "expireY": "Lessons valid for {count} year{count, plural, one {} other {s}}",
     "expireM": "Lessons valid for {count} month{count, plural, one {} other {s}}",
+    "mostPopular": "Most Popular",
     "plans": {
       "discover": {
         "title": "Discover",
@@ -491,6 +492,11 @@
         "description": "Master the Korean language.",
         "topik": "TOPIK Preparation",
         "btnText": "Become an Expert"
+      },
+      "free": {
+        "title": "Pay as you go",
+        "description": "Buy one or more courses as you need, with no subscription.",
+        "btnText": "Buy"
       }
     }
   }

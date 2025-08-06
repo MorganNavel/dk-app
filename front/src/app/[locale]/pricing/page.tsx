@@ -1,75 +1,71 @@
+"use client";
 import React from "react";
-import { PricingCard } from "./pricing";
+import { PricingCard, SingleCourseCard } from "./pricing";
 import { Separator } from "@radix-ui/react-separator";
 import { useTranslations } from "next-intl";
-import { StudentsReviews } from "@/components/home/StudentsReviews";
+import { useSidebar } from "@/components/ui/sidebar";
+
+type PlanCard = {
+  title: string;
+  description: string;
+  price: number;
+  features: string[];
+  btnText: string;
+  isMostUsed?: boolean;
+};
 
 export default function PricingPage() {
   const t = useTranslations("pricing");
-  const cards = [
+
+  const plans: PlanCard[] = [
     {
       title: t("plans.discover.title"),
       description: t("plans.discover.description"),
-      price: 50,
-      features: [
-        t("lessons", { count: 4 }),
-        t("resources"),
-        // t("expireY", { count: 1 }),
-      ],
+      price: 96,
+      features: [t("lessons", { count: 4 }), t("resources")],
       btnText: t("plans.discover.btnText"),
+      isMostUsed: true,
     },
     {
       title: t("plans.advanced.title"),
       description: t("plans.advanced.description"),
-      price: 100,
-      features: [
-        t("lessons", { count: 8 }),
-        t("resources"),
-        // t("expireY", { count: 1 }),
-      ],
+      price: 184,
+      features: [t("lessons", { count: 8 }), t("resources")],
       btnText: t("plans.advanced.btnText"),
     },
     {
       title: t("plans.expert.title"),
       description: t("plans.expert.description"),
-      price: 150,
-      features: [
-        t("lessons", { count: 12 }),
-        t("resources"),
-        // t("expireY", { count: 1 }),
-      ],
-      btnText: t("plans.advanced.btnText"),
+      price: 252,
+      features: [t("lessons", { count: 12 }), t("resources")],
+      btnText: t("plans.expert.btnText"),
     },
   ];
 
   return (
-    <div>
-      <div className='flex flex-col justify-center items-center min-h-screen sm:mt-16 mt-20 lg:mt-0'>
-        <div className='flex flex-col items-center justify-center w-full lg:max-w-4xl p-6 '>
-          <p className='lg:text-3xl text-2xl font-extrabold font-mono tracking-widest text-muted-foreground '>
-            {t("title")}
-          </p>
-          <Separator className='w-1/2 my-4 border-1' />
-          <p className='lg:text-5xl text-4xl font-bold text-center mb-4 text-primary font-Roboto'>
-            {t("subtitle")}
-          </p>
-          <p className='text-md text-center mb-4 text-muted-foreground'>
-            {t("description")}
-          </p>
-        </div>
-        <div className='sm:grid flex flex-col items-center sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl p-6'>
-          {cards.map((card, index) => (
-            <PricingCard
-              key={index}
-              title={card.title}
-              description={card.description}
-              price={card.price}
-              features={card.features}
-              btnText={card.btnText}
-            />
-          ))}
-        </div>
+    <section className='flex flex-col items-center min-h-screen pt-20 sm:pt-16 lg:pt-32 px-6'>
+      <header className='flex flex-col items-center w-full lg:max-w-4xl text-center'>
+        <h2 className='lg:text-3xl text-2xl font-extrabold font-mono tracking-widest text-muted-foreground'>
+          {t("title")}
+        </h2>
+        <Separator className='w-1/2 my-4 border-1' />
+        <h1 className='lg:text-5xl text-4xl font-bold mb-4 text-primary font-roboto'>
+          {t("subtitle")}
+        </h1>
+        <p className='text-md mb-6 text-muted-foreground'>{t("description")}</p>
+      </header>
+
+      <div className='flex flex-col items-center justify-center md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl'>
+        {plans.map((plan, index) => (
+          <PricingCard key={index} {...plan} />
+        ))}
+        <SingleCourseCard
+          title={t("plans.free.title")}
+          description={t("plans.free.description")}
+          price={25}
+          btnText={t("plans.free.btnText")}
+        />
       </div>
-    </div>
+    </section>
   );
 }

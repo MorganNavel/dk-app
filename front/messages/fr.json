@@ -471,11 +471,12 @@
     "title": "TARIFS",
     "subtitle": "Un plan pour chaque objectif",
     "description": "Explorez le coréen, quel que soit votre point de départ.",
-    "perMonth": "/mois",
+    "perMonth": "/ mois",
     "lessons": "{count} leçon{count, plural, one {unique} other {s uniques}}",
     "resources": "Support PDF et ressources",
     "expireY": "Leçons valables {count} an{count, plural, one {} other {s}}",
     "expireM": "Leçons valables {count} mois",
+    "mostPopular": "Plus Populaire",
     "plans": {
       "discover": {
         "title": "Découverte",
@@ -492,6 +493,11 @@
         "description": "Pour maîtriser le coréen.",
         "topik": "Préparation au TOPIK",
         "btnText": "Devenir un expert"
+      },
+      "free": {
+        "title": "Formule Libre",
+        "description": "Achetez un ou plusieurs cours selon vos besoins, sans abonnement.",
+        "btnText": "Acheter"
       }
     }
   }
