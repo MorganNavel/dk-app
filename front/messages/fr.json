@@ -499,6 +499,23 @@
         "description": "Achetez un ou plusieurs cours selon vos besoins, sans abonnement.",
         "btnText": "Acheter"
       }
+    },
+    "dialog": {
+      "successTitle": "Transaction réussie !",
+      "successDescription": "Votre achat a été confirmé. Voici comment fonctionnent vos crédits :",
+      "creditInfo": "Un crédit permet de réserver n'importe quel cours, dispensé par nos professeurs certifiés.",
+      "cancelInfo": "Vous pouvez annuler votre réservation jusqu'à 12 heures avant le début du cours, sans frais.",
+      "emailInfo": "Un email de rappel avec le lien de visioconférence vous sera envoyé 30 minutes avant le début du cours.",
+      "closeButton": "Fermer",
+      "howItWorks": "Comment ça marche ?",
+      "whatYouGet": "Ce que tu reçois",
+      "howItWorksSteps": {
+        "step1": "Achetez un ou plusieurs crédits, ou abonnez-vous selon vos besoins.",
+        "step2": "Réservez le cours de votre choix depuis votre espace membre.",
+        "step3": "Participez au cours en ligne à l'heure prévue.",
+        "step4": "Annulez gratuitement jusqu'à 12 heures avant, si nécessaire."
+      },
+      "note": "Remarque : chaque crédit est valable pour un seul cours et ne peut pas être remboursé après utilisation."
     }
   }
 }

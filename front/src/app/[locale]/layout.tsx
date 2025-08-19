@@ -10,9 +10,9 @@ import { Footer } from "@/components/Footer";
 import favicon from "@public/favicon.ico";
 import { ReactQueryProvider } from "@/providers/ReactQueryProvider";
 import { Toaster } from "sonner";
-
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { SidebarLayout } from "@/components/sidebar/sidebar-layout";
+import { PaypalWrapper } from "@/components/PaypalWrapper";
 export function generateMetadata({
   params: { locale },
 }: {
@@ -54,19 +54,20 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
-
   return (
     <ReactQueryProvider>
       <NextIntlClientProvider messages={messages}>
-        <SidebarProvider>
-          <SidebarLayout>
-            <main className='overflow-auto h-screen font-Poppins'>
-              {props.children}
-              <Footer />
-            </main>
-          </SidebarLayout>
-          <Toaster richColors />
-        </SidebarProvider>
+        <PaypalWrapper>
+          <SidebarProvider>
+            <SidebarLayout>
+              <main className='overflow-auto h-screen font-Poppins'>
+                {props.children}
+                <Footer />
+              </main>
+            </SidebarLayout>
+            <Toaster richColors />
+          </SidebarProvider>
+        </PaypalWrapper>
       </NextIntlClientProvider>
     </ReactQueryProvider>
   );

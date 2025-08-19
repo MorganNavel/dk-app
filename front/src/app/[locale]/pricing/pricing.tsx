@@ -9,10 +9,12 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { CheckIcon, Minus, Plus, Star } from "lucide-react";
+import { CheckIcon, Minus, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { FaStar } from "react-icons/fa";
 import { ReactNode, useState } from "react";
+import { PayPalButtons } from "@paypal/react-paypal-js";
+import { useRouter } from "@/i18n/routing";
+import { useSession } from "@/lib/auth-client";
 function formatPrice(value: number, currency: string) {
   const isInteger = Number.isInteger(value);
 
@@ -33,7 +35,8 @@ export interface PricingCardProps {
   features?: string[];
   icon?: React.ReactNode;
   btnText: string;
-  isMostUsed?: boolean;
+  isAmphasized?: boolean;
+  amphasis?: ReactNode;
   onSubscribe?: () => void;
 }
 export function PricingCard({
@@ -44,7 +47,8 @@ export function PricingCard({
   features = [],
   icon,
   btnText,
-  isMostUsed = false,
+  isAmphasized = false,
+  amphasis,
   onSubscribe,
 }: Readonly<PricingCardProps>) {
   const t = useTranslations("");
@@ -55,17 +59,16 @@ export function PricingCard({
                  hover:scale-[1.02] transition-transform duration-300 ease-in-out
                  focus-within:ring-2 rounded-lg relative
                  ${
-                   isMostUsed
+                   isAmphasized
                      ? "border-2 border-primary shadow-2xl scale-[1.03] hover:scale-[1.05]"
                      : ""
                  }`}
       aria-label={`Pricing plan: ${title}`}
       tabIndex={-1}
     >
-      {isMostUsed && (
+      {isAmphasized && (
         <span className='flex items-center gap-2 absolute -top-3 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md'>
-          <FaStar className='text-yellow-400' />
-          {t("pricing.mostPopular")}
+          {amphasis}
         </span>
       )}
 
@@ -109,7 +112,7 @@ export function PricingCard({
       <CardFooter className='pt-4'>
         <Button
           className={`w-full ${
-            isMostUsed ? "bg-primary text-white hover:bg-primary/90" : ""
+            isAmphasized ? "bg-primary text-white hover:bg-primary/90" : ""
           }`}
           onClick={() => onSubscribe && onSubscribe()}
           aria-label={`Souscrire au plan ${title}`}
@@ -129,6 +132,8 @@ interface SingleCourseCardProps {
   currency?: string;
   btnText: string;
   onBuy?: (count: number, totalPrice: number) => void;
+  isAmphasized?: boolean;
+  amphasis?: ReactNode;
 }
 
 export function SingleCourseCard({
@@ -136,10 +141,13 @@ export function SingleCourseCard({
   description,
   price,
   currency = "USD",
-  btnText,
+  isAmphasized,
+  amphasis,
   icon,
   onBuy,
 }: Readonly<SingleCourseCardProps>) {
+  const router = useRouter();
+  const session = useSession();
   const [nbLessons, setNbLessons] = useState<number>(1);
   function calculatePrice() {
     return price * nbLessons;
@@ -160,7 +168,21 @@ export function SingleCourseCard({
   };
 
   return (
-    <Card className='flex flex-col hover:scale-[1.02] transition-transform duration-300 ease-in-out shadow-lg p-4 sm:p-6 w-full max-w-xs sm:max-w-sm'>
+    <Card
+      className={`flex flex-col w-full max-w-xs sm:max-w-sm p-4 sm:p-6 shadow-lg
+                 hover:scale-[1.02] transition-transform duration-300 ease-in-out
+                 focus-within:ring-2 rounded-lg relative
+                 ${
+                   isAmphasized && amphasis
+                     ? "border-2 border-primary shadow-2xl scale-[1.03] hover:scale-[1.05]"
+                     : ""
+                 }`}
+    >
+      {isAmphasized && amphasis && (
+        <span className='flex items-center gap-2 absolute -top-3 right-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md'>
+          {amphasis}
+        </span>
+      )}
       <CardHeader className='text-center pb-2'>
         <CardTitle className='mb-7 flex items-center justify-center gap-2 text-2xl font-bold '>
           {title} {icon}
@@ -192,12 +214,32 @@ export function SingleCourseCard({
       </CardContent>
 
       <CardFooter>
-        <Button
+        <PayPalButtons
+          key={nbLessons}
           className='w-full'
-          onClick={() => onBuy?.(nbLessons, totalPrice)}
-        >
-          {btnText}
-        </Button>
+          onClick={() => {
+            console.log("click");
+            console.log(session);
+            if (!session.data?.session) router.replace("/auth/sign-in");
+          }}
+          createOrder={(data, actions) => {
+            const totalPriceFixed = (price * nbLessons).toFixed(2);
+            return actions.order.create({
+              purchase_units: [
+                {
+                  amount: {
+                    value: totalPriceFixed,
+                    currency_code: currency,
+                  },
+                },
+              ],
+              intent: "CAPTURE",
+            });
+          }}
+          onApprove={async (data, actions) => {
+            if (onBuy) onBuy(nbLessons, totalPrice);
+          }}
+        />
       </CardFooter>
     </Card>
   );

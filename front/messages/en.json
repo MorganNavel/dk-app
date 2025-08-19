@@ -498,6 +498,23 @@
         "description": "Buy one or more courses as you need, with no subscription.",
         "btnText": "Buy"
       }
+    },
+    "dialog": {
+      "successTitle": "Transaction successful!",
+      "successDescription": "Your purchase has been processed. Here's how your credits work:",
+      "creditInfo": "One credit allows you to book any available course, taught by our certified teachers.",
+      "cancelInfo": "You can cancel your booking up to 12 hours before the course starts at no cost.",
+      "emailInfo": "A reminder email with the video conference link will be sent 30 minutes before the course begins.",
+      "closeButton": "Close",
+      "whatYouGet": "What You Get",
+      "howItWorks": "How does it work?",
+      "howItWorksSteps": {
+        "step1": "Buy one or more credits, or subscribe depending on your needs.",
+        "step2": "Book a reservation for the class of your choice.",
+        "step3": "Attend the online class at the scheduled time.",
+        "step4": "Cancel for free up to 12 hours before, if needed."
+      },
+      "note": "Note: Each credit is valid for a single course and cannot be refunded after use."
     }
   }
 }
