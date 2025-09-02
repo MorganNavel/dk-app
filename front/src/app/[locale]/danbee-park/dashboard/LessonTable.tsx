@@ -142,7 +142,10 @@ export default function LessonTable({
 
         return (
           selectedLessons.length === 0 ||
-          selectedLessons.some((lesson) => lesson.status !== "planned")
+          selectedLessons.some(
+            (lesson) =>
+              lesson.status !== "planned" || lesson.endDate < new Date()
+          )
         );
       },
     },

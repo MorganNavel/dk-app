@@ -34,6 +34,7 @@ export const SELECT_LESSON_FIELDS = {
   status: true,
   startDate: true,
   duration: true,
+  endDate: true,
 } satisfies Prisma.LessonSelect;
 
 export const SELECT_LESSON_AS_PARTICIPANT = {
