@@ -20,8 +20,8 @@ import { Cta } from "@/components/ui/cta";
 export default function AboutUs() {
   const t = useTranslations("about-us");
   return (
-    <div className='flex flex-col min-h-screen gap-40'>
-      <section className='lg:min-h-screen flex flex-col-reverse lg:flex-row items-center justify-between gap-12 px-4 py-48 max-w-7xl mx-auto snap-start snap-always'>
+    <div className='flex flex-col gap-48 mt-64'>
+      <section className='flex flex-col-reverse lg:flex-row items-center justify-between gap-12 px-4 max-w-7xl mx-auto snap-start snap-always'>
         <div className='w-full md:w-1/2 space-y-8 text-center md:text-left'>
           <div className='text-3xl sm:text-3xl lg:text-5xl font-extrabold text-primary'>
             {t("title")}
@@ -50,7 +50,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className='w-full lg:min-h-screen snap-start snap-always py-20  px-6 h-screen flex items-center'>
+      <section className='w-full px-6 flex items-center'>
         <div className='max-w-5xl mx-auto text-center space-y-8'>
           <Title>{t("why.title")}</Title>
           <div className='grid grid-cols-1 sm:grid-cols-2 gap-8'>
@@ -97,7 +97,7 @@ export default function AboutUs() {
         </div>
       </section>
 
-      <section className='flex flex-col items-center justify-center min-h-screen snap-start snap-always gap-16'>
+      <section className='flex flex-col items-center justify-center gap-16'>
         <section className='py-20 px-6 max-w-4xl sm:mx-auto'>
           <div className='text-center space-y-6'>
             <Title>{t("proposed.title")}</Title>
