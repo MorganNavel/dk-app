@@ -55,7 +55,7 @@ export function PricingCard({
 
   return (
     <Card
-      className={`flex flex-col w-full max-w-xs sm:max-w-sm p-4 sm:p-6 shadow-lg
+      className={`flex flex-col w-full p-4 sm:p-6 shadow-lg max-w-xl
                  hover:scale-[1.02] transition-transform duration-300 ease-in-out
                  focus-within:ring-2 rounded-lg relative
                  ${
@@ -111,7 +111,7 @@ export function PricingCard({
 
       <CardFooter className='pt-4'>
         <Button
-          className={`w-full ${
+          className={`w-full  p-5 text-wrap ${
             isAmphasized ? "bg-primary text-white hover:bg-primary/90" : ""
           }`}
           onClick={() => onSubscribe && onSubscribe()}
@@ -169,7 +169,7 @@ export function SingleCourseCard({
 
   return (
     <Card
-      className={`flex flex-col w-full max-w-xs sm:max-w-sm p-4 sm:p-6 shadow-lg
+      className={`flex flex-col p-4 sm:p-6 shadow-lg max-w-xl
                  hover:scale-[1.02] transition-transform duration-300 ease-in-out
                  focus-within:ring-2 rounded-lg relative
                  ${
@@ -218,12 +218,13 @@ export function SingleCourseCard({
           key={nbLessons}
           className='w-full'
           onClick={() => {
-            console.log("click");
-            console.log(session);
             if (!session.data?.session) router.replace("/auth/sign-in");
           }}
-          createOrder={(data, actions) => {
+          createOrder={async (data, actions) => {
             const totalPriceFixed = (price * nbLessons).toFixed(2);
+            if (!session.data?.session) {
+              return Promise.reject(new Error("User not authenticated"));
+            }
             return actions.order.create({
               purchase_units: [
                 {

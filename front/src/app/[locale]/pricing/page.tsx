@@ -30,51 +30,50 @@ type DialogType = "subscribe" | "unit";
 export default function PricingPage() {
   const t = useTranslations("pricing");
   const [dialog, setDialog] = useState<DialogType | null>(null);
-
   const plans: PlanCard[] = [
-    // {
-    //   title: t("plans.discover.title"),
-    //   description: t("plans.discover.description"),
-    //   price: 96,
-    //   features: [t("lessons", { count: 4 }), t("resources")],
-    //   btnText: t("plans.discover.btnText"),
-    //   isAmphasized: true,
-    //   amphasis: (
-    //     <>
-    //       <FaStar className='text-yellow-400' />
-    //       {t("mostPopular")}
-    //     </>
-    //   ),
-    //   onSubscribe: () => {
-    //     addCredits(4);
-    //   },
-    // },
-    // {
-    //   title: t("plans.advanced.title"),
-    //   description: t("plans.advanced.description"),
-    //   price: 184,
-    //   features: [t("lessons", { count: 8 }), t("resources")],
-    //   btnText: t("plans.advanced.btnText"),
-    //   onSubscribe: () => {
-    //     addCredits(8);
-    //   },
-    // },
-    // {
-    //   title: t("plans.expert.title"),
-    //   description: t("plans.expert.description"),
-    //   price: 252,
-    //   features: [t("lessons", { count: 12 }), t("resources")],
-    //   btnText: t("plans.expert.btnText"),
-    //   onSubscribe: () => {
-    //     addCredits(12);
-    //   },
-    // },
+    {
+      title: t("plans.discover.title"),
+      description: t("plans.discover.description"),
+      price: 96,
+      features: [t("lessons", { count: 4 }), t("resources")],
+      btnText: t("plans.discover.btnText"),
+      isAmphasized: true,
+      amphasis: (
+        <>
+          <FaStar className='text-yellow-400' />
+          {t("mostPopular")}
+        </>
+      ),
+      onSubscribe: () => {
+        addCredits(4);
+      },
+    },
+    {
+      title: t("plans.advanced.title"),
+      description: t("plans.advanced.description"),
+      price: 184,
+      features: [t("lessons", { count: 8 }), t("resources")],
+      btnText: t("plans.advanced.btnText"),
+      onSubscribe: () => {
+        addCredits(8);
+      },
+    },
+    {
+      title: t("plans.expert.title"),
+      description: t("plans.expert.description"),
+      price: 252,
+      features: [t("lessons", { count: 12 }), t("resources")],
+      btnText: t("plans.expert.btnText"),
+      onSubscribe: () => {
+        addCredits(12);
+      },
+    },
   ];
 
   return (
-    <section className='flex flex-col items-center min-h-screen pt-20 sm:pt-16 lg:pt-32 px-6'>
-      <header className='flex flex-col items-center w-full lg:max-w-4xl text-center'>
-        <h2 className='lg:text-3xl text-2xl font-extrabold font-mono tracking-widest text-muted-foreground'>
+    <section className='flex flex-col items-center min-h-screen pt-32 px-6'>
+      <header className='flex flex-col items-center w-full lg:max-w-4xl text-center mb-5 '>
+        <h2 className='lg:text-4xl text-3xl font-extrabold font-mono tracking-widest text-muted-foreground'>
           {t("title")}
         </h2>
         <Separator className='w-1/2 my-4 border-1' />
@@ -84,10 +83,10 @@ export default function PricingPage() {
         <p className='text-md mb-6 text-muted-foreground'>{t("description")}</p>
       </header>
 
-      <div className='flex flex-col items-center justify-center md:grid md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl'>
-        {plans.map((plan, index) => (
+      <div className='flex flex-col items-center md:grid w-full md:px-15 px-2 gap-10 md:gap-6 lg:gap-10 justify-center grid-cols-[repeat(auto-fit,minmax(300px,1fr))]'>
+        {/* {plans.map((plan, index) => (
           <PricingCard key={index} {...plan} />
-        ))}
+        ))} */}
         <SingleCourseCard
           onBuy={(nbLessons, _) => {
             addCredits(nbLessons);
