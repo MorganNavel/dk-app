@@ -74,6 +74,15 @@ export function Footer() {
           <p className='text-sm text-gray-200'>
             {t("footer.copyRight", { year: new Date().getFullYear() })}
           </p>
+          <p className='text-sm text-gray-200 '>
+            {t("footer.developed")}{" "}
+            <Link
+              href='https://www.linkedin.com/in/morgan-navel'
+              className='hover:text-white transition-colors duration-300 underline-offset-2 underline'
+            >
+              Morgan Navel
+            </Link>
+          </p>
         </div>
       </div>
     </footer>
