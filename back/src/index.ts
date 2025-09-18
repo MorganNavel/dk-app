@@ -45,8 +45,8 @@ export async function getUpCommingLessons(
       ut.email AS "teacherEmail"
     FROM "Lesson" AS l
     JOIN "Booking" AS b ON l."idLesson" = b."idLesson"
-    JOIN public.user AS ut ON ut.id = l."idTeacher"
-    JOIN public."user" AS us ON us.id = b."idUser"
+    JOIN public."User" AS ut ON ut.id = l."idTeacher"
+    JOIN public."User" AS us ON us.id = b."idUser"
     WHERE l."startDate" BETWEEN 
       NOW() + (($1::int - $2::int) || ' minutes')::interval AND 
       NOW() + (($1::int + $2::int) || ' minutes')::interval
