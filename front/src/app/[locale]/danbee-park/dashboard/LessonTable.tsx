@@ -274,7 +274,7 @@ export default function LessonTable({
       >
         <DrawerContent
           className={cn(
-            "left-auto mt-0 w-full lg:w-1/4 rounded-md",
+            "left-auto mt-0 w-full lg:w-1/2 xl:w-1/4 rounded-md",
             isMobile ? "h-3/4 overflow-hidden" : "h-full"
           )}
         >
