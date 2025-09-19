@@ -56,7 +56,7 @@ const LessonActions = ({ lesson }: LessonActions) => {
             {t("lessons.data-table.actions.notif")}
           </DropdownMenuItem>
 
-          {lesson.status === "planned" && (
+          {lesson.status === "planned" && lesson.endDate > new Date() && (
             <DropdownMenuItem
               className='flex items-center gap-2 font-semibold text-amber-500 focus:bg-amber-500 focus:text-white cursor-pointer'
               onClick={() => setAction("reschedule")}
@@ -65,7 +65,7 @@ const LessonActions = ({ lesson }: LessonActions) => {
               {t("lessons.data-table.actions.reschedule")}
             </DropdownMenuItem>
           )}
-          {lesson.status === "planned" && (
+          {lesson.status === "planned" && lesson.endDate > new Date() && (
             <DropdownMenuItem
               className='flex items-center gap-2 text-destructive font-semibold focus:bg-destructive focus:text-destructive-foreground cursor-pointer'
               onClick={() => setAction("cancel")}

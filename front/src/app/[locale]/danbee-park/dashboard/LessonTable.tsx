@@ -121,6 +121,8 @@ export default function LessonTable({
         if (!lessons) return true;
         const selectedLessons = getSelectedLessons(selected);
         if (selectedLessons.length !== 1) return true;
+        if (selectedLessons[0].status !== "planned") return true;
+        if (selectedLessons[0].endDate < new Date()) return true;
         return !hasPermission(profile, "lessons", "update", selectedLessons);
       },
     },
