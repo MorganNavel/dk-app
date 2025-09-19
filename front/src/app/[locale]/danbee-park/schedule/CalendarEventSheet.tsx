@@ -196,11 +196,12 @@ const EventSheet = ({ selectedEvent, setSelectedEvent }: EventSheetProps) => {
               className='w-full mt-4'
               disabled={isLoading || !!isParticipating}
               variant={"destructive"}
-              onClick={() =>
+              onClick={() => {
+                if (selectedEvent.resource.startDate >= new Date()) return;
                 cancelLessonMutation.mutateAsync([
                   selectedEvent?.resource.idLesson as number,
-                ])
-              }
+                ]);
+              }}
             >
               {isLoading ? (
                 <Spinner size='sm' color='white' />
