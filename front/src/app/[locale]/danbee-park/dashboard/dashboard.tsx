@@ -1,7 +1,6 @@
 "use client";
 
 import { useSession } from "@/lib/auth-client";
-import { notFound } from "next/navigation";
 
 export function DashboardLayout({
   children,
