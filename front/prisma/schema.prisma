@@ -27,8 +27,8 @@ model Billing {
   paymentMethod String?
   paymentReference String?
   status   String
-  idTeacher String
-  teacher   User    @relation(fields: [idTeacher], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  // idTeacher String // add when multi teacher supported
+  // teacher   User    @relation(fields: [idTeacher], references: [id], onDelete: Cascade, onUpdate: Cascade)
 }
 model Booking {
   idBooking Int      @id @default(autoincrement())
@@ -92,8 +92,8 @@ model User {
   nbLessons     Int?       @default(0)
   bookings      Booking[] @relation("BookingUser")
   lessons       Lesson[]
-  @@map("user")
-  Billing Billing[]
+  // @@map("user")
+  // Billing Billing[]
 }
 
 model Session {

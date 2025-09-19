@@ -215,7 +215,7 @@ export function SingleCourseCard({
 
       <CardFooter>
         <PayPalButtons
-          key={nbLessons}
+          forceReRender={[nbLessons]}
           className='w-full'
           onClick={() => {
             if (!session.data?.session) router.replace("/auth/sign-in");

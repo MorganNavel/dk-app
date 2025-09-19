@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2 } from "lucide-react";
-import { addCredits } from "./actions";
+import { addCredits, saveBillingInfo } from "./actions";
 
 type PlanCard = {
   title: string;
@@ -88,9 +88,10 @@ export default function PricingPage() {
           <PricingCard key={index} {...plan} />
         ))} */}
         <SingleCourseCard
-          onBuy={(nbLessons, _) => {
+          onBuy={(nbLessons, price) => {
             addCredits(nbLessons);
             setDialog("unit");
+            saveBillingInfo(price);
           }}
           isAmphasized
           amphasis={

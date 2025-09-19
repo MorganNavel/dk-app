@@ -21,7 +21,7 @@ export async function getTotalEarnings(
       price: true,
     },
     where: {
-      idTeacher,
+      // idTeacher,
       status: "done",
       createdAt: {
         gte: startDate ?? new Date(0),
@@ -63,7 +63,7 @@ export async function getEarningsComparison(): Promise<
       key: "codes.user.not_authenticated",
     };
 
-  // Périodes
+  // Periods
   const now = new Date();
 
   const currentMonthStart = startOfMonth(now);
@@ -90,7 +90,7 @@ export async function getEarningsComparison(): Promise<
     current: number,
     previous: number
   ): number | null {
-    if (previous === 0) return current === 0 ? 0 : null; // null pour "indéfini" ou "new"
+    if (previous === 0) return current === 0 ? 0 : null; // null for "undefined" or "new"
 
     return Math.round(((current - previous) / previous) * 100);
   }
@@ -120,7 +120,9 @@ export async function getEarningsChartData(
   if (!user || user.role !== "teacher") {
     return [];
   }
-  const idTeacher = user.id;
+  // Use id teacher later when adding multi-teacher support
+  // const idTeacher = user.id;
+
   const rawData = await prisma.$queryRaw<
     { year: number; month: number; earnings: number }[]
   >`
@@ -130,8 +132,7 @@ export async function getEarningsChartData(
       SUM(price) AS earnings
     FROM "Billing"
     WHERE
-      "idTeacher" = ${idTeacher}
-      AND status = 'done'
+      status = 'done'
       AND "createdAt" BETWEEN ${startDate} AND ${endDate}
     GROUP BY year, month
     ORDER BY year, month;
