@@ -129,7 +129,11 @@ export async function updateLessonFields(
     };
   const r = await prisma.lesson.update({
     where: { idLesson },
-    data,
+    data: {
+      startDate: start,
+      duration,
+      endDate,
+    },
   });
 
   if (!r) {
