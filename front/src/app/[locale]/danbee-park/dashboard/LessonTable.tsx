@@ -32,6 +32,7 @@ import { useSession } from "@/lib/auth-client";
 import { Lesson, UserProfile } from "@/types/type";
 import { LessonResponse } from "@/queries/lessons/lessons-queries";
 import { FaEdit } from "react-icons/fa";
+import { LessonCodes } from "@/queries/lessons/lessons-codes";
 
 type Action = "delete" | "cancel" | "add" | "update";
 interface LessonTableProps {
@@ -57,26 +58,22 @@ export default function LessonTable({
   const profile = user.data?.user as UserProfile | undefined;
   if (!profile) return null;
   const cols = columns(t, profile);
+  function handleToast(r: LessonResponse) {
+    let fn = r.code === LessonCodes.SUCCESS ? toast.success : toast.error;
+    if (r.key) fn(t(r.key));
+  }
 
   const handleDelete = (ids: number[]) => {
     startTransition(async () => {
-      try {
-        await onDelete(ids);
-        toast.success("Leçons supprimées");
-      } catch {
-        toast.error("Erreur lors de la suppression");
-      }
+      const r = await onDelete(ids);
+      handleToast(r);
     });
   };
 
   const handleCancel = (ids: number[]) => {
     startTransition(async () => {
-      try {
-        await onCancel(ids);
-        toast.success("Leçons annulées");
-      } catch {
-        toast.error("Erreur lors de l'annulation");
-      }
+      const r = await onCancel(ids);
+      handleToast(r);
     });
   };
 

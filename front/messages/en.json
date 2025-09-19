@@ -455,8 +455,13 @@
         "unknown_error": "An unknown error occurred while creating the lesson. Please try again later.",
         "already_exists": "A lesson is already scheduled for this date and time. Please choose another date or time."
       },
+      "cancel": {
+        "success": "The lesson has been successfully cancelled.",
+        "unknown_error": "An unknown error occurred. Please try again later.",
+        "limit_exceed": "You can no longer cancel this lesson. Cancellations must be made at least 12 hours before the class starts."
+      },
       "update": {
-        "success": "La leçon a été modifiée avec succès."
+        "success": "The lesson has been successfully updated."
       },
       "delete": {
         "success": "The lesson has been successfully deleted.",
