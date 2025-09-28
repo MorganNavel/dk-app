@@ -5,9 +5,6 @@
   - You are about to drop the `user` table. If the table is not empty, all the data it contains will be lost.
 
 */
-DELETE FROM "Booking"
-WHERE "idUser" NOT IN (SELECT "id" FROM "user");
-
 -- DropForeignKey
 ALTER TABLE "Billing" DROP CONSTRAINT "Billing_idTeacher_fkey";
 

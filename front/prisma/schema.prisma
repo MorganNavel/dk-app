@@ -92,8 +92,8 @@ model User {
   nbLessons     Int?       @default(0)
   bookings      Booking[] @relation("BookingUser")
   lessons       Lesson[]
-  // @@map("user")
   // Billing Billing[]
+  @@map("user")
 }
 
 model Session {
