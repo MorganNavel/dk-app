@@ -63,7 +63,7 @@ export function Footer() {
               links={[
                 { href: "/privacy", text: t("footer.privacy") },
                 { href: "/terms", text: t("footer.terms") },
-                { href: "/cookies", text: t("footer.cookies") },
+                // { href: "/cookies", text: t("footer.cookies") },
               ]}
             />
           </div>
