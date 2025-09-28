@@ -221,6 +221,8 @@ export function SingleCourseCard({
             if (!session.data?.session) router.replace("/auth/sign-in");
           }}
           createOrder={async (data, actions) => {
+            if (process.env.NODE_ENV == "production")
+              return Promise.reject(new Error("Not yet available"));
             const totalPriceFixed = (price * nbLessons).toFixed(2);
             if (!session.data?.session) {
               return Promise.reject(new Error("User not authenticated"));
