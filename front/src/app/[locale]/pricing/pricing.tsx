@@ -15,6 +15,7 @@ import { ReactNode, useState } from "react";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { useRouter } from "@/i18n/routing";
 import { useSession } from "@/lib/auth-client";
+import { captureOrder, createOrder } from "./actions";
 function formatPrice(value: number, currency: string) {
   const isInteger = Number.isInteger(value);
 
@@ -221,25 +222,16 @@ export function SingleCourseCard({
             if (!session.data?.session) router.replace("/auth/sign-in");
           }}
           createOrder={async (data, actions) => {
+            console.log("CREATE ORDER");
             if (process.env.NODE_ENV == "production")
               return Promise.reject(new Error("Not yet available"));
-            const totalPriceFixed = (price * nbLessons).toFixed(2);
-            if (!session.data?.session) {
-              return Promise.reject(new Error("User not authenticated"));
-            }
-            return actions.order.create({
-              purchase_units: [
-                {
-                  amount: {
-                    value: totalPriceFixed,
-                    currency_code: currency,
-                  },
-                },
-              ],
-              intent: "CAPTURE",
-            });
+            const order = await createOrder(price * nbLessons, currency);
+            console.log(order);
+            return order.id;
           }}
           onApprove={async (data, actions) => {
+            const details = await captureOrder(data.orderID);
+            console.log("Paiement capturé:", details);
             if (onBuy) onBuy(nbLessons, totalPrice);
           }}
         />
